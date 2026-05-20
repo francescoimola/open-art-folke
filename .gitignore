@@ -1,0 +1,43 @@
+.DS_Store
+/.env
+node_modules/
+.vscode
+/site/config/vite.config.php
+
+# Frontend
+/public/assets/
+/public/dist/
+
+# Kirby core (managed by Composer)
+/kirby
+/vendor
+
+# Content (separated from code per best practices - sync via rsync)
+/content
+
+# Kirby dev marker
+.dev
+
+# Plugins installed via composer
+/site/plugins/kirby-vite
+
+# User uploads
+/public/media/*
+!/public/media/index.html
+
+# User accounts (set up locally and on server)
+/storage/accounts/*
+!/storage/accounts/.gitkeep
+
+# Cache and sessions
+/storage/cache/*
+!/storage/cache/.gitkeep
+
+/storage/sessions/*
+!/storage/sessions/.gitkeep
+
+/storage/logs/*
+!/storage/logs/.gitkeep
+
+# License (keep secret)
+/site/config/.license
