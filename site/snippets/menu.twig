@@ -1,0 +1,12 @@
+<nav>
+  <ul>
+    {% for child in site.children.listed %}
+    <li>
+      <a
+        href="{{ child.url }}"
+        {% if child.isActive %}aria-current="page"{% endif %}
+      >{{ child.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
