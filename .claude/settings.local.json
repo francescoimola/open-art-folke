@@ -40,7 +40,8 @@
       "Bash(pkill -f \"concurrently\")",
       "Bash(pnpm dev *)",
       "Bash(kill %1)",
-      "Bash(curl -s http://localhost:5173/)"
+      "Bash(curl -s http://localhost:5173/)",
+      "WebFetch(domain:github.blog)"
     ]
   }
 }

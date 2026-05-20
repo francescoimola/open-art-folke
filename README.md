@@ -51,7 +51,3 @@ rsync -av ./content user@server:~/
 # Download content from server
 rsync -av user@server:~/content ./
 ```
-
-## License
-
-Kirby CMS requires a license for production use. Get yours at [getkirby.com](https://getkirby.com).
