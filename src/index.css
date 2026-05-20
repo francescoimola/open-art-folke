@@ -1,0 +1,129 @@
+/* ── kirby-vite-multi-page-kit ──
+   All site CSS lives here – no separate dist build step needed.
+   kirby-vite bundles it automatically + injects live-reload. */
+
+/* ── Design tokens ── */
+:root {
+  --accent:    #1b6b9c;
+  --accent-dk: #124a6e;
+  --bg:        #faf9f6;
+  --surface:   #ffffff;
+  --text:      #2b2b2b;
+  --text-mid:  #5c5c5c;
+  --border:    #e2e0da;
+  --font:      'Georgia', 'Times New Roman', serif;
+  --font-ui:   system-ui, -apple-system, sans-serif;
+  --max-w:     680px;
+  --radius:    6px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+/* ── Skip link ── */
+.skip-link {
+  position: absolute; top: -100%; left: 0;
+  background: var(--accent); color: #fff;
+  padding: .5rem 1rem; z-index: 100;
+}
+.skip-link:focus { top: 0; }
+
+/* ── Page layout ── */
+.page {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.page h1 {
+  font-family: var(--font-ui);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--accent-dk);
+  margin-bottom: 1.25rem;
+  letter-spacing: -.02em;
+}
+
+.page .text {
+  font-size: 1.0625rem;
+}
+
+/* ── Heading rules inside content ── */
+.page .text h2 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin: 2rem 0 .5rem;
+  color: var(--accent-dk);
+}
+.page .text h2:first-child { margin-top: 0; }
+
+.page .text h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 1.5rem 0 .5rem;
+}
+.page .text p { margin: .75rem 0; }
+.page .text  ul,
+.page .text  ol {
+  padding-left: 1.5rem;
+  margin: .75rem 0;
+}
+.page .text li { margin: .25rem 0; }
+.page .text a { color: var(--accent); word-break: break-word; }
+.page .text strong { font-weight: 700; }
+.page .text em { font-style: italic; }
+
+/* ── Navigation ── */
+.skip-link { position: absolute; top: -200%; }
+
+nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.25rem;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+nav li + li {
+  border-left: 1px solid var(--border);
+}
+
+nav a {
+  display: block;
+  padding: .875rem 1rem;
+  font-family: var(--font-ui);
+  font-size: .9375rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: color .15s;
+}
+
+nav a:hover,
+nav a[aria-current="page"] {
+  color: var(--accent);
+}
+
+/* ── Per-page background tints (from template-specific CSS) ── */
+.page-home  { background-color: #f0f7f1; }
+.page-about { background-color: #fef9ec; }
+.page-contact { background-color: #fdf2f3; }
+/* reload test */
+/* reload test */

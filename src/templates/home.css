@@ -1,0 +1,4 @@
+/* Per-page background tint — shared index.css handles everything else */
+body {
+  background-color: #f0f7f1;
+}
