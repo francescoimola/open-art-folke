@@ -1,6 +1,6 @@
 # Open Art Folke — Agent Instructions
 
-**Stack:** Kirby CMS 5 (PHP 8.4) · Twig 3 templates via `wearejust/kirby-twig` · Vite 7 · pnpm
+**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm
 
 ---
 
@@ -30,10 +30,9 @@ site/
     config.php         # Kirby config
     vite.config.php    # Vite ↔ Kirby bridge config
   plugins/
-    kirby-twig/        # Twig template engine plugin
     kirby-vite/        # Vite asset integration plugin
-  snippets/            # Reusable Twig partials (header, footer, menu)
-  templates/           # One .twig file per page type
+  snippets/            # Reusable PHP partials (header, footer, menu)
+  templates/           # One .php file per page type
 src/
   index.{js,css}       # Global entry points
   templates/           # Per-template JS/CSS (home.js, about.css, etc.)
@@ -49,25 +48,13 @@ vendor/                # Composer dependencies — DO NOT MODIFY
 
 ## Templates and snippets
 
-All templates use Twig 3 via the `kirby-twig` plugin. Every page type needs a matching `.twig` file in `site/templates/`.
-
-**Minimal template pattern:**
-```twig
-{% include '@snippets/header.twig' %}
-
-<main class="page page-home">
-  <h1>{{ page.title }}</h1>
-  <div class="text">{{ page.text.kirbytext()|raw }}</div>
-</main>
-
-{% include '@snippets/footer.twig' %}
-```
+All templates use native PHP via Kirby's built-in template engine. Every page type needs a matching `.php` file in `site/templates/`.
 
 Key conventions:
-- Include snippets with `{% include '@snippets/name.twig' %}` (the `@snippets` alias is registered by the plugin)
-- Render KirbyText fields with `|raw` — e.g. `{{ page.text.kirbytext()|raw }}`
-- Access Vite assets: `{% set v = vite() %}{{ v.css('app.css')|raw }}`
-- Always use `.twig` extension — `.php` templates are not used in this project
+- Include snippets with `<?php snippet('name') ?>`
+- Render KirbyText fields with `->kt()` — e.g. `<?= $page->text()->kt() ?>`
+- Access Vite assets: `<?= vite()->css('app.css') ?>`
+- Always use `.php` extension — `.twig` templates are not used in this project
 
 ---
 
@@ -75,7 +62,7 @@ Key conventions:
 
 1. Create `content/<slug>/` with a `<slug>.txt` file containing `Title:` and `Text:` fields
 2. Add a blueprint at `site/blueprints/pages/<slug>.yml`
-3. Add a template at `site/templates/<slug>.twig`
+3. Add a template at `site/templates/<slug>.php`
 4. If the page needs its own styles or scripts, add `src/templates/<slug>.{css,js}` — Vite picks these up automatically via glob
 
 ---
@@ -83,7 +70,7 @@ Key conventions:
 ## Boundaries
 
 ### Always safe to do
-- Edit `.twig` templates in `site/templates/` and `site/snippets/`
+- Edit `.php` templates in `site/templates/` and `site/snippets/`
 - Edit `.css` and `.js` files in `src/`
 - Edit `.txt` content files in `content/`
 - Edit `.yml` blueprints in `site/blueprints/`
@@ -100,7 +87,7 @@ Key conventions:
 - Modify anything inside `kirby/` — this is the Kirby CMS core, managed by Composer
 - Modify anything inside `vendor/` — managed by Composer
 - Edit files inside `public/dist/` — this is generated output, overwritten by every build
-- Create `.php` templates in `site/templates/` — only `.twig` files are used here
+- Create `.twig` templates in `site/templates/` — only `.php` files are used here
 - Delete `storage/` or its contents — contains sessions and cache; data loss risk
 - Commit `site/config/.license` or any credentials
 - Force-push to `main`

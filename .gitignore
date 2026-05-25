@@ -41,3 +41,6 @@ node_modules/
 
 # License (keep secret)
 /site/config/.license
+
+# AI
+/.claude
