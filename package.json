@@ -17,6 +17,11 @@
     "vite-plugin-kirby": "^5.6.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "dependencies": {
+    "@picocss/pico": "^2.1.1"
   }
 }

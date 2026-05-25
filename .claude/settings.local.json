@@ -41,7 +41,16 @@
       "Bash(pnpm dev *)",
       "Bash(kill %1)",
       "Bash(curl -s http://localhost:5173/)",
-      "WebFetch(domain:github.blog)"
+      "WebFetch(domain:github.blog)",
+      "Bash(git ls-tree *)",
+      "Bash(git show *)",
+      "Bash(rm site/templates/*.twig site/snippets/*.twig && ls site/config/ && cat site/config/config.php 2>/dev/null | head -40)",
+      "Bash(composer update *)",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "WebFetch(domain:www.npmjs.com)"
+    ],
+    "additionalDirectories": [
+      "/Users/francescoimola/Repositories/open-art-folke/site/templates"
     ]
   }
 }
