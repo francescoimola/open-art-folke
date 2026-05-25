@@ -48,7 +48,10 @@
       "Bash(composer update *)",
       "WebFetch(domain:cdn.jsdelivr.net)",
       "WebFetch(domain:www.npmjs.com)",
-      "Bash(pnpm build *)"
+      "Bash(pnpm build *)",
+      "WebFetch(domain:robinrendle.com)",
+      "WebFetch(domain:piccalil.li)",
+      "WebFetch(domain:moderncss.dev)"
     ],
     "additionalDirectories": [
       "/Users/francescoimola/Repositories/open-art-folke/site/templates"
