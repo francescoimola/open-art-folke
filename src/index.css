@@ -66,6 +66,11 @@
     scroll-behavior: smooth;
   }
 
+  html,
+  body {
+    overscroll-behavior: none;
+  }
+
   body {
     min-height: 100vh;
     min-height: 100svh;
@@ -508,21 +513,21 @@
 
     /* Heading overlay — h1–h6 use Graffiti's --fl (h6=0 … h1=5).
      Tracking and wght are linear functions of --fl. */
-    --type-track-base: 0.005em;
+    --type-track-base: 0em;
     --type-track-step: 0.005em;
     --type-wght-base: 600;
-    --type-wght-step: 12;
+    --type-wght-step: 20;
 
     /* Oversize headline (hero h1 and future viewport-fluid titles).
      The element owns ONE knob — the font-size slope per 1vw/1cqi —
      and tracking + wght derive from it via these coupling constants.
      Retune the whole oversize system by editing these. */
-    --headline-track-max: 0.04em;
-    --headline-track-min: -0.05em;
-    --headline-track-coupling: 0.00014;
+    --headline-track-max: 0em;
+    --headline-track-min: -0.2em;
+    --headline-track-coupling: 0.055;
     --headline-wght-max: 650;
-    --headline-wght-min: 380;
-    --headline-wght-coupling: 0.15;
+    --headline-wght-min: 550;
+    --headline-wght-coupling: 8;
   }
 
   body {
@@ -577,52 +582,46 @@
   section.hero {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: 75vh;
     background: var(--red-9);
   }
 
   /* The wrapper is the query container so cqi == 1% of the h1's actual space
-   (matches what the eye sees, not the full viewport). */
+   (matches what the eye sees, not the full viewport). Setting --variable-unit
+   here mirrors what Graffiti's .fc class does, so the formulas below use
+   container units automatically — no @supports block needed. */
   .hero-title {
     position: absolute;
     inset-inline: var(--pad-l);
     bottom: var(--pad-l);
     container-type: inline-size;
+    --variable-unit: 100cqi;
   }
 
   .hero-title>h1 {
     text-align: center;
-    margin-inline-start: -0.04em;
-    text-transform: uppercase;
+    margin-inline-start: -0.05em;
     color: var(--color-background);
+    text-box-edge: cap alphabetic;
+    margin-block-end: -1rem;
 
-    /* The one knob: font-size growth per 1vw/1cqi.
+    /* The one knob: font-size growth per 1% of the container's inline size.
      Rule of thumb: slope ≈ 200 / character-count for a sans-serif title.
      Tracking and wght derive from this via the --headline-* constants. */
     --h1-min: 2rem;
-    --h1-slope: 13;
+    --h1-slope: 15.8;
     --h1-max: 20rem;
 
-    /* Fallback: vw (scaled against the viewport, not the container). */
-    font-size: clamp(var(--h1-min), calc(var(--h1-slope) * 1vw), var(--h1-max));
+    font-size: clamp(var(--h1-min), calc(var(--h1-slope) * var(--variable-unit) / 100), var(--h1-max));
     letter-spacing: clamp(var(--headline-track-min),
-        calc(var(--headline-track-max) - var(--h1-slope) * var(--headline-track-coupling) * 1vw),
+        calc(var(--headline-track-max) - var(--h1-slope) * var(--headline-track-coupling) * var(--variable-unit) / 100),
         var(--headline-track-max));
+    /* wght is unitless, so convert --variable-unit (a length) into a
+     dimensionless number via division by 1px. Without this the calc()
+     mixes a number with a length and the whole declaration is dropped. */
     font-variation-settings: "wght" clamp(var(--headline-wght-min),
-        calc(var(--headline-wght-max) - var(--h1-slope) * var(--headline-wght-coupling) * 1vw),
+        calc(var(--headline-wght-max) - var(--h1-slope) * var(--headline-wght-coupling) * (var(--variable-unit) / 1px) / 100),
         var(--headline-wght-max));
-  }
-
-  @supports (font-size: 1cqi) {
-    section.hero>.hero-title>h1 {
-      font-size: clamp(var(--h1-min), calc(var(--h1-slope) * 1cqi), var(--h1-max));
-      letter-spacing: clamp(var(--headline-track-min),
-          calc(var(--headline-track-max) - var(--h1-slope) * var(--headline-track-coupling) * 1cqi),
-          var(--headline-track-max));
-      font-variation-settings: "wght" clamp(var(--headline-wght-min),
-          calc(var(--headline-wght-max) - var(--h1-slope) * var(--headline-wght-coupling) * 1cqi),
-          var(--headline-wght-max));
-    }
   }
 
 }
