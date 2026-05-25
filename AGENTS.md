@@ -1,6 +1,6 @@
 # Open Art Folke — Agent Instructions
 
-**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm
+**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm · [Graffiti UI](https://graffiti-ui.com/) (CSS)
 
 ---
 
@@ -55,6 +55,24 @@ Key conventions:
 - Render KirbyText fields with `->kt()` — e.g. `<?= $page->text()->kt() ?>`
 - Access Vite assets: `<?= vite()->css('app.css') ?>`
 - Always use `.php` extension — `.twig` templates are not used in this project
+
+---
+
+## Styling
+
+The project uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`), a standards-first CSS library that styles native HTML directly. Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before writing custom CSS — keep custom CSS minimal.
+
+`src/index.css` is organised with cascade layers in this precedence:
+
+1. `@layer reset` — a hand-rolled CSS reset (box-sizing, margin/padding zero, media defaults, reduced-motion handling)
+2. `@layer graffiti` — `@import "@drop-in/graffiti" layer(graffiti)`
+3. `@layer custom` — kept site-specific rules: `section`, `.hero` (full-viewport with absolutely-positioned `h1`), `.section-one` / `.section-two` background tints (light + dark mode), and the `#mainCanvas` / `#p5_loading` p5.js canvas styles
+
+Guidelines:
+- Use Graffiti CSS variables (e.g. `--pad-l`, `--pad-xxxl`, semantic tokens like `--primary`, `--fg`, `--bg`) rather than hard-coded values
+- For page layout, prefer Graffiti classes — `.layout-readable` for centred max-width content, `.section` for vertical section padding, `.stack` for vertical rhythm
+- Do **not** reintroduce Pico CSS or any other base CSS framework
+- Per-template CSS files in `src/templates/*.css` are picked up automatically by Vite — use them for template-specific styles only
 
 ---
 

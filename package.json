@@ -22,6 +22,6 @@
     ]
   },
   "dependencies": {
-    "@picocss/pico": "^2.1.1"
+    "@drop-in/graffiti": "^4.29.0"
   }
 }
