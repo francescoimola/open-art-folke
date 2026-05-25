@@ -1,217 +1,630 @@
-@layer reset, graffiti, custom;
+@layer reset, fonts, graffiti, colors, custom;
 
 @import "@drop-in/graffiti" layer(graffiti);
 
 /* ──────────────────────────────────────────────────────────────
-   1. Reset
+   Fonts — Inclusive Sans Variable
+   ────────────────────────────────────────────────────────────── */
+
+@layer fonts {
+
+  @font-face {
+    font-family: "Inclusive Sans";
+    src: url("./assets/inclusive-sans-var.ttf") format("truetype-variations");
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Inclusive Sans";
+    src: url("./assets/inclusive-sans-var-italic.ttf") format("truetype-variations");
+    font-weight: 300 700;
+    font-style: italic;
+    font-display: swap;
+  }
+
+}
+
+/* end @layer fonts */
+
+/* ──────────────────────────────────────────────────────────────
+   Reset
    ────────────────────────────────────────────────────────────── */
 
 @layer reset {
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-* {
-  margin: 0;
-  padding: 0;
-}
+  * {
+    margin: 0;
+    padding: 0;
+  }
 
-* {
-  min-width: 0;
-}
+  * {
+    min-width: 0;
+  }
 
-[hidden] {
-  display: none !important;
-}
+  [hidden] {
+    display: none !important;
+  }
 
-html {
-  height: 100%;
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  scrollbar-gutter: stable;
-  overscroll-behavior: contain;
-}
-
-html:focus-within {
-  scroll-behavior: smooth;
-}
-
-body {
-  min-height: 100vh;
-  min-height: 100svh;
-  min-height: 100dvh;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-smooth: always;
-  text-rendering: optimizeLegibility;
-  line-height: 1.5;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.1;
-  font-size: inherit;
-  font-weight: inherit;
-  text-wrap: balance;
-}
-
-p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-}
-
-p {
-  text-wrap: pretty;
-}
-
-pre, code, kbd, samp {
-  font-family: monospace;
-  font-size: inherit;
-}
-
-a {
-  color: inherit;
-}
-
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-
-button,
-[role="button"],
-label,
-summary,
-select {
-  cursor: pointer;
-}
-
-img, picture, video, canvas, svg, embed, iframe, object, audio {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  font-style: italic;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-svg[width][height] {
-  max-width: revert;
-}
-
-button {
-  background: none;
-  border: none;
-}
-
-input, button, textarea, select {
-  font: inherit;
-}
-
-input, button, textarea, select {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-fieldset {
-  border: none;
-  padding: 0;
-}
-
-ul, ol, ul[role='list'], ol[role='list'] {
-  list-style: none;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-th {
-  font-weight: inherit;
-}
-
-blockquote, q {
-  quotes: none;
-}
-blockquote::before, blockquote::after, q::before, q::after {
-  content: none;
-}
-
-sub, sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-sub { bottom: -0.25em; }
-sup { top: -0.5em; }
-
-#root, #__next {
-  isolation: isolate;
-}
-
-@media (prefers-reduced-motion: no-preference) {
   html {
-    interpolate-size: allow-keywords;
+    height: 100%;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
   }
+
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: always;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+    font-size: inherit;
+    font-weight: inherit;
+    text-wrap: balance;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  pre,
+  code,
+  kbd,
+  samp {
+    font-family: monospace;
+    font-size: inherit;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+  }
+
+  button,
+  [role="button"],
+  label,
+  summary,
+  select {
+    cursor: pointer;
+  }
+
+  img,
+  picture,
+  video,
+  svg,
+  embed,
+  iframe,
+  object,
+  audio {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  canvas {
+    display: block;
+  }
+
+  svg[width][height] {
+    max-width: revert;
+  }
+
+  button {
+    background: none;
+    border: none;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+  }
+
+  ul,
+  ol,
+  ul[role='list'],
+  ol[role='list'] {
+    list-style: none;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  th {
+    font-weight: inherit;
+  }
+
+  blockquote,
+  q {
+    quotes: none;
+  }
+
+  blockquote::before,
+  blockquote::after,
+  q::before,
+  q::after {
+    content: none;
+  }
+
+  sub,
+  sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  #root,
+  #__next {
+    isolation: isolate;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    html,
+    html:focus-within {
+      scroll-behavior: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+      transition: none !important;
+    }
+  }
+
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html, html:focus-within {
-    scroll-behavior: auto !important;
-  }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-    transition: none !important;
-  }
-}
-
-} /* end @layer reset */
+/* end @layer reset */
 
 /* ──────────────────────────────────────────────────────────────
-   2. Section / hero / canvas customisations
+   Radix Colors Custom Palette
+   ────────────────────────────────────────────────────────────── */
+
+@layer colors {
+
+  :root,
+  .light,
+  .light-theme {
+    --red-1: #fcf9f8;
+    --red-2: #fcf4f3;
+    --red-3: #fbe7e5;
+    --red-4: #ffd8d3;
+    --red-5: #fecac4;
+    --red-6: #f8bab3;
+    --red-7: #efa69f;
+    --red-8: #e68c83;
+    --red-9: #b60018;
+    --red-10: #a30004;
+    --red-11: #c92429;
+    --red-12: #651817;
+
+    --red-a1: #00515003;
+    --red-a2: #a01c1b08;
+    --red-a3: #d1140716;
+    --red-a4: #ff1c0228;
+    --red-a5: #fb1c0538;
+    --red-a6: #e7180249;
+    --red-a7: #d412015d;
+    --red-a8: #cb13027a;
+    --red-a9: #b60018;
+    --red-a10: #a30004;
+    --red-a11: #c00107db;
+    --red-a12: #560100e8;
+
+    --red-contrast: #fff;
+    --red-surface: #fbf3f1cc;
+    --red-indicator: #b60018;
+    --red-track: #b60018;
+
+    --gray-1: #faf8f8;
+    --gray-2: #f7f5f4;
+    --gray-3: #efebea;
+    --gray-4: #e8e2e2;
+    --gray-5: #e2dada;
+    --gray-6: #dad2d2;
+    --gray-7: #d1c7c6;
+    --gray-8: #c0b3b2;
+    --gray-9: #928584;
+    --gray-10: #877b7a;
+    --gray-11: #675e5d;
+    --gray-12: #251e1e;
+
+    --gray-a1: #00639505;
+    --gray-a2: #003c3b08;
+    --gray-a3: #0f0b0a11;
+    --gray-a4: #1e060e1a;
+    --gray-a5: #26030a22;
+    --gray-a6: #1f03082a;
+    --gray-a7: #26060536;
+    --gray-a8: #2603024a;
+    --gray-a9: #1a030279;
+    --gray-a10: #16020083;
+    --gray-a11: #0f0202a1;
+    --gray-a12: #080001e1;
+
+    --gray-contrast: #FFFFFF;
+    --gray-surface: #ffffffcc;
+    --gray-indicator: #928584;
+    --gray-track: #928584;
+
+    --color-background: #fffbfa;
+
+    /* Opacity variants for primary colors */
+    --red-9-10: color-mix(in srgb, var(--red-9) 10%, transparent);
+    --red-9-20: color-mix(in srgb, var(--red-9) 20%, transparent);
+    --red-9-30: color-mix(in srgb, var(--red-9) 30%, transparent);
+    --red-9-40: color-mix(in srgb, var(--red-9) 40%, transparent);
+    --red-9-50: color-mix(in srgb, var(--red-9) 50%, transparent);
+    --red-9-60: color-mix(in srgb, var(--red-9) 60%, transparent);
+    --red-9-70: color-mix(in srgb, var(--red-9) 70%, transparent);
+    --red-9-80: color-mix(in srgb, var(--red-9) 80%, transparent);
+    --red-9-90: color-mix(in srgb, var(--red-9) 90%, transparent);
+
+    --red-12-10: color-mix(in srgb, var(--red-12) 10%, transparent);
+    --red-12-20: color-mix(in srgb, var(--red-12) 20%, transparent);
+    --red-12-30: color-mix(in srgb, var(--red-12) 30%, transparent);
+    --red-12-40: color-mix(in srgb, var(--red-12) 40%, transparent);
+    --red-12-50: color-mix(in srgb, var(--red-12) 50%, transparent);
+    --red-12-60: color-mix(in srgb, var(--red-12) 60%, transparent);
+    --red-12-70: color-mix(in srgb, var(--red-12) 70%, transparent);
+    --red-12-80: color-mix(in srgb, var(--red-12) 80%, transparent);
+    --red-12-90: color-mix(in srgb, var(--red-12) 90%, transparent);
+
+    --gray-9-10: color-mix(in srgb, var(--gray-9) 10%, transparent);
+    --gray-9-20: color-mix(in srgb, var(--gray-9) 20%, transparent);
+    --gray-9-30: color-mix(in srgb, var(--gray-9) 30%, transparent);
+    --gray-9-40: color-mix(in srgb, var(--gray-9) 40%, transparent);
+    --gray-9-50: color-mix(in srgb, var(--gray-9) 50%, transparent);
+    --gray-9-60: color-mix(in srgb, var(--gray-9) 60%, transparent);
+    --gray-9-70: color-mix(in srgb, var(--gray-9) 70%, transparent);
+    --gray-9-80: color-mix(in srgb, var(--gray-9) 80%, transparent);
+    --gray-9-90: color-mix(in srgb, var(--gray-9) 90%, transparent);
+
+    --gray-12-10: color-mix(in srgb, var(--gray-12) 10%, transparent);
+    --gray-12-20: color-mix(in srgb, var(--gray-12) 20%, transparent);
+    --gray-12-30: color-mix(in srgb, var(--gray-12) 30%, transparent);
+    --gray-12-40: color-mix(in srgb, var(--gray-12) 40%, transparent);
+    --gray-12-50: color-mix(in srgb, var(--gray-12) 50%, transparent);
+    --gray-12-60: color-mix(in srgb, var(--gray-12) 60%, transparent);
+    --gray-12-70: color-mix(in srgb, var(--gray-12) 70%, transparent);
+    --gray-12-80: color-mix(in srgb, var(--gray-12) 80%, transparent);
+    --gray-12-90: color-mix(in srgb, var(--gray-12) 90%, transparent);
+  }
+
+  @supports (color: color(display-p3 1 1 1)) {
+    @media (color-gamut: p3) {
+
+      :root,
+      .light,
+      .light-theme {
+        --red-1: oklch(98.4% 0.0031 25.82);
+        --red-2: oklch(97.3% 0.0083 25.82);
+        --red-3: oklch(94.4% 0.0213 25.82);
+        --red-4: oklch(91.6% 0.0463 25.82);
+        --red-5: oklch(88.3% 0.0606 25.82);
+        --red-6: oklch(84.4% 0.0729 25.82);
+        --red-7: oklch(79.4% 0.0875 25.82);
+        --red-8: oklch(73.1% 0.1109 25.82);
+        --red-9: oklch(48.9% 0.1985 25.82);
+        --red-10: oklch(43.8% 0.1985 25.82);
+        --red-11: oklch(54.1% 0.1985 25.82);
+        --red-12: oklch(34% 0.1096 25.82);
+
+        --red-a1: color(display-p3 0.0196 0.3333 0.3294 / 0.012);
+        --red-a2: color(display-p3 0.5765 0.0078 0 / 0.028);
+        --red-a3: color(display-p3 0.702 0.0549 0 / 0.08);
+        --red-a4: color(display-p3 0.8706 0.1098 0 / 0.152);
+        --red-a5: color(display-p3 0.8471 0.102 0 / 0.208);
+        --red-a6: color(display-p3 0.7843 0.1059 0 / 0.276);
+        --red-a7: color(display-p3 0.7098 0.0824 0 / 0.356);
+        --red-a8: color(display-p3 0.6863 0.0784 0 / 0.464);
+        --red-a9: color(display-p3 0.6039 0 0.0039 / 0.869);
+        --red-a10: color(display-p3 0.549 0.0353 0 / 0.916);
+        --red-a11: color(display-p3 0.6588 0.0196 0 / 0.8);
+        --red-a12: color(display-p3 0.2902 0.0118 0 / 0.892);
+
+        --red-contrast: #fff;
+        --red-surface: color(display-p3 0.9765 0.9529 0.9451 / 0.8);
+        --red-indicator: oklch(48.9% 0.1985 25.82);
+        --red-track: oklch(48.9% 0.1985 25.82);
+
+        --gray-1: oklch(98.1% 0.0014 22.85);
+        --gray-2: oklch(97.1% 0.0026 22.85);
+        --gray-3: oklch(94.3% 0.0047 22.85);
+        --gray-4: oklch(91.8% 0.0062 22.85);
+        --gray-5: oklch(89.5% 0.008 22.85);
+        --gray-6: oklch(87.1% 0.0092 22.85);
+        --gray-7: oklch(83.7% 0.0113 22.85);
+        --gray-8: oklch(77.7% 0.0153 22.85);
+        --gray-9: oklch(62.9% 0.0154 22.85);
+        --gray-10: oklch(59.4% 0.0146 22.85);
+        --gray-11: oklch(48.9% 0.0127 22.85);
+        --gray-12: oklch(24.3% 0.0106 22.85);
+
+        --gray-a1: color(display-p3 0.0157 0.251 0.4902 / 0.016);
+        --gray-a2: color(display-p3 0.0157 0.1451 0.1412 / 0.028);
+        --gray-a3: color(display-p3 0.0196 0.0078 0 / 0.064);
+        --gray-a4: color(display-p3 0.0941 0.0039 0.0392 / 0.1);
+        --gray-a5: color(display-p3 0.1373 0.0078 0.0314 / 0.132);
+        --gray-a6: color(display-p3 0.1137 0.0078 0.0275 / 0.164);
+        --gray-a7: color(display-p3 0.1137 0.0039 0 / 0.208);
+        --gray-a8: color(display-p3 0.1255 0.0039 0 / 0.288);
+        --gray-a9: color(display-p3 0.0824 0.0039 0 / 0.472);
+        --gray-a10: color(display-p3 0.0706 0.0078 0 / 0.512);
+        --gray-a11: color(display-p3 0.0431 0.0078 0 / 0.628);
+        --gray-a12: color(display-p3 0.0275 0 0 / 0.881);
+
+        --gray-contrast: #FFFFFF;
+        --gray-surface: color(display-p3 1 1 1 / 80%);
+        --gray-indicator: oklch(62.9% 0.0154 22.85);
+        --gray-track: oklch(62.9% 0.0154 22.85);
+
+        /* Opacity variants for primary colors (P3) */
+        --red-9-10: color-mix(in oklch, var(--red-9) 10%, transparent);
+        --red-9-20: color-mix(in oklch, var(--red-9) 20%, transparent);
+        --red-9-30: color-mix(in oklch, var(--red-9) 30%, transparent);
+        --red-9-40: color-mix(in oklch, var(--red-9) 40%, transparent);
+        --red-9-50: color-mix(in oklch, var(--red-9) 50%, transparent);
+        --red-9-60: color-mix(in oklch, var(--red-9) 60%, transparent);
+        --red-9-70: color-mix(in oklch, var(--red-9) 70%, transparent);
+        --red-9-80: color-mix(in oklch, var(--red-9) 80%, transparent);
+        --red-9-90: color-mix(in oklch, var(--red-9) 90%, transparent);
+
+        --red-12-10: color-mix(in oklch, var(--red-12) 10%, transparent);
+        --red-12-20: color-mix(in oklch, var(--red-12) 20%, transparent);
+        --red-12-30: color-mix(in oklch, var(--red-12) 30%, transparent);
+        --red-12-40: color-mix(in oklch, var(--red-12) 40%, transparent);
+        --red-12-50: color-mix(in oklch, var(--red-12) 50%, transparent);
+        --red-12-60: color-mix(in oklch, var(--red-12) 60%, transparent);
+        --red-12-70: color-mix(in oklch, var(--red-12) 70%, transparent);
+        --red-12-80: color-mix(in oklch, var(--red-12) 80%, transparent);
+        --red-12-90: color-mix(in oklch, var(--red-12) 90%, transparent);
+
+        --gray-9-10: color-mix(in oklch, var(--gray-9) 10%, transparent);
+        --gray-9-20: color-mix(in oklch, var(--gray-9) 20%, transparent);
+        --gray-9-30: color-mix(in oklch, var(--gray-9) 30%, transparent);
+        --gray-9-40: color-mix(in oklch, var(--gray-9) 40%, transparent);
+        --gray-9-50: color-mix(in oklch, var(--gray-9) 50%, transparent);
+        --gray-9-60: color-mix(in oklch, var(--gray-9) 60%, transparent);
+        --gray-9-70: color-mix(in oklch, var(--gray-9) 70%, transparent);
+        --gray-9-80: color-mix(in oklch, var(--gray-9) 80%, transparent);
+        --gray-9-90: color-mix(in oklch, var(--gray-9) 90%, transparent);
+
+        --gray-12-10: color-mix(in oklch, var(--gray-12) 10%, transparent);
+        --gray-12-20: color-mix(in oklch, var(--gray-12) 20%, transparent);
+        --gray-12-30: color-mix(in oklch, var(--gray-12) 30%, transparent);
+        --gray-12-40: color-mix(in oklch, var(--gray-12) 40%, transparent);
+        --gray-12-50: color-mix(in oklch, var(--gray-12) 50%, transparent);
+        --gray-12-60: color-mix(in oklch, var(--gray-12) 60%, transparent);
+        --gray-12-70: color-mix(in oklch, var(--gray-12) 70%, transparent);
+        --gray-12-80: color-mix(in oklch, var(--gray-12) 80%, transparent);
+        --gray-12-90: color-mix(in oklch, var(--gray-12) 90%, transparent);
+      }
+    }
+  }
+
+}
+
+/* end @layer colors */
+
+/* ──────────────────────────────────────────────────────────────
+   Section / hero / canvas customisations
    ────────────────────────────────────────────────────────────── */
 
 @layer custom {
 
-section {
-  width: 100%;
-  container-type: inline-size;
+  * {
+    text-box-trim: trim-both;
+    text-box-edge: cap text;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   Typography — Pseudo-optical sizing layered on Graffiti's --fl
+   ──────────────────────────────────────────────────────────────
+   Graffiti gives every heading a fluid level (--fl): h6=0 … h1=5,
+   and computes font-size from it. We reuse that same --fl to drive
+   inverse letter-spacing and font-variation-settings 'wght' so larger
+   headings get tighter tracking and lighter weight automatically.
+   ────────────────────────────────────────────────────────────── */
+
+  :root {
+    --font-sans: "Inclusive Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    /* Heading overlay — h1–h6 use Graffiti's --fl (h6=0 … h1=5).
+     Tracking and wght are linear functions of --fl. */
+    --type-track-base: 0.005em;
+    --type-track-step: 0.005em;
+    --type-wght-base: 600;
+    --type-wght-step: 12;
+
+    /* Oversize headline (hero h1 and future viewport-fluid titles).
+     The element owns ONE knob — the font-size slope per 1vw/1cqi —
+     and tracking + wght derive from it via these coupling constants.
+     Retune the whole oversize system by editing these. */
+    --headline-track-max: 0.04em;
+    --headline-track-min: -0.05em;
+    --headline-track-coupling: 0.00014;
+    --headline-wght-max: 650;
+    --headline-wght-min: 380;
+    --headline-wght-coupling: 0.15;
+  }
+
+  body {
+    background: var(--color-background);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    letter-spacing: calc(var(--type-track-base) - var(--type-track-step) * var(--fl, 0));
+    font-variation-settings: "wght" calc(var(--type-wght-base) - var(--type-wght-step) * var(--fl, 0));
+  }
+
+  p,
+  li,
+  body {
+    letter-spacing: 0.01rem;
+    font-variation-settings: "wght" 400;
+  }
+
+  small,
+  .ui-caption {
+    letter-spacing: 0.04em;
+    font-variation-settings: "wght" 420;
+  }
+
+  main {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--);
+  }
+
+  main.stack {
+    gap: var(--vs-xl);
+  }
+
+  section {
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  section.hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: var(--red-9);
+  }
+
+  /* The wrapper is the query container so cqi == 1% of the h1's actual space
+   (matches what the eye sees, not the full viewport). */
+  .hero-title {
+    position: absolute;
+    inset-inline: var(--pad-l);
+    bottom: var(--pad-l);
+    container-type: inline-size;
+  }
+
+  .hero-title>h1 {
+    text-align: center;
+    margin-inline-start: -0.04em;
+    text-transform: uppercase;
+    color: var(--color-background);
+
+    /* The one knob: font-size growth per 1vw/1cqi.
+     Rule of thumb: slope ≈ 200 / character-count for a sans-serif title.
+     Tracking and wght derive from this via the --headline-* constants. */
+    --h1-min: 2rem;
+    --h1-slope: 13;
+    --h1-max: 20rem;
+
+    /* Fallback: vw (scaled against the viewport, not the container). */
+    font-size: clamp(var(--h1-min), calc(var(--h1-slope) * 1vw), var(--h1-max));
+    letter-spacing: clamp(var(--headline-track-min),
+        calc(var(--headline-track-max) - var(--h1-slope) * var(--headline-track-coupling) * 1vw),
+        var(--headline-track-max));
+    font-variation-settings: "wght" clamp(var(--headline-wght-min),
+        calc(var(--headline-wght-max) - var(--h1-slope) * var(--headline-wght-coupling) * 1vw),
+        var(--headline-wght-max));
+  }
+
+  @supports (font-size: 1cqi) {
+    section.hero>.hero-title>h1 {
+      font-size: clamp(var(--h1-min), calc(var(--h1-slope) * 1cqi), var(--h1-max));
+      letter-spacing: clamp(var(--headline-track-min),
+          calc(var(--headline-track-max) - var(--h1-slope) * var(--headline-track-coupling) * 1cqi),
+          var(--headline-track-max));
+      font-variation-settings: "wght" clamp(var(--headline-wght-min),
+          calc(var(--headline-wght-max) - var(--h1-slope) * var(--headline-wght-coupling) * 1cqi),
+          var(--headline-wght-max));
+    }
+  }
+
 }
 
-section.hero {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-}
-
-section.hero > h1 {
-  position: absolute;
-  inset-inline: var(--pad-l);
-  bottom: var(--pad-l);
-  text-align: center;
-  color: #fff;
-}
-
-section.section-one { background-color: #e8f4f0; }
-section.section-two { background-color: #fdebd0; }
-
-@media (prefers-color-scheme: dark) {
-  section.section-one { background-color: #11302a; }
-  section.section-two { background-color: #3a2a10; }
-}
-
-#mainCanvas {
-  position: absolute;
-  z-index: 0;
-  margin: auto;
-  top: 0;
-  left: 0;
-  background-color: transparent;
-}
-
-#p5_loading { display: none; }
-
-} /* end @layer custom */
+/* end @layer custom */
