@@ -2,7 +2,7 @@
 
 <section class="hero full-bleed stack-section flex text-center" style="--gap: 0;">
   <img class="hero__bg" src="/assets/images/specsavers.jpg" alt="" aria-hidden="true">
-  <h1><?= $site->title()->html() ?></h1>
+  <h1>Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke</h1>
   <a class="hero__arrow fs-xl" href="#intro" aria-label="Scroll to content">↓</a>
 </section>
 
