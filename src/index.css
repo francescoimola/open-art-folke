@@ -484,6 +484,169 @@
     }
   }
 
+  /* ──────────────────────────────────────────────────────────────
+     Extended palette — Brand, Neutral, semantic states
+     Light and dark primitives for full dark-mode support.
+  ────────────────────────────────────────────────────────────── */
+
+  :root {
+    /* Brand — light */
+    --light-Brand-50: #FFE0DB;
+    --light-Brand-100: #FFC3BE;
+    --light-Brand-200: #FFA39E;
+    --light-Brand-300: #F2837F;
+    --light-Brand-400: #E06361;
+    --light-Brand-500: #D1383D;
+    --light-Brand-600: #B60018;
+    --light-Brand-700: #940000;
+    --light-Brand-800: #6F0000;
+    --light-Brand-900: #480000;
+    --light-Brand-950: #260000;
+
+    /* Brand — dark */
+    --dark-Brand-50: #0A0000;
+    --dark-Brand-100: #220000;
+    --dark-Brand-200: #400000;
+    --dark-Brand-300: #5C0000;
+    --dark-Brand-400: #7A0009;
+    --dark-Brand-500: #98001A;
+    --dark-Brand-600: #B51E2C;
+    --dark-Brand-700: #D1383D;
+    --dark-Brand-800: #F65C5C;
+    --dark-Brand-900: #FF817E;
+    --dark-Brand-950: #FFAAA5;
+
+    /* Neutral — light */
+    --light-Neutral-50: #FFF1F1;
+    --light-Neutral-100: #F2E4E4;
+    --light-Neutral-200: #DED1D0;
+    --light-Neutral-300: #C7BABA;
+    --light-Neutral-400: #A89B9A;
+    --light-Neutral-500: #897D7C;
+    --light-Neutral-600: #6C605F;
+    --light-Neutral-700: #504544;
+    --light-Neutral-800: #352B2A;
+    --light-Neutral-900: #1C1313;
+    --light-Neutral-950: #110908;
+
+    /* Neutral — dark */
+    --dark-Neutral-50: #010000;
+    --dark-Neutral-100: #110908;
+    --dark-Neutral-200: #211817;
+    --dark-Neutral-300: #352B2A;
+    --dark-Neutral-400: #4A3F3F;
+    --dark-Neutral-500: #5D5252;
+    --dark-Neutral-600: #716665;
+    --dark-Neutral-700: #837776;
+    --dark-Neutral-800: #A19594;
+    --dark-Neutral-900: #C1B4B3;
+    --dark-Neutral-950: #E1D4D3;
+
+    /* Success — light */
+    --light-Success-50: #DFFFDF;
+    --light-Success-100: #C2F9C2;
+    --light-Success-200: #9EEB9F;
+    --light-Success-300: #78D87B;
+    --light-Success-400: #43BB4C;
+    --light-Success-500: #169B2A;
+    --light-Success-600: #007B00;
+    --light-Success-700: #005B00;
+    --light-Success-800: #003C00;
+    --light-Success-900: #001F00;
+    --light-Success-950: #001100;
+
+    /* Success — dark */
+    --dark-Success-50: #000100;
+    --dark-Success-100: #001300;
+    --dark-Success-200: #002700;
+    --dark-Success-300: #003E00;
+    --dark-Success-400: #005800;
+    --dark-Success-500: #006C00;
+    --dark-Success-600: #008202;
+    --dark-Success-700: #2F9137;
+    --dark-Success-800: #62AD64;
+    --dark-Success-900: #93C793;
+    --dark-Success-950: #C2E2C2;
+
+    /* Warning — light */
+    --light-Warning-50: #FFF4DC;
+    --light-Warning-100: #FBE5BC;
+    --light-Warning-200: #EFD096;
+    --light-Warning-300: #DDB871;
+    --light-Warning-400: #C2973D;
+    --light-Warning-500: #A27815;
+    --light-Warning-600: #845B00;
+    --light-Warning-700: #624100;
+    --light-Warning-800: #422800;
+    --light-Warning-900: #231200;
+    --light-Warning-950: #120900;
+
+    /* Warning — dark */
+    --dark-Warning-50: #020000;
+    --dark-Warning-100: #170700;
+    --dark-Warning-200: #2D1400;
+    --dark-Warning-300: #462600;
+    --dark-Warning-400: #603900;
+    --dark-Warning-500: #754D00;
+    --dark-Warning-600: #8A6100;
+    --dark-Warning-700: #97742A;
+    --dark-Warning-800: #B1945C;
+    --dark-Warning-900: #CAB58D;
+    --dark-Warning-950: #E3D6BE;
+
+    /* Error — light */
+    --light-Error-50: #FFE6F1;
+    --light-Error-100: #FFCEE1;
+    --light-Error-200: #FFAECA;
+    --light-Error-300: #FF8EB1;
+    --light-Error-400: #FA6190;
+    --light-Error-500: #D63F72;
+    --light-Error-600: #B21556;
+    --light-Error-700: #87003D;
+    --light-Error-800: #5D0026;
+    --light-Error-900: #340011;
+    --light-Error-950: #1D0108;
+
+    /* Error — dark */
+    --dark-Error-50: #040000;
+    --dark-Error-100: #260007;
+    --dark-Error-200: #440013;
+    --dark-Error-300: #650024;
+    --dark-Error-400: #890036;
+    --dark-Error-500: #A10048;
+    --dark-Error-600: #B9205C;
+    --dark-Error-700: #C4486F;
+    --dark-Error-800: #DB728F;
+    --dark-Error-900: #EC9EB0;
+    --dark-Error-950: #FAC9D3;
+
+    /* Info — light */
+    --light-Info-50: #DDFAFF;
+    --light-Info-100: #BFF0FF;
+    --light-Info-200: #99DEFF;
+    --light-Info-300: #72C9FB;
+    --light-Info-400: #39AAE4;
+    --light-Info-500: #008BC2;
+    --light-Info-600: #006CA2;
+    --light-Info-700: #004F7A;
+    --light-Info-800: #003354;
+    --light-Info-900: #00192F;
+    --light-Info-950: #000D19;
+
+    /* Info — dark */
+    --dark-Info-50: #000004;
+    --dark-Info-100: #000C21;
+    --dark-Info-200: #001C3C;
+    --dark-Info-300: #00305A;
+    --dark-Info-400: #004679;
+    --dark-Info-500: #005A8F;
+    --dark-Info-600: #1F6FA5;
+    --dark-Info-700: #4380AF;
+    --dark-Info-800: #6D9EC6;
+    --dark-Info-900: #99BCDA;
+    --dark-Info-950: #C5DBED;
+  }
+
 }
 
 /* end @layer colors */
@@ -511,27 +674,48 @@
   :root {
     --font-sans: "Inclusive Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
+    /* ── Palette → Graffiti token bridge ──────────────────────────
+       Override Graffiti's five root endpoints; all derived scales
+       (--primary-1..9, --primary-opaque-*, --fg-opaque-*, borders,
+       focus-ring) auto-compute from these via relative color syntax.
+    ────────────────────────────────────────────────────────────── */
+    --primary: light-dark(var(--light-Brand-600), var(--dark-Brand-700));
+    --fg-light: var(--light-Neutral-900);
+    /* #1C1313 — warm near-black     */
+    --fg-dark: var(--dark-Neutral-950);
+    /* #E1D4D3 — warm light gray      */
+    --bg-light: var(--color-background);
+    /* #fffbfa — warm white canvas    */
+    --bg-dark: var(--dark-Neutral-100);
+    /* #110908 — warm near-black bg   */
+
+    /* ── Semantic state tokens ─────────────────────────────────────
+       Use these for callouts, badges, status indicators.
+       Auto-switch between light/dark palette steps.
+    ────────────────────────────────────────────────────────────── */
+    --color-success: light-dark(var(--light-Success-600), var(--dark-Success-700));
+    --color-warning: light-dark(var(--light-Warning-500), var(--dark-Warning-700));
+    --color-error: light-dark(var(--light-Error-600), var(--dark-Error-700));
+    --color-info: light-dark(var(--light-Info-500), var(--dark-Info-700));
+
+    /* Fixed nav height estimate — keeps body padding-top + scroll-padding-top in sync */
+    --nav-height: calc(var(--vs-base) * 2 + var(--vs-l));
+    /* Text underline offset */
+    --text-underline-offset: 0.2em;
+
     /* Heading overlay — h1–h6 use Graffiti's --fl (h6=0 … h1=5).
      Tracking and wght are linear functions of --fl. */
     --type-track-base: 0em;
     --type-track-step: 0.005em;
+    --type-track-ui: calc(var(--type-track-base) - 0.03em);
     --type-wght-base: 600;
     --type-wght-step: 20;
-
-    /* Oversize headline (hero h1 and future viewport-fluid titles).
-     The element owns ONE knob — the font-size slope per 1vw/1cqi —
-     and tracking + wght derive from it via these coupling constants.
-     Retune the whole oversize system by editing these. */
-    --headline-track-max: 0em;
-    --headline-track-min: -0.2em;
-    --headline-track-coupling: 0.055;
-    --headline-wght-max: 650;
-    --headline-wght-min: 550;
-    --headline-wght-coupling: 8;
   }
 
   body {
-    background: var(--color-background);
+    background: var(--bg);
+    padding-top: var(--nav-height, 6rem);
+    scroll-padding-top: var(--nav-height, 6rem);
   }
 
   h1,
@@ -564,14 +748,8 @@
   }
 
   main {
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: var(--);
-  }
-
-  main.stack {
-    gap: var(--vs-xl);
   }
 
   section {
@@ -579,49 +757,203 @@
     container-type: inline-size;
   }
 
+  .stack-section {
+    position: sticky;
+    top: var(--nav-height, 6rem);
+    height: calc(100dvh - var(--nav-height, 6rem));
+    background: var(--section-bg, var(--bg));
+  }
+
+  section.hero.stack-section {
+    top: 0;
+  }
+
   section.hero {
-    position: relative;
     width: 100vw;
-    height: 75vh;
-    background: var(--red-9);
+    margin-inline: calc(50% - 50vw);
+    height: 100dvh;
+    margin-top: calc(-1 * var(--nav-height, 6rem));
+    padding: var(--pad-l);
+    background: var(--dark-Brand-600);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
 
-  /* The wrapper is the query container so cqi == 1% of the h1's actual space
-   (matches what the eye sees, not the full viewport). Setting --variable-unit
-   here mirrors what Graffiti's .fc class does, so the formulas below use
-   container units automatically — no @supports block needed. */
-  .hero-title {
-    position: absolute;
-    inset-inline: var(--pad-l);
-    bottom: var(--pad-l);
-    container-type: inline-size;
-    --variable-unit: 100cqi;
-  }
-
-  .hero-title>h1 {
-    text-align: center;
-    margin-inline-start: -0.05em;
-    color: var(--color-background);
+  section.hero>h1 {
+    --fl: 6;
+    color: white;
+    font-size: var(--fluid-type);
+    letter-spacing: -0.05em;
     text-box-edge: cap alphabetic;
-    margin-block-end: -1rem;
+  }
 
-    /* The one knob: font-size growth per 1% of the container's inline size.
-     Rule of thumb: slope ≈ 200 / character-count for a sans-serif title.
-     Tracking and wght derive from this via the --headline-* constants. */
-    --h1-min: 2rem;
-    --h1-slope: 15.8;
-    --h1-max: 20rem;
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+  }
 
-    font-size: clamp(var(--h1-min), calc(var(--h1-slope) * var(--variable-unit) / 100), var(--h1-max));
-    letter-spacing: clamp(var(--headline-track-min),
-        calc(var(--headline-track-max) - var(--h1-slope) * var(--headline-track-coupling) * var(--variable-unit) / 100),
-        var(--headline-track-max));
-    /* wght is unitless, so convert --variable-unit (a length) into a
-     dimensionless number via division by 1px. Without this the calc()
-     mixes a number with a length and the whole declaration is dropped. */
-    font-variation-settings: "wght" clamp(var(--headline-wght-min),
-        calc(var(--headline-wght-max) - var(--h1-slope) * var(--headline-wght-coupling) * (var(--variable-unit) / 1px) / 100),
-        var(--headline-wght-max));
+  section.hero>*:not(.hero__bg, .hero__arrow) {
+    position: relative;
+    z-index: 1;
+  }
+
+  section.hero>.hero__arrow {
+    z-index: 1;
+  }
+
+  .hero__arrow {
+    position: absolute;
+    text-decoration: none;
+    bottom: var(--pad-xl);
+    color: var(--light-Neutral-100);
+  }
+
+  section.intro {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+    padding-top: var(--vs-xl);
+    background: var(--dark-Brand-600);
+  }
+
+  section.intro p:first-child {
+    --fl: 4;
+  }
+
+  section.intro p:first-child,
+  section.intro p:first-child a {
+    color: var(--light-Neutral-50);
+    font-size: var(--fluid-type);
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+    font-variation-settings: "wght" 500;
+    text-box-edge: cap alphabetic;
+  }
+
+  section.intro p:first-child a {
+    color: inherit;
+    text-underline-offset: var(--text-underline-offset);
+  }
+
+  .intro__date {
+    color: var(--light-Neutral-100);
+    letter-spacing: var(--type-track-ui);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     Site nav — fixed, solid background
+  ────────────────────────────────────────────────────────────── */
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    z-index: 100;
+    background-color: var(--dark-Brand-600);
+  }
+
+  .site-nav__logo {
+    display: flex;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-nav__logo svg {
+    height: var(--vs-l);
+    width: auto;
+  }
+
+  .site-nav a,
+  .site-nav__register,
+  .site-nav__menu-toggle {
+    letter-spacing: var(--type-track-ui);
+  }
+
+  .site-nav__register {
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-nav__menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--dark-Neutral-950);
+    font: inherit;
+  }
+
+  .site-nav li:not(:last-child)::after {
+    content: ",\00a0";
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-nav li {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-nav a {
+    color: var(--dark-Neutral-950);
+    white-space: nowrap;
+  }
+
+  .site-nav a[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: var(--text-underline-offset);
+  }
+
+  /* Mobile: hide inline links, show "Menu" toggle */
+  @media (width < 768px) {
+    .site-nav__links {
+      display: none;
+    }
+
+    .site-nav__register {
+      display: none;
+    }
+
+    .site-nav__menu-toggle {
+      display: inline;
+    }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Drawer 
+  ────────────────────────────────────────────────────────────── */
+
+  .site-drawer {
+    --drawer-bg: var(--dark-Brand-600);
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-drawer * {
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-drawer .close {
+    font-size: var(--fluid-type);
+    --fl: 5;
+  }
+
+  .site-drawer a {
+    font-size: var(--fluid-type);
+    letter-spacing: var(--type-track-ui);
+    text-decoration: none;
+  }
+
+  .site-drawer a[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: var(--text-underline-offset);
   }
 
 }

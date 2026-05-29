@@ -51,7 +51,13 @@
       "Bash(pnpm build *)",
       "WebFetch(domain:robinrendle.com)",
       "WebFetch(domain:piccalil.li)",
-      "WebFetch(domain:moderncss.dev)"
+      "WebFetch(domain:moderncss.dev)",
+      "Bash(cp -r /Users/francescoimola/Downloads/graffiti-main/skills/graffiti-best-practices ~/.claude/skills/)",
+      "Bash(smithery mcp search \"figma\" 2>&1 | head -40)",
+      "WebFetch(domain:www.figma.com)",
+      "mcp__plugin_figma_figma__get_screenshot",
+      "Bash(python3 -m json.tool)",
+      "mcp__plugin_figma_figma__get_design_context"
     ],
     "additionalDirectories": [
       "/Users/francescoimola/Repositories/open-art-folke/site/templates"

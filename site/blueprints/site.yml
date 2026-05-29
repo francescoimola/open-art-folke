@@ -1,5 +1,11 @@
 title: Site
 
+fields:
+  register_url:
+    type: url
+    label: Register link URL
+    help: External URL for the "Register" nav link. Leave blank to hide it.
+
 sections:
   pages:
     type: pages
