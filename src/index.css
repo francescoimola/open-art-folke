@@ -757,6 +757,13 @@
     container-type: inline-size;
   }
 
+  /* Full-bleed — escape a constrained container to full viewport width.
+     Reusable sanctioned custom class (Graffiti has no equivalent). */
+  .full-bleed {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+
   .stack-section {
     position: sticky;
     top: var(--nav-height, 6rem);
@@ -764,13 +771,13 @@
     background: var(--section-bg, var(--bg));
   }
 
+  .stack-section.half { height: calc(50dvh - var(--nav-height, 6rem)); }
+
   section.hero.stack-section {
     top: 0;
   }
 
   section.hero {
-    width: 100vw;
-    margin-inline: calc(50% - 50vw);
     height: 100dvh;
     margin-top: calc(-1 * var(--nav-height, 6rem));
     padding: var(--pad-l);
@@ -815,21 +822,85 @@
     color: var(--light-Neutral-100);
   }
 
-  section.intro {
-    width: 100vw;
-    margin-inline: calc(50% - 50vw);
+  /* ──────────────────────────────────────────────────────────────
+     Reusable section building blocks — compose these instead of
+     writing a new bespoke section class each time. Three orthogonal
+     concerns, each one independent word in the class list:
+       .panel        → spacing / padding (colour-blind)
+       .theme-*      → background + linked text colour (size-blind)
+       .statement    → large "opening statement" paragraph type
+  ────────────────────────────────────────────────────────────── */
+
+  /* Panel — the spacing shell. Padding + content rhythm only, no colour. */
+  .panel {
     padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
-    padding-top: var(--vs-xl);
-    background: var(--dark-Brand-600);
+    padding-block-start: var(--vs-xl);
   }
 
-  section.intro p:first-child {
+  /* Theme presets — set the four colour endpoints; Graffiti's
+     `:where([class*="theme-"])` rule re-derives --fg, --bg, opaque
+     scales, borders and focus-ring from these automatically. The
+     `theme-` fragment in the name is load-bearing: it triggers that
+     re-derivation. color-scheme is pinned so internal light-dark()
+     picks resolve on the matching branch. */
+  .theme-brand {
+    --bg-light: var(--dark-Brand-600);
+    --bg-dark: var(--dark-Brand-600);
+    --fg-light: var(--light-Neutral-50);
+    --fg-dark: var(--light-Neutral-50);
+    --primary: var(--light-Neutral-50);
+    color-scheme: dark;
+  }
+
+  /* Paper — warm off-white, dark text, red accent (the default light look). */
+  .theme-paper {
+    --bg-light: var(--light-Neutral-50);
+    --bg-dark: var(--light-Neutral-50);
+    --fg-light: var(--light-Neutral-950);
+    --fg-dark: var(--light-Neutral-950);
+    --primary: var(--light-Brand-600);
+    color-scheme: light;
+  }
+
+  /* Blush — soft pink, dark text, red accent. */
+  .theme-blush {
+    --bg-light: var(--light-Brand-50);
+    --bg-dark: var(--light-Brand-50);
+    --fg-light: var(--light-Neutral-950);
+    --fg-dark: var(--light-Neutral-950);
+    --primary: var(--light-Brand-600);
+    color-scheme: light;
+  }
+
+  /* Ink — near-black, warm light text, soft-pink accent. */
+  .theme-ink {
+    --bg-light: var(--dark-Neutral-100);
+    --bg-dark: var(--dark-Neutral-100);
+    --fg-light: var(--dark-Neutral-950);
+    --fg-dark: var(--dark-Neutral-950);
+    --primary: var(--dark-Brand-950);
+    color-scheme: dark;
+  }
+
+  /* Crimson — deep red, light text, soft-pink accent. */
+  .theme-crimson {
+    --bg-light: var(--dark-Brand-500);
+    --bg-dark: var(--dark-Brand-500);
+    --fg-light: var(--light-Neutral-50);
+    --fg-dark: var(--light-Neutral-50);
+    --primary: var(--dark-Brand-950);
+    color-scheme: dark;
+  }
+
+  /* Accent — colour text with the current theme's --primary. Resolves to
+     brand red on light themes, soft pink on the dark/deep-red themes. */
+  .accent {
+    color: var(--primary);
+  }
+
+  /* Statement — the big lead paragraph. Colour comes from the theme. */
+  .statement {
     --fl: 4;
-  }
-
-  section.intro p:first-child,
-  section.intro p:first-child a {
-    color: var(--light-Neutral-50);
     font-size: var(--fluid-type);
     letter-spacing: -0.05em;
     line-height: 1.1;
@@ -837,13 +908,12 @@
     text-box-edge: cap alphabetic;
   }
 
-  section.intro p:first-child a {
+  .statement a {
     color: inherit;
     text-underline-offset: var(--text-underline-offset);
   }
 
   .intro__date {
-    color: var(--light-Neutral-100);
     letter-spacing: var(--type-track-ui);
   }
 
@@ -858,6 +928,22 @@
     inset-inline: 0;
     z-index: 100;
     background-color: var(--dark-Brand-600);
+  }
+
+  .site-nav__bar {
+    align-items: center;
+    padding-inline: var(--pad-xl);
+    padding-block: var(--vs-base);
+  }
+
+  .site-nav__group {
+    align-items: center;
+    --gap: var(--vs-m);
+  }
+
+  .site-nav__links {
+    align-items: center;
+    --gap: 0;
   }
 
   .site-nav__logo {
@@ -934,6 +1020,17 @@
   .site-drawer {
     --drawer-bg: var(--dark-Brand-600);
     color: var(--dark-Neutral-950);
+  }
+
+  .site-drawer__header {
+    padding: var(--pad-l);
+    margin-block-end: var(--vs-l);
+  }
+
+  .site-drawer__nav {
+    padding-inline: var(--pad-l);
+    padding-block-end: var(--pad-l);
+    --gap: var(--vs-m);
   }
 
   .site-drawer * {
