@@ -18,3 +18,4 @@
 
 <body>
   <?php snippet('menu') ?>
+  <main class="layout-readable">

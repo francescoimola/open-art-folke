@@ -1,6 +1,6 @@
 # Open Art Folke — Agent Instructions
 
-**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm · [Graffiti UI](https://graffiti-ui.com/) (CSS)
+**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm · [Graffiti UI](https://graffiti-ui.com/) 4.29.0 (CSS)
 
 ---
 
@@ -64,15 +64,95 @@ The project uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`), 
 
 `src/index.css` is organised with cascade layers in this precedence:
 
-1. `@layer reset` — a hand-rolled CSS reset (box-sizing, margin/padding zero, media defaults, reduced-motion handling)
-2. `@layer graffiti` — `@import "@drop-in/graffiti" layer(graffiti)`
-3. `@layer custom` — kept site-specific rules: `section`, `.hero` (full-viewport with absolutely-positioned `h1`), `.section-one` / `.section-two` background tints (light + dark mode), and the `#mainCanvas` / `#p5_loading` p5.js canvas styles
+1. `@layer reset` — hand-rolled CSS reset (box-sizing, margin/padding zero, media defaults, reduced-motion handling)
+2. `@layer fonts` — Inclusive Sans Variable (300–700, normal + italic)
+3. `@layer graffiti` — `@import "@drop-in/graffiti" layer(graffiti)`
+4. `@layer colors` — Radix Color scales for `--red-*` and `--gray-*` (sRGB + P3 gamut variants)
+5. `@layer custom` — site-specific rules: token bridge, typography overlay, hero section, layout overrides
 
-Guidelines:
-- Use Graffiti CSS variables (e.g. `--pad-l`, `--pad-xxxl`, semantic tokens like `--primary`, `--fg`, `--bg`) rather than hard-coded values
-- For page layout, prefer Graffiti classes — `.layout-readable` for centred max-width content, `.section` for vertical section padding, `.stack` for vertical rhythm
+### Color system
+
+The project uses a custom palette (warm Brand red + warm Neutral gray + semantic states) bridged into Graffiti's semantic token layer. Five root endpoints are overridden in `@layer custom :root`:
+
+```css
+--primary:  light-dark(var(--light-Brand-600), var(--dark-Brand-700));
+--fg-light: var(--light-Neutral-900);   /* #1C1313 — warm near-black        */
+--fg-dark:  var(--dark-Neutral-950);    /* #E1D4D3 — warm light gray        */
+--bg-light: var(--color-background);    /* #fffbfa — warm white canvas      */
+--bg-dark:  var(--dark-Neutral-100);    /* #110908 — warm near-black bg     */
+```
+
+All derived scales (`--primary-1..9`, `--primary-opaque-*`, `--fg-opaque-*`, `--border-*`, `--focus-ring`) auto-compute from these via Graffiti's relative color syntax — do not override them manually.
+
+Semantic state tokens (use for callouts, badges, status indicators):
+
+```css
+--color-success  --color-warning  --color-error  --color-info
+```
+
+All four use `light-dark()` and switch automatically.
+
+**Palette layers in `@layer colors`:**
+- Radix `--red-*` / `--gray-*` — granular 12-step + alpha scales (keep for fine-grained use)
+- `--light-Brand-*` / `--dark-Brand-*` — 11-step brand red (50–950)
+- `--light-Neutral-*` / `--dark-Neutral-*` — 11-step warm neutral gray (50–950)
+- `--light-Success/Warning/Error/Info-*` / `--dark-*` — semantic state scales
+
+### Figma rem scale
+
+The OAF Figma file uses a design frame with a root font size of ~31px (not 16px). All rem values in Figma-exported code are inflated by ~1.94×.
+
+**Never copy a raw Figma rem value.** Always convert: `browser_rem = figma_rem ÷ 1.93688`, or just take the Figma px value and divide by 16. Then map to the nearest Graffiti token (within ~15% is close enough; prefer the token over a custom value).
+
+| Figma px | Browser rem | Nearest Graffiti token |
+|---|---|---|
+| 8px | 0.5rem | `--vs-s` / `--pad-s` |
+| 12px | 0.75rem | `--pad-m` |
+| 16px | 1rem | `--pad-l` |
+| 24px | 1.5rem | `--vs-m` / `--pad-xl` |
+| 32px | 2rem | `--vs-l` / `--pad-xxl` |
+| 64px | 4rem | `--vs-xl` |
+
+Figma text sizes like `text-[30.99px]` or `1.93688rem` → 1rem in the browser.
+
+---
+
+### Fluid typography
+
+Graffiti applies `--fluid-type` (a responsive `clamp()`) automatically to `h1–h6`, `p`, `li`, `a`, `button`, and a few other elements. The size is controlled by `--fl` (fluid level, –1 to 6):
+
+| Class | `--fl` | Approx size range |
+|---|---|---|
+| `.fs-xs` | –1 | ~11–12px |
+| `.fs-base` | 0 | 16–18px (body) |
+| `.fs-s` | 1 | ~19–22px |
+| `.fs-m` | 2 | ~23–28px |
+| `.fs-l` | 3 | ~28–35px |
+| `.fs-xl` | 4 | ~33–44px |
+| `.fs-xxl` | 5 | ~40–54px |
+| `.fs-xxxl` | 6 | ~48–68px |
+
+Graffiti sets default `--fl` on headings: `h1=5`, `h2=4`, `h3=3`, `h4=2`, `h5=1`, `h6=0`.
+
+**How to use:**
+- Add `.fluid` to any element not in the default list to opt it into fluid sizing, then set `--fl` via class or inline style.
+- Use `.fs-*` classes in HTML markup to set the fluid level on an element: `<p class="fluid fs-xl">`.
+- In CSS, set `--fl` directly and use `font-size: var(--fluid-type)` — valid for any element already in Graffiti's fluid selector list (`h1–h6`, `p`, `li`, `a`, `button`, etc.).
+- `.fc` / `.fluid-text-container` — wraps text in a container query so fluid sizing scales to the container width (`100cqi`) rather than viewport (`100vi`). Use for text inside cards or columns.
+- **Never use `font-size: var(--vs-*)` for text** — `--vs-*` are vertical spacing tokens, not font-size tokens. Use `1rem`, `var(--pad-l)`, or a `--fluid-type` value instead.
+- **Never write raw `clamp()` for font sizes** — set `--fl` and let Graffiti compute it.
+
+The site also overrides Graffiti's heading defaults in `@layer custom` via `--type-track-base`, `--type-track-step`, `--type-wght-base`, and `--type-wght-step` — these drive automatic tighter tracking and lighter weight at larger sizes. Do not override `letter-spacing` on headings manually unless you have a specific design reason.
+
+### Styling guidelines
+- **Before writing any custom CSS, check Graffiti's built-in utilities and layouts.** Inspect the installed files at `node_modules/@drop-in/graffiti/dist/utilities.css` and `node_modules/@drop-in/graffiti/dist/layouts.css` for classes that match your need. Use Graffiti classes in the HTML markup unless the design values differ significantly from what the utility provides — a small gap or padding difference is not a reason to skip a utility.
+- Available layout classes: `.layout-readable`, `.layout-split`, `.layout-sidebar`, `.layout-three-col`, `.section`, `.stack`, `.cluster`, `.reel`, `.carousel`, `.swipe`
+- Available utility classes: `.flex`, `.split` (flex + space-between), `.grid`, `.row`, `.readable`, `.narrow`, `.no-list`, `.text-center`, `.text-end`, `.full`, `.visually-hidden`, `.focus-ring`, `.self-start`, aspect-ratio helpers, gradients, transitions
+- Use Graffiti CSS variables (`--pad-l`, `--vs-xl`, `--primary`, `--fg`, `--bg`, etc.) — never hardcode values
+- Override utility defaults via CSS custom properties on the element (e.g. `style="--gap: var(--vs-s)"`) rather than writing a new class
 - Do **not** reintroduce Pico CSS or any other base CSS framework
 - Per-template CSS files in `src/templates/*.css` are picked up automatically by Vite — use them for template-specific styles only
+- Graffiti 4.29.0 does not include the v4.30.0 AI chat patterns (`.icon-rail`, `.composer`, `.log-card`) — do not reference these
 
 ---
 
