@@ -116,10 +116,6 @@
     font-size: inherit;
   }
 
-  a {
-    color: inherit;
-  }
-
   a:not([class]) {
     text-decoration-skip-ink: auto;
   }
@@ -700,13 +696,14 @@
 
     /* Fixed nav height estimate — keeps body padding-top + scroll-padding-top in sync */
     --nav-height: calc(var(--vs-base) * 2 + var(--vs-l));
-    /* Text underline offset */
-    --text-underline-offset: 0.2em;
+    /* Text underline */
+    --text-underline-offset: 0.22rem;
+    --text-decoration-thickness: 7%;
 
     /* Heading overlay — h1–h6 use Graffiti's --fl (h6=0 … h1=5).
      Tracking and wght are linear functions of --fl. */
-    --type-track-base: 0em;
-    --type-track-step: 0.005em;
+    --type-track-base: 0.01em;
+    --type-track-step: 0.015em;
     --type-track-ui: calc(var(--type-track-base) - 0.03em);
     --type-wght-base: 600;
     --type-wght-step: 20;
@@ -716,6 +713,12 @@
     background: var(--bg);
     padding-top: var(--nav-height, 6rem);
     scroll-padding-top: var(--nav-height, 6rem);
+  }
+
+  * {
+    --ls: calc(var(--type-track-base) - var(--type-track-step) * var(--fl, 0));
+    letter-spacing: var(--ls);
+    word-spacing: max(var(--ls), -0.06em);
   }
 
   h1,
@@ -730,20 +733,23 @@
   .h4,
   .h5,
   .h6 {
-    letter-spacing: calc(var(--type-track-base) - var(--type-track-step) * var(--fl, 0));
     font-variation-settings: "wght" calc(var(--type-wght-base) - var(--type-wght-step) * var(--fl, 0));
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: var(--text-underline-offset);
+    text-decoration-thickness: var(--text-decoration-thickness);
   }
 
   p,
   li,
   body {
-    letter-spacing: 0.01rem;
     font-variation-settings: "wght" 400;
   }
 
   small,
   .ui-caption {
-    letter-spacing: 0.04em;
     font-variation-settings: "wght" 420;
   }
 
@@ -767,11 +773,11 @@
   .stack-section {
     position: sticky;
     top: var(--nav-height, 6rem);
-    height: calc(100dvh - var(--nav-height, 6rem));
+    min-height: calc(100dvh - var(--nav-height, 6rem));
     background: var(--section-bg, var(--bg));
   }
 
-  .stack-section.half { height: calc(50dvh - var(--nav-height, 6rem)); }
+  .stack-section.half { min-height: calc(50dvh - var(--nav-height, 6rem)); }
 
   section.hero.stack-section {
     top: 0;
@@ -792,7 +798,6 @@
     --fl: 6;
     color: white;
     font-size: var(--fluid-type);
-    letter-spacing: -0.05em;
     text-box-edge: cap alphabetic;
   }
 
@@ -835,6 +840,7 @@
   .panel {
     padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
     padding-block-start: var(--vs-xl);
+    padding-block-end: calc(var(--vs-xl)*2);
   }
 
   /* Theme presets — set the four colour endpoints; Graffiti's
@@ -902,15 +908,13 @@
   .statement {
     --fl: 4;
     font-size: var(--fluid-type);
-    letter-spacing: -0.05em;
-    line-height: 1.1;
     font-variation-settings: "wght" 500;
     text-box-edge: cap alphabetic;
+    --lh: 1.30;
   }
 
   .statement a {
     color: inherit;
-    text-underline-offset: var(--text-underline-offset);
   }
 
   .intro__date {
@@ -995,7 +999,6 @@
 
   .site-nav a[aria-current="page"] {
     text-decoration: underline;
-    text-underline-offset: var(--text-underline-offset);
   }
 
   /* Mobile: hide inline links, show "Menu" toggle */
@@ -1050,7 +1053,6 @@
 
   .site-drawer a[aria-current="page"] {
     text-decoration: underline;
-    text-underline-offset: var(--text-underline-offset);
   }
 
 }
