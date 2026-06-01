@@ -1,0 +1,1070 @@
+@use './mixins' as *;
+
+@layer reset, fonts, graffiti, colors, custom;
+
+@import "@drop-in/graffiti" layer(graffiti);
+
+/* ──────────────────────────────────────────────────────────────
+   Fonts — Inclusive Sans Variable
+   ────────────────────────────────────────────────────────────── */
+
+@layer fonts {
+
+  @font-face {
+    font-family: "Inclusive Sans";
+    src: url("./assets/inclusive-sans-var.ttf") format("truetype-variations");
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Inclusive Sans";
+    src: url("./assets/inclusive-sans-var-italic.ttf") format("truetype-variations");
+    font-weight: 300 700;
+    font-style: italic;
+    font-display: swap;
+  }
+
+}
+
+/* end @layer fonts */
+
+/* ──────────────────────────────────────────────────────────────
+   Reset
+   ────────────────────────────────────────────────────────────── */
+
+@layer reset {
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  * {
+    min-width: 0;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  html {
+    height: 100%;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+  }
+
+  html:focus-within {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    overscroll-behavior: none;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: always;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+    font-size: inherit;
+    font-weight: inherit;
+    text-wrap: balance;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  pre,
+  code,
+  kbd,
+  samp {
+    font-family: monospace;
+    font-size: inherit;
+  }
+
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+  }
+
+  button,
+  [role="button"],
+  label,
+  summary,
+  select {
+    cursor: pointer;
+  }
+
+  img,
+  picture,
+  video,
+  svg,
+  embed,
+  iframe,
+  object,
+  audio {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  canvas {
+    display: block;
+  }
+
+  svg[width][height] {
+    max-width: revert;
+  }
+
+  button {
+    background: none;
+    border: none;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  input,
+  button,
+  textarea,
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+  }
+
+  ul,
+  ol,
+  ul[role='list'],
+  ol[role='list'] {
+    list-style: none;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  th {
+    font-weight: inherit;
+  }
+
+  blockquote,
+  q {
+    quotes: none;
+  }
+
+  blockquote::before,
+  blockquote::after,
+  q::before,
+  q::after {
+    content: none;
+  }
+
+  sub,
+  sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  #root,
+  #__next {
+    isolation: isolate;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    html,
+    html:focus-within {
+      scroll-behavior: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+      transition: none !important;
+    }
+  }
+
+}
+
+/* end @layer reset */
+
+/* ──────────────────────────────────────────────────────────────
+   Radix Colors Custom Palette
+   ────────────────────────────────────────────────────────────── */
+
+@layer colors {
+
+  :root,
+  .light,
+  .light-theme {
+    --red-1: #fcf9f8;
+    --red-2: #fcf4f3;
+    --red-3: #fbe7e5;
+    --red-4: #ffd8d3;
+    --red-5: #fecac4;
+    --red-6: #f8bab3;
+    --red-7: #efa69f;
+    --red-8: #e68c83;
+    --red-9: #b60018;
+    --red-10: #a30004;
+    --red-11: #c92429;
+    --red-12: #651817;
+
+    --red-a1: #00515003;
+    --red-a2: #a01c1b08;
+    --red-a3: #d1140716;
+    --red-a4: #ff1c0228;
+    --red-a5: #fb1c0538;
+    --red-a6: #e7180249;
+    --red-a7: #d412015d;
+    --red-a8: #cb13027a;
+    --red-a9: #b60018;
+    --red-a10: #a30004;
+    --red-a11: #c00107db;
+    --red-a12: #560100e8;
+
+    --red-contrast: #fff;
+    --red-surface: #fbf3f1cc;
+    --red-indicator: #b60018;
+    --red-track: #b60018;
+
+    --gray-1: #faf8f8;
+    --gray-2: #f7f5f4;
+    --gray-3: #efebea;
+    --gray-4: #e8e2e2;
+    --gray-5: #e2dada;
+    --gray-6: #dad2d2;
+    --gray-7: #d1c7c6;
+    --gray-8: #c0b3b2;
+    --gray-9: #928584;
+    --gray-10: #877b7a;
+    --gray-11: #675e5d;
+    --gray-12: #251e1e;
+
+    --gray-a1: #00639505;
+    --gray-a2: #003c3b08;
+    --gray-a3: #0f0b0a11;
+    --gray-a4: #1e060e1a;
+    --gray-a5: #26030a22;
+    --gray-a6: #1f03082a;
+    --gray-a7: #26060536;
+    --gray-a8: #2603024a;
+    --gray-a9: #1a030279;
+    --gray-a10: #16020083;
+    --gray-a11: #0f0202a1;
+    --gray-a12: #080001e1;
+
+    --gray-contrast: #FFFFFF;
+    --gray-surface: #ffffffcc;
+    --gray-indicator: #928584;
+    --gray-track: #928584;
+
+    --color-background: #fffbfa;
+
+    /* Opacity variants for primary colors */
+    --red-9-10: color-mix(in srgb, var(--red-9) 10%, transparent);
+    --red-9-20: color-mix(in srgb, var(--red-9) 20%, transparent);
+    --red-9-30: color-mix(in srgb, var(--red-9) 30%, transparent);
+    --red-9-40: color-mix(in srgb, var(--red-9) 40%, transparent);
+    --red-9-50: color-mix(in srgb, var(--red-9) 50%, transparent);
+    --red-9-60: color-mix(in srgb, var(--red-9) 60%, transparent);
+    --red-9-70: color-mix(in srgb, var(--red-9) 70%, transparent);
+    --red-9-80: color-mix(in srgb, var(--red-9) 80%, transparent);
+    --red-9-90: color-mix(in srgb, var(--red-9) 90%, transparent);
+
+    --red-12-10: color-mix(in srgb, var(--red-12) 10%, transparent);
+    --red-12-20: color-mix(in srgb, var(--red-12) 20%, transparent);
+    --red-12-30: color-mix(in srgb, var(--red-12) 30%, transparent);
+    --red-12-40: color-mix(in srgb, var(--red-12) 40%, transparent);
+    --red-12-50: color-mix(in srgb, var(--red-12) 50%, transparent);
+    --red-12-60: color-mix(in srgb, var(--red-12) 60%, transparent);
+    --red-12-70: color-mix(in srgb, var(--red-12) 70%, transparent);
+    --red-12-80: color-mix(in srgb, var(--red-12) 80%, transparent);
+    --red-12-90: color-mix(in srgb, var(--red-12) 90%, transparent);
+
+    --gray-9-10: color-mix(in srgb, var(--gray-9) 10%, transparent);
+    --gray-9-20: color-mix(in srgb, var(--gray-9) 20%, transparent);
+    --gray-9-30: color-mix(in srgb, var(--gray-9) 30%, transparent);
+    --gray-9-40: color-mix(in srgb, var(--gray-9) 40%, transparent);
+    --gray-9-50: color-mix(in srgb, var(--gray-9) 50%, transparent);
+    --gray-9-60: color-mix(in srgb, var(--gray-9) 60%, transparent);
+    --gray-9-70: color-mix(in srgb, var(--gray-9) 70%, transparent);
+    --gray-9-80: color-mix(in srgb, var(--gray-9) 80%, transparent);
+    --gray-9-90: color-mix(in srgb, var(--gray-9) 90%, transparent);
+
+    --gray-12-10: color-mix(in srgb, var(--gray-12) 10%, transparent);
+    --gray-12-20: color-mix(in srgb, var(--gray-12) 20%, transparent);
+    --gray-12-30: color-mix(in srgb, var(--gray-12) 30%, transparent);
+    --gray-12-40: color-mix(in srgb, var(--gray-12) 40%, transparent);
+    --gray-12-50: color-mix(in srgb, var(--gray-12) 50%, transparent);
+    --gray-12-60: color-mix(in srgb, var(--gray-12) 60%, transparent);
+    --gray-12-70: color-mix(in srgb, var(--gray-12) 70%, transparent);
+    --gray-12-80: color-mix(in srgb, var(--gray-12) 80%, transparent);
+    --gray-12-90: color-mix(in srgb, var(--gray-12) 90%, transparent);
+  }
+
+  @supports (color: color(display-p3 1 1 1)) {
+    @media (color-gamut: p3) {
+
+      :root,
+      .light,
+      .light-theme {
+        --red-1: oklch(98.4% 0.0031 25.82);
+        --red-2: oklch(97.3% 0.0083 25.82);
+        --red-3: oklch(94.4% 0.0213 25.82);
+        --red-4: oklch(91.6% 0.0463 25.82);
+        --red-5: oklch(88.3% 0.0606 25.82);
+        --red-6: oklch(84.4% 0.0729 25.82);
+        --red-7: oklch(79.4% 0.0875 25.82);
+        --red-8: oklch(73.1% 0.1109 25.82);
+        --red-9: oklch(48.9% 0.1985 25.82);
+        --red-10: oklch(43.8% 0.1985 25.82);
+        --red-11: oklch(54.1% 0.1985 25.82);
+        --red-12: oklch(34% 0.1096 25.82);
+
+        --red-a1: color(display-p3 0.0196 0.3333 0.3294 / 0.012);
+        --red-a2: color(display-p3 0.5765 0.0078 0 / 0.028);
+        --red-a3: color(display-p3 0.702 0.0549 0 / 0.08);
+        --red-a4: color(display-p3 0.8706 0.1098 0 / 0.152);
+        --red-a5: color(display-p3 0.8471 0.102 0 / 0.208);
+        --red-a6: color(display-p3 0.7843 0.1059 0 / 0.276);
+        --red-a7: color(display-p3 0.7098 0.0824 0 / 0.356);
+        --red-a8: color(display-p3 0.6863 0.0784 0 / 0.464);
+        --red-a9: color(display-p3 0.6039 0 0.0039 / 0.869);
+        --red-a10: color(display-p3 0.549 0.0353 0 / 0.916);
+        --red-a11: color(display-p3 0.6588 0.0196 0 / 0.8);
+        --red-a12: color(display-p3 0.2902 0.0118 0 / 0.892);
+
+        --red-contrast: #fff;
+        --red-surface: color(display-p3 0.9765 0.9529 0.9451 / 0.8);
+        --red-indicator: oklch(48.9% 0.1985 25.82);
+        --red-track: oklch(48.9% 0.1985 25.82);
+
+        --gray-1: oklch(98.1% 0.0014 22.85);
+        --gray-2: oklch(97.1% 0.0026 22.85);
+        --gray-3: oklch(94.3% 0.0047 22.85);
+        --gray-4: oklch(91.8% 0.0062 22.85);
+        --gray-5: oklch(89.5% 0.008 22.85);
+        --gray-6: oklch(87.1% 0.0092 22.85);
+        --gray-7: oklch(83.7% 0.0113 22.85);
+        --gray-8: oklch(77.7% 0.0153 22.85);
+        --gray-9: oklch(62.9% 0.0154 22.85);
+        --gray-10: oklch(59.4% 0.0146 22.85);
+        --gray-11: oklch(48.9% 0.0127 22.85);
+        --gray-12: oklch(24.3% 0.0106 22.85);
+
+        --gray-a1: color(display-p3 0.0157 0.251 0.4902 / 0.016);
+        --gray-a2: color(display-p3 0.0157 0.1451 0.1412 / 0.028);
+        --gray-a3: color(display-p3 0.0196 0.0078 0 / 0.064);
+        --gray-a4: color(display-p3 0.0941 0.0039 0.0392 / 0.1);
+        --gray-a5: color(display-p3 0.1373 0.0078 0.0314 / 0.132);
+        --gray-a6: color(display-p3 0.1137 0.0078 0.0275 / 0.164);
+        --gray-a7: color(display-p3 0.1137 0.0039 0 / 0.208);
+        --gray-a8: color(display-p3 0.1255 0.0039 0 / 0.288);
+        --gray-a9: color(display-p3 0.0824 0.0039 0 / 0.472);
+        --gray-a10: color(display-p3 0.0706 0.0078 0 / 0.512);
+        --gray-a11: color(display-p3 0.0431 0.0078 0 / 0.628);
+        --gray-a12: color(display-p3 0.0275 0 0 / 0.881);
+
+        --gray-contrast: #FFFFFF;
+        --gray-surface: color(display-p3 1 1 1 / 80%);
+        --gray-indicator: oklch(62.9% 0.0154 22.85);
+        --gray-track: oklch(62.9% 0.0154 22.85);
+
+        /* Opacity variants for primary colors (P3) */
+        --red-9-10: color-mix(in oklch, var(--red-9) 10%, transparent);
+        --red-9-20: color-mix(in oklch, var(--red-9) 20%, transparent);
+        --red-9-30: color-mix(in oklch, var(--red-9) 30%, transparent);
+        --red-9-40: color-mix(in oklch, var(--red-9) 40%, transparent);
+        --red-9-50: color-mix(in oklch, var(--red-9) 50%, transparent);
+        --red-9-60: color-mix(in oklch, var(--red-9) 60%, transparent);
+        --red-9-70: color-mix(in oklch, var(--red-9) 70%, transparent);
+        --red-9-80: color-mix(in oklch, var(--red-9) 80%, transparent);
+        --red-9-90: color-mix(in oklch, var(--red-9) 90%, transparent);
+
+        --red-12-10: color-mix(in oklch, var(--red-12) 10%, transparent);
+        --red-12-20: color-mix(in oklch, var(--red-12) 20%, transparent);
+        --red-12-30: color-mix(in oklch, var(--red-12) 30%, transparent);
+        --red-12-40: color-mix(in oklch, var(--red-12) 40%, transparent);
+        --red-12-50: color-mix(in oklch, var(--red-12) 50%, transparent);
+        --red-12-60: color-mix(in oklch, var(--red-12) 60%, transparent);
+        --red-12-70: color-mix(in oklch, var(--red-12) 70%, transparent);
+        --red-12-80: color-mix(in oklch, var(--red-12) 80%, transparent);
+        --red-12-90: color-mix(in oklch, var(--red-12) 90%, transparent);
+
+        --gray-9-10: color-mix(in oklch, var(--gray-9) 10%, transparent);
+        --gray-9-20: color-mix(in oklch, var(--gray-9) 20%, transparent);
+        --gray-9-30: color-mix(in oklch, var(--gray-9) 30%, transparent);
+        --gray-9-40: color-mix(in oklch, var(--gray-9) 40%, transparent);
+        --gray-9-50: color-mix(in oklch, var(--gray-9) 50%, transparent);
+        --gray-9-60: color-mix(in oklch, var(--gray-9) 60%, transparent);
+        --gray-9-70: color-mix(in oklch, var(--gray-9) 70%, transparent);
+        --gray-9-80: color-mix(in oklch, var(--gray-9) 80%, transparent);
+        --gray-9-90: color-mix(in oklch, var(--gray-9) 90%, transparent);
+
+        --gray-12-10: color-mix(in oklch, var(--gray-12) 10%, transparent);
+        --gray-12-20: color-mix(in oklch, var(--gray-12) 20%, transparent);
+        --gray-12-30: color-mix(in oklch, var(--gray-12) 30%, transparent);
+        --gray-12-40: color-mix(in oklch, var(--gray-12) 40%, transparent);
+        --gray-12-50: color-mix(in oklch, var(--gray-12) 50%, transparent);
+        --gray-12-60: color-mix(in oklch, var(--gray-12) 60%, transparent);
+        --gray-12-70: color-mix(in oklch, var(--gray-12) 70%, transparent);
+        --gray-12-80: color-mix(in oklch, var(--gray-12) 80%, transparent);
+        --gray-12-90: color-mix(in oklch, var(--gray-12) 90%, transparent);
+      }
+    }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Extended palette — Brand, Neutral, semantic states
+     Light and dark primitives for full dark-mode support.
+  ────────────────────────────────────────────────────────────── */
+
+  :root {
+    /* Brand — light */
+    --light-Brand-50: #FFE0DB;
+    --light-Brand-100: #FFC3BE;
+    --light-Brand-200: #FFA39E;
+    --light-Brand-300: #F2837F;
+    --light-Brand-400: #E06361;
+    --light-Brand-500: #D1383D;
+    --light-Brand-600: #B60018;
+    --light-Brand-700: #940000;
+    --light-Brand-800: #6F0000;
+    --light-Brand-900: #480000;
+    --light-Brand-950: #260000;
+
+    /* Brand — dark */
+    --dark-Brand-50: #0A0000;
+    --dark-Brand-100: #220000;
+    --dark-Brand-200: #400000;
+    --dark-Brand-300: #5C0000;
+    --dark-Brand-400: #7A0009;
+    --dark-Brand-500: #98001A;
+    --dark-Brand-600: #B51E2C;
+    --dark-Brand-700: #D1383D;
+    --dark-Brand-800: #F65C5C;
+    --dark-Brand-900: #FF817E;
+    --dark-Brand-950: #FFAAA5;
+
+    /* Neutral — light */
+    --light-Neutral-50: #FFF1F1;
+    --light-Neutral-100: #F2E4E4;
+    --light-Neutral-200: #DED1D0;
+    --light-Neutral-300: #C7BABA;
+    --light-Neutral-400: #A89B9A;
+    --light-Neutral-500: #897D7C;
+    --light-Neutral-600: #6C605F;
+    --light-Neutral-700: #504544;
+    --light-Neutral-800: #352B2A;
+    --light-Neutral-900: #1C1313;
+    --light-Neutral-950: #110908;
+
+    /* Neutral — dark */
+    --dark-Neutral-50: #010000;
+    --dark-Neutral-100: #110908;
+    --dark-Neutral-200: #211817;
+    --dark-Neutral-300: #352B2A;
+    --dark-Neutral-400: #4A3F3F;
+    --dark-Neutral-500: #5D5252;
+    --dark-Neutral-600: #716665;
+    --dark-Neutral-700: #837776;
+    --dark-Neutral-800: #A19594;
+    --dark-Neutral-900: #C1B4B3;
+    --dark-Neutral-950: #E1D4D3;
+
+    /* Success — light */
+    --light-Success-50: #DFFFDF;
+    --light-Success-100: #C2F9C2;
+    --light-Success-200: #9EEB9F;
+    --light-Success-300: #78D87B;
+    --light-Success-400: #43BB4C;
+    --light-Success-500: #169B2A;
+    --light-Success-600: #007B00;
+    --light-Success-700: #005B00;
+    --light-Success-800: #003C00;
+    --light-Success-900: #001F00;
+    --light-Success-950: #001100;
+
+    /* Success — dark */
+    --dark-Success-50: #000100;
+    --dark-Success-100: #001300;
+    --dark-Success-200: #002700;
+    --dark-Success-300: #003E00;
+    --dark-Success-400: #005800;
+    --dark-Success-500: #006C00;
+    --dark-Success-600: #008202;
+    --dark-Success-700: #2F9137;
+    --dark-Success-800: #62AD64;
+    --dark-Success-900: #93C793;
+    --dark-Success-950: #C2E2C2;
+
+    /* Warning — light */
+    --light-Warning-50: #FFF4DC;
+    --light-Warning-100: #FBE5BC;
+    --light-Warning-200: #EFD096;
+    --light-Warning-300: #DDB871;
+    --light-Warning-400: #C2973D;
+    --light-Warning-500: #A27815;
+    --light-Warning-600: #845B00;
+    --light-Warning-700: #624100;
+    --light-Warning-800: #422800;
+    --light-Warning-900: #231200;
+    --light-Warning-950: #120900;
+
+    /* Warning — dark */
+    --dark-Warning-50: #020000;
+    --dark-Warning-100: #170700;
+    --dark-Warning-200: #2D1400;
+    --dark-Warning-300: #462600;
+    --dark-Warning-400: #603900;
+    --dark-Warning-500: #754D00;
+    --dark-Warning-600: #8A6100;
+    --dark-Warning-700: #97742A;
+    --dark-Warning-800: #B1945C;
+    --dark-Warning-900: #CAB58D;
+    --dark-Warning-950: #E3D6BE;
+
+    /* Error — light */
+    --light-Error-50: #FFE6F1;
+    --light-Error-100: #FFCEE1;
+    --light-Error-200: #FFAECA;
+    --light-Error-300: #FF8EB1;
+    --light-Error-400: #FA6190;
+    --light-Error-500: #D63F72;
+    --light-Error-600: #B21556;
+    --light-Error-700: #87003D;
+    --light-Error-800: #5D0026;
+    --light-Error-900: #340011;
+    --light-Error-950: #1D0108;
+
+    /* Error — dark */
+    --dark-Error-50: #040000;
+    --dark-Error-100: #260007;
+    --dark-Error-200: #440013;
+    --dark-Error-300: #650024;
+    --dark-Error-400: #890036;
+    --dark-Error-500: #A10048;
+    --dark-Error-600: #B9205C;
+    --dark-Error-700: #C4486F;
+    --dark-Error-800: #DB728F;
+    --dark-Error-900: #EC9EB0;
+    --dark-Error-950: #FAC9D3;
+
+    /* Info — light */
+    --light-Info-50: #DDFAFF;
+    --light-Info-100: #BFF0FF;
+    --light-Info-200: #99DEFF;
+    --light-Info-300: #72C9FB;
+    --light-Info-400: #39AAE4;
+    --light-Info-500: #008BC2;
+    --light-Info-600: #006CA2;
+    --light-Info-700: #004F7A;
+    --light-Info-800: #003354;
+    --light-Info-900: #00192F;
+    --light-Info-950: #000D19;
+
+    /* Info — dark */
+    --dark-Info-50: #000004;
+    --dark-Info-100: #000C21;
+    --dark-Info-200: #001C3C;
+    --dark-Info-300: #00305A;
+    --dark-Info-400: #004679;
+    --dark-Info-500: #005A8F;
+    --dark-Info-600: #1F6FA5;
+    --dark-Info-700: #4380AF;
+    --dark-Info-800: #6D9EC6;
+    --dark-Info-900: #99BCDA;
+    --dark-Info-950: #C5DBED;
+  }
+
+}
+
+/* end @layer colors */
+
+/* ──────────────────────────────────────────────────────────────
+   Section / hero / canvas customisations
+   ────────────────────────────────────────────────────────────── */
+
+@layer custom {
+
+  * {
+    text-box-trim: trim-both;
+    text-box-edge: cap text;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   Typography — Pseudo-optical sizing layered on Graffiti's --fl
+   ──────────────────────────────────────────────────────────────
+   Graffiti gives every heading a fluid level (--fl): h6=0 … h1=5,
+   and computes font-size from it. We reuse that same --fl to drive
+   inverse letter-spacing and font-variation-settings 'wght' so larger
+   headings get tighter tracking and lighter weight automatically.
+   ────────────────────────────────────────────────────────────── */
+
+  :root {
+    --font-sans: "Inclusive Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    /* ── Palette → Graffiti token bridge ──────────────────────────
+       Override Graffiti's five root endpoints; all derived scales
+       (--primary-1..9, --primary-opaque-*, --fg-opaque-*, borders,
+       focus-ring) auto-compute from these via relative color syntax.
+    ────────────────────────────────────────────────────────────── */
+    --primary: light-dark(var(--light-Brand-600), var(--dark-Brand-700));
+    --fg-light: var(--light-Neutral-900);
+    /* #1C1313 — warm near-black     */
+    --fg-dark: var(--dark-Neutral-950);
+    /* #E1D4D3 — warm light gray      */
+    --bg-light: var(--color-background);
+    /* #fffbfa — warm white canvas    */
+    --bg-dark: var(--dark-Neutral-100);
+    /* #110908 — warm near-black bg   */
+
+    /* ── Semantic state tokens ─────────────────────────────────────
+       Use these for callouts, badges, status indicators.
+       Auto-switch between light/dark palette steps.
+    ────────────────────────────────────────────────────────────── */
+    --color-success: light-dark(var(--light-Success-600), var(--dark-Success-700));
+    --color-warning: light-dark(var(--light-Warning-500), var(--dark-Warning-700));
+    --color-error: light-dark(var(--light-Error-600), var(--dark-Error-700));
+    --color-info: light-dark(var(--light-Info-500), var(--dark-Info-700));
+
+    /* Fixed nav height estimate — keeps body padding-top + scroll-padding-top in sync */
+    --nav-height: calc(var(--vs-base) * 2 + var(--vs-l));
+    /* Text underline */
+    --text-underline-offset: 0.22rem;
+    --text-decoration-thickness: 7%;
+
+    /* Heading overlay — h1–h6 use Graffiti's --fl (h6=0 … h1=5).
+     Tracking and wght are linear functions of --fl. */
+    --type-track-base: 0.01em;
+    --type-track-step: 0.015em;
+    --type-track-ui: calc(var(--type-track-base) - 0.03em);
+    --type-wght-base: 600;
+    --type-wght-step: 20;
+  }
+
+  body {
+    background: var(--bg);
+    padding-top: var(--nav-height, 6rem);
+    scroll-padding-top: var(--nav-height, 6rem);
+  }
+
+  * {
+    --ls: calc(var(--type-track-base) - var(--type-track-step) * var(--fl, 0));
+    letter-spacing: var(--ls);
+    word-spacing: max(var(--ls), -0.06em);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    font-variation-settings: "wght" calc(var(--type-wght-base) - var(--type-wght-step) * var(--fl, 0));
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: var(--text-underline-offset);
+    text-decoration-thickness: var(--text-decoration-thickness);
+  }
+
+  p,
+  li,
+  body {
+    font-variation-settings: "wght" 400;
+  }
+
+  small,
+  .ui-caption {
+    font-variation-settings: "wght" 420;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  section {
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  /* Full-bleed — escape a constrained container to full viewport width.
+     Reusable sanctioned custom class (Graffiti has no equivalent). */
+  .full-bleed {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+
+  .stack-section {
+    position: sticky;
+    top: var(--nav-height, 6rem);
+    min-height: calc(100dvh - var(--nav-height, 6rem));
+    background: var(--section-bg, var(--bg));
+  }
+
+  .stack-section.half { min-height: calc(50dvh - var(--nav-height, 6rem)); }
+
+  section.hero.stack-section {
+    top: 0;
+  }
+
+  section.hero {
+    height: 100dvh;
+    margin-top: calc(-1 * var(--nav-height, 6rem));
+    padding: var(--pad-l);
+    background: var(--dark-Brand-600);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  section.hero>h1 {
+    --fl: 6;
+    color: white;
+    font-size: var(--fluid-type);
+    text-box-edge: cap alphabetic;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+  }
+
+  section.hero>*:not(.hero__bg, .hero__arrow) {
+    position: relative;
+    z-index: 1;
+  }
+
+  section.hero>.hero__arrow {
+    z-index: 1;
+  }
+
+  .hero__arrow {
+    position: absolute;
+    text-decoration: none;
+    bottom: var(--pad-xl);
+    color: var(--light-Neutral-100);
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Reusable section building blocks — compose these instead of
+     writing a new bespoke section class each time. Three orthogonal
+     concerns, each one independent word in the class list:
+       .panel        → spacing / padding (colour-blind)
+       .theme-*      → background + linked text colour (size-blind)
+       .statement    → large "opening statement" paragraph type
+  ────────────────────────────────────────────────────────────── */
+
+  /* Panel — the spacing shell. Padding + content rhythm only, no colour. */
+  .panel {
+    padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+    padding-block-start: var(--vs-xl);
+    padding-block-end: calc(var(--vs-xl)*2);
+  }
+
+  /* Theme presets — set the four colour endpoints; Graffiti's
+     `:where([class*="theme-"])` rule re-derives --fg, --bg, opaque
+     scales, borders and focus-ring from these automatically. The
+     `theme-` fragment in the name is load-bearing: it triggers that
+     re-derivation. color-scheme is pinned so internal light-dark()
+     picks resolve on the matching branch. */
+  .theme-brand {
+    --bg-light: var(--dark-Brand-600);
+    --bg-dark: var(--dark-Brand-600);
+    --fg-light: var(--light-Neutral-50);
+    --fg-dark: var(--light-Neutral-50);
+    --primary: var(--light-Neutral-50);
+    color-scheme: dark;
+  }
+
+  /* Paper — warm off-white, dark text, red accent (the default light look). */
+  .theme-paper {
+    --bg-light: var(--light-Neutral-50);
+    --bg-dark: var(--light-Neutral-50);
+    --fg-light: var(--light-Neutral-950);
+    --fg-dark: var(--light-Neutral-950);
+    --primary: var(--light-Brand-600);
+    color-scheme: light;
+  }
+
+  /* Blush — soft pink, dark text, red accent. */
+  .theme-blush {
+    --bg-light: var(--light-Brand-50);
+    --bg-dark: var(--light-Brand-50);
+    --fg-light: var(--light-Neutral-950);
+    --fg-dark: var(--light-Neutral-950);
+    --primary: var(--light-Brand-600);
+    color-scheme: light;
+  }
+
+  /* Ink — near-black, warm light text, soft-pink accent. */
+  .theme-ink {
+    --bg-light: var(--dark-Neutral-100);
+    --bg-dark: var(--dark-Neutral-100);
+    --fg-light: var(--dark-Neutral-950);
+    --fg-dark: var(--dark-Neutral-950);
+    --primary: var(--dark-Brand-950);
+    color-scheme: dark;
+  }
+
+  /* Crimson — deep red, light text, soft-pink accent. */
+  .theme-crimson {
+    --bg-light: var(--dark-Brand-500);
+    --bg-dark: var(--dark-Brand-500);
+    --fg-light: var(--light-Neutral-50);
+    --fg-dark: var(--light-Neutral-50);
+    --primary: var(--dark-Brand-950);
+    color-scheme: dark;
+  }
+
+  /* Accent — colour text with the current theme's --primary. Resolves to
+     brand red on light themes, soft pink on the dark/deep-red themes. */
+  .accent {
+    color: var(--primary);
+  }
+
+  /* Statement — the big lead paragraph. Colour comes from the theme. */
+  .statement {
+    --fl: 4;
+    font-size: var(--fluid-type);
+    font-variation-settings: "wght" 500;
+    text-box-edge: cap alphabetic;
+    --lh: 1.30;
+  }
+
+  .statement a {
+    color: inherit;
+  }
+
+  .intro__date {
+    letter-spacing: var(--type-track-ui);
+  }
+
+
+  @media only screen and (width > 768px) {
+    .right-aligned {
+    width: 100%;
+    text-align: right;
+  }
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     Site nav — fixed, solid background
+  ────────────────────────────────────────────────────────────── */
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    z-index: 100;
+    background-color: var(--dark-Brand-600);
+  }
+
+  .site-nav__bar {
+    align-items: center;
+    padding-inline: var(--pad-xl);
+    padding-block: var(--vs-base);
+  }
+
+  .site-nav__group {
+    align-items: center;
+    --gap: var(--vs-m);
+  }
+
+  .site-nav__links {
+    align-items: center;
+    --gap: 0;
+  }
+
+  .site-nav__logo {
+    display: flex;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-nav__logo svg {
+    height: var(--vs-l);
+    width: auto;
+  }
+
+  .site-nav a,
+  .site-nav__register,
+  .site-nav__menu-toggle {
+    letter-spacing: var(--type-track-ui);
+  }
+
+  .site-nav__register {
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-nav__menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--dark-Neutral-950);
+    font: inherit;
+  }
+
+  .site-nav li:not(:last-child)::after {
+    content: ",\00a0";
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-nav li {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-nav a {
+    color: var(--dark-Neutral-950);
+    white-space: nowrap;
+  }
+
+  .site-nav a[aria-current="page"] {
+    text-decoration: underline;
+  }
+
+  /* Mobile: hide inline links, show "Menu" toggle */
+  @media (width < 768px) {
+    .site-nav__links {
+      display: none;
+    }
+
+    .site-nav__register {
+      display: none;
+    }
+
+    .site-nav__menu-toggle {
+      display: inline;
+    }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Drawer 
+  ────────────────────────────────────────────────────────────── */
+
+  .site-drawer {
+    --drawer-bg: var(--dark-Brand-600);
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-drawer__header {
+    padding: var(--pad-l);
+    margin-block-end: var(--vs-l);
+  }
+
+  .site-drawer__nav {
+    padding-inline: var(--pad-l);
+    padding-block-end: var(--pad-l);
+    --gap: var(--vs-m);
+  }
+
+  .site-drawer * {
+    color: var(--dark-Neutral-950);
+  }
+
+  .site-drawer .close {
+    font-size: var(--fluid-type);
+    --fl: 5;
+  }
+
+  .site-drawer a {
+    font-size: var(--fluid-type);
+    letter-spacing: var(--type-track-ui);
+    text-decoration: none;
+  }
+
+  .site-drawer a[aria-current="page"] {
+    text-decoration: underline;
+  }
+
+}
+
+/* end @layer custom */
