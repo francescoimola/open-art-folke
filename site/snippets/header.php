@@ -11,7 +11,8 @@
   <?= vite()->js('index.js', ['defer' => true]) ?>
 
   <!-- Per-page CSS / JS (loaded only when present) -->
-  <?php $pageCss = vite()->css("templates/{$page->template()}.css", try: true) ?>
+  <?php $pageCss = vite()->css("templates/{$page->template()}.css", try: true)
+              ?? vite()->css("templates/{$page->template()}.scss", try: true) ?>
   <?php $pageJs = vite()->js("templates/{$page->template()}.js", ['defer' => true], try: true) ?>
   <?= $pageCss ?>
 </head>

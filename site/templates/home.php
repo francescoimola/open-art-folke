@@ -6,18 +6,27 @@
   <a class="hero__arrow fs-xl" href="#intro" aria-label="Scroll to content">↓</a>
 </section>
 
-<section id="intro" class="panel full-bleed stack-section half layout-split theme-brand" style="--gap: var(--vs-l);">
+<section id="intro" class="panel full-bleed stack-section half layout-split theme-brand">
   <div class="fc readable">
     <p class="statement">Open Art Folke is <a href="#">a community of 200+ artists and makers</a> in Folkestone. Since 2024, we've run <a href="#">an open house-style festival</a> to keep the creative energy alive, welcome people into our studios, and take over public spaces to share what we've been making.</p>
   </div>
   <p class="intro__date right-aligned row">Open Art '26 runs 9–11 October 2026</p>
 </section>
 
-<section class="panel theme-crimson full-bleed stack-section layout-split" style="--gap: var(--vs-l);">
-  <div class="fc readable">
-    <p class="statement">Hello! Open Art Folke is <a href="#">a community of 200+ artists and makers</a> in Folkestone. Since 2024, we've run <a href="#">an open house-style festival</a> to keep the creative energy alive, welcome people into our studios, and take over public spaces to share what we've been making.</p>
+<section class="theme-paper full-bleed stack-section layout-split">
+  <div class="fc readable split vertical">
+    <p class="statement panel">Hello! Open Art Folke is <a href="#">a community of 200+ artists and makers</a> in Folkestone. Since 2024, we've run <a href="#">an open house-style festival</a> to keep the creative energy alive, welcome people into our studios, and take over public spaces to share what we've been making.</p>
+    <div class="stack panel">
+      <div class="cluster">
+        <a href="#" class="button button-cta">Explore the 2026 programme</a>
+        <a href="#" class="button button-secondary button-cta">Register as an artist</a>
+      </div>
+      <small class="row">Open Art is 99% free to attend, but some events require a paid reservation</small>
+    </div>
   </div>
-  <p class="intro__date right-aligned row">Open Art '26 runs 9–11 October 2026</p>
+  <img src="/assets/images/visitors.jpg" alt="" class="image-cover" aria-hidden="true">
 </section>
 
 <?php snippet('footer') ?>
+
+

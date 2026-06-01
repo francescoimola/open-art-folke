@@ -24,5 +24,8 @@
   },
   "dependencies": {
     "@drop-in/graffiti": "^4.29.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

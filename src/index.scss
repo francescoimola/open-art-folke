@@ -1,7 +1,8 @@
 @use './mixins' as *;
+@use './reset';
 
-@layer reset, fonts, graffiti, colors, custom;
-
+// @import is intentional: @use does not support the layer() annotation.
+// Remove only when Sass adds @use … layer() support.
 @import "@drop-in/graffiti" layer(graffiti);
 
 /* ──────────────────────────────────────────────────────────────
@@ -29,8 +30,6 @@
 }
 
 /* end @layer fonts */
-
-@import './reset';
 
 /* ──────────────────────────────────────────────────────────────
    Radix Colors Custom Palette
@@ -107,10 +106,10 @@
 
     /* Opacity variants for primary colors */
     @each $pct in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
-      --red-9-#{$pct}:   color-mix(in srgb, var(--red-9)   #{$pct}%, transparent);
-      --red-12-#{$pct}:  color-mix(in srgb, var(--red-12)  #{$pct}%, transparent);
-      --gray-9-#{$pct}:  color-mix(in srgb, var(--gray-9)  #{$pct}%, transparent);
-      --gray-12-#{$pct}: color-mix(in srgb, var(--gray-12) #{$pct}%, transparent);
+      --red-9-#{$pct}: color-mix(in srgb, var(--red-9) #{$pct * 1%}, transparent);
+      --red-12-#{$pct}: color-mix(in srgb, var(--red-12) #{$pct * 1%}, transparent);
+      --gray-9-#{$pct}: color-mix(in srgb, var(--gray-9) #{$pct * 1%}, transparent);
+      --gray-12-#{$pct}: color-mix(in srgb, var(--gray-12) #{$pct * 1%}, transparent);
     }
   }
 
@@ -184,10 +183,10 @@
 
         /* Opacity variants for primary colors (P3) */
         @each $pct in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
-          --red-9-#{$pct}:   color-mix(in oklch, var(--red-9)   #{$pct}%, transparent);
-          --red-12-#{$pct}:  color-mix(in oklch, var(--red-12)  #{$pct}%, transparent);
-          --gray-9-#{$pct}:  color-mix(in oklch, var(--gray-9)  #{$pct}%, transparent);
-          --gray-12-#{$pct}: color-mix(in oklch, var(--gray-12) #{$pct}%, transparent);
+          --red-9-#{$pct}: color-mix(in oklch, var(--red-9) #{$pct * 1%}, transparent);
+          --red-12-#{$pct}: color-mix(in oklch, var(--red-12) #{$pct * 1%}, transparent);
+          --gray-9-#{$pct}: color-mix(in oklch, var(--gray-9) #{$pct * 1%}, transparent);
+          --gray-12-#{$pct}: color-mix(in oklch, var(--gray-12) #{$pct * 1%}, transparent);
         }
       }
     }
@@ -476,6 +475,13 @@
     container-type: inline-size;
   }
 
+  .image-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
   /* Full-bleed — escape a constrained container to full viewport width.
      Reusable sanctioned custom class (Graffiti has no equivalent). */
   .full-bleed {
@@ -490,10 +496,14 @@
     background: var(--section-bg, var(--bg));
   }
 
-  .stack-section.half { min-height: calc(50dvh - var(--nav-height, 6rem)); }
+  .stack-section.half {
+    min-height: calc(50dvh - var(--nav-height, 6rem));
+  }
 
   section.hero {
-    &.stack-section { top: 0; }
+    &.stack-section {
+      top: 0;
+    }
 
     height: 100dvh;
     margin-top: calc(-1 * var(--nav-height, 6rem));
@@ -504,29 +514,31 @@
     justify-content: center;
     overflow: hidden;
 
-    > h1 {
+    >h1 {
       --fl: 6;
       color: white;
       font-size: var(--fluid-type);
       text-box-edge: cap alphabetic;
     }
 
-    > *:not(.hero__bg, .hero__arrow) {
+    >*:not(.hero__bg, .hero__arrow) {
       position: relative;
       z-index: 1;
     }
 
-    > .hero__arrow { z-index: 1; }
+    >.hero__arrow {
+      z-index: 1;
+    }
   }
 
   .hero__bg {
     position: absolute;
     inset: 0;
+    z-index: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    z-index: 0;
   }
 
   .hero__arrow {
@@ -709,15 +721,22 @@
       color: var(--dark-Neutral-950);
       white-space: nowrap;
 
-      &[aria-current="page"] { text-decoration: underline; }
+      &[aria-current="page"] {
+        text-decoration: underline;
+      }
     }
 
     /* Mobile: hide inline links, show "Menu" toggle */
     @include below-tablet {
-      &__links,
-      &__register { display: none; }
 
-      &__menu-toggle { display: inline; }
+      &__links,
+      &__register {
+        display: none;
+      }
+
+      &__menu-toggle {
+        display: inline;
+      }
     }
   }
 
@@ -740,7 +759,9 @@
       --gap: var(--vs-m);
     }
 
-    * { color: var(--dark-Neutral-950); }
+    * {
+      color: var(--dark-Neutral-950);
+    }
 
     .close {
       font-size: var(--fluid-type);
@@ -752,7 +773,91 @@
       letter-spacing: var(--type-track-ui);
       text-decoration: none;
 
-      &[aria-current="page"] { text-decoration: underline; }
+      &[aria-current="page"] {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  /* Remove Graffiti's inset top-highlight gloss from all buttons */
+  button,
+  .button {
+    box-shadow: 0 1px 2px var(--button-shadow);
+    &:hover  { box-shadow: 0 2px 4px var(--button-shadow); }
+    &:active { box-shadow: 0 1px 2px var(--button-shadow); }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Default button — brand red surface, light text.
+     Overrides Graffiti's gray default so a plain button/a.button is red
+     without needing an extra .primary class anywhere.
+  ────────────────────────────────────────────────────────────── */
+
+  button,
+  .button {
+    --button-color: var(--light-Brand-500);
+    color: var(--light-Neutral-50);
+    --button-bg-top: var(--button-color);
+    --button-bg-bottom: var(--button-color);
+    --button-border: color-mix(in oklab, var(--button-color) 95%, black);
+    --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
+
+
+    &:hover {
+      --button-bg-top: light-dark(
+        color-mix(in oklab, var(--button-color) 85%, white),
+        color-mix(in oklab, var(--button-color) 95%, black)
+      );
+      --button-bg-bottom: light-dark(
+        color-mix(in oklab, var(--button-color) 92%, white),
+        var(--button-color)
+      );
+    }
+
+    &:active {
+      --button-bg-top: light-dark(
+        color-mix(in oklab, var(--button-color) 88%, black),
+        color-mix(in oklab, var(--button-color) 75%, black)
+      );
+      --button-bg-bottom: light-dark(
+        color-mix(in oklab, var(--button-color) 80%, black),
+        color-mix(in oklab, var(--button-color) 70%, black)
+      );
+    }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     CTA buttons — flat-cornered, statement-scale; used in homepage sections
+     Reason: Graffiti's default button has --br-m + small padding; the OAF
+     design uses rectangular blocks at a much larger scale.
+  ────────────────────────────────────────────────────────────── */
+
+  .button-cta {
+    border-radius: 0;
+    padding-block: var(--vs-base);
+    padding-inline: var(--pad-xl);
+    --fl: 1;
+    font-size: var(--fluid-type);
+    font-variation-settings: "wght" 400;
+  }
+
+  /* Secondary CTA — exact Figma values: --light-Brand-50 (#FFE0DB) bg, --light-Brand-600 (#B60018) text.
+     Overrides Graffiti's --button-* derivation chain directly. */
+  .button-secondary {
+    --button-bg-top: var(--light-Brand-50);
+    --button-bg-bottom: var(--light-Brand-50);
+    color: var(--primary);
+    --button-border: none;
+    --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--light-Brand-300) 40%, black) 22%, transparent);
+
+    &:hover {
+      --button-bg-top: var(--light-Brand-100);
+      --button-bg-bottom: var(--light-Brand-200);
+    }
+
+    &:active {
+      --button-bg-top: var(--light-Brand-200);
+      --button-bg-bottom: var(--light-Brand-300);
     }
   }
 
