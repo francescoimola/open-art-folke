@@ -106,45 +106,12 @@
     --color-background: #fffbfa;
 
     /* Opacity variants for primary colors */
-    --red-9-10: color-mix(in srgb, var(--red-9) 10%, transparent);
-    --red-9-20: color-mix(in srgb, var(--red-9) 20%, transparent);
-    --red-9-30: color-mix(in srgb, var(--red-9) 30%, transparent);
-    --red-9-40: color-mix(in srgb, var(--red-9) 40%, transparent);
-    --red-9-50: color-mix(in srgb, var(--red-9) 50%, transparent);
-    --red-9-60: color-mix(in srgb, var(--red-9) 60%, transparent);
-    --red-9-70: color-mix(in srgb, var(--red-9) 70%, transparent);
-    --red-9-80: color-mix(in srgb, var(--red-9) 80%, transparent);
-    --red-9-90: color-mix(in srgb, var(--red-9) 90%, transparent);
-
-    --red-12-10: color-mix(in srgb, var(--red-12) 10%, transparent);
-    --red-12-20: color-mix(in srgb, var(--red-12) 20%, transparent);
-    --red-12-30: color-mix(in srgb, var(--red-12) 30%, transparent);
-    --red-12-40: color-mix(in srgb, var(--red-12) 40%, transparent);
-    --red-12-50: color-mix(in srgb, var(--red-12) 50%, transparent);
-    --red-12-60: color-mix(in srgb, var(--red-12) 60%, transparent);
-    --red-12-70: color-mix(in srgb, var(--red-12) 70%, transparent);
-    --red-12-80: color-mix(in srgb, var(--red-12) 80%, transparent);
-    --red-12-90: color-mix(in srgb, var(--red-12) 90%, transparent);
-
-    --gray-9-10: color-mix(in srgb, var(--gray-9) 10%, transparent);
-    --gray-9-20: color-mix(in srgb, var(--gray-9) 20%, transparent);
-    --gray-9-30: color-mix(in srgb, var(--gray-9) 30%, transparent);
-    --gray-9-40: color-mix(in srgb, var(--gray-9) 40%, transparent);
-    --gray-9-50: color-mix(in srgb, var(--gray-9) 50%, transparent);
-    --gray-9-60: color-mix(in srgb, var(--gray-9) 60%, transparent);
-    --gray-9-70: color-mix(in srgb, var(--gray-9) 70%, transparent);
-    --gray-9-80: color-mix(in srgb, var(--gray-9) 80%, transparent);
-    --gray-9-90: color-mix(in srgb, var(--gray-9) 90%, transparent);
-
-    --gray-12-10: color-mix(in srgb, var(--gray-12) 10%, transparent);
-    --gray-12-20: color-mix(in srgb, var(--gray-12) 20%, transparent);
-    --gray-12-30: color-mix(in srgb, var(--gray-12) 30%, transparent);
-    --gray-12-40: color-mix(in srgb, var(--gray-12) 40%, transparent);
-    --gray-12-50: color-mix(in srgb, var(--gray-12) 50%, transparent);
-    --gray-12-60: color-mix(in srgb, var(--gray-12) 60%, transparent);
-    --gray-12-70: color-mix(in srgb, var(--gray-12) 70%, transparent);
-    --gray-12-80: color-mix(in srgb, var(--gray-12) 80%, transparent);
-    --gray-12-90: color-mix(in srgb, var(--gray-12) 90%, transparent);
+    @each $pct in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
+      --red-9-#{$pct}:   color-mix(in srgb, var(--red-9)   #{$pct}%, transparent);
+      --red-12-#{$pct}:  color-mix(in srgb, var(--red-12)  #{$pct}%, transparent);
+      --gray-9-#{$pct}:  color-mix(in srgb, var(--gray-9)  #{$pct}%, transparent);
+      --gray-12-#{$pct}: color-mix(in srgb, var(--gray-12) #{$pct}%, transparent);
+    }
   }
 
   @supports (color: color(display-p3 1 1 1)) {
@@ -216,45 +183,12 @@
         --gray-track: oklch(62.9% 0.0154 22.85);
 
         /* Opacity variants for primary colors (P3) */
-        --red-9-10: color-mix(in oklch, var(--red-9) 10%, transparent);
-        --red-9-20: color-mix(in oklch, var(--red-9) 20%, transparent);
-        --red-9-30: color-mix(in oklch, var(--red-9) 30%, transparent);
-        --red-9-40: color-mix(in oklch, var(--red-9) 40%, transparent);
-        --red-9-50: color-mix(in oklch, var(--red-9) 50%, transparent);
-        --red-9-60: color-mix(in oklch, var(--red-9) 60%, transparent);
-        --red-9-70: color-mix(in oklch, var(--red-9) 70%, transparent);
-        --red-9-80: color-mix(in oklch, var(--red-9) 80%, transparent);
-        --red-9-90: color-mix(in oklch, var(--red-9) 90%, transparent);
-
-        --red-12-10: color-mix(in oklch, var(--red-12) 10%, transparent);
-        --red-12-20: color-mix(in oklch, var(--red-12) 20%, transparent);
-        --red-12-30: color-mix(in oklch, var(--red-12) 30%, transparent);
-        --red-12-40: color-mix(in oklch, var(--red-12) 40%, transparent);
-        --red-12-50: color-mix(in oklch, var(--red-12) 50%, transparent);
-        --red-12-60: color-mix(in oklch, var(--red-12) 60%, transparent);
-        --red-12-70: color-mix(in oklch, var(--red-12) 70%, transparent);
-        --red-12-80: color-mix(in oklch, var(--red-12) 80%, transparent);
-        --red-12-90: color-mix(in oklch, var(--red-12) 90%, transparent);
-
-        --gray-9-10: color-mix(in oklch, var(--gray-9) 10%, transparent);
-        --gray-9-20: color-mix(in oklch, var(--gray-9) 20%, transparent);
-        --gray-9-30: color-mix(in oklch, var(--gray-9) 30%, transparent);
-        --gray-9-40: color-mix(in oklch, var(--gray-9) 40%, transparent);
-        --gray-9-50: color-mix(in oklch, var(--gray-9) 50%, transparent);
-        --gray-9-60: color-mix(in oklch, var(--gray-9) 60%, transparent);
-        --gray-9-70: color-mix(in oklch, var(--gray-9) 70%, transparent);
-        --gray-9-80: color-mix(in oklch, var(--gray-9) 80%, transparent);
-        --gray-9-90: color-mix(in oklch, var(--gray-9) 90%, transparent);
-
-        --gray-12-10: color-mix(in oklch, var(--gray-12) 10%, transparent);
-        --gray-12-20: color-mix(in oklch, var(--gray-12) 20%, transparent);
-        --gray-12-30: color-mix(in oklch, var(--gray-12) 30%, transparent);
-        --gray-12-40: color-mix(in oklch, var(--gray-12) 40%, transparent);
-        --gray-12-50: color-mix(in oklch, var(--gray-12) 50%, transparent);
-        --gray-12-60: color-mix(in oklch, var(--gray-12) 60%, transparent);
-        --gray-12-70: color-mix(in oklch, var(--gray-12) 70%, transparent);
-        --gray-12-80: color-mix(in oklch, var(--gray-12) 80%, transparent);
-        --gray-12-90: color-mix(in oklch, var(--gray-12) 90%, transparent);
+        @each $pct in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
+          --red-9-#{$pct}:   color-mix(in oklch, var(--red-9)   #{$pct}%, transparent);
+          --red-12-#{$pct}:  color-mix(in oklch, var(--red-12)  #{$pct}%, transparent);
+          --gray-9-#{$pct}:  color-mix(in oklch, var(--gray-9)  #{$pct}%, transparent);
+          --gray-12-#{$pct}: color-mix(in oklch, var(--gray-12) #{$pct}%, transparent);
+        }
       }
     }
   }
@@ -558,11 +492,9 @@
 
   .stack-section.half { min-height: calc(50dvh - var(--nav-height, 6rem)); }
 
-  section.hero.stack-section {
-    top: 0;
-  }
-
   section.hero {
+    &.stack-section { top: 0; }
+
     height: 100dvh;
     margin-top: calc(-1 * var(--nav-height, 6rem));
     padding: var(--pad-l);
@@ -571,13 +503,20 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-  }
 
-  section.hero>h1 {
-    --fl: 6;
-    color: white;
-    font-size: var(--fluid-type);
-    text-box-edge: cap alphabetic;
+    > h1 {
+      --fl: 6;
+      color: white;
+      font-size: var(--fluid-type);
+      text-box-edge: cap alphabetic;
+    }
+
+    > *:not(.hero__bg, .hero__arrow) {
+      position: relative;
+      z-index: 1;
+    }
+
+    > .hero__arrow { z-index: 1; }
   }
 
   .hero__bg {
@@ -588,15 +527,6 @@
     object-fit: cover;
     object-position: center;
     z-index: 0;
-  }
-
-  section.hero>*:not(.hero__bg, .hero__arrow) {
-    position: relative;
-    z-index: 1;
-  }
-
-  section.hero>.hero__arrow {
-    z-index: 1;
   }
 
   .hero__arrow {
@@ -701,11 +631,11 @@
   }
 
 
-  @media only screen and (width > 768px) {
+  @media (width > 768px) {
     .right-aligned {
-    width: 100%;
-    text-align: right;
-  }
+      width: 100%;
+      text-align: right;
+    }
   }
 
 
@@ -719,127 +649,111 @@
     inset-inline: 0;
     z-index: 100;
     background-color: var(--dark-Brand-600);
-  }
 
-  .site-nav__bar {
-    align-items: center;
-    padding-inline: var(--pad-xl);
-    padding-block: var(--vs-base);
-  }
-
-  .site-nav__group {
-    align-items: center;
-    --gap: var(--vs-m);
-  }
-
-  .site-nav__links {
-    align-items: center;
-    --gap: 0;
-  }
-
-  .site-nav__logo {
-    display: flex;
-    flex-shrink: 0;
-    text-decoration: none;
-    color: var(--dark-Neutral-950);
-  }
-
-  .site-nav__logo svg {
-    height: var(--vs-l);
-    width: auto;
-  }
-
-  .site-nav a,
-  .site-nav__register,
-  .site-nav__menu-toggle {
-    letter-spacing: var(--type-track-ui);
-  }
-
-  .site-nav__register {
-    color: var(--dark-Neutral-950);
-  }
-
-  .site-nav__menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: var(--dark-Neutral-950);
-    font: inherit;
-  }
-
-  .site-nav li:not(:last-child)::after {
-    content: ",\00a0";
-    color: var(--dark-Neutral-950);
-  }
-
-  .site-nav li {
-    display: flex;
-    align-items: center;
-  }
-
-  .site-nav a {
-    color: var(--dark-Neutral-950);
-    white-space: nowrap;
-  }
-
-  .site-nav a[aria-current="page"] {
-    text-decoration: underline;
-  }
-
-  /* Mobile: hide inline links, show "Menu" toggle */
-  @media (width < 768px) {
-    .site-nav__links {
-      display: none;
+    &__bar {
+      align-items: center;
+      padding-inline: var(--pad-xl);
+      padding-block: var(--vs-base);
     }
 
-    .site-nav__register {
-      display: none;
+    &__group {
+      align-items: center;
+      --gap: var(--vs-m);
     }
 
-    .site-nav__menu-toggle {
-      display: inline;
+    &__links {
+      align-items: center;
+      --gap: 0;
+    }
+
+    &__logo {
+      display: flex;
+      flex-shrink: 0;
+      text-decoration: none;
+      color: var(--dark-Neutral-950);
+
+      svg {
+        height: var(--vs-l);
+        width: auto;
+      }
+    }
+
+    &__register {
+      letter-spacing: var(--type-track-ui);
+      color: var(--dark-Neutral-950);
+    }
+
+    &__menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: var(--dark-Neutral-950);
+      font: inherit;
+      letter-spacing: var(--type-track-ui);
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+
+      &:not(:last-child)::after {
+        content: ",\00a0";
+        color: var(--dark-Neutral-950);
+      }
+    }
+
+    a {
+      letter-spacing: var(--type-track-ui);
+      color: var(--dark-Neutral-950);
+      white-space: nowrap;
+
+      &[aria-current="page"] { text-decoration: underline; }
+    }
+
+    /* Mobile: hide inline links, show "Menu" toggle */
+    @include below-tablet {
+      &__links,
+      &__register { display: none; }
+
+      &__menu-toggle { display: inline; }
     }
   }
 
   /* ──────────────────────────────────────────────────────────────
-     Drawer 
+     Drawer
   ────────────────────────────────────────────────────────────── */
 
   .site-drawer {
     --drawer-bg: var(--dark-Brand-600);
     color: var(--dark-Neutral-950);
-  }
 
-  .site-drawer__header {
-    padding: var(--pad-l);
-    margin-block-end: var(--vs-l);
-  }
+    &__header {
+      padding: var(--pad-l);
+      margin-block-end: var(--vs-l);
+    }
 
-  .site-drawer__nav {
-    padding-inline: var(--pad-l);
-    padding-block-end: var(--pad-l);
-    --gap: var(--vs-m);
-  }
+    &__nav {
+      padding-inline: var(--pad-l);
+      padding-block-end: var(--pad-l);
+      --gap: var(--vs-m);
+    }
 
-  .site-drawer * {
-    color: var(--dark-Neutral-950);
-  }
+    * { color: var(--dark-Neutral-950); }
 
-  .site-drawer .close {
-    font-size: var(--fluid-type);
-    --fl: 5;
-  }
+    .close {
+      font-size: var(--fluid-type);
+      --fl: 5;
+    }
 
-  .site-drawer a {
-    font-size: var(--fluid-type);
-    letter-spacing: var(--type-track-ui);
-    text-decoration: none;
-  }
+    a {
+      font-size: var(--fluid-type);
+      letter-spacing: var(--type-track-ui);
+      text-decoration: none;
 
-  .site-drawer a[aria-current="page"] {
-    text-decoration: underline;
+      &[aria-current="page"] { text-decoration: underline; }
+    }
   }
 
 }
