@@ -10,7 +10,7 @@
  */
 ?>
 <div class="stack" style="width: 100%;">
-  <div class="split">
+  <div class="split no-wrap">
         <small><?= $page->countdownStartDate()->format('M Y') ?></small>
         <small style="margin-right: var(--vs-s)"><?= $page->countdownEndDate()->format('M Y') ?></small>
   </div>

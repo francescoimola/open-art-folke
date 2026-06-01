@@ -588,6 +588,11 @@
     }
   }
 
+  .split:where(.no-wrap) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
   /* Theme presets — set the four colour endpoints; Graffiti's
      `:where([class*="theme-"])` rule re-derives --fg, --bg, opaque
      scales, borders and focus-ring from these automatically. The
