@@ -922,6 +922,14 @@
   }
 
 
+  @media only screen and (width > 768px) {
+    .right-aligned {
+    width: 100%;
+    text-align: right;
+  }
+  }
+
+
   /* ──────────────────────────────────────────────────────────────
      Site nav — fixed, solid background
   ────────────────────────────────────────────────────────────── */

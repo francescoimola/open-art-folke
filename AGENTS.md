@@ -1,6 +1,6 @@
 # Open Art Folke — Agent Instructions
 
-**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm · [Graffiti UI](https://graffiti-ui.com/) 4.29.0 (CSS)
+**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm · [Graffiti UI](https://graffiti-ui.com/) 4.29.0 (CSS) · SCSS (Sass)
 
 ---
 
@@ -34,7 +34,8 @@ site/
   snippets/            # Reusable PHP partials (header, footer, menu)
   templates/           # One .php file per page type
 src/
-  index.{js,css}       # Global entry points
+  index.{js,scss}      # Global entry points (SCSS compiled by Vite)
+  _mixins.scss         # Breakpoint & container query mixins
   templates/           # Per-template JS/CSS
   assets/              # Static assets (fonts, images)
 public/
@@ -64,7 +65,7 @@ The project uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`), 
 
 > **Workflow:** Before writing or refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, token bridge, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.site-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-*`, `.accent`, `.statement`), and the Figma → Graffiti translation process. Full rationale: `docs/superpowers/specs/2026-05-29-graffiti-workflow-design.md`.
 
-`src/index.css` is organised with cascade layers in this precedence:
+`src/index.scss` is organised with cascade layers in this precedence. It imports `src/_mixins.scss` (breakpoint and container query mixins) at the top via `@use './mixins' as *;`.
 
 1. `@layer reset` — hand-rolled CSS reset (box-sizing, margin/padding zero, media defaults, reduced-motion handling)
 2. `@layer fonts` — Inclusive Sans Variable (300–700, normal + italic)
@@ -100,7 +101,7 @@ Swapping the theme class makes `.accent` automatically adjust colour (red on lig
 1. Create `content/<slug>/` with a `<slug>.txt` file containing `Title:` and `Text:` fields
 2. Add a blueprint at `site/blueprints/pages/<slug>.yml`
 3. Add a template at `site/templates/<slug>.php` **only if the page diverges from the standard content layout.** Generic title-plus-text pages need no template — they fall back to `site/templates/default.php`. Do not duplicate `default.php`.
-4. If the page needs its own styles or scripts, add `src/templates/<slug>.{css,js}` — Vite picks these up automatically via glob
+4. If the page needs its own styles or scripts, add `src/templates/<slug>.{scss,css,js}` — Vite picks these up automatically via glob
 
 ---
 
@@ -108,7 +109,7 @@ Swapping the theme class makes `.accent` automatically adjust colour (red on lig
 
 ### Always safe to do
 - Edit `.php` templates in `site/templates/` and `site/snippets/`
-- Edit `.css` and `.js` files in `src/`
+- Edit `.scss`, `.css`, and `.js` files in `src/`
 - Edit `.txt` content files in `content/`
 - Edit `.yml` blueprints in `site/blueprints/`
 - Run `pnpm dev`, `pnpm build`, `composer update`
