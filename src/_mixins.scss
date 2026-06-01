@@ -1,0 +1,11 @@
+// Breakpoints — match Graffiti UI 4.29.0
+@mixin mobile        { @media (width < 640px)   { @content; } }
+@mixin below-tablet  { @media (width < 768px)   { @content; } }
+@mixin tablet        { @media (width >= 768px)  { @content; } }
+@mixin below-desktop { @media (width < 1024px)  { @content; } }
+
+// Container queries — match Graffiti UI 4.29.0
+@mixin cq-compact    { @container (max-width: 30rem) { @content; } }
+@mixin cq-narrow     { @container (max-width: 500px) { @content; } }
+@mixin cq-medium     { @container (max-width: 600px) { @content; } }
+@mixin cq-wide       { @container (max-width: 768px) { @content; } }
