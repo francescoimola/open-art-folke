@@ -7,7 +7,7 @@
   <title><?= $page->title() ?> – <?= $site->title() ?></title>
 
   <!-- Shared CSS / JS -->
-  <?= vite()->css('index.css') ?>
+  <?= vite()->css('index.scss') ?>
   <?= vite()->js('index.js', ['defer' => true]) ?>
 
   <!-- Per-page CSS / JS (loaded only when present) -->
