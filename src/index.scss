@@ -471,14 +471,15 @@
     font-variation-settings: "wght" 400;
   }
 
-  p {
-    color: var(--fg-6);
+  p:not(.statement) {
+    color: var(--fg-7);
+    text-box-edge: cap alphabetic;
   }
 
   small,
   .ui-caption {
     font-variation-settings: "wght" 420;
-    color: color-mix(in oklab, var(--fg) 75%, var(--bg));
+    color: var(--fg-6);
   }
 
   main {
@@ -489,6 +490,10 @@
   section {
     width: 100%;
     container-type: inline-size;
+  }
+
+  p:not(.unwrapped) {
+    text-wrap: balance;
   }
 
   .image-cover {
@@ -702,6 +707,7 @@
       flex-shrink: 0;
       text-decoration: none;
       color: var(--dark-Neutral-950);
+      margin-top: calc(var(--vs-xs) * -1);
 
       svg {
         height: var(--vs-l);
@@ -827,6 +833,9 @@
     box-shadow: 0 1px 2px var(--button-shadow);
     &:hover  { box-shadow: 0 2px 4px var(--button-shadow); }
     &:active { box-shadow: 0 1px 2px var(--button-shadow); }
+    &.fit-width {
+      width: fit-content;
+    }
   }
 
   /* ──────────────────────────────────────────────────────────────

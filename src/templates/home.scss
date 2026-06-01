@@ -1,0 +1,53 @@
+@use '../mixins' as *;
+
+/* ──────────────────────────────────────────────────────────────
+   Countdown banner
+   coat.png is one continuous layer behind a row of cells. Empty
+   cells are opaque pale (the section --bg, = Figma #fff1f1) and
+   cover the image; filled cells are transparent windows onto the
+   image. Each cell carries pale side-borders, so adjacent borders
+   meet to form the pale gutters between revealed slices — the
+   gutters read pale even over the image, matching the design.
+   Swapping the surrounding .theme-* recolours the empties + gutters
+   for free. Joins the project's `custom` cascade layer (ordered in
+   _layers.css).
+   ────────────────────────────────────────────────────────────── */
+@layer custom {
+
+  .countdown {
+    position: relative;
+    aspect-ratio: 1312 / 325; // matches the Figma band
+    overflow: hidden;
+    // Spent boxes sit a step lighter than the theme --bg so they read
+    // as boxes against the section; gutters stay at --bg. Derived from
+    // --bg so it follows whatever .theme-* surrounds the banner.
+    --countdown-empty: color-mix(in oklch, var(--bg), white 55%);
+  }
+
+  // Pre-edited artwork — deliberately no filter and no blend mode.
+  .countdown__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .countdown__grid {
+    position: absolute;
+    inset: 0;
+    display: flex;
+  }
+
+  .countdown__cell {
+    flex: 1 1 0;
+    box-sizing: border-box;
+    background: var(--countdown-empty); // spent: lighter than --bg, so it shows
+    border-inline: calc(var(--vs-s) / 2) solid var(--bg); // gutters = theme --bg
+
+    &.is-filled {
+      background: transparent; // reveals the continuous coat slice behind
+    }
+  }
+
+}

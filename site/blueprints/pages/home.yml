@@ -8,3 +8,11 @@ fields:
       - bold
       - italic
       - link
+  countdownstart:
+    type: date
+    label: Countdown start
+    default: 2026-01-01
+  countdownend:
+    type: date
+    label: Countdown end
+    default: 2026-10-09
