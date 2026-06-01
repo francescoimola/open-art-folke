@@ -1,6 +1,12 @@
 @use './mixins' as *;
 @use './reset';
 
+// Layer ordering must arrive before Graffiti's content so the browser
+// establishes reset < fonts < graffiti < colors < custom before it
+// encounters @layer graffiti from the import below.
+// Sass hoists CSS @imports to the top in source order, so _layers.css
+// (a plain CSS @import) must precede the Graffiti @import here.
+@import "./_layers.css";
 // @import is intentional: @use does not support the layer() annotation.
 // Remove only when Sass adds @use … layer() support.
 @import "@drop-in/graffiti" layer(graffiti);
@@ -413,12 +419,14 @@
     --text-decoration-thickness: 7%;
 
     /* Heading overlay — h1–h6 use Graffiti's --fl (h6=0 … h1=5).
-     Tracking and wght are linear functions of --fl. */
+     Tracking, wght, and line-height are linear functions of --fl. */
     --type-track-base: 0.01em;
     --type-track-step: 0.015em;
     --type-track-ui: calc(var(--type-track-base) - 0.03em);
     --type-wght-base: 600;
     --type-wght-step: 20;
+    --type-lh-base: 1.5;
+    --type-lh-step: 0.1;
   }
 
   body {
@@ -446,6 +454,9 @@
   .h5,
   .h6 {
     font-variation-settings: "wght" calc(var(--type-wght-base) - var(--type-wght-step) * var(--fl, 0));
+    --lh: calc(var(--type-lh-base) - var(--type-lh-step) * var(--fl, 0));
+    line-height: var(--lh);
+    text-box-edge: cap alphabetic;
   }
 
   a {
@@ -463,6 +474,7 @@
   small,
   .ui-caption {
     font-variation-settings: "wght" 420;
+    color: color-mix(in oklab, var(--fg) 75%, var(--bg));
   }
 
   main {
@@ -559,9 +571,12 @@
 
   /* Panel — the spacing shell. Padding + content rhythm only, no colour. */
   .panel {
-    padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
-    padding-block-start: var(--vs-xl);
-    padding-block-end: calc(var(--vs-xl)*2);
+    padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+    padding-block: var(--vs-xl) calc(var(--vs-xl) * 2);
+
+    &.even {
+      padding-block: var(--vs-xl);
+    }
   }
 
   /* Theme presets — set the four colour endpoints; Graffiti's
@@ -777,6 +792,29 @@
         text-decoration: underline;
       }
     }
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+     Margin utilities — Graffiti zeroes margins by default; these
+     classes restore intentional spacing via --vs-* tokens.
+     .mt-* → margin-block-start   .mb-* → margin-block-end
+     .my-* → margin-block (both)  .mx-* → margin-inline (both)
+     Scale: s=0.5rem  m=1.5rem  l=2rem  xl=4rem  xxl=6rem
+  ────────────────────────────────────────────────────────────── */
+
+  $margin-scale: (
+    's':   var(--vs-s),
+    'm':   var(--vs-m),
+    'l':   var(--vs-l),
+    'xl':  var(--vs-xl),
+    'xxl': var(--vs-xxl),
+  );
+
+  @each $name, $value in $margin-scale {
+    .mt-#{$name} { margin-block-start: #{$value}; }
+    .mb-#{$name} { margin-block-end:   #{$value}; }
+    .my-#{$name} { margin-block:       #{$value}; }
+    .mx-#{$name} { margin-inline:      #{$value}; }
   }
 
   /* Remove Graffiti's inset top-highlight gloss from all buttons */

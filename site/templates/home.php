@@ -14,14 +14,18 @@
 </section>
 
 <section class="theme-paper full-bleed stack-section layout-split">
-  <div class="fc readable split vertical">
-    <p class="statement panel">Hello! Open Art Folke is <a href="#">a community of 200+ artists and makers</a> in Folkestone. Since 2024, we've run <a href="#">an open house-style festival</a> to keep the creative energy alive, welcome people into our studios, and take over public spaces to share what we've been making.</p>
-    <div class="stack panel">
+  <div class="split vertical">
+    <div class="stack panel fc readable">
+      <h2><span style="color: var(--fg-6)">Open Art</span><br>The Festival</h2>
+      <p>A free pass* to connect with talented local creatives, experience their work, and learn about how it’s made.</p>
+      <p>Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
+    </div>
+    <div class="stack panel even">
       <div class="cluster">
         <a href="#" class="button button-cta">Explore the 2026 programme</a>
         <a href="#" class="button button-secondary button-cta">Register as an artist</a>
       </div>
-      <small class="row">Open Art is 99% free to attend, but some events require a paid reservation</small>
+      <small class="mt-s">Open Art is 99% free to attend, but some events require a paid reservation</small>
     </div>
   </div>
   <img src="/assets/images/visitors.jpg" alt="" class="image-cover" aria-hidden="true">
