@@ -712,7 +712,10 @@
       display: flex;
       flex-shrink: 0;
       text-decoration: none;
-      margin-top: calc(var(--vs-xs) * -1);
+
+      &.desktop-only {
+        margin-top: calc(var(--vs-xs) * -1);
+      }
 
       svg {
         height: var(--vs-l);

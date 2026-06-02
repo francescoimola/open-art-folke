@@ -1,6 +1,6 @@
 <header class="site-nav theme-brand" aria-label="<?= $site->title()->html() ?>">
   <nav class="site-nav__group">
-    <a href="<?= $site->url() ?>" class="site-nav__logo" aria-label="<?= $site->title()->html() ?> — home">
+    <a href="<?= $site->url() ?>" class="site-nav__logo desktop-only" aria-label="<?= $site->title()->html() ?> — home">
       <?php snippet('logo') ?>
     </a>
     <ul class="site-nav__links" role="list">
