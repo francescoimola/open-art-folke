@@ -412,7 +412,7 @@
     --color-error: light-dark(var(--light-Error-600), var(--dark-Error-700));
     --color-info: light-dark(var(--light-Info-500), var(--dark-Info-700));
 
-    /* Fixed nav height estimate — keeps body padding-top + scroll-padding-top in sync */
+    /* Sticky nav height estimate — used by scroll-padding and stack-sections */
     --nav-height: calc(var(--vs-base) * 2 + var(--vs-l));
     /* Text underline */
     --text-underline-offset: 0.22rem;
@@ -689,29 +689,29 @@
     top: 0;
     inset-inline: 0;
     z-index: 100;
-    background-color: var(--dark-Brand-600);
-
-    &__bar {
-      align-items: center;
-      padding-inline: var(--pad-xl);
-      padding-block: var(--vs-base);
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+    padding-inline: var(--pad-xl);
+    padding-block: var(--vs-base);
 
     &__group {
+      display: flex;
       align-items: center;
-      --gap: var(--vs-m);
+      gap: var(--vs-m);
     }
 
     &__links {
+      display: flex;
       align-items: center;
-      --gap: 0;
+      gap: 0;
     }
 
     &__logo {
       display: flex;
       flex-shrink: 0;
       text-decoration: none;
-      color: var(--dark-Neutral-950);
       margin-top: calc(var(--vs-xs) * -1);
 
       svg {
@@ -722,17 +722,10 @@
 
     &__register {
       letter-spacing: var(--type-track-ui);
-      color: var(--dark-Neutral-950);
     }
 
     &__menu-toggle {
       display: none;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      color: var(--dark-Neutral-950);
-      font: inherit;
       letter-spacing: var(--type-track-ui);
     }
 
@@ -742,13 +735,12 @@
 
       &:not(:last-child)::after {
         content: ",\00a0";
-        color: var(--dark-Neutral-950);
       }
     }
 
     a {
       letter-spacing: var(--type-track-ui);
-      color: var(--dark-Neutral-950);
+      text-decoration: underline;
       white-space: nowrap;
 
       &[aria-current="page"] {
@@ -756,7 +748,6 @@
       }
     }
 
-    /* Mobile: hide inline links, show "Menu" toggle */
     @include below-tablet {
 
       &__links,
@@ -765,7 +756,7 @@
       }
 
       &__menu-toggle {
-        display: inline;
+        display: inline-flex;
       }
     }
   }
@@ -775,9 +766,6 @@
   ────────────────────────────────────────────────────────────── */
 
   .site-drawer {
-    --drawer-bg: var(--dark-Brand-600);
-    color: var(--dark-Neutral-950);
-
     &__header {
       padding: var(--pad-l);
       margin-block-end: var(--vs-l);
@@ -787,10 +775,6 @@
       padding-inline: var(--pad-l);
       padding-block-end: var(--pad-l);
       --gap: var(--vs-m);
-    }
-
-    * {
-      color: var(--dark-Neutral-950);
     }
 
     .close {
@@ -833,8 +817,8 @@
   }
 
   /* Remove Graffiti's inset top-highlight gloss from all buttons */
-  button,
-  .button {
+  button:not(.minimal),
+  .button:not(.minimal) {
     box-shadow: 0 1px 2px var(--button-shadow);
     &:hover  { box-shadow: 0 2px 4px var(--button-shadow); }
     &:active { box-shadow: 0 1px 2px var(--button-shadow); }
@@ -846,11 +830,15 @@
   /* ──────────────────────────────────────────────────────────────
      Default button — brand red surface, light text.
      Overrides Graffiti's gray default so a plain button/a.button is red
-     without needing an extra .primary class anywhere.
+     without needing an extra .primary class anywhere. Stays a direct rule in
+     @layer custom (not a sublayer): its .button:not(.minimal) specificity (0,2,0)
+     must keep beating the `a { color: --fg-7 }` link rule above, since the CTAs
+     are <a> elements. Variants win over this via the higher `button-variants`
+     layer (see src/_layers.css), not by out-specifying it.
   ────────────────────────────────────────────────────────────── */
 
-  button,
-  .button {
+  button:not(.minimal),
+  .button:not(.minimal) {
     --button-color: var(--light-Brand-500);
     color: var(--light-Neutral-50);
     --button-bg-top: var(--button-color);
@@ -882,41 +870,6 @@
     }
   }
 
-  /* ──────────────────────────────────────────────────────────────
-     CTA buttons — flat-cornered, statement-scale; used in homepage sections
-     Reason: Graffiti's default button has --br-m + small padding; the OAF
-     design uses rectangular blocks at a much larger scale.
-  ────────────────────────────────────────────────────────────── */
-
-  .button-cta {
-    border-radius: 0;
-    padding-block: var(--vs-base);
-    padding-inline: var(--pad-xl);
-    --fl: 1;
-    font-size: var(--fluid-type);
-    font-variation-settings: "wght" 400;
-  }
-
-  /* Secondary CTA — exact Figma values: --light-Brand-50 (#FFE0DB) bg, --light-Brand-600 (#B60018) text.
-     Overrides Graffiti's --button-* derivation chain directly. */
-  .button-secondary {
-    --button-bg-top: var(--light-Brand-50);
-    --button-bg-bottom: var(--light-Brand-50);
-    color: var(--primary);
-    --button-border: none;
-    --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--light-Brand-300) 40%, black) 22%, transparent);
-
-    &:hover {
-      --button-bg-top: var(--light-Brand-100);
-      --button-bg-bottom: var(--light-Brand-200);
-    }
-
-    &:active {
-      --button-bg-top: var(--light-Brand-200);
-      --button-bg-bottom: var(--light-Brand-300);
-    }
-  }
-
   /* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
   .gap-none {
     --gap: 0;
@@ -945,3 +898,46 @@
 }
 
 /* end @layer custom */
+
+/* ──────────────────────────────────────────────────────────────
+   Button variants — own top-level layer, ordered AFTER `custom` (see
+   src/_layers.css). This is what makes variants win over the base treatment:
+   not by out-specifying the base's (0,2,0) selector, but by living in a higher
+   cascade layer. Future variants can stay single-class and never need a hack.
+   Kept in this one file; "split" here means cascade layer, not a separate file.
+────────────────────────────────────────────────────────────── */
+@layer button-variants {
+  /* CTA buttons — flat-cornered, statement-scale; used in homepage sections.
+     Reason: Graffiti's default button has --br-m + small padding; the OAF
+     design uses rectangular blocks at a much larger scale. */
+  .button-cta {
+    border-radius: 0;
+    padding-block: var(--vs-base);
+    padding-inline: var(--pad-xl);
+    --fl: 1;
+    font-size: var(--fluid-type);
+    font-variation-settings: "wght" 400;
+  }
+
+  /* Secondary CTA — pale brand surface (--light-Brand-50, Figma #FFE0DB) with
+     brand-red text. Resting surface, border and shadow all derive from the single
+     --button-color knob; only the text colour is set independently, since foreground
+     can't be derived from the surface hue. Hover/active set explicit darker steps
+     because the base hover math mixes --button-color toward white/black, which barely
+     moves on an already-pale surface and wouldn't read as a state change. */
+  .button-secondary {
+    --button-color: var(--light-Brand-50);
+    color: var(--primary);
+    --button-border: transparent;
+
+    &:hover {
+      --button-bg-top: var(--light-Brand-100);
+      --button-bg-bottom: var(--light-Brand-200);
+    }
+
+    &:active {
+      --button-bg-top: var(--light-Brand-200);
+      --button-bg-bottom: var(--light-Brand-300);
+    }
+  }
+}
