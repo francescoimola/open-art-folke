@@ -14,7 +14,7 @@ class HomePage extends Page
 {
   private const DEFAULT_START = '2026-01-01';
   private const DEFAULT_END = '2026-10-09';
-  private const TOTAL_BLOCKS = 10;
+  private const TOTAL_BLOCKS = 20;
 
   public function countdownStartDate(): DateTimeImmutable
   {

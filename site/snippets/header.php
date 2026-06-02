@@ -15,6 +15,7 @@
               ?? vite()->css("templates/{$page->template()}.scss", try: true) ?>
   <?php $pageJs = vite()->js("templates/{$page->template()}.js", ['defer' => true], try: true) ?>
   <?= $pageCss ?>
+  <?= $pageJs ?>
 </head>
 
 <body>

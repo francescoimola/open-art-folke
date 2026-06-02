@@ -18,10 +18,21 @@
     position: relative;
     aspect-ratio: 1312 / 325; // matches the Figma band
     overflow: hidden;
-    // Spent boxes sit a step lighter than the theme --bg so they read
-    // as boxes against the section; gutters stay at --bg. Derived from
-    // --bg so it follows whatever .theme-* surrounds the banner.
     --countdown-empty: color-mix(in oklch, var(--bg), white 55%);
+
+    // ── Animation knobs ──────────────────────────────────────────
+    // Override these on .countdown to retune the reveal without
+    // touching the keyframe or selector logic.
+    //
+    // --countdown-duration   per-cell slide time
+    // --countdown-stagger    extra delay per cell index (--i)
+    // --countdown-easing     timing function for each cell
+    //
+    // With 20 blocks: last cell fires at (19 × stagger) + duration.
+    // At 28ms stagger + 340ms duration = 872ms — under the 900ms cap.
+    --countdown-duration: 340ms;
+    --countdown-stagger:  60ms;
+    --countdown-easing:   cubic-bezier(0.16, 1, 0.3, 1); // expo-out feel
   }
 
   // Pre-edited artwork — deliberately no filter and no blend mode.
@@ -40,13 +51,55 @@
   }
 
   .countdown__cell {
+    position: relative;
     flex: 1 1 0;
     box-sizing: border-box;
-    background: var(--countdown-empty); // spent: lighter than --bg, so it shows
+    overflow: hidden; // clips the sliding ::after curtain
+    background: var(--countdown-empty);
     border-inline: calc(var(--vs-s) / 2) solid var(--bg); // gutters = theme --bg
 
     &.is-filled {
-      background: transparent; // reveals the continuous coat slice behind
+      background: transparent;
+    }
+  }
+
+  // Curtain: covers filled cells until the observer fires.
+  // JS adds .countdown--primed to show the curtain, then
+  // .countdown--revealed to animate it away.
+  .countdown--primed .countdown__cell.is-filled::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--countdown-empty);
+  }
+
+  .countdown--revealed .countdown__cell.is-filled::after {
+    animation:
+      countdown-cell-reveal
+      var(--countdown-duration, 340ms)
+      var(--countdown-easing, cubic-bezier(0.16, 1, 0.3, 1))
+      calc(var(--i, 0) * var(--countdown-stagger, 28ms))
+      both;
+  }
+
+  @keyframes countdown-cell-reveal {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100%); }
+  }
+
+  // On narrow viewports show 10 blocks instead of 20 — collapse every
+  // even cell to zero width. Visible cells keep odd --i values (0,2,4…18),
+  // so halve --countdown-stagger to preserve the same inter-cell pacing.
+  @include mobile {
+    .countdown__cell:nth-child(even) {
+      flex: 0 0 0;
+      min-width: 0;
+      overflow: hidden;
+      border-inline: none;
+    }
+
+    .countdown {
+      --countdown-stagger: 30ms;
     }
   }
 

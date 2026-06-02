@@ -917,6 +917,31 @@
     }
   }
 
+  /* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
+  .gap-none {
+    --gap: 0;
+  }
+
+  .gap-m {
+    --gap: var(--vs-m);
+  }
+
+  .gap-l {
+    --gap: var(--vs-l);
+  }
+
+  .gap-xl {
+    --gap: var(--vs-xl);
+  }
+
+  .gap-xxl {
+    --gap: var(--vs-xxl);
+  }
+
+  .no-gap {
+    --layout-gap: 0;
+  }
+
 }
 
 /* end @layer custom */

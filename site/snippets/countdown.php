@@ -18,7 +18,7 @@
     <img class="countdown__img" src="/assets/images/coat.png" alt="" aria-hidden="true">
     <div class="countdown__grid" role="img" aria-label="<?= $page->daysRemaining() ?> days remaining until Open Art Folke">
       <?php for ($i = 0; $i < $page->countdownTotalBlocks(); $i++): ?>
-        <span class="countdown__cell<?= $i < $page->countdownFilled() ? ' is-filled' : '' ?>" aria-hidden="true"></span>
+        <span class="countdown__cell<?= $i < $page->countdownFilled() ? ' is-filled' : '' ?>"<?= $i < $page->countdownFilled() ? " style=\"--i: $i\"" : '' ?> aria-hidden="true"></span>
       <?php endfor ?>
     </div>
   </div>
