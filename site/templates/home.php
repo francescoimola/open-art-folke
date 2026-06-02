@@ -42,10 +42,11 @@
     <?php $days = $page->daysRemaining() ?>
     <h2>There
       <?= $days === 1 ? 'is' : 'are' ?>
-      <?= $days ?>day
-      <?= $days === 1 ? '' : 's' ?>
+      <?= $days ?>
+      day<?= $days === 1 ? '' : 's' ?>
     until the next edition of Open Art Folke
-    </h2><p class="close-trim"> Some things, as you know, just take time</p>
+    </h2>
+      <p class="close-trim"> Some things, as you know, just take time</p>
   </div>
   <?php snippet('countdown') ?>
 </section>
@@ -58,17 +59,17 @@
     <div class="box panel even stack fc readable gap-m">
       <p class="fs-s">This year, the festival runs October 9 - 11. We will release the programme in the weeks leading up to the opening.</p>
       <p class="fs-s">Leave us your email and we'll be sure to tell you all about it as soon as we can.</p>
-      <form class="stack">
-        <form class="stack">
-          <div class="row">
-            <label for="actions-name">Email</label>
-            <input type="email" id="actions-email" placeholder="you@example.com"/>
-          </div>
-        </form>
-      </div>
+      <form class="grid" style="grid-template-columns: 2fr 1fr">
+        <div class="row">
+          <label for="actions-name">Email</label>
+          <input type="email" id="actions-email" placeholder="you@example.com"/>
+        </div>
+        <button class="button-cta" type="submit">Keep me posted</button>
+      </form>
     </div>
+  </div>
 
-  </section>
+</section>
 
-  <?php snippet('footer') ?>
+<?php snippet('footer') ?>
 
