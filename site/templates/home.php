@@ -56,16 +56,15 @@
   <div class="panel even split fc vertical gap-l">
     <h2>Looking for the Festival Programme?<br><span style="color: var(--fg-6)">You’re early</span>
     </h2>
-    <div class="box panel even stack fc readable gap-m">
-      <p class="fs-s">This year, the festival runs October 9 - 11. We will release the programme in the weeks leading up to the opening.</p>
-      <p class="fs-s">Leave us your email and we'll be sure to tell you all about it as soon as we can.</p>
-      <form class="grid" style="grid-template-columns: 2fr 1fr">
-        <div class="row">
-          <label for="actions-name">Email</label>
-          <input type="email" id="actions-email" placeholder="you@example.com"/>
-        </div>
-        <button class="button-cta" type="submit">Keep me posted</button>
-      </form>
+    <div class="box panel even stack fc readable gap-m pretty">
+      <p class="fs-s">We'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it as soon as we can.</p>
+      <div class="stack mt-l">
+        <label for="actions-email">Email</label>
+        <form class="input-group gap-s">
+          <input type="email" id="actions-email" placeholder="you@example.com" style="border-radius: 0"/>
+          <button class="button-cta" type="submit" style="border-radius: 0">Keep me posted</button>
+        </form>
+      </div>
     </div>
   </div>
 

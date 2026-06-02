@@ -472,8 +472,13 @@
   }
 
   p:not(.statement) {
-    color: var(--fg-7);
+     color: light-dark(var(--fg-7), var(--fg-8));
     text-box-edge: cap alphabetic;
+  }
+
+  ::placeholder {
+    color: var(--fg-5);
+    opacity: 1; /* Firefox applies its own opacity on top — reset it */
   }
 
   small,
@@ -494,6 +499,10 @@
 
   p:not(.unwrapped) {
     text-wrap: balance;
+  }
+
+  .pretty, .pretty p {
+    text-wrap: pretty;
   }
 
   .image-cover {
@@ -878,6 +887,14 @@
     --gap: 0;
   }
 
+  .gap-xs {
+    --gap: var(--pad-xs);
+  }
+
+  .gap-s {
+    --gap: var(--pad-s);
+  }
+
   .gap-m {
     --gap: var(--vs-m);
   }
@@ -896,6 +913,11 @@
 
   .no-gap {
     --layout-gap: 0;
+  }
+
+  /* Let .input-group consume --gap so gap-* utilities work on it */
+  .input-group {
+    gap: var(--gap, 0);
   }
 
 }
