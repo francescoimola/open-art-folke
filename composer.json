@@ -1,6 +1,6 @@
 {
-  "name": "arnoson/kirby-vite-multi-page-kit",
-  "description": "A multi-page Kirby CMS + Vite starter kit",
+  "name": "open-art-folke/site",
+  "description": "Website for Open Art Folke — Folkestone's first artist-run festival",
   "type": "project",
   "license": "GPL-3.0-or-later",
   "require": {

@@ -1,6 +1,6 @@
 <?php snippet('header') ?>
 
-<section class="hero stack-section flex text-center gap-none">
+<section class="hero stack-section flex text-center stack-gap-none">
   <img class="hero__bg" src="/assets/images/specsavers.jpg" alt="" aria-hidden="true">
   <h1>Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke</h1>
   <a class="hero__arrow fs-xl" href="#intro" aria-label="Scroll to content">↓</a>
@@ -17,7 +17,7 @@
   <p class="intro__date right-aligned row">Open Art '26 runs 9–11 October 2026</p>
 </section>
 
-<section class="theme-paper stack-section layout-split no-gap">
+<section class="theme-paper stack-section layout-split split-gap-none">
   <div class="split vertical panel even gap-l">
     <div class="stack fc readable gap-xl">
       <h2>
@@ -27,8 +27,8 @@
         <p class="fs-s close-trim">Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
       </div>
       <div class="stack ">
-        <a href="#" class="button">Explore the 2026 programme</a>
-        <a href="#" class="button button--secondary">Register as an artist</a>
+        <a href="#" class="button fit-width">Explore the 2026 programme</a>
+        <a href="#" class="button btt--secondary fit-width">Register as an artist</a>
       </div>
     </div>
     <small class="mt-s">* Open Art is 99% free to attend, but some events require a paid reservation</small>
@@ -41,10 +41,8 @@
     class="stack fc readable gap-l">
     <?php $days = $page->daysRemaining() ?>
     <h2>There
-      <?= $days === 1 ? 'is' : 'are' ?>
       <?= $days ?>
-      day
-      <?= $days === 1 ? '' : 's' ?>
+      <?= $days === 1 ? 'day' : 'days' ?>
     until the next edition of Open Art Folke
     </h2>
       <p class="close-trim"> Some things, as you know, just take time</p>
@@ -58,27 +56,28 @@
     <h2>Looking for the Festival Programme?<br><span style="color: var(--fg-6)">You’re early</span>
     </h2>
     <div class="box panel even stack fc readable gap-m pretty">
-      <p class="fs-s">We'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it as soon as we can.</p>
+      <p class="fs-s">We'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can.</p>
       <div class="stack mt-l">
         <label for="actions-email">Email</label>
         <form class="input-group gap-s">
           <input type="email" id="actions-email" placeholder="you@example.com" style="border-radius: 0"/>
-          <button class="button-cta" type="submit" style="border-radius: 0">Keep me posted</button>
+          <button class="btt--secondary" type="submit" style="border-radius: 0">Keep me posted</button>
         </form>
       </div>
     </div>
+    <small class="mt-s">*Spam? We want nothing to do with him either—and we'll never send you unsolicited communications.</small>
   </div>
 </section>
 
-<section class="theme-blush stack-section panel even split vertical gap-xxl">
+<section class="theme-blush stack-section panel even split vertical">
   <h2>Recent sponsors</h2>
-  <div class="stack">
-    <p class="fs-m">Art4Site</p>
-    <p class="fs-m">Docker</p>
-    <p class="fs-m">Folksey Community Glass</p>
+  <div class="stack accent row">
+    <p class="statement">Art4Site</p>
+    <p class="statement">Docker</p>
+    <p class="statement">Folksey Community Glass</p>
   </div>
   <div class="cluster">
-    <a href="#" class="button button-secondary">Become a sponsor</a>
+    <a href="#" class="button fit-width">Become a sponsor</a>
   </div>
 </section>
 

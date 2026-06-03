@@ -1,17 +1,9 @@
 @use '../mixins' as *;
 
-/* ──────────────────────────────────────────────────────────────
-   Countdown banner
-   coat.png is one continuous layer behind a row of cells. Empty
-   cells are opaque pale (the section --bg, = Figma #fff1f1) and
-   cover the image; filled cells are transparent windows onto the
-   image. Each cell carries pale side-borders, so adjacent borders
-   meet to form the pale gutters between revealed slices — the
-   gutters read pale even over the image, matching the design.
-   Swapping the surrounding .theme-* recolours the empties + gutters
-   for free. Joins the project's `custom` cascade layer (ordered in
-   _layers.css).
-   ────────────────────────────────────────────────────────────── */
+/* Countdown: coat.png behind a row of cells. Empty cells are opaque
+   (section --bg), filled cells are transparent windows. Side-borders
+   form pale gutters between revealed slices. Swapping .theme-*
+   recolours empties + gutters automatically. */
 @layer custom {
 
   .countdown {
@@ -20,16 +12,10 @@
     overflow: hidden;
     --countdown-empty: color-mix(in oklch, var(--bg), white 55%);
 
-    // ── Animation knobs ──────────────────────────────────────────
-    // Override these on .countdown to retune the reveal without
-    // touching the keyframe or selector logic.
-    //
-    // --countdown-duration   per-cell slide time
-    // --countdown-stagger    extra delay per cell index (--i)
-    // --countdown-easing     timing function for each cell
-    //
-    // With 20 blocks: last cell fires at (19 × stagger) + duration.
-    // At 28ms stagger + 340ms duration = 872ms — under the 900ms cap.
+    // Override these per-instance to retune the reveal timing.
+    // --countdown-duration: per-cell slide time
+    // --countdown-stagger:  incremental delay per cell index (--i)
+    // --countdown-easing:   timing function
     --countdown-duration: 340ms;
     --countdown-stagger:  60ms;
     --countdown-easing:   cubic-bezier(0.16, 1, 0.3, 1); // expo-out feel

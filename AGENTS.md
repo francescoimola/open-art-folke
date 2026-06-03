@@ -47,6 +47,44 @@ vendor/                # Composer dependencies — DO NOT MODIFY
 
 ---
 
+## Architecture — how Kirby and Vite work together
+
+### Request flow
+
+```
+Browser request
+  → public/index.php boots Kirby
+    → Kirby matches URL to a page (e.g. home)
+      → renders the matching template (site/templates/home.php)
+        → template renders snippets (header.php, footer.php, menu.php)
+          → header.php calls vite()->css() and vite()->js()
+            → Vite helper injects the right asset URLs
+```
+
+### Dev mode (`pnpm dev`)
+
+Two servers run concurrently:
+- **PHP** on port 8888 (built-in server + `kirby/router.php`)
+- **Vite** on port 5173 (HMR dev server)
+
+The `.dev` file at the project root signals the Vite helper to serve assets from the Vite dev server (not from `public/dist/`). Changes to SCSS/JS files trigger instant hot-reload in the browser.
+
+### Production (`pnpm build`)
+
+Vite compiles all assets into `public/dist/` with hashed filenames. The Vite helper reads `.vite/manifest.json` to resolve the correct hashed file names at runtime.
+
+### Key detail: Vite's `root` is `src/`
+
+`vite.config.js` sets `root: "src"`, so all paths inside SCSS/JS are relative to `src/`. This is why fonts are referenced as `./assets/...` rather than `../src/assets/...`.
+
+### Entry points
+
+Defined in `vite.config.js` via glob:
+- `src/index.{js,scss}` — global entry (only SCSS exists; JS uses `try: true`)
+- `src/templates/*.{js,scss,css}` — per-page entries, auto-detected by template name
+
+---
+
 ## Templates and snippets
 
 All templates use native PHP via Kirby's built-in template engine. Every page type needs a matching `.php` file in `site/templates/`.
