@@ -828,27 +828,13 @@
     .mx-#{$name} { margin-inline:      #{$value}; }
   }
 
-  /* Remove Graffiti's inset top-highlight gloss from all buttons */
-  button:not(.minimal),
-  .button:not(.minimal) {
-    box-shadow: 0 1px 2px var(--button-shadow);
-    &:hover  { box-shadow: 0 2px 4px var(--button-shadow); }
-    &:active { box-shadow: 0 1px 2px var(--button-shadow); }
-    &.fit-width {
-      width: fit-content;
-    }
-  }
-
-  /* ──────────────────────────────────────────────────────────────
-     Default button — brand red surface, light text.
+  /* Default button — brand red surface, light text.
      Overrides Graffiti's gray default so a plain button/a.button is red
      without needing an extra .primary class anywhere. Stays a direct rule in
      @layer custom (not a sublayer): its .button:not(.minimal) specificity (0,2,0)
      must keep beating the `a { color: --fg-7 }` link rule above, since the CTAs
      are <a> elements. Variants win over this via the higher `button-variants`
-     layer (see src/_layers.css), not by out-specifying it.
-  ────────────────────────────────────────────────────────────── */
-
+     layer (see src/_layers.css), not by out-specifying it. */
   button:not(.minimal),
   .button:not(.minimal) {
     --button-color: var(--light-Brand-500);
@@ -857,9 +843,14 @@
     --button-bg-bottom: var(--button-color);
     --button-border: color-mix(in oklab, var(--button-color) 95%, black);
     --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
+    box-shadow: 0 1px 2px var(--button-shadow);
 
+    &.fit-width {
+      width: fit-content;
+    }
 
     &:hover {
+      box-shadow: 0 2px 4px var(--button-shadow);
       --button-bg-top: light-dark(
         color-mix(in oklab, var(--button-color) 85%, white),
         color-mix(in oklab, var(--button-color) 95%, black)
@@ -871,6 +862,7 @@
     }
 
     &:active {
+      box-shadow: 0 1px 2px var(--button-shadow);
       --button-bg-top: light-dark(
         color-mix(in oklab, var(--button-color) 88%, black),
         color-mix(in oklab, var(--button-color) 75%, black)
@@ -950,11 +942,19 @@
      can't be derived from the surface hue. Hover/active set explicit darker steps
      because the base hover math mixes --button-color toward white/black, which barely
      moves on an already-pale surface and wouldn't read as a state change. */
-  .button-secondary {
+  .button--secondary {
+    // geometry (always CTA-scale)
+    border-radius: 0;
+    padding-block: var(--vs-base);
+    padding-inline: var(--pad-xl);
+    --fl: 1;
+    font-size: var(--fluid-type);
+    font-variation-settings: "wght" 400;
+    width: fit-content;
+    // colour variant
     --button-color: var(--light-Brand-50);
     color: var(--primary);
     --button-border: transparent;
-
     &:hover {
       --button-bg-top: var(--light-Brand-100);
       --button-bg-bottom: var(--light-Brand-200);

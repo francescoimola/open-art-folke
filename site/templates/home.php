@@ -27,8 +27,8 @@
         <p class="fs-s close-trim">Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
       </div>
       <div class="stack ">
-        <a href="#" class="button button-cta fit-width">Explore the 2026 programme</a>
-        <a href="#" class="button button-secondary button-cta fit-width">Register as an artist</a>
+        <a href="#" class="button">Explore the 2026 programme</a>
+        <a href="#" class="button button--secondary">Register as an artist</a>
       </div>
     </div>
     <small class="mt-s">* Open Art is 99% free to attend, but some events require a paid reservation</small>
@@ -43,7 +43,8 @@
     <h2>There
       <?= $days === 1 ? 'is' : 'are' ?>
       <?= $days ?>
-      day<?= $days === 1 ? '' : 's' ?>
+      day
+      <?= $days === 1 ? '' : 's' ?>
     until the next edition of Open Art Folke
     </h2>
       <p class="close-trim"> Some things, as you know, just take time</p>
@@ -67,7 +68,18 @@
       </div>
     </div>
   </div>
+</section>
 
+<section class="theme-blush stack-section panel even split vertical gap-xxl">
+  <h2>Recent sponsors</h2>
+  <div class="stack">
+    <p class="fs-m">Art4Site</p>
+    <p class="fs-m">Docker</p>
+    <p class="fs-m">Folksey Community Glass</p>
+  </div>
+  <div class="cluster">
+    <a href="#" class="button button-secondary">Become a sponsor</a>
+  </div>
 </section>
 
 <?php snippet('footer') ?>

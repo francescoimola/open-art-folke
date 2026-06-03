@@ -23,7 +23,8 @@
     ]
   },
   "dependencies": {
-    "@drop-in/graffiti": "^4.29.0"
+    "@drop-in/graffiti": "^4.29.0",
+    "opencode-ai": "^1.15.13"
   },
   "engines": {
     "node": ">=22"
