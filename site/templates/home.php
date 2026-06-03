@@ -21,7 +21,7 @@
   <div class="split vertical panel even gap-l">
     <div class="stack fc readable gap-xl">
       <h2>
-        <span style="color: var(--fg-6)">Open Art</span><br>The Festival</h2>
+        <span class="text-muted">Open Art</span><br>The Festival</h2>
       <div class="stack gap-m">
         <p class="fs-s">A free pass* to connect with talented local creatives, experience their work, and learn about how it’s made.</p>
         <p class="fs-s close-trim">Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
@@ -53,15 +53,15 @@
 <section class="theme-crimson stack-section layout-split">
   <img src="/assets/images/visitors-reading-map.jpg" alt="" class="image-cover" aria-hidden="true">
   <div class="panel even split fc vertical gap-l">
-    <h2>Looking for the Festival Programme?<br><span style="color: var(--fg-6)">You’re early</span>
+    <h2>Looking for the Festival Programme?<br><span class="text-muted">You’re early</span>
     </h2>
     <div class="box panel even stack fc readable gap-m pretty">
       <p class="fs-s">We'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can.</p>
       <div class="stack mt-l">
         <label for="actions-email">Email</label>
         <form class="input-group gap-s">
-          <input type="email" id="actions-email" placeholder="you@example.com" style="border-radius: 0"/>
-          <button class="btt--secondary" type="submit" style="border-radius: 0">Keep me posted</button>
+          <input type="email" id="actions-email" placeholder="you@example.com"/>
+          <button class="btt--secondary" type="submit">Keep me posted</button>
         </form>
       </div>
     </div>

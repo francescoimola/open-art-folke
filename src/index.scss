@@ -856,6 +856,12 @@
     gap: var(--gap, 0);
   }
 
+  /* Square the email field to match the squared buttons (button border-radius
+     is already 0 globally; inputs keep Graffiti's radius unless reset). */
+  .input-group input {
+    border-radius: 0;
+  }
+
   @media (prefers-contrast: more) {
     .accent {
       text-decoration: underline;

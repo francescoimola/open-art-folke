@@ -23,7 +23,6 @@ The panel (CMS admin) is at http://localhost:8888/panel.
 content/               # Flat-file content (edit here or via /panel)
   home/home.txt
   about/about.txt
-  contact/contact.txt
 site/
   blueprints/pages/    # Kirby field definitions (YAML)
   config/
