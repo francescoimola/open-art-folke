@@ -367,7 +367,7 @@
     --color-info: light-dark(var(--light-Info-500), var(--dark-Info-700));
 
     /* Sticky nav height estimate — used by scroll-padding and stack-sections */
-    --nav-height: calc(var(--vs-base) * 2 + var(--vs-l));
+    --nav-height: calc(var(--vs-base) * 1.75 + var(--vs-l));
     /* Text underline */
     --text-underline-offset: 0.22rem;
     --text-decoration-thickness: 7%;

@@ -7,7 +7,7 @@
 </section>
 
 <section id="intro" class="panel stack-section half layout-split theme-brand">
-  <div class="readable">
+  <div class="fc readable">
     <p class="statement">Open Art Folke is
       <a href="#">a community of 200+ artists and makers</a>
       in Folkestone. Since 2024, we've run
@@ -17,14 +17,14 @@
   <p class="intro__date right-aligned row">Open Art '26 runs 9–11 October 2026</p>
 </section>
 
-<section class="theme-paper stack-section layout-split split-gap-none">
+<section class="theme-paper stack-section layout-split">
   <div class="split vertical panel even gap-l">
-    <div class="stack fc readable gap-xl">
+    <div class="stack readable gap-xl">
       <h2>
         <span class="text-muted">Open Art</span><br>The Festival</h2>
       <div class="stack gap-m">
-        <p class="fs-s">A free pass* to connect with talented local creatives, experience their work, and learn about how it’s made.</p>
-        <p class="fs-s close-trim">Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
+        <p>A free pass* to connect with talented local creatives, experience their work, and learn about how it’s made.</p>
+        <p>Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
       </div>
       <div class="stack ">
         <a href="#" class="button fit-width">Explore the 2026 programme</a>
