@@ -411,6 +411,7 @@
     --lh: calc(var(--type-lh-base) - var(--type-lh-step) * var(--fl, 0));
     line-height: var(--lh);
     text-box-edge: cap alphabetic;
+
     @supports (font-variation-settings: "wght" 400) {
       font-variation-settings: "wght" calc(var(--type-wght-base) - var(--type-wght-step) * var(--fl, 0));
     }
@@ -426,25 +427,28 @@
   li,
   body {
     font-weight: 400;
+
     @supports (font-variation-settings: "wght" 400) {
       font-variation-settings: "wght" 400;
     }
   }
 
-  p:not(.statement) {
-     color: light-dark(var(--fg-7), var(--fg-8));
+  p {
+    color: var(--text-color, light-dark(var(--fg-7), var(--fg-8)));
     text-box-edge: cap alphabetic;
   }
 
   ::placeholder {
     color: var(--fg-5);
-    opacity: 1; /* Firefox applies its own opacity on top — reset it */
+    opacity: 1;
+    /* Firefox applies its own opacity on top — reset it */
   }
 
   small,
   .ui-caption {
     font-weight: 420;
-    color: light-dark(var(--fg-6), var(--fg-7));
+    color: var(--text-color, light-dark(var(--fg-6), var(--fg-7)));
+
     @supports (font-variation-settings: "wght" 400) {
       font-variation-settings: "wght" 420;
     }
@@ -464,7 +468,8 @@
     text-wrap: balance;
   }
 
-  .pretty, .pretty p {
+  .pretty,
+  .pretty p {
     text-wrap: pretty;
   }
 
@@ -485,7 +490,7 @@
   .stack-section {
     position: sticky;
     top: var(--nav-height, 6rem);
-    min-height: calc(100dvh - var(--nav-height, 6rem));
+    min-height: calc(100svh - var(--nav-height, 6rem));
     background: var(--section-bg, var(--bg));
   }
 
@@ -498,7 +503,7 @@
       top: 0;
     }
 
-    height: 100dvh;
+    height: 100svh;
     margin-top: calc(-1 * var(--nav-height, 6rem));
     padding: var(--pad-l);
     background: var(--dark-Brand-600);
@@ -539,6 +544,22 @@
     text-decoration: none;
     bottom: calc(var(--pad-xl) + env(safe-area-inset-bottom, 0px));
     color: var(--light-Neutral-100);
+  }
+
+  @include short-viewport {
+    .stack-section {
+      position: relative;
+      min-height: auto;
+
+      &.half {
+        min-height: auto;
+      }
+    }
+
+    section.hero.stack-section {
+      top: calc(var(--nav-height, 6rem) * 0.90);
+
+    }
   }
 
   /* Reusable section building blocks — three orthogonal concerns:
@@ -615,7 +636,8 @@
 
   /* Accent — colour text with the current theme's --primary. Resolves to
      brand red on light themes, soft pink on the dark/deep-red themes. */
-  .accent {
+  :is(.accent, .statement) {
+    --text-color: var(--primary);
     color: var(--primary);
   }
 
@@ -626,6 +648,15 @@
     font-weight: 500;
     text-box-edge: cap alphabetic;
     --lh: 1.30;
+
+    @include below-tablet {
+      --fl: 3;
+    }
+
+    @include mobile {
+      --fl: 2;
+    }
+
     @supports (font-variation-settings: "wght" 400) {
       font-variation-settings: "wght" 500;
     }
@@ -758,131 +789,154 @@
      Scale: s=0.5rem  m=1.5rem  l=2rem  xl=4rem  xxl=6rem */
 
   $margin-scale: (
-    's':   var(--vs-s),
-    'm':   var(--vs-m),
-    'l':   var(--vs-l),
-    'xl':  var(--vs-xl),
+    's': var(--vs-s),
+    'm': var(--vs-m),
+    'l': var(--vs-l),
+    'xl': var(--vs-xl),
     'xxl': var(--vs-xxl),
   );
 
-  @each $name, $value in $margin-scale {
-    .mt-#{$name} { margin-block-start: #{$value}; }
-    .mb-#{$name} { margin-block-end:   #{$value}; }
-    .my-#{$name} { margin-block:       #{$value}; }
-    .mx-#{$name} { margin-inline:      #{$value}; }
+@each $name, $value in $margin-scale {
+  .mt-#{$name} {
+    margin-block-start: #{$value};
   }
 
-  /* Default button: brand red surface without needing an extra class.
+  .mb-#{$name} {
+    margin-block-end: #{$value};
+  }
+
+  .my-#{$name} {
+    margin-block: #{$value};
+  }
+
+  .mx-#{$name} {
+    margin-inline: #{$value};
+  }
+}
+
+/* Default button: brand red surface without needing an extra class.
      Variants in @layer button-variants override by cascade priority,
      not by out-specifying the selector. */
+button:not(.minimal),
+.button:not(.minimal) {
+  --button-color: light-dark(var(--light-Brand-500), var(--dark-Brand-800));
+  color: light-dark(var(--light-Neutral-50), var(--dark-Neutral-50));
+  --button-bg-top: var(--button-color);
+  --button-bg-bottom: var(--button-color);
+  --button-border: color-mix(in oklab, var(--button-color) 95%, black);
+  --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
+  box-shadow: 0 1px 2px var(--button-shadow);
+
+  border-radius: 0;
+  padding-block: var(--vs-base);
+  padding-inline: var(--pad-xl);
+  --fl: 1;
+  font-size: var(--fluid-type);
+  font-weight: 400;
+
+  @supports (font-variation-settings: "wght" 400) {
+    font-variation-settings: "wght" 400;
+  }
+
+  &.fit-width {
+    width: fit-content;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 4px var(--button-shadow);
+    --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 85%, white),
+        color-mix(in oklab, var(--button-color) 95%, black));
+    --button-bg-bottom: var(--button-bg-top);
+  }
+
+  &:active {
+    box-shadow: 0 1px 2px var(--button-shadow);
+    --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 88%, black),
+        color-mix(in oklab, var(--button-color) 75%, black));
+    --button-bg-bottom: var(--button-bg-top);
+  }
+}
+
+/* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
+.stack-gap-none {
+  --gap: 0;
+}
+
+.gap-xs {
+  --gap: var(--vs-xs);
+}
+
+.gap-s {
+  --gap: var(--vs-s);
+}
+
+.gap-m {
+  --gap: var(--vs-m);
+}
+
+.gap-l {
+  --gap: var(--vs-l);
+}
+
+.gap-xl {
+  --gap: var(--vs-xl);
+}
+
+.gap-xxl {
+  --gap: var(--vs-xxl);
+}
+
+.split-gap-none {
+  --layout-gap: 0;
+}
+
+/* Let .input-group consume --gap so gap-* utilities work on it */
+.input-group {
+  gap: var(--gap, 0);
+}
+
+/* Square the email field to match the squared buttons (button border-radius
+     is already 0 globally; inputs keep Graffiti's radius unless reset). */
+.input-group input {
+  border-radius: 0;
+}
+
+@media (prefers-contrast: more) {
+  .accent {
+    text-decoration: underline;
+  }
+
   button:not(.minimal),
   .button:not(.minimal) {
-    --button-color: light-dark(var(--light-Brand-500), var(--dark-Brand-800));
-    color: light-dark(var(--light-Neutral-50), var(--dark-Neutral-50));
-    --button-bg-top: var(--button-color);
-    --button-bg-bottom: var(--button-color);
-    --button-border: color-mix(in oklab, var(--button-color) 95%, black);
-    --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
-    box-shadow: 0 1px 2px var(--button-shadow);
-
-    border-radius: 0;
-    padding-block: var(--vs-base);
-    padding-inline: var(--pad-xl);
-    --fl: 1;
-    font-size: var(--fluid-type);
-    font-weight: 400;
-    @supports (font-variation-settings: "wght" 400) {
-      font-variation-settings: "wght" 400;
-    }
-
-    &.fit-width {
-      width: fit-content;
-    }
-
-    &:hover {
-      box-shadow: 0 2px 4px var(--button-shadow);
-      --button-bg-top: light-dark(
-        color-mix(in oklab, var(--button-color) 85%, white),
-        color-mix(in oklab, var(--button-color) 95%, black)
-      );
-      --button-bg-bottom: var(--button-bg-top);
-    }
-
-    &:active {
-      box-shadow: 0 1px 2px var(--button-shadow);
-      --button-bg-top: light-dark(
-        color-mix(in oklab, var(--button-color) 88%, black),
-        color-mix(in oklab, var(--button-color) 75%, black)
-      );
-      --button-bg-bottom: var(--button-bg-top);
-    }
+    --button-border: currentColor;
+    --button-shadow: none;
   }
-
-  /* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
-  .stack-gap-none {
-    --gap: 0;
-  }
-
-  .gap-xs {
-    --gap: var(--vs-xs);
-  }
-
-  .gap-s {
-    --gap: var(--vs-s);
-  }
-
-  .gap-m {
-    --gap: var(--vs-m);
-  }
-
-  .gap-l {
-    --gap: var(--vs-l);
-  }
-
-  .gap-xl {
-    --gap: var(--vs-xl);
-  }
-
-  .gap-xxl {
-    --gap: var(--vs-xxl);
-  }
-
-  .split-gap-none {
-    --layout-gap: 0;
-  }
-
-  /* Let .input-group consume --gap so gap-* utilities work on it */
-  .input-group {
-    gap: var(--gap, 0);
-  }
-
-  /* Square the email field to match the squared buttons (button border-radius
-     is already 0 globally; inputs keep Graffiti's radius unless reset). */
-  .input-group input {
-    border-radius: 0;
-  }
-
-  @media (prefers-contrast: more) {
-    .accent {
-      text-decoration: underline;
-    }
-
-    button:not(.minimal),
-    .button:not(.minimal) {
-      --button-border: currentColor;
-      --button-shadow: none;
-    }
-  }
+}
 
 }
 
 /* Button variants in @layer button-variants win over the base rule
    via cascade layer priority, not by selector specificity. */
 @layer button-variants {
+
   /* Secondary CTA */
   .btt--secondary {
     --button-color: light-dark(var(--light-Brand-50), var(--dark-Brand-950));
     color: light-dark(var(--light-Brand-900), var(--dark-Brand-400));
     --button-border: transparent;
+  }
+
+  /* On blush the default secondary bg (Brand-50) equals the section bg, so it
+     vanishes. Match Figma instead: bright-red text on a Brand-50 (#FFE0DB)
+     surface, with a faint Brand border so the box still reads against blush.
+     Scoped to .theme-blush so it only applies inside blush sections. */
+  .theme-blush {
+    .btt--secondary {
+      --button-color: var(--light-Neutral-50);
+    }
+
+    .accent .btt--secondary {
+      color: inherit;
+    }
   }
 }

@@ -7,7 +7,7 @@
 </section>
 
 <section id="intro" class="panel stack-section half layout-split theme-brand">
-  <div class="fc readable">
+  <div class="readable">
     <p class="statement">Open Art Folke is
       <a href="#">a community of 200+ artists and makers</a>
       in Folkestone. Since 2024, we've run
@@ -38,7 +38,7 @@
 
 <section class="theme-blush stack-section half split panel even vertical gap-xxl">
   <div
-    class="stack fc readable gap-l">
+    class="stack readable gap-l">
     <?php $days = $page->daysRemaining() ?>
     <h2>There
       <?= $days ?>
@@ -71,13 +71,14 @@
 
 <section class="theme-blush stack-section panel even split vertical">
   <h2>Recent sponsors</h2>
-  <div class="stack accent row">
-    <p class="statement">Art4Site</p>
-    <p class="statement">Docker</p>
-    <p class="statement">Folksey Community Glass</p>
+  <div class="stack accent row gap-l">
+    <p class="h1">Art4Site</p>
+    <p class="h1">Docker</p>
+    <p class="h1">Folksey Community Glass</p>
   </div>
-  <div class="cluster">
-    <a href="#" class="button fit-width">Become a sponsor</a>
+  <div class="cluster gap-m accent">
+    <a href="#" class="button btt--secondary">See all our sponsors</a>
+    <a href="#">Who’s behind Open Art Folke</a>
   </div>
 </section>
 
