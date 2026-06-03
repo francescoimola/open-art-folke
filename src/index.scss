@@ -528,19 +528,14 @@
     color: var(--light-Neutral-100);
   }
 
-  @include short-viewport {
-    .stack-section {
+  /* Below the tablet breakpoint (where the nav collapses to the drawer),
+     stop the per-section card-stacking: only the hero stays pinned, and
+     every other section flows normally so the content scrolls up over the
+     hero as one continuous block. Heights are left untouched. */
+  @include below-tablet {
+    .stack-section:not(.hero) {
       position: relative;
-      min-height: auto;
-
-      &.half {
-        min-height: auto;
-      }
-    }
-
-    section.hero.stack-section {
-      top: calc(var(--nav-height, 6rem) * 0.90);
-
+      top: auto;
     }
   }
 
@@ -562,6 +557,31 @@
   .split:where(.no-wrap) {
     flex-direction: row;
     flex-wrap: nowrap;
+  }
+
+  .center-both {
+    display: grid;
+    place-items: center;
+  }
+
+  .full-height {
+    height: 100%;
+  }
+
+  /* Breakpoint visibility utilities: .show-mobile is visible only below the
+     tablet breakpoint, .show-desktop only at/above it. For swapping between two
+     alternate Graffiti layouts of the same content (e.g. the sponsors carousel
+     vs list) instead of overriding a component's internals. */
+  @include tablet {
+    .show-mobile {
+      display: none;
+    }
+  }
+
+  @include below-tablet {
+    .show-desktop {
+      display: none;
+    }
   }
 
   /* Theme presets: set --bg/--fg/--primary endpoints. Graffiti's
@@ -690,7 +710,9 @@
       flex-shrink: 0;
       text-decoration: none;
 
-      &.desktop-only {
+      /* The logo instance that sits in the top bar (not the drawer) gets a small
+         optical nudge upward. NOT a visibility toggle — purely a margin tweak. */
+      &--topbar {
         margin-top: calc(var(--vs-xs) * -1);
       }
 
@@ -876,6 +898,10 @@
   --layout-gap: 0;
 }
 
+.split-gap-xxl {
+  --layout-gap: var(--vs-xxl);
+}
+
 /* Let .input-group consume --gap so gap-* utilities work on it */
 .input-group {
   gap: var(--gap, 0);
@@ -898,6 +924,70 @@
   }
 }
 
+  /* Sponsors — two self-contained layouts, swapped by breakpoint via
+     .show-mobile / .show-desktop. Both are plain Graffiti (.carousel / .box /
+     .split / .stack); the only custom bits are the few knobs below and the
+     desktop hover-reveal. To restyle, change the knobs — leave the rest. */
+  .sponsors {
+    --sponsor-card-width: min(80%, 24rem);     /* mobile: width of each carousel card */
+    --sponsor-card-logo-size: min(12rem, 40%); /* mobile: logo width inside a card */
+    --sponsor-logo-size: min(22rem, 45%);      /* desktop: revealed logo width */
+    --sponsor-logo-fade: 0.3s;                 /* desktop: hover crossfade speed */
+  }
+
+  /* Shared logo rendering. */
+  .sponsor-logo {
+    inline-size: var(--sponsor-card-logo-size);
+  }
+
+  .sponsor-logo svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    color: var(--primary);
+  }
+
+  /* Mobile carousel cards. */
+  .sponsors-mobile {
+    --gap: var(--vs-m);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sponsors-mobile > li {
+    inline-size: var(--sponsor-card-width);
+  }
+
+  /* Desktop list — names flow with Graffiti's natural stack gaps; each row's logo
+     is taken out of flow and centred to the right, free to overshoot the row,
+     revealed on hover/focus (blank until then). */
+  .sponsors-desktop {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .sponsors-desktop > li {
+    position: relative;
+    cursor:crosshair;
+  }
+
+  .sponsors-desktop .sponsor-logo {
+    position: absolute;
+    inset-inline-end: 14%;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    inline-size: var(--sponsor-logo-size);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--sponsor-logo-fade) ease;
+  }
+
+  .sponsors-desktop > li:hover .sponsor-logo,
+  .sponsors-desktop > li:focus-within .sponsor-logo {
+    opacity: 1;
+  }
 }
 
 /* Button variants in @layer button-variants win over the base rule

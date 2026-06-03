@@ -113,7 +113,7 @@ Key conventions:
 
 The project uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`), a standards-first CSS library that styles native HTML directly. Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before writing custom CSS — keep custom CSS minimal.
 
-> **Workflow:** Before writing or refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, token bridge, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.site-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-*`, `.accent`, `.statement`), and the Figma → Graffiti translation process. Full rationale: `superpowers/specs/2026-05-29-graffiti-workflow-design.md`.
+> **Workflow:** Before writing or refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, token bridge, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.site-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-*`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → Graffiti translation process. Full rationale: `superpowers/specs/2026-05-29-graffiti-workflow-design.md`.
 
 `src/index.scss` is organised with cascade layers in this precedence. It imports `src/_mixins.scss` (breakpoint and container query mixins) at the top via `@use './mixins' as *;`.
 

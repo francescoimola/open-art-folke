@@ -16,3 +16,20 @@ fields:
     type: date
     label: Countdown end
     default: 2026-10-09
+  sponsors:
+    type: structure
+    label: Sponsors
+    fields:
+      name:
+        type: text
+        label: Name
+      url:
+        type: url
+        label: Website
+      logo:
+        type: files
+        label: Logo
+        max: 1
+        query: page.files.filterBy("extension", "svg")
+        uploads:
+          accept: image/svg+xml

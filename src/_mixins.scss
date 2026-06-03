@@ -9,14 +9,3 @@
 @mixin cq-narrow     { @container (max-width: 500px) { @content; } }
 @mixin cq-medium     { @container (max-width: 600px) { @content; } }
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
-
-// Short viewport — disable sticky stacking when height is too low.
-// Bundles range syntax (modern) + max-height fallback (universal).
-@mixin short-viewport {
-  @media (height < 600px) {
-    @content;
-  }
-  @media (max-height: 599px) {
-    @content;
-  }
-}

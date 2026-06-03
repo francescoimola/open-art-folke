@@ -36,7 +36,7 @@
   <img src="/assets/images/visitors.jpg" alt="" class="image-cover" aria-hidden="true">
 </section>
 
-<section class="theme-blush stack-section half split panel even vertical gap-xxl">
+<section class="theme-blush stack-section half layout-split split-gap-xxl panel even">
   <div
     class="stack readable gap-l">
     <?php $days = $page->daysRemaining() ?>
@@ -69,29 +69,64 @@
   </div>
 </section>
 
-<section class="theme-blush stack-section half panel even stack gap-xxl">
+<section class="sponsors theme-blush stack-section half panel even stack gap-xxl">
   <h2>Recent sponsors</h2>
-  <div class="stack accent gap-l">
-    <p class="h1">Art4Site</p>
-    <p class="h1">Docker</p>
-    <p class="h1">Folksey Community Glass</p>
-  </div>
-  <div class="cluster gap-m accent">
-    <a href="#" class="button btt--secondary">See all our sponsors</a>
-    <a href="#">Who’s behind Open Art Folke</a>
-  </div>
-</section>
+  <?php
+  // Build the data once; both layouts below render from it (logos sanitised once each).
+  $sponsors = [];
+  foreach ($page->sponsors()->toStructure() as $s) {
+    $sponsors[] = [
+      'name' => $s->name(),
+      'url' => $s->url(),
+      'logo' => $page->sponsorLogo($s),
+    ];
+  }
 
-<section class="theme-paper stack-section half panel even stack gap-xxl">
-  <h2>Recent sponsors</h2>
-  <div class="stack accent gap-l">
-    <p class="h1">Art4Site</p>
-    <p class="h1">Docker</p>
-    <p class="h1">Folksey Community Glass</p>
-  </div>
+  // Shared name markup (plain text, or a link when a Website is set).
+  $sponsorName = fn($s) => $s['url']->isNotEmpty()
+    ? '<a href="' . $s['url']->esc('attr') . '">' . esc($s['name']->value()) . '</a>'
+    : esc($s['name']->value());
+  ?>
+
+  <!-- Mobile: a Graffiti carousel of cards, name + logo shown together. -->
+  <ul
+    class="sponsors-mobile show-mobile carousel accent">
+    <?php foreach ($sponsors as $s): ?>
+      <li class="box ghost split vertical center">
+        <p class="h1"><?= $sponsorName($s) ?></p>
+        <?php if ($s['logo']): ?>
+          <figure class="sponsor-logo center-both"><?= $s['logo'] ?></figure>
+        <?php endif ?>
+      </li>
+    <?php endforeach ?>
+  </ul>
+
+  <!-- Desktop: a stacked list; each row reveals its own logo on hover/focus. -->
+  <ul
+    class="sponsors-desktop show-desktop stack gap-xl accent">
+    <?php foreach ($sponsors as $s): ?>
+      <li>
+        <div class="dropdown" style="--anchor: --dropdown-options">
+          <button class="reset" style="all: unset" popovertarget="dropdown-options">
+            <p class="h1"><?= $sponsorName($s) ?></p>
+          </button>
+        </div>
+        <div id="dropdown-options" popover class="dropdown-menu">
+          <div class="dropdown-header">High-quality scanning and fine art printers</div>
+          <hr>
+          <a href="#profile">Visit website <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <?php if ($s['logo']): ?>
+          <figure class="sponsor-logo center-both"><?= $s['logo'] ?></figure>
+        <?php endif ?>
+      </li>
+    <?php endforeach ?>
+  </ul>
+
   <div class="cluster gap-m accent">
     <a href="#" class="button btt--secondary">See all our sponsors</a>
-    <a href="#">Who’s behind Open Art Folke</a>
+    <a href="#">Who's behind Open Art Folke</a>
   </div>
 </section>
 

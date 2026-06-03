@@ -42,7 +42,7 @@
     box-sizing: border-box;
     overflow: hidden; // clips the sliding ::after curtain
     background: var(--countdown-empty);
-    border-inline: calc(var(--vs-s) / 2) solid var(--bg); // gutters = theme --bg
+    border-inline: calc(var(--vs-xs) / 2) solid var(--bg); // gutters = theme --bg
 
     &.is-filled {
       background: transparent;
