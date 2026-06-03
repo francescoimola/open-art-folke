@@ -333,10 +333,9 @@
 
 @layer custom {
 
-  * {
+  :where(*) {
     @supports (text-box-trim: trim-both) {
-      text-box-trim: trim-both;
-      text-box-edge: cap text;
+      text-box: trim-both cap text;
     }
   }
 
@@ -835,7 +834,7 @@
   --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
   box-shadow: 0 1px 2px var(--button-shadow);
 
-  border-radius: 0;
+  border-radius: var(--br-s);
   padding-block: var(--vs-base);
   padding-inline: var(--pad-xl);
   --fl: 1;
@@ -910,7 +909,7 @@
 /* Square the email field to match the squared buttons (button border-radius
      is already 0 globally; inputs keep Graffiti's radius unless reset). */
 .input-group input {
-  border-radius: 0;
+  border-radius: var(--br-s);
 }
 
 @media (prefers-contrast: more) {
@@ -924,70 +923,139 @@
   }
 }
 
-  /* Sponsors — two self-contained layouts, swapped by breakpoint via
+:where(.dropdown) {
+  cursor: context-menu;
+
+  .dropdown-menu {
+    --bg-light: var(--color-background);
+    background: var(--bg-light);
+    text-box: trim-both leading (initial) alphabetic;
+  }
+}
+
+.theme-blush:has(.dropdown) .dropdown-menu {
+  --bg-light: var(--light-Neutral-50);
+  background: var(--bg-light);
+}
+
+:is(.dropdown-header) {
+  margin-top: var(--pad-xs);
+}
+
+/* Sponsors — two self-contained layouts, swapped by breakpoint via
      .show-mobile / .show-desktop. Both are plain Graffiti (.carousel / .box /
      .split / .stack); the only custom bits are the few knobs below and the
      desktop hover-reveal. To restyle, change the knobs — leave the rest. */
-  .sponsors {
-    --sponsor-card-width: min(80%, 24rem);     /* mobile: width of each carousel card */
-    --sponsor-card-logo-size: min(12rem, 40%); /* mobile: logo width inside a card */
-    --sponsor-logo-size: min(22rem, 45%);      /* desktop: revealed logo width */
-    --sponsor-logo-fade: 0.3s;                 /* desktop: hover crossfade speed */
-  }
+.sponsors {
+  --sponsor-card-width: min(80%, 24rem);
+  /* mobile: width of each carousel card */
+  --sponsor-card-logo-size: min(12rem, 40%);
+  /* mobile: logo width inside a card */
+  --sponsor-logo-size: min(22rem, 45%);
+  /* desktop: revealed logo width */
+  --sponsor-logo-fade: 0.3s;
+  /* desktop: hover crossfade speed */
+}
 
-  /* Shared logo rendering. */
-  .sponsor-logo {
-    inline-size: var(--sponsor-card-logo-size);
-  }
+/* Shared logo rendering. */
+.sponsor-logo {
+  inline-size: var(--sponsor-card-logo-size);
+}
 
-  .sponsor-logo svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    color: var(--primary);
-  }
+.sponsor-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height:calc(var(--sponsor-card-logo-size)*2);
+  color: var(--primary);
+}
 
-  /* Mobile carousel cards. */
-  .sponsors-mobile {
-    --gap: var(--vs-m);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+/* Mobile carousel cards. */
+.sponsors-mobile {
+  --gap: var(--vs-m);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .sponsors-mobile > li {
-    inline-size: var(--sponsor-card-width);
-  }
+.sponsors-mobile>li {
+  inline-size: var(--sponsor-card-width);
+}
 
-  /* Desktop list — names flow with Graffiti's natural stack gaps; each row's logo
+/* Desktop list — names flow with Graffiti's natural stack gaps; each row's logo
      is taken out of flow and centred to the right, free to overshoot the row,
      revealed on hover/focus (blank until then). */
-  .sponsors-desktop {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+.sponsors-desktop {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .sponsors-desktop > li {
-    position: relative;
-    cursor:crosshair;
-  }
+.sponsors-desktop>li {
+  position: relative;
+  cursor: default;
+}
 
-  .sponsors-desktop .sponsor-logo {
+.sponsors-desktop .sponsor-logo {
+  position: absolute;
+  inset-inline-end: 14%;
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  inline-size: var(--sponsor-logo-size);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--sponsor-logo-fade) ease;
+}
+
+.sponsors-desktop>li:hover .sponsor-logo,
+.sponsors-desktop>li:focus-within .sponsor-logo {
+  opacity: 1;
+}
+
+/* Photo banner — pre-filtered background photo with 3-col identity grid.
+   Reusable: compose with .stack-section/.half; override
+   --photo-banner-img-position to shift the focal point. */
+.photo-banner {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+
+  &__bg {
     position: absolute;
-    inset-inline-end: 14%;
-    inset-block-start: 50%;
-    translate: 0 -50%;
-    inline-size: var(--sponsor-logo-size);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--sponsor-logo-fade) ease;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--photo-banner-img-position, center);
   }
 
-  .sponsors-desktop > li:hover .sponsor-logo,
-  .sponsors-desktop > li:focus-within .sponsor-logo {
-    opacity: 1;
+  &__grid {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+    padding-block: var(--vs-xl);
+
+    > p {
+      &:last-child { text-align: right; }
+    }
+
+    > div {
+      display: flex;
+      justify-content: center;
+
+      svg {
+        height: calc(var(--vs-xxl)*2);
+        width: auto;
+      }
+    }
   }
+}
 }
 
 /* Button variants in @layer button-variants win over the base rule

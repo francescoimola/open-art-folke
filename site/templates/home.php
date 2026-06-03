@@ -70,7 +70,7 @@
 </section>
 
 <section class="sponsors theme-blush stack-section half panel even stack gap-xxl">
-  <h2>Recent sponsors</h2>
+  <h2 class="mb-m">Recent sponsors</h2>
   <?php
   // Build the data once; both layouts below render from it (logos sanitised once each).
   $sponsors = [];
@@ -78,6 +78,7 @@
     $sponsors[] = [
       'name' => $s->name(),
       'url' => $s->url(),
+      'description' => $s->description(),
       'logo' => $page->sponsorLogo($s),
     ];
   }
@@ -104,17 +105,22 @@
   <!-- Desktop: a stacked list; each row reveals its own logo on hover/focus. -->
   <ul
     class="sponsors-desktop show-desktop stack gap-xl accent">
-    <?php foreach ($sponsors as $s): ?>
-      <li>
-        <div class="dropdown" style="--anchor: --dropdown-options">
-          <button class="reset" style="all: unset" popovertarget="dropdown-options">
-            <p class="h1"><?= $sponsorName($s) ?></p>
+    <?php foreach ($sponsors as $i => $s): ?>
+      <?php $menuId = 'sponsor-dropdown-' . $i ?>
+      <li style="--anchor: --sponsor-<?= $i ?>">
+        <div class="dropdown">
+          <button class="reset" style="all: unset" popovertarget="<?= $menuId ?>">
+            <p class="h1"><?= esc($s['name']->value()) ?></p>
           </button>
         </div>
-        <div id="dropdown-options" popover class="dropdown-menu">
-          <div class="dropdown-header">High-quality scanning and fine art printers</div>
-          <hr>
-          <a href="#profile">Visit website <span aria-hidden="true">↗</span></a>
+        <div id="<?= $menuId ?>" popover class="dropdown-menu">
+          <?php if ($s['description']->isNotEmpty()): ?>
+            <div class="dropdown-header"><?= $s['description']->esc() ?></div>
+            <hr>
+          <?php endif ?>
+          <?php if ($s['url']->isNotEmpty()): ?>
+            <a href="<?= $s['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a>
+          <?php endif ?>
         </div>
 
         <?php if ($s['logo']): ?>
@@ -127,6 +133,15 @@
   <div class="cluster gap-m accent">
     <a href="#" class="button btt--secondary">See all our sponsors</a>
     <a href="#">Who's behind Open Art Folke</a>
+  </div>
+</section>
+
+<section class="theme-ink photo-banner stack-section">
+  <img class="photo-banner__bg" src="/assets/images/festival-opening-25.jpg" alt="" aria-hidden="true">
+  <div class="photo-banner__grid">
+    <p>Open Art Folke 2026</p>
+    <div><?php snippet('logo') ?></div>
+    <p>9–11 October</p>
   </div>
 </section>
 
