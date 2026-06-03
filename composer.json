@@ -5,8 +5,7 @@
   "license": "GPL-3.0-or-later",
   "require": {
     "getkirby/cms": "^4.0 || ^5.0",
-    "arnoson/kirby-vite": "^5.0.0",
-    "bnomei/kirby-mcp": "^1.6"
+    "arnoson/kirby-vite": "^5.0.0"
   },
   "config": {
     "allow-plugins": {

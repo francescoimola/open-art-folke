@@ -4,7 +4,7 @@
       <?php snippet('logo') ?>
     </a>
     <ul class="site-nav__links" role="list">
-      <?php foreach($site->children()->not('home', 'contact') as $child): ?>
+      <?php foreach($site->children()->not('home') as $child): ?>
         <li class="fs-s">
           <a href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
         </li>
@@ -30,7 +30,7 @@
   </div>
   <nav class="stack site-drawer__nav" aria-label="Mobile navigation">
     <a href="<?= $site->url() ?>"<?= e($site->homePage()->isActive(), ' aria-current="page"') ?>>Home</a>
-    <?php foreach($site->children()->not('home', 'contact') as $child): ?>
+    <?php foreach($site->children()->not('home') as $child): ?>
       <a href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
     <?php endforeach ?>
     <?php if ($registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->value() : null): ?>
