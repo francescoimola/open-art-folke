@@ -48,25 +48,14 @@
     line-height: 1.5;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  :where(h1, h2, h3, h4, h5, h6) {
     line-height: 1.1;
     font-size: inherit;
     font-weight: inherit;
     text-wrap: balance;
   }
 
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  :where(p, h1, h2, h3, h4, h5, h6) {
     overflow-wrap: break-word;
   }
 
@@ -74,10 +63,7 @@
     text-wrap: pretty;
   }
 
-  pre,
-  code,
-  kbd,
-  samp {
+  :where(pre, code, kbd, samp) {
     font-family: monospace;
     font-size: inherit;
   }
@@ -86,22 +72,11 @@
     text-decoration-skip-ink: auto;
   }
 
-  button,
-  [role="button"],
-  label,
-  summary,
-  select {
+  :where(button, [role="button"], label, summary, select) {
     cursor: pointer;
   }
 
-  img,
-  picture,
-  video,
-  svg,
-  embed,
-  iframe,
-  object,
-  audio {
+  :where(img, picture, video, svg, embed, iframe, object, audio) {
     display: block;
     max-width: 100%;
     height: auto;
@@ -123,17 +98,11 @@
     border: none;
   }
 
-  input,
-  button,
-  textarea,
-  select {
+  :where(input, button, textarea, select) {
     font: inherit;
   }
 
-  input,
-  button,
-  textarea,
-  select {
+  :where(input, button, textarea, select) {
     -webkit-appearance: none;
     appearance: none;
   }
@@ -143,10 +112,7 @@
     padding: 0;
   }
 
-  ul,
-  ol,
-  ul[role='list'],
-  ol[role='list'] {
+  :where(ul, ol, ul[role='list'], ol[role='list']) {
     list-style: none;
   }
 
@@ -158,11 +124,11 @@
     font-weight: inherit;
   }
 
-  blockquote,
-  q {
+  :where(blockquote, q) {
     quotes: none;
   }
 
+  /* Pseudo-elements aren't valid inside :is()/:where(), so this stays a list. */
   blockquote::before,
   blockquote::after,
   q::before,
@@ -170,8 +136,7 @@
     content: none;
   }
 
-  sub,
-  sup {
+  :where(sub, sup) {
     font-size: 75%;
     line-height: 0;
     position: relative;
@@ -186,8 +151,7 @@
     top: -0.5em;
   }
 
-  #root,
-  #__next {
+  :where(#root, #__next) {
     isolation: isolate;
   }
 

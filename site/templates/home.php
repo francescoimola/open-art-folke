@@ -55,7 +55,7 @@
   <div class="panel even split fc vertical gap-l">
     <h2>Looking for the Festival Programme?<br><span class="text-muted">You’re early</span>
     </h2>
-    <div class="box panel even stack fc readable gap-m pretty">
+    <div class="stack fc readable gap-m pretty">
       <p class="fs-s">We'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can.</p>
       <div class="stack mt-l">
         <label for="actions-email">Email</label>
@@ -69,9 +69,22 @@
   </div>
 </section>
 
-<section class="theme-blush stack-section panel even split vertical">
+<section class="theme-blush stack-section half panel even stack gap-xxl">
   <h2>Recent sponsors</h2>
-  <div class="stack accent row gap-l">
+  <div class="stack accent gap-l">
+    <p class="h1">Art4Site</p>
+    <p class="h1">Docker</p>
+    <p class="h1">Folksey Community Glass</p>
+  </div>
+  <div class="cluster gap-m accent">
+    <a href="#" class="button btt--secondary">See all our sponsors</a>
+    <a href="#">Who’s behind Open Art Folke</a>
+  </div>
+</section>
+
+<section class="theme-paper stack-section half panel even stack gap-xxl">
+  <h2>Recent sponsors</h2>
+  <div class="stack accent gap-l">
     <p class="h1">Art4Site</p>
     <p class="h1">Docker</p>
     <p class="h1">Folksey Community Glass</p>
