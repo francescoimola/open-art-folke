@@ -1016,8 +1016,6 @@
    Reusable: compose with .stack-section/.half; override
    --photo-banner-img-position to shift the focal point. */
 .photo-banner {
-  position: relative;
-  overflow: hidden;
   display: flex;
   align-items: center;
 
