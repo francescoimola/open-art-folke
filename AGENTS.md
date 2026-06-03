@@ -1,6 +1,6 @@
 # Open Art Folke — Agent Instructions
 
-**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm · [Graffiti UI](https://graffiti-ui.com/) 4.29.0 (CSS) · SCSS (Sass)
+**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm · PostCSS (autoprefixer + postcss-preset-env) · [Graffiti UI](https://graffiti-ui.com/) 4.29.0 (CSS) · SCSS (Sass) · Lenis 1.3.23
 
 ---
 
@@ -33,8 +33,10 @@ site/
   snippets/            # Reusable PHP partials (header, footer, menu)
   templates/           # One .php file per page type
 src/
-  index.{js,scss}      # Global entry points (SCSS compiled by Vite)
+  index.{js,scss}      # Global entry points (Lenis in JS, global SCSS)
   _mixins.scss         # Breakpoint & container query mixins
+  _reset.scss          # CSS reset layer
+  _layers.css          # Cascade layer order declarations
   templates/           # Per-template JS/CSS
   assets/              # Static assets (fonts, images)
 public/
@@ -82,6 +84,17 @@ Defined in `vite.config.js` via glob:
 - `src/index.{js,scss}` — global entry (only SCSS exists; JS uses `try: true`)
 - `src/templates/*.{js,scss,css}` — per-page entries, auto-detected by template name
 
+### PostCSS processing
+
+`postcss.config.js` defines a pipeline that Vite auto-detects. It runs after Sass → CSS compilation:
+
+1. **postcss-preset-env** (stage 2) — transforms modern CSS features (`light-dark()`, `color-mix()`, `oklch()`) for the target browserslist; skips features already broadly supported by your targets
+2. **autoprefixer** — adds vendor prefixes
+
+The `cascade-layers` polyfill is disabled — it rewrites selectors and would break Graffiti UI specificity.
+
+Browserslist target (in `package.json`): `> 0.5%, last 2 versions, not dead`.
+
 ---
 
 ## Templates and snippets
@@ -109,6 +122,7 @@ The project uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`), 
 3. `@layer graffiti` — `@import "@drop-in/graffiti" layer(graffiti)`
 4. `@layer colors` — Radix Color scales for `--red-*` and `--gray-*` (sRGB + P3 gamut variants)
 5. `@layer custom` — site-specific rules: token bridge, typography overlay, hero section, layout overrides
+6. `@layer button-variants` — `.btt--secondary` variant + theme-specific overrides
 
 ### Color system & Figma rem scale
 
