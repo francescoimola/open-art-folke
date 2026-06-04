@@ -12,6 +12,14 @@ tabs:
                 type: url
                 label: Register link URL
                 help: External URL for the "Register" nav link. Leave blank to hide it.
+              instagram_url:
+                type: url
+                label: Instagram URL
+                help: Link for the footer "Instagram" button. Leave blank to hide it.
+              facebook_url:
+                type: url
+                label: Facebook URL
+                help: Link for the footer "Facebook" button. Leave blank to hide it.
           pages:
             type: pages
             label: Pages

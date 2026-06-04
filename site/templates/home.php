@@ -69,8 +69,8 @@
   </div>
 </section>
 
-<section class="sponsors theme-blush stack-section half panel even stack gap-xxl">
-  <h2 class="mb-m">Recent sponsors</h2>
+<section class="sponsors theme-blush stack-section half panel even stack gap-xl">
+  <h2>Recent sponsors</h2>
   <?php
   // Build the data once; both layouts below render from it (logos sanitised once each).
   $sponsors = [];
@@ -91,20 +91,20 @@
 
   <!-- Mobile: a Graffiti carousel of cards, name + logo shown together. -->
   <ul
-    class="sponsors-mobile show-mobile carousel accent">
+    class="sponsors-mobile show-mobile carousel">
     <?php foreach ($sponsors as $s): ?>
-      <li class="box ghost split vertical center">
-        <p class="h1"><?= $sponsorName($s) ?></p>
+      <li class="theme-crimson box ghost split vertical center gap-xl">
         <?php if ($s['logo']): ?>
           <figure class="sponsor-logo center-both"><?= $s['logo'] ?></figure>
         <?php endif ?>
+         <p class="h1"><?= $sponsorName($s) ?></p>
       </li>
     <?php endforeach ?>
   </ul>
 
   <!-- Desktop: a stacked list; each row reveals its own logo on hover/focus. -->
   <ul
-    class="sponsors-desktop show-desktop stack gap-xl accent">
+    class="sponsors-desktop show-desktop stack accent mt-l">
     <?php foreach ($sponsors as $i => $s): ?>
       <?php $menuId = 'sponsor-dropdown-' . $i ?>
       <li style="--anchor: --sponsor-<?= $i ?>">
@@ -144,6 +144,8 @@
     <p>9–11 October</p>
   </div>
 </section>
+
+<?php snippet('site-footer') ?>
 
 <?php snippet('footer') ?>
 

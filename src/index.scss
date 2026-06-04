@@ -836,17 +836,11 @@
 
   border-radius: var(--br-s);
   padding-block: var(--vs-base);
-  padding-inline: var(--pad-xl);
-  --fl: 1;
-  font-size: var(--fluid-type);
-  font-weight: 400;
+  padding-inline: var(--pad-l);
+  font-weight: 500;
 
   @supports (font-variation-settings: "wght" 400) {
-    font-variation-settings: "wght" 400;
-  }
-
-  &.fit-width {
-    width: fit-content;
+    font-variation-settings: "wght" 500;
   }
 
   &:hover {
@@ -862,6 +856,16 @@
         color-mix(in oklab, var(--button-color) 75%, black));
     --button-bg-bottom: var(--button-bg-top);
   }
+}
+
+.fit-width {
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 /* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
@@ -957,29 +961,61 @@
   /* desktop: hover crossfade speed */
 }
 
-/* Shared logo rendering. */
+/* Shared logo rendering */
 .sponsor-logo {
   inline-size: var(--sponsor-card-logo-size);
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: calc(var(--sponsor-card-logo-size)*2);
+    color: var(--primary);
+  }
 }
 
-.sponsor-logo svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height:calc(var(--sponsor-card-logo-size)*2);
-  color: var(--primary);
-}
-
-/* Mobile carousel cards. */
+/* Mobile carousel — full-bleed within the .panel parent so it scrolls
+     edge-to-edge, with matching padding and scroll-padding so the last
+     card never sits flush against the right edge.                   */
 .sponsors-mobile {
-  --gap: var(--vs-m);
+  --gap: var(--vs-base);
+  --layout-padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
   list-style: none;
-  margin: 0;
-  padding: 0;
-}
+  margin-inline: calc(-1 * var(--layout-padding));
+  padding-inline: var(--layout-padding);
 
-.sponsors-mobile>li {
-  inline-size: var(--sponsor-card-width);
+  >li {
+    inline-size: var(--sponsor-card-width);
+    padding: var(--vs-l);
+
+    >p {
+      text-align: center;
+    }
+  }
+
+  /* Override .box.ghost's transparent background so the card's own
+     --bg (derived from its theme class) is visible.                   */
+  >li.box.ghost {
+    background: var(--bg);
+  }
+
+  /* Inside a deep-red card the SVG logo should use the light fg.       */
+  >li.theme-crimson .sponsor-logo svg {
+    color: var(--fg);
+  }
+
+  >li.split.vertical {
+    height: auto;
+    justify-content: space-between;
+  }
+
+  .sponsor-logo {
+    display: contents;
+
+    svg {
+      width: calc(var(--sponsor-card-logo-size) * 1.75);
+    }
+  }
 }
 
 /* Desktop list — names flow with Graffiti's natural stack gaps; each row's logo
@@ -987,35 +1023,40 @@
      revealed on hover/focus (blank until then). */
 .sponsors-desktop {
   list-style: none;
-  margin: 0;
   padding: 0;
-}
 
-.sponsors-desktop>li {
-  position: relative;
-  cursor: default;
-}
 
-.sponsors-desktop .sponsor-logo {
-  position: absolute;
-  inset-inline-end: 14%;
-  inset-block-start: 50%;
-  translate: 0 -50%;
-  inline-size: var(--sponsor-logo-size);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--sponsor-logo-fade) ease;
-}
+  >li {
+    position: relative;
+    cursor: default;
 
-.sponsors-desktop>li:hover .sponsor-logo,
-.sponsors-desktop>li:focus-within .sponsor-logo {
-  opacity: 1;
+    &:not(:first-child):not(:last-child) {
+      margin-block: var(--vs-l);
+    }
+  }
+
+  .sponsor-logo {
+    position: absolute;
+    inset-inline-end: 14%;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    inline-size: var(--sponsor-logo-size);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--sponsor-logo-fade) ease;
+  }
+
+  >li:hover .sponsor-logo,
+  >li:focus-within .sponsor-logo {
+    opacity: 1;
+  }
 }
 
 /* Photo banner — pre-filtered background photo with 3-col identity grid.
    Reusable: compose with .stack-section/.half; override
    --photo-banner-img-position to shift the focal point. */
 .photo-banner {
+  container-type: inline-size;
   display: flex;
   align-items: center;
 
@@ -1039,17 +1080,44 @@
     padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
     padding-block: var(--vs-xl);
 
-    > p {
-      &:last-child { text-align: right; }
+    >p {
+      width: fit-content;
+      font-weight: 500;
+
+      @supports (font-variation-settings: "wght" 450) {
+        font-variation-settings: "wght" 450;
+      }
+
+      &:last-child {
+        justify-self: end;
+      }
     }
 
-    > div {
+    >div {
       display: flex;
       justify-content: center;
 
       svg {
         height: calc(var(--vs-xxl)*2);
         width: auto;
+      }
+    }
+
+    @container (max-width: 50rem) {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: var(--vs-xl);
+
+      >p {
+        text-align: center;
+
+        &:last-child {
+          justify-self: revert;
+        }
+      }
+
+      >div svg {
+        height: calc(var(--vs-xxl));
       }
     }
   }
@@ -1067,6 +1135,17 @@
     --button-border: transparent;
   }
 
+  /* Contrast CTA — surface = the theme's own --fg, text = its --bg (the
+     inverted "fg/bg swap" buttons in the footer). Lives here (not Graffiti's
+     .button.contrast) because the @layer custom base rule forces every button
+     to brand red; this higher layer's --button-color override is what the base
+     rule's --button-bg-top/bottom then resolve from. */
+  .btt--contrast {
+    --button-color: var(--fg);
+    color: var(--bg);
+    --button-border: transparent;
+  }
+
   /* On blush the default secondary bg (Brand-50) equals the section bg, so it
      vanishes. Match Figma instead: bright-red text on a Brand-50 (#FFE0DB)
      surface, with a faint Brand border so the box still reads against blush.
@@ -1078,6 +1157,22 @@
 
     .accent .btt--secondary {
       color: inherit;
+    }
+  }
+
+  /* Graffiti's .footer component underlines all <a> on hover; override that
+     for buttons so they don't get a link-style underline on hover. */
+  .footer {
+    >nav {
+      padding-block: var(--vs-xl);
+      gap: clamp(var(--vs-base), 5vw, var(--vs-m));
+    }
+    :is(.button, button):hover {
+      text-decoration: none;
+    }
+
+    h3 {
+      color: var(--fg-8);
     }
   }
 }

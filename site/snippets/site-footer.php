@@ -1,0 +1,84 @@
+<?php
+$registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->value() : null;
+$contactEmail = 'openartfolke@gmail.com';
+?>
+<footer class="footer theme-ink panel stack gap-xl stack-section">
+
+  <nav class="cluster center" aria-label="Footer">
+    <a class="underline" href="<?= $site->url() ?>"<?= e($site->homePage()->isActive(), ' aria-current="page"') ?>>Home</a>
+    <?php foreach ($site->children()->not('home') as $child): ?>
+      <a class="underline" href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
+    <?php endforeach ?>
+    <?php if ($registerUrl): ?>
+      <a class="underline" href="<?= $registerUrl ?>" rel="noopener noreferrer" target="_blank">Register <span aria-hidden="true">↗</span></a>
+    <?php endif ?>
+  </nav>
+
+  <hr>
+
+  <div class="layout-split" style="--layout-gap: var(--vs-xxl);">
+    <h2 class="fs-xxl">Key information</h2>
+    <div class="stack gap-xl">
+      <div class="stack gap-m">
+        <h3 class="fs-xxl">I’m a visitor</h3>
+        <a class="button btt--contrast fit-width" href="<?= page('programme')?->url() ?? '#' ?>">See upcoming festival programme</a>
+      </div>
+      <div class="stack gap-m">
+        <h3 class="fs-xxl text-muted">I’m a creative</h3>
+        <a class="button btt--contrast fit-width" href="<?= $registerUrl ?? '#' ?>"<?= e($registerUrl, ' rel="noopener noreferrer" target="_blank"') ?>>Register as a creative</a>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="layout-split" style="--layout-gap: var(--vs-xxl);">
+    <h2 class="fs-xxl">Questions</h2>
+    <div class="stack gap-xl">
+      <div class="stack gap-m">
+        <h3 class="fs-xxl text-muted">Contact us</h3>
+        <p>Email us at <?= esc($contactEmail) ?></p>
+        <button class="btt--contrast fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email address</button>
+      </div>
+      <div class="stack gap-m">
+        <h3 class="fs-xxl text-muted">Elsewhere</h3>
+        <div class="stack gap-s">
+          <?php if ($site->instagram_url()->isNotEmpty()): ?>
+            <a class="button btt--contrast fit-width" href="<?= $site->instagram_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">Instagram</a>
+          <?php endif ?>
+          <?php if ($site->facebook_url()->isNotEmpty()): ?>
+            <a class="button btt--contrast fit-width" href="<?= $site->facebook_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">Facebook</a>
+          <?php endif ?>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="layout-split" style="--layout-gap: var(--vs-xxl);">
+    <h2 class="fs-xxl">Provisions</h2>
+    <div class="stack gap-xl">
+      <div class="stack gap-l">
+        <h3>Privacy</h3>
+        <p class="pretty">When signing up for festival updates you agree for us to collect your email address and receive emails about the festival, artists, sponsors and related news. We may share data with service providers. We keep your data only as long as necessary. You can unsubscribe using the link in our emails, or contact us for access, correction or deletion.</p>
+      </div>
+      <div class="stack gap-l">
+        <h3>Fundraising</h3>
+        <p class="pretty">This website may include information about fundraising activity and support opportunities for the festival. Any fundraising pages, donation links, or supporter arrangements may be subject to separate terms or processing information where relevant.</p>
+      </div>
+      <div class="stack gap-l">
+        <h3>Terms</h3>
+        <p class="pretty">This website provides general information about the festival, artists and supporters. We aim for accuracy and update information regularly, but cannot guarantee everything will always be complete or current. Festival dates, participants, fees and other arrangements may change. This website does not replace any separate agreements for artists, sponsors or participants.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="layout-split footer__legal">
+    <small>Copyright ©️ Open Art Folke, 2026</small>
+    <small>Site design Francesco Imola</small>
+  </div>
+
+</footer>
