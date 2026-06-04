@@ -16,7 +16,7 @@
 
 @import "./_layers.css";
 @import "@drop-in/graffiti" layer(graffiti);
-@import "lenis/dist/lenis.css";
+@import "lenis/dist/lenis.css" layer(graffiti);
 
 @layer fonts {
 
@@ -333,6 +333,12 @@
 
 @layer custom {
 
+  // ─────────────────────────────────────────────────────────────────────
+  // 1. Element defaults & typography
+  //    Text-box trim → root tokens → body → headings/links/paragraphs
+  //    → placeholder → main/section → text-wrap → image-cover
+  // ─────────────────────────────────────────────────────────────────────
+
   :where(*) {
     @supports (text-box-trim: trim-both) {
       text-box: trim-both cap text;
@@ -461,6 +467,12 @@
     object-position: center;
   }
 
+  // ─────────────────────────────────────────────────────────────────────
+  // 2. Layout primitives
+  //    .full-bleed / .full-height / .center-both / .split.no-wrap
+  //    + breakpoint visibility utilities
+  // ─────────────────────────────────────────────────────────────────────
+
   /* Full-bleed — escape a constrained container to full viewport width.
      Reusable sanctioned custom class (Graffiti has no equivalent). */
   .full-bleed {
@@ -468,11 +480,61 @@
     margin-inline: calc(50% - 50vw);
   }
 
+  .full-height {
+    height: 100%;
+  }
+
+  .center-both {
+    display: grid;
+    place-items: center;
+  }
+
+  /* .split defaults to wrap in Graffiti — pin to no-wrap when the layout
+     depends on a single row. */
+  .split:where(.no-wrap) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  @include tablet {
+    .right-aligned {
+      width: 100%;
+      text-align: right;
+    }
+  }
+
+  /* Breakpoint visibility utilities: .show-mobile is visible only below the
+     tablet breakpoint, .show-desktop only at/above it. For swapping between two
+     alternate Graffiti layouts of the same content (e.g. the sponsors carousel
+     vs list) instead of overriding a component's internals. */
+  @include tablet {
+    .show-mobile {
+      display: none;
+    }
+  }
+
+  @include below-tablet {
+    .show-desktop {
+      display: none;
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
+  // 3. Section structures
+  //    .stack-section (and below-tablet override) → .hero + .hero__bg /
+  //    .hero__arrow → .panel → .photo-banner → .page-hero → .photo-frame
+  // ─────────────────────────────────────────────────────────────────────
+
   .stack-section {
     position: sticky;
     top: var(--nav-height, 6rem);
     min-height: calc(100svh - var(--nav-height, 6rem));
     background: var(--section-bg, var(--bg));
+
+    &:is(.flowing) {
+      position: relative;
+      top: auto;
+    }
   }
 
   .stack-section.half {
@@ -527,6 +589,11 @@
     color: var(--light-Neutral-100);
   }
 
+  /* Intro date — letter-spacing tweak for the homepage hero lead-in. */
+  .intro__date {
+    letter-spacing: var(--type-track-ui);
+  }
+
   /* Below the tablet breakpoint (where the nav collapses to the drawer),
      stop the per-section card-stacking: only the hero stays pinned, and
      every other section flows normally so the content scrolls up over the
@@ -538,11 +605,6 @@
     }
   }
 
-  /* Reusable section building blocks — three orthogonal concerns:
-       .panel     → spacing / padding (colour-blind)
-       .theme-*   → background + linked text colour (size-blind)
-       .statement → large lead paragraph */
-
   /* Panel — the spacing shell. Padding + content rhythm only, no colour. */
   .panel {
     padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
@@ -553,35 +615,116 @@
     }
   }
 
-  .split:where(.no-wrap) {
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
+  /* Photo banner — pre-filtered background photo with 3-col identity grid.
+     Reusable: compose with .stack-section/.half; override
+     --photo-banner-img-position to shift the focal point. */
+  .photo-banner {
+    container-type: inline-size;
+    display: flex;
+    align-items: center;
+    position: relative;        /* contain .photo-banner__bg (position: absolute) */
+    overflow: clip; 
+    top: 0;           /* clip any overshoot; doesn't establish a scroll container */
 
-  .center-both {
-    display: grid;
-    place-items: center;
-  }
+    &__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: var(--photo-banner-img-position, center);
+    }
 
-  .full-height {
-    height: 100%;
-  }
+    &__grid {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+      padding-block: var(--vs-xl);
 
-  /* Breakpoint visibility utilities: .show-mobile is visible only below the
-     tablet breakpoint, .show-desktop only at/above it. For swapping between two
-     alternate Graffiti layouts of the same content (e.g. the sponsors carousel
-     vs list) instead of overriding a component's internals. */
-  @include tablet {
-    .show-mobile {
-      display: none;
+      >p {
+        width: fit-content;
+        font-weight: 500;
+
+        @supports (font-variation-settings: "wght" 450) {
+          font-variation-settings: "wght" 450;
+        }
+
+        &:last-child {
+          justify-self: end;
+        }
+      }
+
+      >div {
+        display: flex;
+        justify-content: center;
+
+        svg {
+          height: calc(var(--vs-xxl) * 2);
+          width: auto;
+        }
+      }
+
+      @container (max-width: 50rem) {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: var(--vs-xl);
+
+        >p {
+          text-align: center;
+
+          &:last-child {
+            justify-self: revert;
+          }
+        }
+
+        >div svg {
+          height: calc(var(--vs-xxl));
+        }
+      }
     }
   }
 
-  @include below-tablet {
-    .show-desktop {
-      display: none;
+  /* Page hero — a short section hero (used to open the About page). Fills roughly
+     half the viewport and bottom-centres its heading; pair with .panel for padding
+     and a .theme-* class for colour. */
+  .page-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;   /* title sits at the bottom */
+    align-items: center;         /* ...centred horizontally */
+    text-align: center;
+    min-height: 50svh;
+
+    h1 {
+      --fl: 6;                    /* homepage-hero scale */
+      font-size: var(--fluid-type);
     }
   }
+
+  /* Flush table — Graffiti's .table wrapper keeps its overflow-x: auto (so the
+     table scrolls horizontally instead of squeezing) but drops the boxed border
+     and radius for an open, editorial list. Cells stay on one line so the table
+     overflows its container rather than wrapping. Compose: <div class="table
+     table-flush"><table>…</table></div>. */
+  .table-flush {
+    border-radius: var(--br-s);
+
+    :is(th, td) {
+      white-space: nowrap;
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
+  // 4. Themes
+  //    Each preset sets --bg/--fg/--primary endpoints + color-scheme.
+  //    Graffiti's :where([class*="theme-"]) re-derives every downstream
+  //    scale from those five values.
+  // ─────────────────────────────────────────────────────────────────────
 
   /* Theme presets: set --bg/--fg/--primary endpoints. Graffiti's
      `:where([class*="theme-"])` re-derives all scales automatically.
@@ -635,6 +778,12 @@
     color-scheme: dark;
   }
 
+  // ─────────────────────────────────────────────────────────────────────
+  // 5. Theme-aware text
+  //    .accent / .statement colour the text from the current theme;
+  //    .statement also drives the large lead-paragraph typography.
+  // ─────────────────────────────────────────────────────────────────────
+
   /* Accent — colour text with the current theme's --primary. Resolves to
      brand red on light themes, soft pink on the dark/deep-red themes. */
   :is(.accent, .statement) {
@@ -667,18 +816,24 @@
     color: inherit;
   }
 
-  .intro__date {
-    letter-spacing: var(--type-track-ui);
+  /* Tagline lead — the About page's opening "umbrella" statement. Reuses the
+     .statement type scale but recolours it: the lead paragraph sits at full
+     foreground strength and the continuation drops to a muted tone (deliberately
+     not the red accent the homepage statements use). Scoped so .statement stays
+     red everywhere else. */
+  .tagline > p:first-child {
+    --text-color: var(--fg);
+    color: var(--fg);
   }
 
-
-  @include tablet {
-    .right-aligned {
-      width: 100%;
-      text-align: right;
-    }
+  .tagline > p:nth-child(2) {
+    --text-color: var(--fg-5);
+    color: var(--fg-5);
   }
 
+  // ─────────────────────────────────────────────────────────────────────
+  // 6. Site components — header/nav and mobile drawer
+  // ─────────────────────────────────────────────────────────────────────
 
   .site-nav {
     position: fixed;
@@ -791,6 +946,213 @@
     }
   }
 
+  // ─────────────────────────────────────────────────────────────────────
+  // 7. Sponsors — knobs, shared logo, then mobile carousel + desktop list
+  //    (visibility swap is via .show-mobile / .show-desktop above)
+  // ─────────────────────────────────────────────────────────────────────
+
+  /* Sponsors — two self-contained layouts, swapped by breakpoint via
+     .show-mobile / .show-desktop. Both are plain Graffiti (.carousel / .box /
+     .split / .stack); the only custom bits are the few knobs below and the
+     desktop hover-reveal. To restyle, change the knobs — leave the rest. */
+  .sponsors {
+    --sponsor-card-width: min(80%, 24rem);
+    /* mobile: width of each carousel card */
+    --sponsor-card-logo-size: min(12rem, 40%);
+    /* mobile: logo width inside a card */
+    --sponsor-logo-size: min(22rem, 45%);
+    /* desktop: revealed logo width */
+    --sponsor-logo-fade: 0.3s;
+    /* desktop: hover crossfade speed */
+  }
+
+  /* Shared logo rendering */
+  .sponsor-logo {
+    inline-size: var(--sponsor-card-logo-size);
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: calc(var(--sponsor-card-logo-size) * 2);
+      color: var(--primary);
+    }
+  }
+
+  /* Mobile carousel — full-bleed within the .panel parent so it scrolls
+     edge-to-edge, with matching padding and scroll-padding so the last
+     card never sits flush against the right edge.                   */
+  .sponsors-mobile {
+    --gap: var(--vs-base);
+    --layout-padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+    list-style: none;
+    margin-inline: calc(-1 * var(--layout-padding));
+    padding-inline: var(--layout-padding);
+
+    >li {
+      inline-size: var(--sponsor-card-width);
+      padding: var(--vs-l);
+
+      >p {
+        text-align: center;
+      }
+    }
+
+    /* Override .box.ghost's transparent background so the card's own
+       --bg (derived from its theme class) is visible.                   */
+    >li.box.ghost {
+      background: var(--bg);
+    }
+
+    /* Inside a deep-red card the SVG logo should use the light fg.       */
+    >li.theme-crimson .sponsor-logo svg {
+      color: var(--fg);
+    }
+
+    >li.split.vertical {
+      height: auto;
+      justify-content: space-between;
+    }
+
+    .sponsor-logo {
+      display: contents;
+
+      svg {
+        width: calc(var(--sponsor-card-logo-size) * 1.75);
+      }
+    }
+  }
+
+  /* Desktop list — names flow with Graffiti's natural stack gaps; each row's logo
+     is taken out of flow and centred to the right, free to overshoot the row,
+     revealed on hover/focus (blank until then). */
+  .sponsors-desktop {
+    list-style: none;
+    padding: 0;
+
+    >li {
+      position: relative;
+      cursor: default;
+
+      &:not(:first-child):not(:last-child) {
+        margin-block: var(--vs-l);
+      }
+    }
+
+    .sponsor-logo {
+      position: absolute;
+      inset-inline-end: 14%;
+      inset-block-start: 50%;
+      translate: 0 -50%;
+      inline-size: var(--sponsor-logo-size);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--sponsor-logo-fade) ease;
+    }
+
+    >li:hover .sponsor-logo,
+    >li:focus-within .sponsor-logo {
+      opacity: 1;
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
+  // 8. Buttons
+  //    Base rule for any un-classed button (brand red surface) lives in
+  //    @layer custom — was unlayered pre-refactor. Variants in
+  //    @layer button-variants still win via cascade-layer priority, and
+  //    template-level unlayered CSS can still override the base per page.
+  //    The prefers-contrast media query is the a11y override and must
+  //    stay immediately after the base rule.
+  // ─────────────────────────────────────────────────────────────────────
+
+  /* Default button: brand red surface without needing an extra class.
+     Lives in @layer custom (was unlayered pre-refactor); variants in
+     @layer button-variants still win via cascade-layer priority. */
+  :is(button, .button):not(.minimal) {
+    --button-color: light-dark(var(--light-Brand-500), var(--dark-Brand-800));
+    color: light-dark(var(--light-Neutral-50), var(--dark-Neutral-50));
+    --button-bg-top: var(--button-color);
+    --button-bg-bottom: var(--button-color);
+    --button-border: color-mix(in oklab, var(--button-color) 95%, black);
+    --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
+    box-shadow: 0 1px 2px var(--button-shadow);
+
+    border-radius: var(--br-s);
+    padding-block: var(--vs-base);
+    padding-inline: var(--pad-l);
+    font-weight: 500;
+
+    @supports (font-variation-settings: "wght" 400) {
+      font-variation-settings: "wght" 500;
+    }
+
+    &:hover {
+      box-shadow: 0 2px 4px var(--button-shadow);
+      --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 85%, white),
+          color-mix(in oklab, var(--button-color) 95%, black));
+      --button-bg-bottom: var(--button-bg-top);
+    }
+
+    &:active {
+      box-shadow: 0 1px 2px var(--button-shadow);
+      --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 88%, black),
+          color-mix(in oklab, var(--button-color) 75%, black));
+      --button-bg-bottom: var(--button-bg-top);
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    .accent {
+      text-decoration: underline;
+    }
+
+    :is(button, .button):not(.minimal) {
+      --button-border: currentColor;
+      --button-shadow: none;
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
+  // 9. Form & dropdown
+  // ─────────────────────────────────────────────────────────────────────
+
+  /* Let .input-group consume --gap so gap-* utilities work on it */
+  .input-group {
+    gap: var(--gap, 0);
+  }
+
+  /* Square the email field to match the squared buttons (button border-radius
+     is already 0 globally; inputs keep Graffiti's radius unless reset). */
+  .input-group input {
+    border-radius: var(--br-s);
+  }
+
+  :where(.dropdown) {
+    cursor: context-menu;
+
+    .dropdown-menu {
+      --bg-light: var(--color-background);
+      background: var(--bg-light);
+      text-box: trim-both leading;
+    }
+  }
+
+  .theme-blush:has(.dropdown) .dropdown-menu {
+    --bg-light: var(--light-Neutral-50);
+    background: var(--bg-light);
+  }
+
+  :is(.dropdown-header) {
+    margin-top: var(--pad-xs);
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
+  // 10. Utility classes
+  //     Margin scale, fit-width, underline, gap scale. Listed in usage
+  //     frequency order (margin/gap) then minor one-offs.
+  // ─────────────────────────────────────────────────────────────────────
+
   /* Margin utilities — Graffiti zeroes margins, these restore spacing:
      .mt-* → margin-block-start   .mb-* → margin-block-end
      .my-* → margin-block (both)  .mx-* → margin-inline (both)
@@ -804,324 +1166,71 @@
     'xxl': var(--vs-xxl),
   );
 
-@each $name, $value in $margin-scale {
-  .mt-#{$name} {
-    margin-block-start: #{$value};
+  @each $name, $value in $margin-scale {
+    .mt-#{$name} {
+      margin-block-start: #{$value};
+    }
+
+    .mb-#{$name} {
+      margin-block-end: #{$value};
+    }
+
+    .my-#{$name} {
+      margin-block: #{$value};
+    }
+
+    .mx-#{$name} {
+      margin-inline: #{$value};
+    }
   }
 
-  .mb-#{$name} {
-    margin-block-end: #{$value};
+  .fit-width {
+    width: fit-content;
+    margin: 0;
+    padding: 0;
   }
 
-  .my-#{$name} {
-    margin-block: #{$value};
-  }
-
-  .mx-#{$name} {
-    margin-inline: #{$value};
-  }
-}
-
-/* Default button: brand red surface without needing an extra class.
-     Variants in @layer button-variants override by cascade priority,
-     not by out-specifying the selector. */
-:is(button, .button):not(.minimal) {
-  --button-color: light-dark(var(--light-Brand-500), var(--dark-Brand-800));
-  color: light-dark(var(--light-Neutral-50), var(--dark-Neutral-50));
-  --button-bg-top: var(--button-color);
-  --button-bg-bottom: var(--button-color);
-  --button-border: color-mix(in oklab, var(--button-color) 95%, black);
-  --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
-  box-shadow: 0 1px 2px var(--button-shadow);
-
-  border-radius: var(--br-s);
-  padding-block: var(--vs-base);
-  padding-inline: var(--pad-l);
-  font-weight: 500;
-
-  @supports (font-variation-settings: "wght" 400) {
-    font-variation-settings: "wght" 500;
-  }
-
-  &:hover {
-    box-shadow: 0 2px 4px var(--button-shadow);
-    --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 85%, white),
-        color-mix(in oklab, var(--button-color) 95%, black));
-    --button-bg-bottom: var(--button-bg-top);
-  }
-
-  &:active {
-    box-shadow: 0 1px 2px var(--button-shadow);
-    --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 88%, black),
-        color-mix(in oklab, var(--button-color) 75%, black));
-    --button-bg-bottom: var(--button-bg-top);
-  }
-}
-
-.fit-width {
-  width: fit-content;
-  margin: 0;
-  padding: 0;
-}
-
-.underline {
-  text-decoration: underline;
-}
-
-/* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
-.stack-gap-none {
-  --gap: 0;
-}
-
-.gap-xs {
-  --gap: var(--vs-xs);
-}
-
-.gap-s {
-  --gap: var(--vs-s);
-}
-
-.gap-m {
-  --gap: var(--vs-m);
-}
-
-.gap-l {
-  --gap: var(--vs-l);
-}
-
-.gap-xl {
-  --gap: var(--vs-xl);
-}
-
-.gap-xxl {
-  --gap: var(--vs-xxl);
-}
-
-.split-gap-none {
-  --layout-gap: 0;
-}
-
-.split-gap-xxl {
-  --layout-gap: var(--vs-xxl);
-}
-
-/* Let .input-group consume --gap so gap-* utilities work on it */
-.input-group {
-  gap: var(--gap, 0);
-}
-
-/* Square the email field to match the squared buttons (button border-radius
-     is already 0 globally; inputs keep Graffiti's radius unless reset). */
-.input-group input {
-  border-radius: var(--br-s);
-}
-
-@media (prefers-contrast: more) {
-  .accent {
+  .underline {
     text-decoration: underline;
   }
 
-  :is(button, .button):not(.minimal) {
-    --button-border: currentColor;
-    --button-shadow: none;
-  }
-}
-
-:where(.dropdown) {
-  cursor: context-menu;
-
-  .dropdown-menu {
-    --bg-light: var(--color-background);
-    background: var(--bg-light);
-    text-box: trim-both leading (initial) alphabetic;
-  }
-}
-
-.theme-blush:has(.dropdown) .dropdown-menu {
-  --bg-light: var(--light-Neutral-50);
-  background: var(--bg-light);
-}
-
-:is(.dropdown-header) {
-  margin-top: var(--pad-xs);
-}
-
-/* Sponsors — two self-contained layouts, swapped by breakpoint via
-     .show-mobile / .show-desktop. Both are plain Graffiti (.carousel / .box /
-     .split / .stack); the only custom bits are the few knobs below and the
-     desktop hover-reveal. To restyle, change the knobs — leave the rest. */
-.sponsors {
-  --sponsor-card-width: min(80%, 24rem);
-  /* mobile: width of each carousel card */
-  --sponsor-card-logo-size: min(12rem, 40%);
-  /* mobile: logo width inside a card */
-  --sponsor-logo-size: min(22rem, 45%);
-  /* desktop: revealed logo width */
-  --sponsor-logo-fade: 0.3s;
-  /* desktop: hover crossfade speed */
-}
-
-/* Shared logo rendering */
-.sponsor-logo {
-  inline-size: var(--sponsor-card-logo-size);
-
-  svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: calc(var(--sponsor-card-logo-size)*2);
-    color: var(--primary);
-  }
-}
-
-/* Mobile carousel — full-bleed within the .panel parent so it scrolls
-     edge-to-edge, with matching padding and scroll-padding so the last
-     card never sits flush against the right edge.                   */
-.sponsors-mobile {
-  --gap: var(--vs-base);
-  --layout-padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
-  list-style: none;
-  margin-inline: calc(-1 * var(--layout-padding));
-  padding-inline: var(--layout-padding);
-
-  >li {
-    inline-size: var(--sponsor-card-width);
-    padding: var(--vs-l);
-
-    >p {
-      text-align: center;
-    }
+  /* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
+  .stack-gap-none {
+    --gap: 0;
   }
 
-  /* Override .box.ghost's transparent background so the card's own
-     --bg (derived from its theme class) is visible.                   */
-  >li.box.ghost {
-    background: var(--bg);
+  .gap-xs {
+    --gap: var(--vs-xs);
   }
 
-  /* Inside a deep-red card the SVG logo should use the light fg.       */
-  >li.theme-crimson .sponsor-logo svg {
-    color: var(--fg);
+  .gap-s {
+    --gap: var(--vs-s);
   }
 
-  >li.split.vertical {
-    height: auto;
-    justify-content: space-between;
+  .gap-m {
+    --gap: var(--vs-m);
   }
 
-  .sponsor-logo {
-    display: contents;
-
-    svg {
-      width: calc(var(--sponsor-card-logo-size) * 1.75);
-    }
-  }
-}
-
-/* Desktop list — names flow with Graffiti's natural stack gaps; each row's logo
-     is taken out of flow and centred to the right, free to overshoot the row,
-     revealed on hover/focus (blank until then). */
-.sponsors-desktop {
-  list-style: none;
-  padding: 0;
-
-
-  >li {
-    position: relative;
-    cursor: default;
-
-    &:not(:first-child):not(:last-child) {
-      margin-block: var(--vs-l);
-    }
+  .gap-l {
+    --gap: var(--vs-l);
   }
 
-  .sponsor-logo {
-    position: absolute;
-    inset-inline-end: 14%;
-    inset-block-start: 50%;
-    translate: 0 -50%;
-    inline-size: var(--sponsor-logo-size);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--sponsor-logo-fade) ease;
+  .gap-xl {
+    --gap: var(--vs-xl);
   }
 
-  >li:hover .sponsor-logo,
-  >li:focus-within .sponsor-logo {
-    opacity: 1;
-  }
-}
-
-/* Photo banner — pre-filtered background photo with 3-col identity grid.
-   Reusable: compose with .stack-section/.half; override
-   --photo-banner-img-position to shift the focal point. */
-.photo-banner {
-  container-type: inline-size;
-  display: flex;
-  align-items: center;
-
-  &__bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: var(--photo-banner-img-position, center);
+  .gap-xxl {
+    --gap: var(--vs-xxl);
   }
 
-  &__grid {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
-    padding-block: var(--vs-xl);
-
-    >p {
-      width: fit-content;
-      font-weight: 500;
-
-      @supports (font-variation-settings: "wght" 450) {
-        font-variation-settings: "wght" 450;
-      }
-
-      &:last-child {
-        justify-self: end;
-      }
-    }
-
-    >div {
-      display: flex;
-      justify-content: center;
-
-      svg {
-        height: calc(var(--vs-xxl)*2);
-        width: auto;
-      }
-    }
-
-    @container (max-width: 50rem) {
-      grid-template-columns: 1fr;
-      justify-items: center;
-      gap: var(--vs-xl);
-
-      >p {
-        text-align: center;
-
-        &:last-child {
-          justify-self: revert;
-        }
-      }
-
-      >div svg {
-        height: calc(var(--vs-xxl));
-      }
-    }
+  .split-gap-none {
+    --layout-gap: 0;
   }
-}
+
+  .split-gap-xxl {
+    --layout-gap: var(--vs-xxl);
+  }
+
 }
 
 /* Button variants in @layer button-variants win over the base rule

@@ -69,7 +69,7 @@
   </div>
 </section>
 
-<section class="sponsors theme-blush stack-section half panel even stack gap-xl">
+<section class="sponsors theme-blush stack-section half panel even stack gap-xxl">
   <h2>Recent sponsors</h2>
   <?php
   // Build the data once; both layouts below render from it (logos sanitised once each).
@@ -104,7 +104,7 @@
 
   <!-- Desktop: a stacked list; each row reveals its own logo on hover/focus. -->
   <ul
-    class="sponsors-desktop show-desktop stack accent mt-l">
+    class="sponsors-desktop show-desktop stack accent mt-m">
     <?php foreach ($sponsors as $i => $s): ?>
       <?php $menuId = 'sponsor-dropdown-' . $i ?>
       <li style="--anchor: --sponsor-<?= $i ?>">
