@@ -111,7 +111,7 @@ Key conventions:
 
 ## Styling
 
-The project uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`), a standards-first CSS library that styles native HTML directly. Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before writing custom CSS — keep custom CSS minimal.
+The project uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`), a standards-first CSS library that styles native HTML directly. Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before writing custom CSS — keep custom CSS minimal, only for edge cases.
 
 > **Workflow:** Before writing or refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, token bridge, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.site-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-*`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → Graffiti translation process. Full rationale: `superpowers/specs/2026-05-29-graffiti-workflow-design.md`.
 
@@ -156,27 +156,45 @@ Swapping the theme class makes `.accent` automatically adjust colour (red on lig
 
 ---
 
-## Boundaries
+## Content and deployment
 
-### Always safe to do
+`/content` is gitignored. Git tracks only code (templates, blueprints, styles). Content (text, uploaded images, panel data) lives only on the server where it was written.
+
+**Two separate streams — never let one overwrite the other:**
+- **Git** = source of truth for code. Push to deploy code changes.
+- **Production `content/`** = source of truth for content. Panel edits go live immediately and persist there.
+
+**Syncing content between production and local** is done via rsync over SSH (exact command depends on hosting provider):
+
+```bash
+# Pull production content down to local
+rsync -av user@your-server:~/content ./
+
+# Push local content up to production
+rsync -av ./content user@your-server:~
+```
+
+Use the pull command after a colleague uploads assets or edits content via the panel, so your local copy reflects what's live. Use push to seed initial content when first deploying. Hosting provider not yet confirmed — check with the user before running sync commands.
+
+---
+
+## Boundaries: Always safe to do
 - Edit `.php` templates in `site/templates/` and `site/snippets/`
 - Edit `.scss`, `.css`, and `.js` files in `src/`
 - Edit `.txt` content files in `content/`
 - Edit `.yml` blueprints in `site/blueprints/`
 - Run `pnpm dev`, `pnpm build`, `composer update`
 
-### Ask before doing
+## Boundaries: Ask before doing
 - Changing `site/config/config.php` — affects routing, caching, and panel access
 - Adding or removing Composer packages (`composer require` / `composer remove`)
-- Adding or removing pnpm packages
 - Modifying `vite.config.js` or `site/config/vite.config.php`
 - Creating or deleting content folders under `content/`
 
-### Never do
+## Boundaries: Never do
 - Modify anything inside `kirby/` — this is the Kirby CMS core, managed by Composer
 - Modify anything inside `vendor/` — managed by Composer
 - Edit files inside `public/dist/` — this is generated output, overwritten by every build
 - Create `.twig` templates in `site/templates/` — only `.php` files are used here
 - Delete `storage/` or its contents — contains sessions and cache; data loss risk
 - Commit `site/config/.license` or any credentials
-- Force-push to `main`
