@@ -10,7 +10,7 @@ $contactEmail = 'openartfolke@gmail.com';
       <a class="underline" href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
     <?php endforeach ?>
     <?php if ($registerUrl): ?>
-      <a class="underline" href="<?= $registerUrl ?>" rel="noopener noreferrer" target="_blank">Register <span aria-hidden="true">↗</span></a>
+      <a class="underline" href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank">Register <span aria-hidden="true">↗</span></a>
     <?php endif ?>
   </nav>
 
@@ -25,7 +25,7 @@ $contactEmail = 'openartfolke@gmail.com';
       </div>
       <div class="stack gap-m">
         <h3 class="fs-xxl text-muted">I’m a creative</h3>
-        <a class="button btt--contrast fit-width" href="<?= $registerUrl ?? '#' ?>"<?= e($registerUrl, ' rel="noopener noreferrer" target="_blank"') ?>>Register as a creative</a>
+        <a class="button btt--contrast fit-width" href="<?= esc($registerUrl ?? '#', 'attr') ?>"<?= e($registerUrl, ' rel="noopener noreferrer" target="_blank"') ?>>Register as a creative</a>
       </div>
     </div>
   </div>
