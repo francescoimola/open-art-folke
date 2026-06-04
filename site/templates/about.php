@@ -50,6 +50,23 @@
   </div>
 </section>
 
+<section class="principles stack-section center-both">
+  <img class="principles__bg" src="/assets/images/2025-opening.jpg" alt="" aria-hidden="true">
+  <div class="principles__card panel even theme-brand stack gap-xxl text-center">
+    <h2>Our guiding principles</h2>
+    <ul class="stack gap-m fs-l">
+      <li>We are open to all</li>
+      <li>We are community</li>
+      <li>We are collaborative</li>
+      <li>We are reliant on artist participation</li>
+      <li>We are honest and straightforward</li>
+      <li>We are not sales or professional agents</li>
+      <li>We are not curated or themed</li>
+      <li>We are not always a festival</li>
+    </ul>
+  </div>
+</section>
+
 <?php snippet('site-footer') ?>
 
 <?php snippet('footer') ?>

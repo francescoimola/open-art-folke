@@ -689,6 +689,36 @@
     }
   }
 
+  /* Guiding principles — a centred statement card over an un-filtered backdrop
+     photo. Mirrors the .hero__bg / .photo-banner__bg backdrop idiom: the photo
+     fills the section edge-to-edge (no filter applied), the card is a
+     width-constrained theme-brand panel. Compose with
+     .stack-section.flowing + .center-both. */
+  .principles {
+    overflow: clip;
+
+    &__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    &__card {
+      position: relative;
+      z-index: 1;
+      width: min(100%, calc(var(--vs-xxl) * 8)); /* ≈ Figma 756px, = 48rem/768px */
+
+      h2 {
+        --fl: 5;
+        font-size: var(--fluid-type);
+      }
+    }
+  }
+
   /* Page hero — a short section hero (used to open the About page). Fills roughly
      half the viewport and bottom-centres its heading; pair with .panel for padding
      and a .theme-* class for colour. */
@@ -1282,6 +1312,16 @@
 
     h3 {
       color: var(--fg-8);
+    }
+
+    &__legal {
+        --layout-gap: var(--vs-xxl);
+      }
+      
+    @include below-tablet {
+      &__legal {
+        --layout-gap: revert;
+      }
     }
   }
 }
