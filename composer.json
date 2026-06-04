@@ -12,5 +12,8 @@
       "getkirby/composer-installer": true,
       "php-http/discovery": true
     }
+  },
+  "require-dev": {
+    "bnomei/kirby-mcp": "^1.8"
   }
 }

@@ -39,3 +39,5 @@ node_modules/
 /.claude
 /.kilo
 /opencode.json
+/site/commands
+/.kirby-mcp
