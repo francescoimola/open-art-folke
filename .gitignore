@@ -11,9 +11,12 @@ node_modules/
 /public/dist/
 /public/assets/
 
-# Kirby core (managed by Composer)
+# Kirby core and plugins (managed by Composer)
 /kirby
 /site/plugins/kirby-vite
+/site/plugins/kirby-flash
+/site/plugins/kirby-form
+/site/plugins/kirby-uniform
 
 # Config secrets
 /site/config/vite.config.php
@@ -21,6 +24,7 @@ node_modules/
 
 # Development
 .dev
+/site/webhook-mock.php
 
 # Storage (sync excluded)
 /content

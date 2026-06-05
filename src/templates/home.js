@@ -1,3 +1,12 @@
+const signupCallout = document.querySelector('.callout.success, .callout.error');
+if (signupCallout) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  signupCallout.scrollIntoView({
+    behavior: reduceMotion ? 'auto' : 'smooth',
+    block: 'center',
+  });
+}
+
 const countdown = document.querySelector('.countdown');
 
 if (countdown && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

@@ -1,5 +1,34 @@
 <?php
 
+// Minimal .env loader: parses KEY=VALUE pairs into $_ENV / getenv() and
+// exposes a tiny env() helper. Kirby 5 doesn't auto-load .env files, but
+// they're gitignored at the project root so this is the canonical place
+// to keep secrets out of version control.
+$envFile = dirname(__DIR__, 2) . '/.env';
+if (is_file($envFile) && is_readable($envFile)) {
+  foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+    $line = trim($line);
+    if ($line === '' || $line[0] === '#') continue;
+    if (!str_contains($line, '=')) continue;
+    [$key, $value] = explode('=', $line, 2);
+    $key = trim($key);
+    $value = trim($value, " \t\"'");
+    $_ENV[$key] = $value;
+    $_SERVER[$key] = $value;
+    putenv("$key=$value");
+  }
+}
+
+if (!function_exists('env')) {
+  function env(string $key, mixed $default = null): mixed
+  {
+    if (array_key_exists($key, $_ENV)) return $_ENV[$key];
+    if (array_key_exists($key, $_SERVER)) return $_SERVER[$key];
+    $value = getenv($key);
+    return $value === false ? $default : $value;
+  }
+}
+
 return [
   'debug' => true,
 
@@ -7,6 +36,18 @@ return [
   // On Fortrabbit, set KIRBY_LICENSE env var instead of using .license file
   'panel' => [
     'install' => false  // Set to true only for initial remote setup
+  ],
+
+  // kirby-uniform needs fresh CSRF tokens per request, so the home page
+  // (the only page that hosts a form) must not be cacheable.
+  'cache' => [
+    'pages' => [
+      'home' => false,
+    ],
+  ],
+
+  'zapier' => [
+    'webhook' => env('PROGRAMME_SIGNUP_WEBHOOK', ''),
   ],
 
   // Responsive image recipe, defined once and reused everywhere via the

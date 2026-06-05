@@ -645,9 +645,19 @@
     container-type: inline-size;
     display: flex;
     align-items: center;
-    position: relative;        /* contain .photo-banner__bg (position: absolute) */
-    overflow: clip; 
-    top: 0;           /* clip any overshoot; doesn't establish a scroll container */
+    position: relative;
+    /* contain .photo-banner__bg (position: absolute) */
+    overflow: clip;
+    top: 0;
+    /* clip any overshoot; doesn't establish a scroll container */
+
+    /* <picture> is a layout-transparent wrapper: collapse it so the absolute
+       .photo-banner__bg <img> inside leaves the flex flow (positioning against
+       the section itself), leaving .photo-banner__grid as the sole flex child
+       so its width: 100% spans the full section again. */
+    >picture {
+      display: contents;
+    }
 
     &__bg {
       position: absolute;
@@ -720,7 +730,8 @@
   .principles {
     overflow: clip;
     display: grid;
-    place-items: end center;             /* bottom-centred card */
+    place-items: end center;
+    /* bottom-centred card */
 
     &__bg {
       position: absolute;
@@ -735,7 +746,8 @@
     &__card {
       position: relative;
       z-index: 1;
-      width: min(100%, calc(var(--vs-xxl) * 8)); /* ≈ Figma 756px, = 48rem/768px */
+      width: min(100%, calc(var(--vs-xxl) * 8));
+      /* ≈ Figma 756px, = 48rem/768px */
 
       h2 {
         --fl: 5;
@@ -750,13 +762,16 @@
   .page-hero {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;   /* title sits at the bottom */
-    align-items: center;         /* ...centred horizontally */
+    justify-content: flex-end;
+    /* title sits at the bottom */
+    align-items: center;
+    /* ...centred horizontally */
     text-align: center;
     min-height: 50svh;
 
     h1 {
-      --fl: 6;                    /* homepage-hero scale */
+      --fl: 6;
+      /* homepage-hero scale */
       font-size: var(--fluid-type);
     }
   }
@@ -876,12 +891,12 @@
      foreground strength and the continuation drops to a muted tone (deliberately
      not the red accent the homepage statements use). Scoped so .statement stays
      red everywhere else. */
-  .tagline > p:first-child {
+  .tagline>p:first-child {
     --text-color: var(--fg);
     color: var(--fg);
   }
 
-  .tagline > p:nth-child(2) {
+  .tagline>p:nth-child(2) {
     --text-color: var(--fg-5);
     color: var(--fg-5);
   }
@@ -1183,6 +1198,11 @@
     border-radius: var(--br-s);
   }
 
+  .uniform__potty {
+    position: absolute;
+    left: -9999px;
+  }
+
   :where(.dropdown) {
     cursor: context-menu;
 
@@ -1200,6 +1220,18 @@
 
   :is(.dropdown-header) {
     margin-top: var(--pad-xs);
+  }
+
+  .callout {
+    background: var(--gray-surface);
+    margin-top: var(--vs-base);
+    
+    p {color: var(--color-info); text-wrap: balance;}
+
+    &.hard {
+      border: var(--button-color) solid 2px;
+      border-radius: var(--br-s);
+    }
   }
 
   // ─────────────────────────────────────────────────────────────────────
@@ -1221,70 +1253,70 @@
     'xxl': var(--vs-xxl),
   );
 
-  @each $name, $value in $margin-scale {
-    .mt-#{$name} {
-      margin-block-start: #{$value};
-    }
-
-    .mb-#{$name} {
-      margin-block-end: #{$value};
-    }
-
-    .my-#{$name} {
-      margin-block: #{$value};
-    }
-
-    .mx-#{$name} {
-      margin-inline: #{$value};
-    }
+@each $name, $value in $margin-scale {
+  .mt-#{$name} {
+    margin-block-start: #{$value};
   }
 
-  .fit-width {
-    width: fit-content;
-    margin: 0;
-    padding: 0;
+  .mb-#{$name} {
+    margin-block-end: #{$value};
   }
 
-  .underline {
-    text-decoration: underline;
+  .my-#{$name} {
+    margin-block: #{$value};
   }
 
-  /* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
-  .stack-gap-none {
-    --gap: 0;
+  .mx-#{$name} {
+    margin-inline: #{$value};
   }
+}
 
-  .gap-xs {
-    --gap: var(--vs-xs);
-  }
+.fit-width {
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+}
 
-  .gap-s {
-    --gap: var(--vs-s);
-  }
+.underline {
+  text-decoration: underline;
+}
 
-  .gap-m {
-    --gap: var(--vs-m);
-  }
+/* Gap utilities — set --gap on flex/grid/stack containers without inline styles */
+.stack-gap-none {
+  --gap: 0;
+}
 
-  .gap-l {
-    --gap: var(--vs-l);
-  }
+.gap-xs {
+  --gap: var(--vs-xs);
+}
 
-  .gap-xl {
-    --gap: var(--vs-xl);
-  }
+.gap-s {
+  --gap: var(--vs-s);
+}
 
-  .gap-xxl {
-    --gap: var(--vs-xxl);
-  }
+.gap-m {
+  --gap: var(--vs-m);
+}
 
-  .split-gap-none {
-    --layout-gap: 0;
-  }
+.gap-l {
+  --gap: var(--vs-l);
+}
 
-  .split-gap-xxl {
-    --layout-gap: var(--vs-xxl);
-  }
+.gap-xl {
+  --gap: var(--vs-xl);
+}
+
+.gap-xxl {
+  --gap: var(--vs-xxl);
+}
+
+.split-gap-none {
+  --layout-gap: 0;
+}
+
+.split-gap-xxl {
+  --layout-gap: var(--vs-xxl);
+}
 
 }
 
@@ -1331,6 +1363,7 @@
       padding-block: var(--vs-xl);
       gap: clamp(var(--vs-base), 5vw, var(--vs-m));
     }
+
     :is(.button, button):hover {
       text-decoration: none;
     }
@@ -1340,9 +1373,9 @@
     }
 
     &__legal {
-        --layout-gap: var(--vs-xxl);
-      }
-      
+      --layout-gap: var(--vs-xxl);
+    }
+
     @include below-tablet {
       &__legal {
         --layout-gap: revert;

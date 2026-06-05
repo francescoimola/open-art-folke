@@ -60,7 +60,7 @@
   <?php snippet('countdown') ?>
 </section>
 
-<?php snippet('programme-signup') ?>
+<?php snippet('programme-signup', ['form' => $form]) ?>
 
 <?php $sponsorPage = page('sponsor') ?>
 <?php if ($sponsorPage): ?>

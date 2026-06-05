@@ -10,13 +10,39 @@
     </h2>
     <div class="stack fc readable gap-m pretty">
       <p class="fs-s">We'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can.</p>
-      <div class="stack mt-l">
-        <label for="actions-email">Email</label>
-        <form class="input-group gap-s">
-          <input type="email" id="actions-email" placeholder="you@example.com"/>
-          <button class="btt--secondary" type="submit">Keep me posted</button>
-        </form>
-      </div>
+
+      <?php if ($form->success()): ?>
+        <div class="callout success hard" role="status">
+          <p>Wooho! We'll send you en email as soon as the programme drops 😉
+          </p>
+        </div>
+      <?php else: ?>
+
+        <?php $emailError = $form->error('email')[0] ?? null ?>
+        <?php if ($emailError): ?>
+          <div class="callout error hard" role="alert">
+            <p><?= esc($emailError) ?></p>
+          </div>
+        <?php endif ?>
+
+        <div class="stack mt-l">
+          <label for="actions-email">Email</label>
+          <form class="input-group gap-s" method="POST" action="<?= $page->url() ?>">
+            <input
+              type="email"
+              name="email"
+              id="actions-email"
+              placeholder="you@example.com"
+              value="<?= esc($form->old('email'), 'attr') ?>"
+              <?= $emailError ? 'aria-invalid="true"' : '' ?>
+            />
+            <button class="btt--secondary" type="submit">Keep me posted</button>
+            <?= honeypot_field() ?>
+            <?= csrf_field() ?>
+          </form>
+        </div>
+
+      <?php endif ?>
     </div>
     <small class="mt-s">*Spam? We want nothing to do with him either—and we'll never send you unsolicited communications.</small>
   </div>
