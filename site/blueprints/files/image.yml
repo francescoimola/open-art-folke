@@ -1,0 +1,12 @@
+title: Image
+
+accept:
+  mime: image/jpeg, image/png, image/webp
+
+fields:
+  alt:
+    type: text
+    label: Alt text
+    help: >
+      Describe the image for screen readers and search engines. Leave empty for
+      purely decorative images (those are hidden from assistive tech in the layout).

@@ -9,3 +9,19 @@ fields:
       - italic
       - link
       - ul
+  studioimage:
+    type: files
+    label: Studio photo
+    help: Photo of an artist in their studio, shown after the intro.
+    max: 1
+    query: page.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      template: image
+  principlesimage:
+    type: files
+    label: Guiding principles background
+    help: Full-width background photo behind the “Our guiding principles” card.
+    max: 1
+    query: page.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      template: image

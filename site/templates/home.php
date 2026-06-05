@@ -1,7 +1,15 @@
 <?php snippet('header') ?>
 
 <section class="hero stack-section flex text-center stack-gap-none">
-  <img class="hero__bg" src="/assets/images/dover-road-studios.jpg" alt="" aria-hidden="true" style="object-position: 50% 25%">
+  <?php snippet('image', [
+    'file' => $page->heroimage()->toFile(),
+    'class' => 'hero__bg',
+    'style' => 'object-position: 50% 25%',
+    'hidden' => true,
+    'loading' => 'eager',
+    'fetchpriority' => 'high',
+    'sizes' => '100vw',
+  ]) ?>
   <h1>Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke</h1>
   <a class="hero__arrow fs-xl" href="#intro" aria-label="Scroll to content">↓</a>
 </section>
@@ -31,7 +39,12 @@
     </div>
     <small class="mt-s">* Open Art is 99% free to attend, but some events require a paid reservation</small>
   </div>
-  <img src="/assets/images/visitors.jpg" alt="" class="image-cover" aria-hidden="true">
+  <?php snippet('image', [
+    'file' => $page->festivalimage()->toFile(),
+    'class' => 'image-cover',
+    'hidden' => true,
+    'sizes' => '(min-width: 768px) 50vw, 100vw',
+  ]) ?>
 </section>
 
 <section class="theme-blush stack-section half layout-split split-gap-xxl panel even">
@@ -49,7 +62,12 @@
 </section>
 
 <section class="theme-crimson stack-section layout-split">
-  <img src="/assets/images/visitors-reading-map.jpg" alt="" class="image-cover" aria-hidden="true">
+  <?php snippet('image', [
+    'file' => $page->programmeimage()->toFile(),
+    'class' => 'image-cover',
+    'hidden' => true,
+    'sizes' => '(min-width: 768px) 50vw, 100vw',
+  ]) ?>
   <div class="panel even split fc vertical gap-l">
     <h2>Looking for the Festival Programme?<br><span class="text-muted">You’re early</span>
     </h2>
@@ -135,7 +153,12 @@
 </section>
 
 <section class="theme-ink photo-banner stack-section">
-  <img class="photo-banner__bg" src="/assets/images/festival-opening-25.jpg" alt="" aria-hidden="true">
+  <?php snippet('image', [
+    'file' => $page->bannerimage()->toFile(),
+    'class' => 'photo-banner__bg',
+    'hidden' => true,
+    'sizes' => '100vw',
+  ]) ?>
   <div class="photo-banner__grid">
     <p>Open Art Folke 2026</p>
     <div><?php snippet('logo') ?></div>

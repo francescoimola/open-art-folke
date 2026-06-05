@@ -11,7 +11,10 @@
   </div>
 
   <figure class="layout-split">
-      <img src="/assets/images/artist-in-studio.jpg" alt="Artist seated among prints and sculptures in their Folkestone studio">
+    <?php snippet('image', [
+      'file' => $page->studioimage()->toFile(),
+      'sizes' => '(min-width: 768px) 50vw, 100vw',
+    ]) ?>
   </figure>
 </section>
 
@@ -50,8 +53,13 @@
   </div>
 </section>
 
-<section class="principles stack-section center-both">
-  <img class="principles__bg" src="/assets/images/2025-opening.jpg" alt="" aria-hidden="true">
+<section class="principles stack-section">
+  <?php snippet('image', [
+    'file' => $page->principlesimage()->toFile(),
+    'class' => 'principles__bg',
+    'hidden' => true,
+    'sizes' => '100vw',
+  ]) ?>
   <div class="principles__card panel even theme-brand stack gap-xxl text-center">
     <h2>Our guiding principles</h2>
     <ul class="stack gap-m fs-l">

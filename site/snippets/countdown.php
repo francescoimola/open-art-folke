@@ -15,7 +15,12 @@
     <small style="margin-right: var(--vs-s)"><?= $page->countdownEndDate()->format('M Y') ?></small>
   </div>
   <div class="countdown">
-    <img class="countdown__img" src="/assets/images/coat.png" alt="" aria-hidden="true">
+    <?php snippet('image', [
+      'file' => $page->countdownimage()->toFile(),
+      'class' => 'countdown__img',
+      'hidden' => true,
+      'sizes' => '(min-width: 768px) 50vw, 100vw',
+    ]) ?>
     <div
       class="countdown__grid" role="img" aria-label="<?= $page->daysRemaining() ?> days remaining until Open Art Folke">
       <?php for ($i = 0; $i < $page->countdownTotalBlocks(); $i++): ?>

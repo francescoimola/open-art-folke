@@ -562,9 +562,18 @@
       text-box-edge: cap alphabetic;
     }
 
-    >*:not(.hero__bg, .hero__arrow) {
+    /* The bg <img> is wrapped in a <picture>; exclude that wrapper (not the
+       now-nested .hero__bg class) so it isn't lifted and doesn't become a
+       zero-size containing block for the absolutely-positioned image. */
+    >*:not(picture, .hero__arrow) {
       position: relative;
       z-index: 1;
+    }
+
+    /* <picture> is a layout-transparent wrapper: let the .hero__bg <img> inside
+       position against the .hero section itself. */
+    >picture {
+      display: contents;
     }
 
     >.hero__arrow {
@@ -689,13 +698,15 @@
     }
   }
 
-  /* Guiding principles — a centred statement card over an un-filtered backdrop
-     photo. Mirrors the .hero__bg / .photo-banner__bg backdrop idiom: the photo
-     fills the section edge-to-edge (no filter applied), the card is a
-     width-constrained theme-brand panel. Compose with
-     .stack-section.flowing + .center-both. */
+  /* Guiding principles — a bottom-anchored statement card over an un-filtered
+     backdrop photo. Mirrors the .hero__bg / .photo-banner__bg backdrop idiom:
+     the photo fills the section edge-to-edge (no filter applied), the card is
+     a width-constrained theme-brand panel pinned to the bottom of the
+     stack-section. */
   .principles {
     overflow: clip;
+    display: grid;
+    place-items: end center;             /* bottom-centred card */
 
     &__bg {
       position: absolute;
@@ -711,6 +722,7 @@
       position: relative;
       z-index: 1;
       width: min(100%, calc(var(--vs-xxl) * 8)); /* ≈ Figma 756px, = 48rem/768px */
+      margin-block-end: var(--pad-m);    /* small breathing room from the edge */
 
       h2 {
         --fl: 5;

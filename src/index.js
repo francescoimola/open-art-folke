@@ -2,7 +2,7 @@ import Lenis from 'lenis'
 
 const lenis = new Lenis({
   autoRaf: true,
-  lerp: 0.1,
+  duration: 1.2,
   anchors: true,
   allowNestedScroll: true,
   smoothWheel: true,   
