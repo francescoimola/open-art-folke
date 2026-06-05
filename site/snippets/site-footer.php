@@ -6,7 +6,7 @@ $contactEmail = 'openartfolke@gmail.com';
 
   <nav class="cluster center" aria-label="Footer">
     <a class="underline" href="<?= $site->url() ?>"<?= e($site->homePage()->isActive(), ' aria-current="page"') ?>>Home</a>
-    <?php foreach ($site->children()->not('home') as $child): ?>
+    <?php foreach ($site->children()->not('home', 'media') as $child): ?>
       <a class="underline" href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
     <?php endforeach ?>
     <?php if ($registerUrl): ?>

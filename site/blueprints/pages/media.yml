@@ -1,0 +1,14 @@
+title: Media library
+icon: image
+num: 0            # unlisted — keeps it out of normal page ordering
+options:
+  changeSlug: false
+  changeStatus: false
+  delete: false
+sections:
+  images:
+    type: files
+    label: Images
+    template: image
+    layout: cards
+    sortBy: filename asc

@@ -21,6 +21,11 @@
  * @var string|null $class          class for the <img>
  * @var string|null $style          inline style for the <img> (e.g. object-position)
  * @var string|null $alt            alt text; null → read the file's `alt` field
+ *
+ * Cropping is done in the browser via `object-fit: cover` on the layout classes.
+ * The crop position follows the file's Panel focus point: it's read here and
+ * emitted as `object-position`. A caller-supplied `$style` containing
+ * `object-position` overrides the focus point.
  * @var bool|null   $hidden         decorative? forces alt="" + aria-hidden="true"
  * @var string|null $loading        'lazy' (default) or 'eager'
  * @var string|null $fetchpriority  optional, e.g. 'high' for the hero LCP
@@ -43,6 +48,21 @@ if ($hidden === true) {
   // Cms\File exposes alt() as a magic content field (so method_exists is false);
   // Asset has no content fields. Read the panel `alt` field for real files only.
   $alt = $file instanceof \Kirby\Cms\File ? $file->alt()->or('')->value() : '';
+}
+
+$style = $style ?? '';
+
+// Honour the Panel focus point: translate it into `object-position` so the
+// browser's cover-crop keeps the chosen subject in frame. Skip when the caller
+// already set `object-position` explicitly, or when no focus point is stored.
+if (
+  $file instanceof \Kirby\Cms\File &&
+  str_contains($style, 'object-position') === false &&
+  ($focus = $file->focus()->value()) !== null &&
+  $focus !== ''
+) {
+  $position = 'object-position: ' . \Kirby\Image\Focus::normalize($focus) . ';';
+  $style    = $style === '' ? $position : $position . ' ' . $style;
 }
 
 ?>

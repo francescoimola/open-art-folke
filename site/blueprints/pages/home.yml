@@ -1,52 +1,50 @@
 title: Home
 
 fields:
-  text:
-    type: textarea
-    label: Text
-    buttons:
-      - bold
-      - italic
-      - link
   heroimage:
     type: files
     label: Hero background
     help: Full-screen background photo behind the “Open Art Folke” title.
     max: 1
-    query: page.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
     uploads:
+      parent: site.find('media')
       template: image
   festivalimage:
     type: files
     label: Festival section photo
     help: Photo beside the “Open Art — The Festival” copy.
     max: 1
-    query: page.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
     uploads:
+      parent: site.find('media')
       template: image
   programmeimage:
     type: files
     label: Programme section photo
     help: Photo beside the “Looking for the Festival Programme?” copy.
     max: 1
-    query: page.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
     uploads:
+      parent: site.find('media')
       template: image
   bannerimage:
     type: files
     label: Photo banner background
     help: Full-width background photo behind the closing date banner.
     max: 1
-    query: page.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
     uploads:
+      parent: site.find('media')
       template: image
   countdownimage:
     type: files
     label: Countdown image
     help: Image revealed as vertical slices in the countdown banner (transparent PNG).
     max: 1
-    query: page.images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
     uploads:
+      parent: site.find('media')
       template: image
   countdownstart:
     type: date
@@ -56,24 +54,3 @@ fields:
     type: date
     label: Countdown end
     default: 2026-10-09
-  sponsors:
-    type: structure
-    label: Sponsors
-    fields:
-      name:
-        type: text
-        label: Name
-      url:
-        type: url
-        label: Website
-      description:
-        type: text
-        label: Description
-        help: Shown above the website link in the dropdown. Leave empty to show only the link.
-      logo:
-        type: files
-        label: Logo
-        max: 1
-        query: page.files.filterBy("extension", "svg")
-        uploads:
-          accept: image/svg+xml

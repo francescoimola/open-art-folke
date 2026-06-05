@@ -1,0 +1,32 @@
+title: Sponsor
+
+fields:
+  text:
+    type: textarea
+    label: Text
+    buttons:
+      - bold
+      - italic
+      - link
+      - ul
+  sponsors:
+    type: structure
+    label: Sponsors
+    fields:
+      name:
+        type: text
+        label: Name
+      url:
+        type: url
+        label: Website
+      description:
+        type: text
+        label: Description
+        help: Shown above the website link in the dropdown. Leave empty to show only the link.
+      logo:
+        type: files
+        label: Logo
+        max: 1
+        query: page.files.filterBy("extension", "svg")
+        uploads:
+          accept: image/svg+xml

@@ -4,7 +4,6 @@
   <?php snippet('image', [
     'file' => $page->heroimage()->toFile(),
     'class' => 'hero__bg',
-    'style' => 'object-position: 50% 25%',
     'hidden' => true,
     'loading' => 'eager',
     'fetchpriority' => 'high',
@@ -47,9 +46,9 @@
   ]) ?>
 </section>
 
-<section class="theme-blush stack-section half layout-split split-gap-xxl panel even">
+<section class="theme-blush stack-section half layout-split">
   <div
-    class="stack readable gap-l">
+    class="stack panel even readable gap-l">
     <?php $days = $page->daysRemaining() ?>
     <h2>There
       <?= $days ?>
@@ -61,41 +60,22 @@
   <?php snippet('countdown') ?>
 </section>
 
-<section class="theme-crimson stack-section layout-split">
-  <?php snippet('image', [
-    'file' => $page->programmeimage()->toFile(),
-    'class' => 'image-cover',
-    'hidden' => true,
-    'sizes' => '(min-width: 768px) 50vw, 100vw',
-  ]) ?>
-  <div class="panel even split fc vertical gap-l">
-    <h2>Looking for the Festival Programme?<br><span class="text-muted">You’re early</span>
-    </h2>
-    <div class="stack fc readable gap-m pretty">
-      <p class="fs-s">We'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can.</p>
-      <div class="stack mt-l">
-        <label for="actions-email">Email</label>
-        <form class="input-group gap-s">
-          <input type="email" id="actions-email" placeholder="you@example.com"/>
-          <button class="btt--secondary" type="submit">Keep me posted</button>
-        </form>
-      </div>
-    </div>
-    <small class="mt-s">*Spam? We want nothing to do with him either—and we'll never send you unsolicited communications.</small>
-  </div>
-</section>
+<?php snippet('programme-signup') ?>
 
+<?php $sponsorPage = page('sponsor') ?>
+<?php if ($sponsorPage): ?>
 <section class="sponsors theme-blush stack-section half panel even stack gap-xxl">
   <h2>Recent sponsors</h2>
   <?php
-  // Build the data once; both layouts below render from it (logos sanitised once each).
+  // Sponsors are authored on the Sponsor page; build the data once here so both
+  // layouts below render from it (logos sanitised once each).
   $sponsors = [];
-  foreach ($page->sponsors()->toStructure() as $s) {
+  foreach ($sponsorPage->sponsors()->toStructure() as $s) {
     $sponsors[] = [
       'name' => $s->name(),
       'url' => $s->url(),
       'description' => $s->description(),
-      'logo' => $page->sponsorLogo($s),
+      'logo' => $sponsorPage->sponsorLogo($s),
     ];
   }
 
@@ -147,10 +127,11 @@
   </ul>
 
   <div class="cluster gap-m accent">
-    <a href="#" class="button btt--secondary">See all our sponsors</a>
+    <a href="<?= $sponsorPage->url() ?>" class="button btt--secondary">See all our sponsors</a>
     <a href="#">Who's behind Open Art Folke</a>
   </div>
 </section>
+<?php endif ?>
 
 <section class="theme-ink photo-banner stack-section">
   <?php snippet('image', [

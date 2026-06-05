@@ -9,7 +9,7 @@
  * coat.png is pre-edited — no filter, no blend mode is applied here.
  */
 ?>
-<div class="stack" style="width: 100%;">
+<div class="stack panel even" style="width: 100%;">
   <div class="split no-wrap">
     <small><?= $page->countdownStartDate()->format('M Y') ?></small>
     <small style="margin-right: var(--vs-s)"><?= $page->countdownEndDate()->format('M Y') ?></small>

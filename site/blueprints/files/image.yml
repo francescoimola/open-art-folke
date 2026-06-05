@@ -3,6 +3,11 @@ title: Image
 accept:
   mime: image/jpeg, image/png, image/webp
 
+# Show the focus picker on the file preview. Click the most important spot in
+# the image; the front end uses it as the crop position (CSS object-position)
+# so that spot stays in frame across screen sizes.
+focus: true
+
 fields:
   alt:
     type: text
