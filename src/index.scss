@@ -1116,7 +1116,6 @@
     --fg-light: var(--light-Neutral-50);
     --fg-dark: var(--light-Neutral-50);
     --primary: var(--dark-Brand-950);
-    --fg-2: color-mix(in oklch, var(--fg) 60%, transparent);
     color-scheme: dark;
   }
 
@@ -1409,8 +1408,8 @@
   .sponsors-roster hr {
     inline-size: 100%;
     border: 0;
-    border-block-start: 1px solid currentColor;
-    opacity: 0.35;
+    border-block-start: 1px solid color-mix(in oklch, var(--fg) 60%, transparent);
+    opacity: 0.6;
   }
 
   // ─────────────────────────────────────────────────────────────────────
