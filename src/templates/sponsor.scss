@@ -1,0 +1,27 @@
+@use '../mixins' as *;
+
+/* Sponsor page — benefits comparison table tweaks.
+
+   Graffiti's .table only puts a bottom border on <td>, so a row whose first
+   cell is a <th scope="row"> (our Benefit column) gets a divider that stops
+   short of the left edge. Carry the same border onto the row-header cells so
+   each divider spans the full table width. */
+@layer custom {
+
+  .sponsor-support {
+
+    tbody th {
+      border-bottom: var(--border-1);
+    }
+
+    tbody tr:last-child th {
+      border: none;
+    }
+
+    /* Rein in the Benefit column so the tier columns aren't pushed hard right
+       and share the remaining width more evenly. */
+    :is(th, td):first-child {
+      width: 45%;
+    }
+  }
+}

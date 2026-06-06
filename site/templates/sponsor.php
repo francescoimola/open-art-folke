@@ -23,7 +23,8 @@ $cell = function ($field) use ($tick) {
 <?php snippet('header') ?>
 
 <section class="panel full-bleed theme-ink sponsor-feature">
-  <div class="sponsor-grid">
+  <div
+    class="sponsor-grid">
 
     <!-- Cell 1,1: intro -->
     <div class="sponsor-grid__intro stack gap-xl">
@@ -32,10 +33,11 @@ $cell = function ($field) use ($tick) {
     </div>
 
     <!-- Cell 2,1: subgrid that constrains the detail image -->
-    <div class="sponsor-grid__detail-cell">
+    <div
+      class="sponsor-grid__detail-cell">
       <?php if ($detail = $page->detailimage()->toFile()): ?>
-        <figure class="sponsor-grid__detail aspect-square">
-          <?php snippet('image', [
+        <figure
+          class="sponsor-grid__detail aspect-square"><?php snippet('image', [
             'file' => $detail,
             'sizes' => '(min-width: 768px) 25vw, 100vw',
           ]) ?>
@@ -45,8 +47,8 @@ $cell = function ($field) use ($tick) {
 
     <!-- Cell 1,2: feature image -->
     <?php if ($feature = $page->featureimage()->toFile()): ?>
-      <figure class="sponsor-grid__feature aspect-square">
-        <?php snippet('image', [
+      <figure
+        class="sponsor-grid__feature aspect-square"><?php snippet('image', [
           'file' => $feature,
           'sizes' => '(min-width: 768px) 50vw, 100vw',
         ]) ?>
@@ -80,18 +82,20 @@ $cell = function ($field) use ($tick) {
 
   <div class="sponsors-roster__group stack gap-xl">
     <p class="sponsors-label">Previous</p>
-    <ul class="sponsors-desktop sponsors-past accent stack">
+    <ul
+      class="sponsors-desktop sponsors-past accent stack">
       <?php foreach ($page->pastSponsorsData() as $i => $p): ?>
         <li style="--anchor: --past-sponsor-<?= $i ?>">
           <?php if ($p['url']->isNotEmpty()): ?>
             <?php $menuId = 'past-sponsor-' . $i ?>
-            <div class="dropdown">
-              <button class="reset" style="all: unset" popovertarget="<?= $menuId ?>">
+              <div class="dropdown"> <button class="reset" style="all: unset" popovertarget="<?= $menuId ?>">
                 <p class="h3"><?= esc($p['name']->value()) ?></p>
               </button>
             </div>
             <div id="<?= $menuId ?>" popover class="dropdown-menu">
-              <a href="<?= $p['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a>
+              <a href="<?= $p['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">Visit website
+                <span aria-hidden="true">↗</span>
+              </a>
             </div>
           <?php else: ?>
             <p class="h3"><?= esc($p['name']->value()) ?></p>
@@ -130,36 +134,55 @@ $cell = function ($field) use ($tick) {
         </tbody>
       </table>
     </div>
-    <p class="text-muted">Prices and exact allocations will be confirmed to you by the fundraising team. The list above covers standard benefits available across tiers. Sponsorship packages are for a single festival year. Sponsors with first refusal are contacted ahead of each festival cycle.</p>
+    <small class="readable">Prices and exact allocations will be confirmed to you by the fundraising team. The list above covers standard benefits available across tiers. Sponsorship packages are for a single festival year. Sponsors with first refusal are contacted ahead of each festival cycle.</small>
   </div>
 
-  <div class="stack gap-xl">
-    <h2 class="h1">Become a sponsor</h2>
-    <p>To discuss sponsoring OAF, please email Jackie at <strong><?= esc($contactEmail) ?></strong></p>
-    <p>We’ll chat through what your support helps us achieve and how your brand will be highlighted, and we’ll answer any questions.</p>
+  <div class="stack gap-l">
+    <h2 class="mb-m">Become a sponsor</h2>
+    <p class="readable">To discuss sponsoring OAF, please email Jackie at
+      <strong><?= esc($contactEmail) ?></strong>. We’ll chat through what your support helps us achieve and how your brand will be highlighted, and we’ll answer any questions.</p>
     <button class="btt--secondary fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email address</button>
   </div>
 
-  <div class="stack gap-xl">
-    <h2 class="h1">Buy us a coffee</h2>
-    <p>Donating, however you can, helps to keep the lights on, prepare for the upcoming festival, and support local creatives in making and showcasing their work.</p>
+  <div class="stack gap-l">
+    <h2 class="mb-m">Buy us a coffee</h2>
+    <p class="readable">Donating, however you can, helps to keep the lights on, prepare for the upcoming festival, and support local creatives in making and showcasing their work.</p>
     <?php if ($site->donation_url()->isNotEmpty()): ?>
-      <a class="button btt--secondary fit-width" href="<?= $site->donation_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">Buy the OAF team a coffee <span aria-hidden="true">↗</span></a>
+      <a class="button btt--secondary fit-width" href="<?= $site->donation_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">Buy the OAF team a coffee
+        <span aria-hidden="true">↗</span>
+      </a>
     <?php endif ?>
   </div>
 
-  <div class="stack gap-xl">
-    <h2 class="h1">Other ways to support us</h2>
-    <p>Sponsorship isn’t the only way to help Open Art Folke continue offering its services to the local creative community and organise its festival.</p>
-    <p>We’re always looking for:</p>
-    <ul>
-      <li><strong>Venues.</strong> Cafés, shops, studios, community halls, restaurants, or unusual spaces willing to host work during the festival.</li>
-      <li><strong>Equipment loans.</strong> We’re always on the lookout for plinths, screens, projectors, lighting, sound, and AV kit.</li>
-      <li><strong>Volunteer time and skills.</strong> Our extended committee is responsible for most of the work, but we often need help with invigilation, installation, photography, videography and guiding visitors.</li>
+  <div class="stack gap-m">
+    <h2 class="mb-m">Other ways to support us</h2>
+    <p class="readable">Sponsorship isn’t the only way to help Open Art Folke continue offering its services to the local creative community and organise its festival.</p>
+    <p class="readable">We’re always looking for:</p>
+    <ul class="stack dots gap-m readable">
+      <li>
+        <p>
+          <strong>Venues.</strong>
+          Cafés, shops, studios, community halls, restaurants, or unusual spaces willing to host art, events or performances during the festival.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Equipment loans.</strong>
+          Always on the lookout for plinths, screens, lighting, and AV.
+        </p>
+      </li>
+      <li>
+        <p>
+          <strong>Volunteer time and skills.</strong>
+          Our extended committee is responsible for most of the work, but we often need help with invigilation, installation, photography, videography and guiding visitors.
+        </p>
+      </li>
     </ul>
-    <p>If any of that sounds like you, email Becca or Thurle at <strong><?= esc($contactEmail) ?></strong>.</p>
+    <p>If any of that sounds like you, email Becca or Thurle at
+      <strong><?= esc($contactEmail) ?></strong>.</p>
   </div>
 
 </section>
 
 <?php snippet('site-footer') ?>
+

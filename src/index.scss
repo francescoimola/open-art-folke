@@ -440,6 +440,14 @@
     /* Firefox applies its own opacity on top — reset it */
   }
 
+  strong {
+    font-weight: 600;
+
+    @supports (font-variation-settings: "wght" 600) {
+      font-variation-settings: "wght" 600;
+    }
+  }
+
   /* Text selection — theme-aware inverted highlight. There is no Graffiti
      primitive for ::selection, so this is a sanctioned global custom rule.
      The highlight is each section's foreground at ~85% (a touch of transparency
@@ -857,11 +865,25 @@
   }
 
   .darken {
-    &-50 {filter: brightness(90%);}
-    &-100 {filter: brightness(70%);}
-    &-200 {filter: brightness(60%);}
-    &-300 {filter: brightness(50%);}
-    &-400 {filter: brightness(40%);}
+    &-50 {
+      filter: brightness(90%);
+    }
+
+    &-100 {
+      filter: brightness(70%);
+    }
+
+    &-200 {
+      filter: brightness(60%);
+    }
+
+    &-300 {
+      filter: brightness(50%);
+    }
+
+    &-400 {
+      filter: brightness(40%);
+    }
   }
 
   /* Flush table — Graffiti's .table wrapper keeps its overflow-x: auto (so the
@@ -884,34 +906,37 @@
     --gap: var(--vs-l);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap:var(--vs-l);
+    gap: var(--vs-l);
     align-items: start;
 
     @include below-tablet {
-        grid-template-columns: 1fr;
+      grid-template-columns: 1fr;
     }
 
     li {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap:var(--vs-m);
+      gap: var(--vs-m);
       align-items: start;
 
       article {
         --gap: var(--vs-s);
-         >span {text-box: trim-start text;}
+
+        >span {
+          text-box: trim-start text;
+        }
 
         >span:first-of-type {
-        display: block;
-        margin-bottom: var(--vs-s);
-      }
+          display: block;
+          margin-bottom: var(--vs-s);
+        }
       }
 
       @include mobile {
         grid-template-columns: 1fr;
       }
 
-        .people-row__photo {
+      .people-row__photo {
         flex-shrink: 0;
         overflow: hidden;
         border-radius: var(--br-xs);
@@ -931,7 +956,7 @@
   .about-grid {
     grid-template-columns: repeat(12, 1fr);
 
-    @include below-tablet{
+    @include below-tablet {
       grid-template-columns: 1fr;
     }
 
@@ -987,11 +1012,50 @@
     @include cq-wide {
       grid-template-columns: 1fr;
 
-      .sponsor-grid__intro       { grid-column: auto; grid-row: auto; order: 1; }
-      .sponsor-grid__feature     { grid-column: auto; grid-row: auto; order: 2; }
-      .sponsor-grid__help        { grid-column: auto; grid-row: auto; order: 3; }
-      .sponsor-grid__detail-cell { grid-column: auto; grid-row: auto; display: contents; }
-      .sponsor-grid__detail      { grid-column: auto; grid-row: auto; order: 4; }
+      .sponsor-grid__intro {
+        grid-column: auto;
+        grid-row: auto;
+        order: 1;
+      }
+
+      .sponsor-grid__feature {
+        grid-column: auto;
+        grid-row: auto;
+        order: 2;
+      }
+
+      .sponsor-grid__help {
+        grid-column: auto;
+        grid-row: auto;
+        order: 3;
+      }
+
+      .sponsor-grid__detail-cell {
+        grid-column: auto;
+        grid-row: auto;
+        display: contents;
+      }
+
+      .sponsor-grid__detail {
+        grid-column: auto;
+        grid-row: auto;
+        order: 4;
+      }
+    }
+  }
+
+  ul:is(.dots) {
+    margin-inline-start: var(--pad-l);
+    margin-block: var(--pad-l);
+    >li {
+      list-style-type: "[✴] ";
+      list-style-position: inside;
+
+      p {
+        display: inline;
+        padding-inline-start: var(--pad-m);
+
+      }
     }
   }
 
@@ -1052,6 +1116,7 @@
     --fg-light: var(--light-Neutral-50);
     --fg-dark: var(--light-Neutral-50);
     --primary: var(--dark-Brand-950);
+    --fg-2: color-mix(in oklch, var(--fg) 60%, transparent);
     color-scheme: dark;
   }
 
@@ -1440,6 +1505,14 @@
     background: var(--bg-light);
   }
 
+  .theme-crimson:has(.dropdown) .dropdown-menu {
+    --bg-light: var(--light-Brand-50);
+    --fg-light: var(--dark-Brand-500);
+    color-scheme: light;
+    background: var(--bg-light);
+    color: var(--fg-light);
+  }
+
   :is(.dropdown-header) {
     margin-top: var(--pad-xs);
   }
@@ -1447,8 +1520,11 @@
   .callout {
     background: var(--gray-surface);
     margin-top: var(--vs-base);
-    
-    p {color: var(--color-info); text-wrap: balance;}
+
+    p {
+      color: var(--color-info);
+      text-wrap: balance;
+    }
 
     &.hard {
       border: var(--button-color) solid 2px;
@@ -1544,58 +1620,58 @@
   color: var(--fg-6);
 }
 
-  // ─────────────────────────────────────────────────────────────────────
-  // 11. View transitions
-  //     Global cross-document transition (opted in via the unlayered
-  //     @view-transition rule near the top of this file). The page content
-  //     (the "root" snapshot) cross-fades and lifts ~8px; the persistent
-  //     chrome (nav + footer) is named so it leaves the root group and stays
-  //     visually stable rather than flickering.
-  // ─────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────
+// 11. View transitions
+//     Global cross-document transition (opted in via the unlayered
+//     @view-transition rule near the top of this file). The page content
+//     (the "root" snapshot) cross-fades and lifts ~8px; the persistent
+//     chrome (nav + footer) is named so it leaves the root group and stays
+//     visually stable rather than flickering.
+// ─────────────────────────────────────────────────────────────────────
 
-  @keyframes vt-content-in {
-    from {
-      opacity: 0;
-      transform: translateY(8px);
-    }
+@keyframes vt-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
+}
 
-  @keyframes vt-content-out {
-    to {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
+@keyframes vt-content-out {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
   }
+}
 
-  ::view-transition-old(root) {
-    animation: vt-content-out 0.35s ease both;
-  }
+::view-transition-old(root) {
+  animation: vt-content-out 0.35s ease both;
+}
 
-  ::view-transition-new(root) {
-    animation: vt-content-in 0.35s ease both;
-  }
+::view-transition-new(root) {
+  animation: vt-content-in 0.35s ease both;
+}
 
-  /* Lift the persistent chrome out of the root snapshot. A named element present
+/* Lift the persistent chrome out of the root snapshot. A named element present
      on both pages morphs in place; since these are identical across pages, the
      morph is imperceptible — no fade flicker. Each name must be unique per page,
      and both .site-nav and .footer appear exactly once. */
-  .site-nav {
-    view-transition-name: site-nav;
-  }
+.site-nav {
+  view-transition-name: site-nav;
+}
 
-  .footer {
-    view-transition-name: site-footer;
-  }
+.footer {
+  view-transition-name: site-footer;
+}
 
-  /* Accessibility: honour reduced-motion by swapping instantly. */
-  @media (prefers-reduced-motion: reduce) {
+/* Accessibility: honour reduced-motion by swapping instantly. */
+@media (prefers-reduced-motion: reduce) {
 
-    ::view-transition-group(*),
-    ::view-transition-old(*),
-    ::view-transition-new(*) {
-      animation: none !important;
-    }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
+}
 
 }
 

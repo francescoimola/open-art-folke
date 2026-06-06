@@ -80,18 +80,6 @@
 </section>
 <?php endif ?>
 
-<section class="theme-ink photo-banner stack-section">
-  <?php snippet('image', [
-    'file' => $page->bannerimage()->toFile(),
-    'class' => 'photo-banner__bg darken-300',
-    'hidden' => true,
-    'sizes' => '100vw',
-  ]) ?>
-  <div class="photo-banner__grid">
-    <p>Open Art Folke 2026</p>
-    <div><?php snippet('logo') ?></div>
-    <p>9–11 October</p>
-  </div>
-</section>
+<?php snippet('photo-banner', ['image' => $page->bannerimage()->toFile()]) ?>
 
 <?php snippet('site-footer') ?>
