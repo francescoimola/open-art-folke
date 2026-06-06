@@ -8,5 +8,3 @@
 </div>
 
 <?php snippet('site-footer') ?>
-
-<?php snippet('footer') ?>

@@ -29,8 +29,22 @@ if (!function_exists('env')) {
   }
 }
 
+// Dev-only: the `.dev` file is present only while the Vite dev server runs
+// (written/removed by vite-plugin-kirby). When it exists we tell the browser
+// never to cache page responses, so a stale/broken page from a dropped Vite
+// connection can always be fixed with a plain reload — no manual cache-clear.
+$isDev = is_file(dirname(__DIR__, 2) . '/.dev');
+
 return [
   'debug' => true,
+
+  'hooks' => [
+    'route:after' => function () use ($isDev) {
+      if ($isDev && headers_sent() === false) {
+        header('Cache-Control: no-store, no-cache, must-revalidate');
+      }
+    },
+  ],
 
   // Environment-specific settings
   // On Fortrabbit, set KIRBY_LICENSE env var instead of using .license file
@@ -38,10 +52,13 @@ return [
     'install' => false  // Set to true only for initial remote setup
   ],
 
-  // kirby-uniform needs fresh CSRF tokens per request, so the home page
-  // (the only page that hosts a form) must not be cacheable.
+  // In development (Vite running) the pages cache is OFF, so template,
+  // snippet and content edits show up on the next reload instead of serving
+  // stale rendered HTML — this is what makes live-reload reliable. In
+  // production the pages cache is ON for speed; the home page is excluded
+  // because kirby-uniform needs a fresh CSRF token per request.
   'cache' => [
-    'pages' => [
+    'pages' => $isDev ? false : [
       'home' => false,
     ],
   ],

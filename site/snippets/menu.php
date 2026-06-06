@@ -4,6 +4,9 @@
       <?php snippet('logo') ?>
     </a>
     <ul class="site-nav__links" role="list">
+      <li class="fs-s">
+        <a href="<?= $site->homePage()->url() ?>#programme">Programme</a>
+      </li>
       <?php foreach($site->children()->not('home', 'media') as $child): ?>
         <li class="fs-s">
           <a href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
@@ -30,6 +33,7 @@
   </div>
   <nav class="stack site-drawer__nav" aria-label="Mobile navigation">
     <a href="<?= $site->url() ?>"<?= e($site->homePage()->isActive(), ' aria-current="page"') ?>>Home</a>
+    <a href="<?= $site->homePage()->url() ?>#programme">Programme</a>
     <?php foreach($site->children()->not('home', 'media') as $child): ?>
       <a href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
     <?php endforeach ?>

@@ -8,10 +8,21 @@ tabs:
           site-fields:
             type: fields
             fields:
+              festivalyear:
+                type: number
+                label: Current festival year
+                help: Sponsors tagged with this year show under "Current" (with logo); all others show under "Previous". Bump this each edition.
+                step: 1
+                default: 2026
+                width: 1/2
               register_url:
                 type: url
                 label: Register link URL
                 help: External URL for the "Register" nav link. Leave blank to hide it.
+              donation_url:
+                type: url
+                label: Donation link
+                help: External link for the "Buy the OAF team a coffee" button on the Sponsor page. Leave blank to hide the button.
               instagram_url:
                 type: url
                 label: Instagram URL

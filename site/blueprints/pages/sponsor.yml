@@ -9,9 +9,60 @@ fields:
       - italic
       - link
       - ul
+  featureimage:
+    type: files
+    label: Feature image
+    help: Large photo, top-right of the sponsor grid.
+    max: 1
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      parent: site.find('media')
+      template: image
+  detailimage:
+    type: files
+    label: Detail image
+    help: Small square photo, bottom-left of the sponsor grid.
+    max: 1
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      parent: site.find('media')
+      template: image
+  helptitle:
+    type: text
+    label: Help section title
+    help: Headline for the "Who and how does your support help" block.
+  helptext:
+    type: textarea
+    label: Help section text
+    buttons:
+      - bold
+      - italic
+      - link
+      - ul
+  benefits:
+    type: structure
+    label: Sponsor benefits table
+    help: One row per benefit. For each tier cell — leave blank for nothing, type "Yes" for a tick, or type text like "Full page".
+    fields:
+      benefit:
+        type: text
+        label: Benefit
+      gold:
+        type: text
+        label: Gold
+        width: 1/3
+      silver:
+        type: text
+        label: Silver
+        width: 1/3
+      bronze:
+        type: text
+        label: Bronze
+        width: 1/3
   sponsors:
     type: structure
     label: Sponsors
+    help: One entry per sponsor, across every edition. Tag each with the years they supported — sponsors tagged with the site's current festival year show under "Current" (with logo); all others show under "Previous", most recent first.
     fields:
       name:
         type: text
@@ -19,13 +70,19 @@ fields:
       url:
         type: url
         label: Website
+      years:
+        type: tags
+        label: Years supported
+        help: e.g. 2024, 2025, 2026. Decides Current vs Previous and the Previous ordering.
+        width: 1/2
       description:
         type: text
         label: Description
-        help: Shown above the website link in the dropdown. Leave empty to show only the link.
+        help: Shown above the website link in the dropdown (current sponsors). Optional.
       logo:
         type: files
         label: Logo
+        help: Current sponsors only — shown on hover. SVG.
         max: 1
         query: page.files.filterBy("extension", "svg")
         uploads:

@@ -2,10 +2,13 @@
 $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->value() : null;
 $contactEmail = 'openartfolke@gmail.com';
 ?>
+</main>
+
 <footer class="footer theme-ink panel stack gap-xl stack-section">
 
   <nav class="cluster center" aria-label="Footer">
     <a class="underline" href="<?= $site->url() ?>"<?= e($site->homePage()->isActive(), ' aria-current="page"') ?>>Home</a>
+    <a class="underline" href="<?= $site->homePage()->url() ?>#programme">Programme</a>
     <?php foreach ($site->children()->not('home', 'media') as $child): ?>
       <a class="underline" href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
     <?php endforeach ?>
@@ -21,7 +24,7 @@ $contactEmail = 'openartfolke@gmail.com';
     <div class="stack gap-xl">
       <div class="stack gap-m">
         <h3 class="fs-xxl">I’m a visitor</h3>
-        <a class="button btt--contrast fit-width" href="<?= page('programme')?->url() ?? '#' ?>">See upcoming festival programme</a>
+        <a class="button btt--contrast fit-width" href="<?= $site->homePage()->url() ?>#programme">See upcoming festival programme</a>
       </div>
       <div class="stack gap-m">
         <h3 class="fs-xxl text-muted">I’m a creative</h3>
@@ -78,7 +81,9 @@ $contactEmail = 'openartfolke@gmail.com';
 
   <div class="layout-split footer__legal">
     <small>Copyright ©️ Open Art Folke, 2026</small>
-    <small>Site design Francesco Imola</small>
+    <small>Site design and heartfelt support by <a href="https://francescoimola.com/" rel="noopener noreferrer" target="_blank">Francesco Imola</a></small>
   </div>
 
 </footer>
+</body>
+</html>

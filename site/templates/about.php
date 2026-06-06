@@ -1,6 +1,14 @@
 <?php snippet('header') ?>
 
 <section class="page-hero panel even theme-brand stack-section">
+  <?php snippet('image', [
+    'file' => $page->heroimage()->toFile(),
+    'class' => 'page-hero__bg darken-200',
+    'hidden' => true,
+    'loading' => 'eager',
+    'fetchpriority' => 'high',
+    'sizes' => '100vw',
+  ]) ?>
   <h1>About Open Art</h1>
 </section>
 
@@ -10,47 +18,48 @@
     <p class="statement">Every so often, we invite the whole town to join us for a mighty festival, where you can meet the makers in their studios, their homes or perhaps in more unlikely corners of Folkestone.</p>
   </div>
 
-  <figure class="layout-split">
-    <?php snippet('image', [
-      'file' => $page->studioimage()->toFile(),
-      'sizes' => '(min-width: 768px) 50vw, 100vw',
-    ]) ?>
-  </figure>
+  <div class="grid about-grid">
+    <figure class="">
+      <?php snippet('image', [
+        'file' => $page->image1()->toFile(),
+        'sizes' => '(min-width: 768px) 50vw, 100vw',
+      ]) ?>
+    </figure>
+    <figure>
+      <?php snippet('image', [
+        'file' => $page->image2()->toFile(),
+        'sizes' => '(min-width: 768px) 50vw, 100vw',
+      ]) ?>
+    </figure>
+  </div>
 </section>
 
 <section class="panel even theme-paper stack gap-xl stack-section flowing">
   <div class="stack gap-xl">
-    <h2>The people behind Open Art</h2>
-    <p class="fs-m readable">OAF is a nonprofit, volunteer-run collective led by artists for artists. We don't guarantee running a festival each year, but when we do run, our incredible team is what makes it possible.</p>
+    <h2>The people behind Open Art Folke</h2>
+    <p class="readable">OAF is a nonprofit, volunteer-run collective led by artists for artists. We don't guarantee running a festival each year, but when we do run, our incredible team is what makes it possible.</p>
   </div>
 
-  <div class="table table-flush">
-    <table class="fs-m">
-      <thead class="visually-hidden">
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Area</th>
-          <th scope="col">Who they are</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Thurle Wright</td><td>Co-Chair</td><td>Artist</td></tr>
-        <tr><td>Becca Pelly-Fry</td><td>Co-Chair</td><td>Curator &amp; Cultural Consultant</td></tr>
-        <tr><td>Steven Aron Williams</td><td>Marketing &amp; Comms</td><td>Artist</td></tr>
-        <tr><td>Simon Rickard</td><td>Programmes &amp; Operations</td><td>Artist Technician</td></tr>
-        <tr><td>Francesco Imola</td><td>Marketing &amp; Comms</td><td>Designer &amp; Artist</td></tr>
-        <tr><td>Sangmin Cha</td><td>Programmes &amp; Operations</td><td>Curator &amp; Researcher</td></tr>
-        <tr><td>Katherine Brown</td><td>Programmes &amp; Operations</td><td>Artist</td></tr>
-        <tr><td>Rob Birch</td><td>Marketing &amp; Comms</td><td>Artist</td></tr>
-        <tr><td>Beth Hart</td><td>Marketing &amp; Comms</td><td>Artist</td></tr>
-        <tr><td>Janet Robinson</td><td>Programmes &amp; Operations</td><td>Artist</td></tr>
-        <tr><td>Jackie Kennedy</td><td>Finance &amp; Fundraising</td><td>Artist</td></tr>
-        <tr><td>Stephen Foy-Philp</td><td>Programmes &amp; Operations</td><td>Artist</td></tr>
-        <tr><td>David Alderman</td><td>Finance &amp; Fundraising</td><td>Artist</td></tr>
-        <tr><td>Amber Baker</td><td>Programmes &amp; Operations</td><td>Artist</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <ul class="stack people-list">
+    <?php foreach ($page->people()->toStructure() as $person): ?>
+      <li>
+        <?php if ($photo = $person->photo()->toFile()): ?>
+          <div class="people-row__photo aspect-square">
+            <?php snippet('image', [
+              'file' => $photo,
+              'sizes' => '20vw',
+              'alt' => $person->name()->value(),
+            ]) ?>
+          </div>
+        <?php endif ?>
+        <article class="stack">
+          <span class="h5 fluid text-muted"><?= $person->name()->html() ?></span>
+          <span><?= $person->area()->html() ?></span>
+          <span><?= $person->role()->html() ?></span>
+        </article>
+      </li>
+    <?php endforeach ?>
+  </ul>
 </section>
 
 <section class="principles stack-section">
@@ -61,8 +70,8 @@
     'sizes' => '100vw',
   ]) ?>
   <div class="principles__card panel even theme-brand stack gap-xxl text-center">
-    <h2>Our guiding principles</h2>
-    <ul class="stack gap-m fs-l">
+    <h2>Our (very solemn but very important) guiding principles</h2>
+    <ul class="stack gap-base fs-l">
       <li>We are open to all</li>
       <li>We are community</li>
       <li>We are collaborative</li>
@@ -76,5 +85,3 @@
 </section>
 
 <?php snippet('site-footer') ?>
-
-<?php snippet('footer') ?>

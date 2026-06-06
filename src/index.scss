@@ -18,6 +18,14 @@
 @import "@drop-in/graffiti" layer(graffiti);
 @import "lenis/dist/lenis.css" layer(graffiti);
 
+/* Cross-document (MPA) view transitions — global opt-in. Standalone at-rule, so
+   it sits outside the cascade layers. Unsupported browsers (e.g. Firefox) ignore
+   it and navigate normally — pure progressive enhancement. Animation is defined
+   in @layer custom §11. */
+@view-transition {
+  navigation: auto;
+}
+
 @layer fonts {
 
   @font-face {
@@ -432,6 +440,27 @@
     /* Firefox applies its own opacity on top — reset it */
   }
 
+  /* Text selection — theme-aware inverted highlight. There is no Graffiti
+     primitive for ::selection, so this is a sanctioned global custom rule.
+     The highlight is each section's foreground at ~85% (a touch of transparency
+     to soften it); selected text flips to the section's background, guaranteeing
+     contrast in every theme — including the light-on-dark hero where the browser
+     default obscured the title. --fg/--bg are re-derived per .theme-* section, so
+     this adapts to all current and future sections automatically. */
+  ::selection {
+    background: color-mix(in oklab, var(--fg) 85%, transparent);
+    color: var(--bg);
+    text-shadow: none;
+  }
+
+  /* High-contrast users: drop the softening transparency for a fully opaque,
+     maximally legible inversion. Mirrors the prefers-contrast block in §8. */
+  @media (prefers-contrast: more) {
+    ::selection {
+      background: var(--fg);
+    }
+  }
+
   :is(small, .ui-caption) {
     font-weight: 420;
     color: var(--text-color, light-dark(var(--fg-6), var(--fg-7)));
@@ -439,6 +468,10 @@
     @supports (font-variation-settings: "wght" 400) {
       font-variation-settings: "wght" 420;
     }
+  }
+
+  small a {
+    font-size: inherit;
   }
 
   main {
@@ -496,6 +529,18 @@
 
   .full-height {
     height: 100%;
+  }
+
+  /* Non-sticky anchor sentinel. Sticky sections (.stack-section) report a pinned
+     bounding rect once scrolled past, which makes rect-based anchor scrolling
+     (native + Lenis) refuse to travel back up to them. Pointing the link at a
+     zero-height, normal-flow marker just before the section restores correct
+     two-way scroll. scroll-margin-top mirrors the nav offset (body already sets
+     scroll-padding-top). */
+  .anchor-target {
+    display: block;
+    height: 0;
+    scroll-margin-top: var(--nav-height, 6rem);
   }
 
   .center-both {
@@ -741,6 +786,10 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
+
+      @include below-tablet {
+        position: relative;
+      }
     }
 
     &__card {
@@ -767,13 +816,52 @@
     align-items: center;
     /* ...centred horizontally */
     text-align: center;
-    min-height: 50svh;
+    /* Extend under the fixed nav (like the homepage hero) so the body's
+       nav-height top padding doesn't show as a gap above the section. The
+       inherited .stack-section sticky positioning also contains the absolute
+       .page-hero__bg below. */
+    top: 0;
+    margin-top: calc(-1 * var(--nav-height, 6rem));
+    min-height: calc(50svh + var(--nav-height, 6rem));
+    overflow: clip;
+
+    /* <picture> is a layout-transparent wrapper: collapse it so the absolute
+       .page-hero__bg <img> inside positions against the section itself. */
+    >picture {
+      display: contents;
+    }
+
+    /* lift the heading above the backdrop photo */
+    >h1 {
+      position: relative;
+      z-index: 1;
+    }
 
     h1 {
       --fl: 6;
       /* homepage-hero scale */
       font-size: var(--fluid-type);
     }
+  }
+
+  /* Full-bleed backdrop photo behind the page-hero title; mirrors the
+     .hero__bg / .principles__bg idiom. */
+  .page-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .darken {
+    &-50 {filter: brightness(90%);}
+    &-100 {filter: brightness(70%);}
+    &-200 {filter: brightness(60%);}
+    &-300 {filter: brightness(50%);}
+    &-400 {filter: brightness(40%);}
   }
 
   /* Flush table — Graffiti's .table wrapper keeps its overflow-x: auto (so the
@@ -788,6 +876,125 @@
       white-space: nowrap;
     }
   }
+
+  /* People list — 2-col photo + info rows. Photo is square (Graffiti's
+     .aspect-square) with a fixed block-size; the info column uses Graffiti's
+     .stack for vertical rhythm. */
+  .people-list {
+    --gap: var(--vs-l);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:var(--vs-l);
+    align-items: start;
+
+    @include below-tablet {
+        grid-template-columns: 1fr;
+    }
+
+    li {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap:var(--vs-m);
+      align-items: start;
+
+      article {
+        --gap: var(--vs-s);
+         >span {text-box: trim-start text;}
+
+        >span:first-of-type {
+        display: block;
+        margin-bottom: var(--vs-s);
+      }
+      }
+
+      @include mobile {
+        grid-template-columns: 1fr;
+      }
+
+        .people-row__photo {
+        flex-shrink: 0;
+        overflow: hidden;
+        border-radius: var(--br-xs);
+
+        >* {
+          inline-size: 100%;
+          block-size: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+  }
+
+  /* About grid — flexible 12-column layout that collapses to single column
+     and uses responsive tablet breakpoint for two-column photo arrangement. */
+  .about-grid {
+    grid-template-columns: repeat(12, 1fr);
+
+    @include below-tablet{
+      grid-template-columns: 1fr;
+    }
+
+    @include tablet {
+      figure:first-child {
+        grid-column: 1 / span 6;
+      }
+
+      figure:last-child {
+        grid-column: 7 / span 4;
+        align-self: end;
+      }
+    }
+  }
+
+  /* Sponsor feature — 2×2 grid. Each cell is a direct child. Cell (2,1) is a
+     subgrid that constrains the detail image to be smaller than the cell. */
+  .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, auto);
+    column-gap: var(--vs-xl);
+    row-gap: var(--vs-xxl);
+    align-items: start;
+
+    &__intro {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    &__detail-cell {
+      grid-column: 1;
+      grid-row: 2;
+      display: grid;
+    }
+
+    &__detail {
+      justify-self: start;
+      align-self: start;
+      inline-size: min(20rem, 100%);
+    }
+
+    &__feature {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    &__help {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    @include cq-wide {
+      grid-template-columns: 1fr;
+
+      .sponsor-grid__intro       { grid-column: auto; grid-row: auto; order: 1; }
+      .sponsor-grid__feature     { grid-column: auto; grid-row: auto; order: 2; }
+      .sponsor-grid__help        { grid-column: auto; grid-row: auto; order: 3; }
+      .sponsor-grid__detail-cell { grid-column: auto; grid-row: auto; display: contents; }
+      .sponsor-grid__detail      { grid-column: auto; grid-row: auto; order: 4; }
+    }
+  }
+
 
   // ─────────────────────────────────────────────────────────────────────
   // 4. Themes
@@ -1109,6 +1316,14 @@
       }
     }
 
+    &.sponsors-past {
+      gap: var(--vs-l);
+
+      li:not(:first-child):not(:last-child) {
+        margin-block: revert;
+      }
+    }
+
     .sponsor-logo {
       position: absolute;
       inset-inline-end: 14%;
@@ -1124,6 +1339,13 @@
     >li:focus-within .sponsor-logo {
       opacity: 1;
     }
+  }
+
+  .sponsors-roster hr {
+    inline-size: 100%;
+    border: 0;
+    border-block-start: 1px solid currentColor;
+    opacity: 0.35;
   }
 
   // ─────────────────────────────────────────────────────────────────────
@@ -1317,6 +1539,63 @@
 .split-gap-xxl {
   --layout-gap: var(--vs-xxl);
 }
+
+.text-muted {
+  color: var(--fg-6);
+}
+
+  // ─────────────────────────────────────────────────────────────────────
+  // 11. View transitions
+  //     Global cross-document transition (opted in via the unlayered
+  //     @view-transition rule near the top of this file). The page content
+  //     (the "root" snapshot) cross-fades and lifts ~8px; the persistent
+  //     chrome (nav + footer) is named so it leaves the root group and stays
+  //     visually stable rather than flickering.
+  // ─────────────────────────────────────────────────────────────────────
+
+  @keyframes vt-content-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @keyframes vt-content-out {
+    to {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  ::view-transition-old(root) {
+    animation: vt-content-out 0.35s ease both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-content-in 0.35s ease both;
+  }
+
+  /* Lift the persistent chrome out of the root snapshot. A named element present
+     on both pages morphs in place; since these are identical across pages, the
+     morph is imperceptible — no fade flicker. Each name must be unique per page,
+     and both .site-nav and .footer appear exactly once. */
+  .site-nav {
+    view-transition-name: site-nav;
+  }
+
+  .footer {
+    view-transition-name: site-footer;
+  }
+
+  /* Accessibility: honour reduced-motion by swapping instantly. */
+  @media (prefers-reduced-motion: reduce) {
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
 
 }
 

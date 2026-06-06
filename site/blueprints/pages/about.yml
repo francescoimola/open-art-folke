@@ -9,15 +9,54 @@ fields:
       - italic
       - link
       - ul
-  studioimage:
+  heroimage:
     type: files
-    label: Studio photo
-    help: Photo of an artist in their studio, shown after the intro.
+    label: Hero background
+    help: Full-width background photo behind the “About Open Art” title.
     max: 1
     query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
     uploads:
       parent: site.find('media')
       template: image
+  image1:
+    type: files
+    label: First photo
+    max: 1
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      parent: site.find('media')
+      template: image
+  image2:
+    type: files
+    label: Second photo
+    max: 1
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      parent: site.find('media')
+      template: image
+  people:
+    type: structure
+    label: People
+    fields:
+      name:
+        type: text
+        label: Name
+      area:
+        type: text
+        label: Area
+        width: 1/2
+      role:
+        type: text
+        label: Role
+        width: 1/2
+      photo:
+        type: files
+        label: Photo
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
   principlesimage:
     type: files
     label: Guiding principles background

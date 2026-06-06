@@ -5,12 +5,80 @@ use Kirby\Cms\Page;
 /**
  * Sponsor page model.
  *
- * Holds the sponsors list (a structure field authored in the panel) and the
- * logic to render each sponsor's logo safely. Templates only call methods and
- * never touch raw SVG markup.
+ * Holds the single sponsors list (a structure field authored in the panel) and
+ * splits it into "current" and "past" by year. Each sponsor is tagged with the
+ * years they supported; whichever match the site's current festival year are
+ * current (shown with logo), the rest are past (ordered most-recent first).
+ * Templates only call methods and never touch raw SVG markup.
  */
 class SponsorPage extends Page
 {
+  /**
+   * The current festival year, from the site setting. Falls back to the actual
+   * calendar year if the setting is empty.
+   */
+  protected function festivalYear(): int
+  {
+    return (int) site()->festivalyear()->value() ?: (int) date('Y');
+  }
+
+  /**
+   * Every sponsor as a flat row, with its years parsed once.
+   *
+   * Each row is ['name', 'url', 'description' => Field, 'logo' => string,
+   * 'years' => int[], 'maxYear' => int]. Logos are sanitised here exactly once.
+   */
+  protected function sponsorRows(): array
+  {
+    $rows = [];
+
+    foreach ($this->sponsors()->toStructure() as $s) {
+      $years = array_map('intval', $s->years()->split(','));
+      $rows[] = [
+        'name' => $s->name(),
+        'url' => $s->url(),
+        'description' => $s->description(),
+        'logo' => $this->sponsorLogo($s),
+        'years' => $years,
+        'maxYear' => $years ? max($years) : 0,
+      ];
+    }
+
+    return $rows;
+  }
+
+  /**
+   * Sponsors supporting the current festival year — shown under "Current" with
+   * their logo. Shared by the homepage teaser and the sponsor-page roster.
+   */
+  public function currentSponsors(): array
+  {
+    $year = $this->festivalYear();
+
+    return array_values(array_filter(
+      $this->sponsorRows(),
+      fn($r) => in_array($year, $r['years'], true)
+    ));
+  }
+
+  /**
+   * Past sponsors (not tagged with the current festival year), ordered
+   * most-recent first. Each row is ['name' => Field, 'url' => Field, …].
+   */
+  public function pastSponsorsData(): array
+  {
+    $year = $this->festivalYear();
+
+    $rows = array_values(array_filter(
+      $this->sponsorRows(),
+      fn($r) => !in_array($year, $r['years'], true)
+    ));
+
+    usort($rows, fn($a, $b) => $b['maxYear'] <=> $a['maxYear']);
+
+    return $rows;
+  }
+
   /**
    * Sanitised, theme-aware inline SVG for one sponsor's logo.
    *

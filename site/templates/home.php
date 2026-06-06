@@ -3,7 +3,7 @@
 <section class="hero stack-section flex text-center stack-gap-none">
   <?php snippet('image', [
     'file' => $page->heroimage()->toFile(),
-    'class' => 'hero__bg',
+    'class' => 'hero__bg darken-50',
     'hidden' => true,
     'loading' => 'eager',
     'fetchpriority' => 'high',
@@ -32,8 +32,8 @@
         <p>Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
       </div>
       <div class="stack ">
-        <a href="#" class="button fit-width">Explore the 2026 programme</a>
-        <a href="#" class="button btt--secondary fit-width">Register as an artist</a>
+        <a href="#programme" class="button fit-width">Explore the 2026 programme</a>
+        <a href="<?= $site->register_url() ?>" rel="noopener noreferrer" target="_blank" class="button btt--secondary fit-width">Register as an artist</a>
       </div>
     </div>
     <small class="mt-s">* Open Art is 99% free to attend, but some events require a paid reservation</small>
@@ -60,75 +60,22 @@
   <?php snippet('countdown') ?>
 </section>
 
+<div id="programme" class="anchor-target" aria-hidden="true"></div>
 <?php snippet('programme-signup', ['form' => $form]) ?>
 
 <?php $sponsorPage = page('sponsor') ?>
 <?php if ($sponsorPage): ?>
 <section class="sponsors theme-blush stack-section half panel even stack gap-xxl">
   <h2>Recent sponsors</h2>
-  <?php
-  // Sponsors are authored on the Sponsor page; build the data once here so both
-  // layouts below render from it (logos sanitised once each).
-  $sponsors = [];
-  foreach ($sponsorPage->sponsors()->toStructure() as $s) {
-    $sponsors[] = [
-      'name' => $s->name(),
-      'url' => $s->url(),
-      'description' => $s->description(),
-      'logo' => $sponsorPage->sponsorLogo($s),
-    ];
-  }
 
-  // Shared name markup (plain text, or a link when a Website is set).
-  $sponsorName = fn($s) => $s['url']->isNotEmpty()
-    ? '<a href="' . $s['url']->esc('attr') . '">' . esc($s['name']->value()) . '</a>'
-    : esc($s['name']->value());
-  ?>
-
-  <!-- Mobile: a Graffiti carousel of cards, name + logo shown together. -->
-  <ul
-    class="sponsors-mobile show-mobile carousel">
-    <?php foreach ($sponsors as $s): ?>
-      <li class="theme-crimson box ghost split vertical center gap-xl">
-        <?php if ($s['logo']): ?>
-          <figure class="sponsor-logo center-both"><?= $s['logo'] ?></figure>
-        <?php endif ?>
-         <p class="h1"><?= $sponsorName($s) ?></p>
-      </li>
-    <?php endforeach ?>
-  </ul>
-
-  <!-- Desktop: a stacked list; each row reveals its own logo on hover/focus. -->
-  <ul
-    class="sponsors-desktop show-desktop stack accent mt-m">
-    <?php foreach ($sponsors as $i => $s): ?>
-      <?php $menuId = 'sponsor-dropdown-' . $i ?>
-      <li style="--anchor: --sponsor-<?= $i ?>">
-        <div class="dropdown">
-          <button class="reset" style="all: unset" popovertarget="<?= $menuId ?>">
-            <p class="h1"><?= esc($s['name']->value()) ?></p>
-          </button>
-        </div>
-        <div id="<?= $menuId ?>" popover class="dropdown-menu">
-          <?php if ($s['description']->isNotEmpty()): ?>
-            <div class="dropdown-header"><?= $s['description']->esc() ?></div>
-            <hr>
-          <?php endif ?>
-          <?php if ($s['url']->isNotEmpty()): ?>
-            <a href="<?= $s['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a>
-          <?php endif ?>
-        </div>
-
-        <?php if ($s['logo']): ?>
-          <figure class="sponsor-logo center-both"><?= $s['logo'] ?></figure>
-        <?php endif ?>
-      </li>
-    <?php endforeach ?>
-  </ul>
+  <?php snippet('sponsor-list', [
+    'sponsors' => $sponsorPage->currentSponsors(),
+    'idPrefix' => 'home-sponsor',
+  ]) ?>
 
   <div class="cluster gap-m accent">
     <a href="<?= $sponsorPage->url() ?>" class="button btt--secondary">See all our sponsors</a>
-    <a href="#">Who's behind Open Art Folke</a>
+    <a href="/about">Who's behind Open Art Folke</a>
   </div>
 </section>
 <?php endif ?>
@@ -136,7 +83,7 @@
 <section class="theme-ink photo-banner stack-section">
   <?php snippet('image', [
     'file' => $page->bannerimage()->toFile(),
-    'class' => 'photo-banner__bg',
+    'class' => 'photo-banner__bg darken-300',
     'hidden' => true,
     'sizes' => '100vw',
   ]) ?>
@@ -148,6 +95,3 @@
 </section>
 
 <?php snippet('site-footer') ?>
-
-<?php snippet('footer') ?>
-
