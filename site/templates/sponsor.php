@@ -22,7 +22,7 @@ $cell = function ($field) use ($tick) {
 ?>
 <?php snippet('header') ?>
 
-<section class="panel full-bleed theme-ink sponsor-feature">
+<section class="panel theme-ink sponsor-feature">
   <div
     class="sponsor-grid">
 
@@ -67,7 +67,7 @@ $cell = function ($field) use ($tick) {
   </div>
 </section>
 
-<section class="panel full-bleed theme-crimson sponsors sponsors-roster stack gap-xxl">
+<section class="panel theme-crimson sponsors sponsors-roster stack gap-xxl">
   <h2 class="h1">Our sponsors</h2>
 
   <div class="sponsors-roster__group stack gap-xl">
@@ -108,7 +108,7 @@ $cell = function ($field) use ($tick) {
   <p>We’re grateful to every one of the people and brands named here</p>
 </section>
 
-<section class="panel full-bleed theme-paper sponsor-support stack gap-xxl">
+<section class="panel theme-paper sponsor-support stack gap-xxl">
 
   <div class="stack gap-xl">
     <h2 class="h1">What sponsors get</h2>
@@ -136,17 +136,19 @@ $cell = function ($field) use ($tick) {
     </div>
     <small class="readable">Prices and exact allocations will be confirmed to you by the fundraising team. The list above covers standard benefits available across tiers. Sponsorship packages are for a single festival year. Sponsors with first refusal are contacted ahead of each festival cycle.</small>
   </div>
+</section>
 
+<section class="panel theme-paper sponsor-support stack gap-xxl">
   <div class="stack gap-l">
     <h2 class="mb-m">Become a sponsor</h2>
     <p class="readable">To discuss sponsoring OAF, please email Jackie at
-      <strong><?= esc($contactEmail) ?></strong>. We’ll chat through what your support helps us achieve and how your brand will be highlighted, and we’ll answer any questions.</p>
+      <strong>openartfolke at gmail dot com</strong>. We’ll chat through what your support helps us achieve and how your brand will be highlighted, and we’ll answer any questions.</p>
     <button class="btt--secondary fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email address</button>
   </div>
 
   <div class="stack gap-l">
     <h2 class="mb-m">Buy us a coffee</h2>
-    <p class="readable">Donating, however you can, helps to keep the lights on, prepare for the upcoming festival, and support local creatives in making and showcasing their work.</p>
+    <p class="readable">Donating, however you can, helps to keep the lights on, prepare for the upcoming festival cycle, and support local creatives in making and showcasing their work.</p>
     <?php if ($site->donation_url()->isNotEmpty()): ?>
       <a class="button btt--secondary fit-width" href="<?= $site->donation_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">Buy the OAF team a coffee
         <span aria-hidden="true">↗</span>
@@ -156,7 +158,7 @@ $cell = function ($field) use ($tick) {
 
   <div class="stack gap-m">
     <h2 class="mb-m">Other ways to support us</h2>
-    <p class="readable">Sponsorship isn’t the only way to help Open Art Folke continue offering its services to the local creative community and organise its festival.</p>
+    <p class="readable">Sponsorship isn’t the only way to help Open Art Folke continue offering its services to the local creative community.</p>
     <p class="readable">We’re always looking for:</p>
     <ul class="stack dots gap-m readable">
       <li>
@@ -178,11 +180,16 @@ $cell = function ($field) use ($tick) {
         </p>
       </li>
     </ul>
-    <p>If any of that sounds like you, email Becca or Thurle at
-      <strong><?= esc($contactEmail) ?></strong>.</p>
+    <p class="readable">If you'd be up for offering any of that, it would make Becca and Thurle, and all of us at Open Art incredibly grateful. Please reach out to let us know.</p>
   </div>
 
 </section>
+
+<?php snippet('photo-banner', [
+  'hideText' => true,
+  'half' => true,
+  'logoBottom' => true,
+]) ?>
 
 <?php snippet('site-footer') ?>
 

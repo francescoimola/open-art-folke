@@ -62,7 +62,7 @@
   </ul>
 </section>
 
-<section class="principles stack-section">
+<section class="principles stack-section flowing">
   <?php snippet('image', [
     'file' => $page->principlesimage()->toFile(),
     'class' => 'principles__bg',
@@ -83,5 +83,11 @@
     </ul>
   </div>
 </section>
+
+<?php snippet('photo-banner', [
+  'hideText' => true,
+  'half' => true,
+  'logoBottom' => true,
+]) ?>
 
 <?php snippet('site-footer') ?>

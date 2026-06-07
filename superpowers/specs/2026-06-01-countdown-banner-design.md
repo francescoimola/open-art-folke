@@ -71,7 +71,7 @@ No timer arithmetic in the template; it only calls model methods and includes th
 Reads `$page->countdownFilled()` and `$page->countdownTotalBlocks()`:
 
 ```php
-<div class="countdown full-bleed">
+<div class="countdown">
   <img class="countdown__img" src="/assets/images/coat.png" alt="" aria-hidden="true">
   <div class="countdown__grid" role="img"
        aria-label="<?= $page->daysRemaining() ?> days remaining">

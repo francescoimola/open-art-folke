@@ -57,8 +57,7 @@ A repeatable 6-step pipeline, run for every Figma frame handed over.
    component-internal responsiveness, consistent with the existing
    `section { container-type: inline-size }` rule.
 
-6. **Justify any custom CSS in writing.** If a region has no primitive (e.g. the
-   full-bleed sticky-stacking hero), write it as a reusable class in
+6. **Justify any custom CSS in writing.** If a region has no primitive, write it as a reusable class in
    `@layer custom` and record *why* no primitive fit. The deliverable for each
    component is a class plan + token plan + a one-line note for each custom rule.
 
@@ -87,8 +86,7 @@ Audited the live codebase including uncommitted WIP.
   tokens and belong in a small reusable nav class set, not per-element inline
   styles. (Also fixed: markup referenced `--vs-x`, which is not a Graffiti token.)
 - **Full-bleed breakout duplicated.** `width:100vw; margin-inline:calc(50% - 50vw)`
-  was hand-written on both `.hero` and `.intro`. Extracted into one reusable
-  `.full-bleed` class.
+  was hand-written on both `.hero` and `.intro`. Extracted into one reusable `.full-bleed` class.
 - **Header forced `layout-readable` on the shared `<main>`,** which fought
   `home.php`'s full-bleed sections. Resolved by making the header own a plain
   `<main>` and letting each template choose its own layout wrapper.
@@ -110,9 +108,6 @@ Audited the live codebase including uncommitted WIP.
 
 - **`.site-nav`** — Graffiti 4.29 ships no navbar primitive, so a custom nav is
   justified. Stays, leans on tokens, documented as a sanctioned exception.
-- **`.hero` / `.intro` / `.stack-section`** — sticky full-bleed stacking sections
-  are genuinely custom layout. Sanctioned; full-bleed behavior extracted to the
-  reusable `.full-bleed` class.
 
 ---
 
@@ -123,7 +118,7 @@ The two roles are one loop, not two activities:
 - **Shared source-of-truth order:** installed CSS contracts → hosted Graffiti docs
   → `AGENTS.md` → skill recipes.
 - **Audit feeds Implementation.** Every custom class the audit sanctions
-  (`.full-bleed`, `.site-nav`) becomes a *known primitive* the Implementation
+  (`.site-nav`) becomes a *known primitive* the Implementation
   Specialist reuses — custom code is written once, then reused, never re-invented.
 - **Implementation feeds Audit.** Step 6's "justify custom CSS" notes become the
   audit's checklist next round; new raw CSS without a justification note is the
@@ -150,6 +145,4 @@ The two roles are one loop, not two activities:
 - Created `.claude/skills/oaf-graffiti/SKILL.md`.
 - P1: header `<main>` made plain; `default.php` rewrapped; deleted 5 redundant
   templates + `test.php`.
-- P2: `menu.php` inline styles → reusable nav classes; `.full-bleed` extracted and
-  applied to hero/intro.
 - P3 (reset trim) left as a flagged follow-up.
