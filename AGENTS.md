@@ -1,6 +1,6 @@
 # Open Art Folke — Agent Instructions
 
-**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 7 · pnpm · PostCSS (autoprefixer + postcss-preset-env) · [Graffiti UI](https://graffiti-ui.com/) 4.29.0 (CSS) · SCSS (Sass) · Lenis 1.3.23
+**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 8 · pnpm · PostCSS (autoprefixer + postcss-preset-env) · [Graffiti UI](https://graffiti-ui.com/) 4.29.0 (CSS) · SCSS (Sass) · Lenis 1.3.23
 
 ---
 
