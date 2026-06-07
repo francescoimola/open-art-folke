@@ -36,7 +36,10 @@ if (!function_exists('env')) {
 $isDev = is_file(dirname(__DIR__, 2) . '/.dev');
 
 return [
-  'debug' => true,
+  // Debug must stay OFF in production (it leaks stack traces / paths). Local
+  // dev (Vite running) keeps it on; on the server set KIRBY_DEBUG=true only
+  // for short-lived troubleshooting.
+  'debug' => $isDev ? true : (env('KIRBY_DEBUG', false) === 'true'),
 
   'hooks' => [
     'route:after' => function () use ($isDev) {
@@ -47,9 +50,11 @@ return [
   ],
 
   // Environment-specific settings
-  // On Fortrabbit, set KIRBY_LICENSE env var instead of using .license file
+  // Panel installer is OFF by default. To create the first admin user on a
+  // fresh server, set KIRBY_PANEL_INSTALL=true in the Fortrabbit ENV vars,
+  // create the account at /panel, then remove the var again.
   'panel' => [
-    'install' => false  // Set to true only for initial remote setup
+    'install' => env('KIRBY_PANEL_INSTALL', false) === 'true'
   ],
 
   // In development (Vite running) the pages cache is OFF, so template,
