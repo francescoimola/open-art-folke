@@ -7,8 +7,7 @@
     "dev": "concurrently --kill-others \"pnpm:server\" \"pnpm:vite\" -c yellow,green",
     "server": "/opt/homebrew/opt/php@8.4/bin/php -S localhost:8888 -t public ./kirby/router.php",
     "build": "vite build",
-    "preview": "pnpm run build && pnpm run server",
-    "deploy": "vite build && rsync -av ./public/dist/ en-0li4gv@ssh.eu-w1a.frbit.app:~/public/dist/"
+    "preview": "pnpm run build && pnpm run server"
   },
   "author": "Open Art Folke",
   "license": "GPL-3.0-or-later",

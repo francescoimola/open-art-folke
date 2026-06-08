@@ -158,23 +158,45 @@ Swapping the theme class makes `.accent` automatically adjust colour (red on lig
 
 ## Content and deployment
 
-`/content` is gitignored. Git tracks only code (templates, blueprints, styles). Content (text, uploaded images, panel data) lives only on the server where it was written.
+**Hosting:** Fortrabbit Universal (flat-file) app `en-0li4gv`, region `eu-w1a`.
+- Live site: `https://en-0li4gv.eu-w1a.frbit.app`
+- Production Panel: `https://en-0li4gv.eu-w1a.frbit.app/panel`
 
-**Two separate streams — never let one overwrite the other:**
-- **Git** = source of truth for code. Push to deploy code changes.
-- **Production `content/`** = source of truth for content. Panel edits go live immediately and persist there.
+### Deploying code = `git push origin main`
 
-**Syncing content between production and local** is done via rsync over SSH (exact command depends on hosting provider):
+That is the **only** way code reaches live. Fortrabbit's GitHub App picks up the push and rebuilds server-side (`composer install` + `pnpm build`), so `vendor/`, `kirby/`, and `public/dist/` are all generated on the server — never uploaded manually. `pnpm dev`, local file saves, and `git commit` do **not** touch the live site; only the push does.
+
+### Two separate streams — never let one overwrite the other
+
+`/content` and `/media` are gitignored and excluded from deploys, so a deploy never overwrites them.
+
+- **Code** → Git → `git push` rebuilds. Source of truth = the repo.
+- **Content** (text, uploaded images, panel data) → edited in the **production Panel**, goes live instantly, and persists across every deploy. Source of truth = the server.
+
+### Uploading images / creating content
+
+Always do it at the **production Panel** (`https://en-0li4gv.eu-w1a.frbit.app/panel`). The localhost Panel (`http://localhost:8888/panel`) only edits your local `content/` copy and **never reaches live** — it's for development against dummy content. Workflow for a new image-bearing section: build the section's *code* locally and `git push` it, then add the *image and text* through the production Panel.
+
+### Reverting a bad content edit (e.g. a colleague deletes a still-linked image)
+
+Content isn't in git, so `git revert` can't help. Restore from Fortrabbit's **automatic daily file backup** — a `.tar` of all files including `content/` and uploads, retained **14 days** ([help.fortrabbit.com/backups](https://help.fortrabbit.com/backups)):
+
+1. Dashboard → app → **Backups** → download the latest archive from before the mistake.
+2. Unpack it locally and find the deleted file under `content/`.
+3. Re-upload just that file via the Panel (or SFTP/rsync).
+
+Caveats: backups are **daily** (up to a day of changes can be lost) and kept **14 days**.
+
+### Optional extra safety — pull content down to local
+
+For a longer-lived local copy, occasionally pull `content/` down via rsync over SSH:
 
 ```bash
-# Pull production content down to local
-rsync -av user@your-server:~/content ./
-
-# Push local content up to production
-rsync -av ./content user@your-server:~
+# Pull production content down to local (run after colleagues edit via the Panel)
+rsync -av en-0li4gv@ssh.eu-w1a.frbit.app:/data/www/content ./
 ```
 
-Use the pull command after a colleague uploads assets or edits content via the panel, so your local copy reflects what's live. Use push to seed initial content when first deploying. Hosting provider not yet confirmed — check with the user before running sync commands.
+**Pull only — never rsync content *up*,** or you overwrite live Panel edits. (SSH over port 22 is blocked on some public/venue WiFi; use a hotspot or trusted network if it times out.)
 
 ---
 
