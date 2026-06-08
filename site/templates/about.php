@@ -73,7 +73,7 @@
     <h2>Our (very solemn but very important) guiding principles</h2>
     <ul class="stack gap-base fs-l">
       <li>We are open to all</li>
-      <li>We are community</li>
+      <li>We are a community</li>
       <li>We are collaborative</li>
       <li>We are reliant on artist participation</li>
       <li>We are honest and straightforward</li>

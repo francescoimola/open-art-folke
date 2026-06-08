@@ -1,53 +1,31 @@
 # Open Art Folke
 
-Website for Open Art Folke, Folkestone's first artist-run festival of open studios, exhibitions, performances and workshops. A non-profit, unincorporated association.
+[![Licence: GPL v3](https://img.shields.io/badge/Licence-GPLv3-blue.svg)](LICENSE.md)
+![Kirby CMS](https://img.shields.io/badge/Kirby-5-000000?logo=kirby&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 
-## Tech Stack
+If you've landed here, hello. This is the website for Open Art Folke, Folkestone's first artist-run festival of open studios, exhibitions, performances and workshops.
 
-- [Kirby CMS](https://getkirby.com) - File-based content management
-- [Vite](https://vitejs.dev/) - Frontend build tool with live reloading
+## It's built with
 
-## Requirements
+- [Kirby CMS](https://getkirby.com)
+- PHP templates
+- [Vite](https://vitejs.dev/) for bundling
+- [Graffiti UI](https://graffiti-ui.com/) for styling
+- SCSS and PostCSS
+- [Lenis](https://lenis.darkroom.engineering/) for smooth scrolling
 
-- PHP 8.3+
-- Node.js 20+
-- Composer
+## How to run it locally
 
-## Installation
+You'll need PHP 8.4, Node, Composer and pnpm.
 
 ```bash
 composer install
-pnpm install  # or npm install
+pnpm install
+pnpm dev
 ```
 
-## Development
+That serves the site at http://localhost:8888, with the panel at http://localhost:8888/panel. Templates, styles and scripts reload as you edit them.
 
-```bash
-pnpm dev      # or npm run dev
-```
-
-Visit `localhost:8888` in the browser.
-
-## Build
-
-```bash
-pnpm build    # or npm run build
-```
-
-## Deployment
-
-The site is configured for Composer-based deployment. The following paths are excluded from version control:
-
-- `/kirby`, `/vendor` - Managed by Composer
-- `/content` - Content synced separately via rsync
-- `/storage` - User accounts, cache, sessions (server-generated)
-
-### Sync Content (if needed)
-
-```bash
-# Upload content changes
-rsync -av ./content user@server:~/
-
-# Download content from server
-rsync -av user@server:~/content ./
-```
+To ship it, push it to `main`. Fortrabbit picks up the push and rebuilds the site on the server. There is nothing to upload by hand. You can edit (most) words and images in the live panel.
