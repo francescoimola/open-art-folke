@@ -47,6 +47,39 @@ return [
         header('Cache-Control: no-store, no-cache, must-revalidate');
       }
     },
+
+    // Bust the rendered-page cache whenever a new build is deployed.
+    //
+    // Vite re-hashes asset filenames (index-<hash>.css) on every build and
+    // deletes the old ones, but cached page HTML embeds the old names — so
+    // after a deploy, cached pages 404 their CSS and image thumbnails until
+    // the cache is cleared. We can't clear it from the `pnpm build` step:
+    // Fortrabbit runs the build in an isolated deploy stage, so a flush
+    // there never touches the live storage/. Instead we detect a new build
+    // at runtime — the Vite manifest's mtime changes on every deploy — and
+    // flush the pages cache once. The first request after a deploy pays a
+    // single re-render; everything after is served fresh from a rebuilt
+    // cache. Cheap (one filemtime + string compare per request) and self-
+    // healing, so no manual SSH flush is needed after `git push`.
+    'route:before' => function () use ($isDev) {
+      if ($isDev === true) {
+        return;
+      }
+
+      $manifest = dirname(__DIR__, 2) . '/public/dist/.vite/manifest.json';
+      if (is_file($manifest) === false) {
+        return;
+      }
+
+      $marker      = kirby()->root('cache') . '/.build';
+      $fingerprint = (string) filemtime($manifest);
+      $seen        = is_file($marker) ? @file_get_contents($marker) : null;
+
+      if ($seen !== $fingerprint) {
+        kirby()->cache('pages')->flush();
+        @file_put_contents($marker, $fingerprint, LOCK_EX);
+      }
+    },
   ],
 
   // Environment-specific settings
