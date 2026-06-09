@@ -145,6 +145,14 @@ Build sections with `.panel` (spacing) + `.theme-*` (colour: `brand`, `paper`, `
 
 Swapping the theme class makes `.accent` automatically adjust colour (red on light themes, pink on dark themes).
 
+### Responsive images — the `image` snippet
+
+All images render through `snippet('image', [...])` (`site/snippets/image.php`), which emits a `<picture>` with a WebP `<source>` plus an original-format (`jpg`/`png`) `<img>` fallback, driving every width from the `thumbs.srcsets` recipe in `config.php`. Pass a Kirby `File` and a `sizes` string; see the snippet's docblock for all options (`hidden`, `loading`, `fetchpriority`, focus-point cropping, etc.).
+
+**WebP-only, on purpose — do not re-add AVIF.** This host's web workers have a hard ~128 MB per-request memory ceiling, and AVIF encoding (libavif) allocates *outside* PHP's `memory_limit`, so generating AVIF from our large source photos OOM-kills the worker and the request 503s — reproducibly, even at 1920w. WebP encodes cheaply, generates the full ladder (to 2400w) reliably, and `srcset` still serves every device — including large retina — the right resolution. AVIF only becomes viable again if the source images are right-sized or the container gets more RAM.
+
+**Right-size source images before uploading.** Thumbnails are generated on-demand from whatever is uploaded. Multi-MB 2560px+ PNG *photos* are the main cause of slow/borderline thumbnail generation — export photos as JPEG at roughly the largest size they'll display (heroes ~2000px, smaller slots less), not as oversized PNGs.
+
 ---
 
 ## Adding a new page
@@ -165,6 +173,12 @@ Swapping the theme class makes `.accent` automatically adjust colour (red on lig
 ### Deploying code = `git push origin main`
 
 That is the **only** way code reaches live. Fortrabbit's GitHub App picks up the push and rebuilds server-side (`composer install` + `pnpm build`), so `vendor/`, `kirby/`, and `public/dist/` are all generated on the server — never uploaded manually. `pnpm dev`, local file saves, and `git commit` do **not** touch the live site; only the push does.
+
+### Page cache — auto-flushes on deploy
+
+Production caches rendered page HTML (`cache.pages` in `config.php`, all pages except `home`) for speed. That HTML embeds Vite's hashed asset names and image-thumbnail URLs, which change on every build — so a stale cache after a deploy would 404 its CSS and images. A `route:before` hook in `config.php` prevents this: it fingerprints the Vite manifest's mtime and, when it changes (i.e. a new build deployed), flushes the page cache once on the first request. **So no manual cache step is needed after `git push`** — it self-heals.
+
+Do **not** put the flush in the `pnpm build` script — Fortrabbit runs the build in an isolated stage, so `rm`-ing the cache there hits a throwaway directory, not live `storage/`. If you ever need to flush by hand (emergency only): `ssh en-0li4gv@ssh.eu-w1a.frbit.app 'rm -rf storage/cache/*/pages'`.
 
 ### Two separate streams — never let one overwrite the other
 
