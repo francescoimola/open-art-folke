@@ -95,13 +95,18 @@ return [
         '1920w' => ['width' => 1920, 'format' => 'webp', 'quality' => 70],
         '2400w' => ['width' => 2400, 'format' => 'webp', 'quality' => 68],
       ],
+      // AVIF tops out at 1920w on purpose. Encoding a 2400w AVIF from our
+      // large (2560px) source photos allocates memory outside PHP's
+      // memory_limit (libavif) and gets OOM-killed by the hosting
+      // container — the request then 503s. WebP/JPEG still go to 2400w
+      // below, so big screens get a sharp non-AVIF image; AVIF browsers
+      // get AVIF up to 1920w and upscale that for the largest slots.
       'avif' => [
         '480w'  => ['width' => 480,  'format' => 'avif', 'quality' => 55],
         '768w'  => ['width' => 768,  'format' => 'avif', 'quality' => 55],
         '1024w' => ['width' => 1024, 'format' => 'avif', 'quality' => 52],
         '1440w' => ['width' => 1440, 'format' => 'avif', 'quality' => 50],
         '1920w' => ['width' => 1920, 'format' => 'avif', 'quality' => 48],
-        '2400w' => ['width' => 2400, 'format' => 'avif', 'quality' => 46],
       ],
     ],
   ]
