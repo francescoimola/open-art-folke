@@ -31,6 +31,25 @@ tabs:
                 type: url
                 label: Facebook URL
                 help: Link for the footer "Facebook" button. Leave blank to hide it.
+          seo-defaults:
+            type: fields
+            label: SEO / Social defaults
+            fields:
+              seodescription:
+                type: textarea
+                label: Default meta description
+                buttons: false
+                maxlength: 160
+                help: Used for search results and social cards on any page without its own description.
+              ogimage:
+                type: files
+                label: Default social share image
+                help: Shown when a page is shared on social media and has no image of its own (ideally around 1200×630).
+                max: 1
+                query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+                uploads:
+                  parent: site.find('media')
+                  template: image
           pages:
             type: pages
             label: Pages

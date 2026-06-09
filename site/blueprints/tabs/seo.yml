@@ -1,0 +1,22 @@
+label: SEO / Social
+icon: search
+fields:
+  seotitle:
+    type: text
+    label: Meta title
+    help: Overrides the browser tab title and the title shown when the page is shared. Leave blank to use “{Page} – Open Art Folke”.
+  seodescription:
+    type: textarea
+    label: Meta description
+    buttons: false
+    maxlength: 160
+    help: A 1–2 sentence summary for search results and social cards (aim for under 160 characters). Leave blank to use the site default.
+  ogimage:
+    type: files
+    label: Social share image
+    help: Image shown when the page is shared on social media (ideally around 1200×630). Leave blank to use the site default.
+    max: 1
+    query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+    uploads:
+      parent: site.find('media')
+      template: image

@@ -23,5 +23,11 @@
     :is(th, td):first-child {
       width: 45%;
     }
+
+    /* At narrow viewports the table must not squish below this width —
+       Graffiti's .table overflow-x:auto then scrolls it horizontally. */
+    table {
+      min-width: 36rem;
+    }
   }
 }

@@ -1053,7 +1053,7 @@
     margin-block: var(--pad-l);
 
     >li {
-      list-style-type: "[✴] ";
+      list-style-type: "[✴\fe0e] "; // \fe0e = text-presentation selector (prevents emoji rendering)
       list-style-position: inside;
 
       p {
