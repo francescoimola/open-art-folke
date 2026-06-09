@@ -14,7 +14,9 @@ if (countdown && !window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 
   new IntersectionObserver((entries, obs) => {
     if (entries[0].isIntersecting) {
-      countdown.classList.add('countdown--revealed');
+      setTimeout(() => {
+        countdown.classList.add('countdown--revealed');
+      }, 400);
       obs.disconnect();
     }
   }, { threshold: 1.0 }).observe(countdown);

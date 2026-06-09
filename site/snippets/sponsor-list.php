@@ -30,12 +30,12 @@ $sponsorName = fn($s) => $s['url']->isNotEmpty()
 </ul>
 
 <!-- Desktop: a stacked list; each row reveals its own logo on hover/focus. -->
-<ul class="sponsors-desktop show-desktop stack accent mt-m">
+<ul class="sponsors-desktop show-desktop stack accent mt-m" style="gap: 0;">
   <?php foreach ($sponsors as $i => $s): ?>
     <?php $menuId = $idPrefix . '-' . $i ?>
     <li style="--anchor: --sponsor-<?= $i ?>">
       <div class="dropdown">
-        <button class="reset" style="all: unset" popovertarget="<?= $menuId ?>">
+        <button class="reset" popovertarget="<?= $menuId ?>">
           <p class="h1"><?= esc($s['name']->value()) ?></p>
         </button>
       </div>

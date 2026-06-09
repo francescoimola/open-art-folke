@@ -1051,6 +1051,7 @@
   ul:is(.dots) {
     margin-inline-start: var(--pad-l);
     margin-block: var(--pad-l);
+
     >li {
       list-style-type: "[✴] ";
       list-style-position: inside;
@@ -1349,6 +1350,15 @@
       background: var(--bg);
     }
 
+    /* On the deep-red sponsor section the crimson cards would blend in, so
+       lift them to theme-brand's brighter red endpoint to stand out. Scoped
+       to the crimson section so the homepage (blush section) teaser keeps
+       crimson cards.                                                       */
+    :where(.theme-crimson) & >li.box.ghost {
+      --bg-light: var(--dark-Brand-600);
+      --bg-dark: var(--dark-Brand-600);
+    }
+
     /* Inside a deep-red card the SVG logo should use the light fg.       */
     >li.theme-crimson .sponsor-logo svg {
       color: var(--fg);
@@ -1364,6 +1374,7 @@
 
       svg {
         width: calc(var(--sponsor-card-logo-size) * 1.75);
+        max-height: calc(var(--sponsor-card-logo-size) * 1.25);
       }
     }
   }
@@ -1375,6 +1386,10 @@
     list-style: none;
     padding: 0;
 
+    .h1 {
+      margin-bottom: var(--vs-xs);
+    }
+
     >li {
       position: relative;
       cursor: default;
@@ -1382,13 +1397,17 @@
       &:not(:first-child):not(:last-child) {
         margin-block: var(--vs-l);
       }
-    }
 
-    &.sponsors-past {
-      gap: var(--vs-l);
+      >.dropdown {
+        display: block;
+        height: auto;
 
-      li:not(:first-child):not(:last-child) {
-        margin-block: revert;
+        >.reset {
+          all: unset;
+          display: block;
+          width: 100%;
+          --button-shadow: none;
+        }
       }
     }
 
@@ -1406,6 +1425,24 @@
     >li:hover .sponsor-logo,
     >li:focus-within .sponsor-logo {
       opacity: 1;
+    }
+  }
+
+  // Past sponsors — a plain list of name + ↗ links (no dropdown/logo). The
+  // links inherit the surrounding .accent colour rather than re-colouring.
+  .sponsors-past {
+    list-style: none;
+    padding: 0;
+    gap: var(--vs-l);
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover,
+      &:focus-visible {
+        text-decoration: underline;
+      }
     }
   }
 

@@ -70,33 +70,25 @@ $cell = function ($field) use ($tick) {
 <section class="panel theme-crimson sponsors sponsors-roster stack gap-xxl">
   <h2 class="h1">Our sponsors</h2>
 
-  <div class="sponsors-roster__group stack gap-xl">
-    <p class="sponsors-label">Current</p>
+  <div class="stack gap-l">
+    <p>Current</p>
     <?php snippet('sponsor-list', [
       'sponsors' => $page->currentSponsors(),
       'idPrefix' => 'current-sponsor',
     ]) ?>
   </div>
 
-  <hr>
+  <hr class="show-desktop">
 
-  <div class="sponsors-roster__group stack gap-xl">
-    <p class="sponsors-label">Previous</p>
-    <ul
-      class="sponsors-desktop sponsors-past accent stack">
-      <?php foreach ($page->pastSponsorsData() as $i => $p): ?>
-        <li style="--anchor: --past-sponsor-<?= $i ?>">
+  <div class="stack gap-xl">
+    <p>Previous</p>
+    <ul class="sponsors-past accent stack">
+      <?php foreach ($page->pastSponsorsData() as $p): ?>
+        <li>
           <?php if ($p['url']->isNotEmpty()): ?>
-            <?php $menuId = 'past-sponsor-' . $i ?>
-              <div class="dropdown"> <button class="reset" style="all: unset" popovertarget="<?= $menuId ?>">
-                <p class="h3"><?= esc($p['name']->value()) ?></p>
-              </button>
-            </div>
-            <div id="<?= $menuId ?>" popover class="dropdown-menu">
-              <a href="<?= $p['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">Visit website
-                <span aria-hidden="true">↗</span>
-              </a>
-            </div>
+            <a class="h3" href="<?= $p['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">
+              <?= esc($p['name']->value()) ?> <span aria-hidden="true">↗</span>
+            </a>
           <?php else: ?>
             <p class="h3"><?= esc($p['name']->value()) ?></p>
           <?php endif ?>
@@ -105,7 +97,7 @@ $cell = function ($field) use ($tick) {
     </ul>
   </div>
 
-  <p>We’re grateful to every one of the people and brands named here</p>
+  <p>If you're one of the people or brands named here, thank you for your support.</p>
 </section>
 
 <section class="panel theme-paper sponsor-support stack gap-xxl">
