@@ -67,7 +67,12 @@ if (
 
 ?>
 <picture>
-  <source type="image/avif" srcset="<?= $file->srcset('avif') ?>" sizes="<?= $sizes ?>">
+  <?php /* No AVIF source on purpose: encoding AVIF from our large (2560px)
+     source photos exceeds the hosting container's per-request memory
+     (libavif allocates outside PHP's memory_limit) and 503s — even at
+     1920w under real web load. WebP is light to encode, serves the full
+     width ladder reliably, and via srcset gives every device (incl. large
+     retina) the right resolution. JPEG/PNG `<img>` below is the fallback. */ ?>
   <source type="image/webp" srcset="<?= $file->srcset('webp') ?>" sizes="<?= $sizes ?>">
   <img
     src="<?= $file->resize($fallback)->url() ?>"
