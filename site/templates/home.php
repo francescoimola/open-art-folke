@@ -50,12 +50,12 @@
   <div
     class="stack panel even readable gap-l">
     <?php $days = $page->daysRemaining() ?>
-    <h2>There
+    <h2><?= $days === 1 ? 'There is' : 'There are' ?>
       <?= $days ?>
       <?= $days === 1 ? 'day' : 'days' ?>
-    until the next edition of Open Art Folke
+      until the next edition of Open Art Folke
     </h2>
-      <p class="close-trim"> Some things, as you know, just take time</p>
+      <p class="close-trim">Some things, as you know, just take time</p>
   </div>
   <?php snippet('countdown') ?>
 </section>

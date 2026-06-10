@@ -9,7 +9,7 @@
     <h2>Looking for the Festival Programme?<br><span class="text-muted">You’re early</span>
     </h2>
     <div class="stack fc readable gap-m pretty">
-      <p class="fs-s">We're still settting the stage for 3rd edition of Open Art Folke: <i>Art This Way</i>, and we'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can.</p>
+      <p class="fs-s">We're still settting the stage for the 3rd edition of Open Art Folke: <i>Art This Way</i>, and we'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can.</p>
 
       <?php if ($form->success()): ?>
         <div class="callout success hard" role="status">
