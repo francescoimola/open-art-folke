@@ -10,68 +10,47 @@
   </div>
 </section>
 
-<section class="panel even theme-blush stack-section flowing">
-  <div class="stack gap-xl">
-    <h1>2025: The Triennial Edition</h1>
-    <?php if ($page->video()->isNotEmpty()): ?>
-      <div class="layout-split">
-        <?php snippet('video', [
-          'files' => $page->video()->toFiles(),
-          'class' => 'aspect-video',
-        ]) ?>
-      </div>
-    <?php endif ?>
-    <div class="stack gap-l readable">
-      <p>For our Triennial Edition we invited anyone with a spark of imagination and a point of view to open up and share their energy. The festival ran across the entire summer and into the autumn, 25 July - 19 October. It included two action-packed weekends (we called them Blooms) and an end of Summer open party (Fête of Folkestone) held in Payers Park in collaboration with <a href="https://www.instagram.com/underthemoonartmarket/" target="_blank" rel="noopener noreferrer">Under The Moon Art Market</a>.</p>
-      <p>225 artists took part, across 115 projects and 74 Venues thanks to the support of 14 sponsors.</p>
-      <p>Thanks to a 12-week season of art and events—which at points seemed it might as well become a permanent engagement(!)—we became one of the longest-running grassroots art festivals in Kent. This edition and its overlap with the 2025 Folkestone Triennial taught us a tremendous amount, above all about audience participation, assessing our impact, and caring for our volunteers.</p>
-    </div>
-    <?php $gallery = $page->gallery()->toFiles() ?>
-    <?php if ($gallery->isNotEmpty()): ?>
-      <ul class="carousel archive-carousel">
-        <?php foreach ($gallery as $photo): ?>
-          <li>
+<?php foreach ($page->editions()->toStructure() as $i => $edition): ?>
+  <?php $photos = $edition->gallery()->toFiles() ?>
+  <section class="panel even stack-section flowing <?= $i % 2 ? 'theme-paper' : 'theme-blush' ?>">
+    <div class="stack gap-xl">
+      <h2><?= $edition->headline()->esc() ?></h2>
+
+      <?php if ($edition->video()->isNotEmpty()): ?>
+        <div class="layout-split">
+          <?php snippet('video', [
+            'files' => $edition->video()->toFiles(),
+            'class' => 'aspect-video',
+          ]) ?>
+        </div>
+      <?php endif ?>
+
+      <div class="stack gap-l readable"><?= $edition->text()->kt() ?></div>
+
+      <?php if ($photos->count() > 2): ?>
+        <ul class="carousel archive-carousel">
+          <?php foreach ($photos as $photo): ?>
+            <li>
+              <?php snippet('image', [
+                'file'  => $photo,
+                'sizes' => '(min-width: 768px) 28vw, 45vw',
+              ]) ?>
+            </li>
+          <?php endforeach ?>
+        </ul>
+      <?php elseif ($photos->isNotEmpty()): ?>
+        <div class="layout-split">
+          <?php foreach ($photos as $photo): ?>
             <?php snippet('image', [
               'file'  => $photo,
-              'sizes' => '(min-width: 768px) 28vw, 45vw',
+              'sizes' => '(min-width: 768px) 50vw, 100vw',
             ]) ?>
-          </li>
-        <?php endforeach ?>
-      </ul>
-    <?php endif ?>
-  </div>
-</section>
-
-<section class="panel even theme-paper stack-section layout-split">
-  <div class="stack gap-xl">
-    <div class="tagline stack gap-l">
-      <p class="statement">This page is not yet complete 🥲</p>
-    </div>
-    <div class="stack gap-l readable">
-      <p>Big ideas take time.</p>
-      <p>We know how it feels to sit on projects that, by their very nature, will never be finished. So here's a thought we'd like to set free.</p>
-      <p>Don't be afraid to share along the way. You don't have to wait until your thing is finished to fling it up into the sky and drop it down here. Hell, you might use that as an excuse to never release anything. People like stories, complete or unfinished they may be, so use that to your benefit. Work in progress is great, and it's a lesson we keep forgetting, and relearning, time and again.</p>
-      <hr>
-      <p>But if you insist... like, for some reason, you really want to know what we've been up to in recent years, the're no better place than
-        <a href="<?= $site->instagram_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">our vibrant—perhaps too vibrant—Instagram</a>.</p>
-    </div>
-    <div class="stack"><?php if ($image1 = $page->image1()->toFile()): ?>
-        <?php snippet('image', [
-          'file' => $image1,
-          'class' => 'image-cover',
-          'sizes' => '(min-width: 768px) 50vw, 100vw',
-        ]) ?>
-      <?php endif ?>
-      <?php if ($image2 = $page->image2()->toFile()): ?>
-        <?php snippet('image', [
-          'file' => $image2,
-          'class' => 'image-cover',
-          'sizes' => '(min-width: 768px) 50vw, 100vw',
-        ]) ?>
+          <?php endforeach ?>
+        </div>
       <?php endif ?>
     </div>
-  </div>
-</section>
+  </section>
+<?php endforeach ?>
 
 
 <?php snippet('site-footer') ?>

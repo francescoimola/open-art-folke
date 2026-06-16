@@ -59,10 +59,16 @@ $contactEmail = 'openartfolke@gmail.com';
 
   <hr>
 
-  <div class="layout-split" style="--layout-gap: var(--vs-xxl);">
+  <div id="credits-terms" class="layout-split" style="--layout-gap: var(--vs-xxl);">
     <h2 class="fs-xxl">Provisions</h2>
     <div class="stack gap-xl">
+      <?php if ($site->media_credits()->isNotEmpty()): ?>
       <div class="stack gap-l">
+        <h3>Media credits</h3>
+        <div class="pretty"><?= $site->media_credits()->kt() ?></div>
+      </div>
+      <?php endif ?>
+    <div class="stack gap-l">
         <h3>Privacy</h3>
         <p class="pretty">When signing up for festival updates you agree for us to collect your email address and receive emails about the festival, artists, sponsors and related news. We may share data with service providers. We keep your data only as long as necessary. You can unsubscribe using the link in our emails, or contact us for access, correction or deletion.</p>
       </div>

@@ -13,39 +13,40 @@ tabs:
           - italic
           - link
           - ul
-      video:
-        type: files
-        label: 2025 video
-        help: Upload an MP4 (required). Optionally upload a WebM for better compression. WebM will be used automatically in browsers that support it.
-        max: 2
-        query: site.find('media').files.filterBy("extension", "in", ["mp4", "webm"])
-        uploads:
-          parent: site.find('media')
-          template: video
-      image1:
-        type: files
-        label: Image 1
-        max: 1
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-        uploads:
-          parent: site.find('media')
-          template: image
-      image2:
-        type: files
-        label: Image 2
-        max: 1
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-        uploads:
-          parent: site.find('media')
-          template: image
-      gallery:
-        type: files
-        label: 2025 gallery
-        max: 12
-        help: Add up to 12 photos — they appear as a scrollable row. Leave empty to hide the row.
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-        uploads:
-          parent: site.find('media')
-          template: image
+      editions:
+        type: structure
+        label: Past editions
+        help: One row per festival edition (most recent first). 
+        fields:
+          headline:
+            type: text
+            label: Headline
+          text:
+            type: textarea
+            label: Text
+            help: Leave an empty line to separate a parahgraph from the next.
+            buttons:
+              - bold
+              - italic
+              - link
+              - ul
+          video:
+            type: files
+            label: Video (optional)
+            help: Upload an MP4. If your video is over 1 min, please export it WebM for better compression and upload that alongside the MP4 here. The compressed version will be used automatically on devices that support it.
+            max: 2
+            query: site.find('media').files.filterBy("extension", "in", ["mp4", "webm"])
+            uploads:
+              parent: site.find('media')
+              template: video
+          gallery:
+            type: files
+            label: Photos
+            help: Up to 12. Leave empty for none.
+            max: 12
+            query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+            uploads:
+              parent: site.find('media')
+              template: image
   seo:
     extends: tabs/seo

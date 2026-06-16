@@ -1,12 +1,39 @@
 title: Site
 
 tabs:
-  main:
+  pages:
+    label: Pages
+    icon: dashboard
     columns:
       - width: 1/1
         sections:
-          site-fields:
+          pages:
+            type: pages
+            label: Pages
+
+  media:
+    label: Media
+    icon: image
+    columns:
+      - width: 1/1
+        sections:
+          library:
+            type: pages
+            headline: Media library
+            templates: media
+            status: all
+            image: false
+            info: "{{ page.images.count }} images, {{ page.videos.count }} videos"
+
+  settings:
+    label: Settings
+    icon: cog
+    columns:
+      - width: 1/1
+        sections:
+          festival:
             type: fields
+            label: Festival
             fields:
               festivalyear:
                 type: number
@@ -15,6 +42,10 @@ tabs:
                 step: 1
                 default: 2026
                 width: 1/2
+          links:
+            type: fields
+            label: Links
+            fields:
               register_url:
                 type: url
                 label: Register link URL
@@ -31,7 +62,15 @@ tabs:
                 type: url
                 label: Facebook URL
                 help: Link to Facebook page. Leave blank to hide it.
-          seo-defaults:
+          credits:
+            type: fields
+            label: Credits
+            fields:
+              media_credits:
+                type: textarea
+                label: Media credits
+                help: Credits text for the footer (videographers, photographers). Links and formatting are supported.
+          seo:
             type: fields
             label: SEO / Social defaults
             fields:
@@ -50,6 +89,3 @@ tabs:
                 uploads:
                   parent: site.find('media')
                   template: image
-          pages:
-            type: pages
-            label: Pages
