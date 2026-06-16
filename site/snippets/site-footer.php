@@ -78,7 +78,7 @@ $contactEmail = 'openartfolke@gmail.com';
       </div>
       <div class="stack gap-l">
         <h3>Terms</h3>
-        <p class="pretty">This website provides general information about the festival, artists and supporters. We aim for accuracy and update information regularly, but cannot guarantee everything will always be complete or current. Festival dates, participants, fees and other arrangements may change. This website does not replace any separate agreements for artists, sponsors or participants.</p>
+        <p class="pretty">This website provides general infor about Open Art Folke, and its festival, artists and supporters. We aim for accuracy and update information regularly, but can't guarantee everything will always be complete or current. Festival dates, participants, fees and other arrangements may change.</p>
       </div>
     </div>
   </div>

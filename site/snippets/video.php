@@ -22,7 +22,7 @@
  * @var bool       $muted                                 mute by default
  * @var bool       $autoplay                              autoplay (requires muted in most browsers)
  * @var bool       $loop                                  loop playback
- * @var string|null $poster                               poster image URL
+ * @var \Kirby\Cms\File|string|null $poster               poster image File or URL
  */
 
 if (empty($files) || $files->count() === 0) {
@@ -47,8 +47,13 @@ if (($caption ?? null) === null) {
 	$caption = $mp4 ? $mp4->caption()->or('')->value() : '';
 }
 
+if ($poster instanceof \Kirby\Cms\File) {
+	$poster = $poster->resize(1920)->url();
+}
+
 ?>
 <video
+	style="object-fit: cover"
 	<?php if (!empty($class)): ?>class="<?= esc($class) ?>"<?php endif ?>
 
 	<?php if ($controls): ?>controls<?php endif ?>

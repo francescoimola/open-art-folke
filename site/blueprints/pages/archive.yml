@@ -5,14 +5,6 @@ tabs:
     label: Content
     icon: text
     fields:
-      text:
-        type: textarea
-        label: Text
-        buttons:
-          - bold
-          - italic
-          - link
-          - ul
       editions:
         type: structure
         label: Past editions
@@ -39,6 +31,18 @@ tabs:
             uploads:
               parent: site.find('media')
               template: video
+          poster:
+            type: files
+            label: Poster image (optional)
+            help: >
+              A still image shown before the video plays. If left empty, the
+              browser uses the first frame of the video. JPG, PNG or WebP; one
+              image per row.
+            max: 1
+            query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+            uploads:
+              parent: site.find('media')
+              template: image
           gallery:
             type: files
             label: Photos
