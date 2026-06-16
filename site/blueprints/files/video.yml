@@ -1,0 +1,12 @@
+title: Video
+
+accept:
+  mime: video/mp4
+
+fields:
+  caption:
+    type: text
+    label: Caption
+    help: >
+      Optional. A short description shown to screen readers as the video's
+      accessible label.

@@ -45,3 +45,5 @@ node_modules/
 /opencode.json
 /site/commands
 /.kirby-mcp
+/media
+/site/cache

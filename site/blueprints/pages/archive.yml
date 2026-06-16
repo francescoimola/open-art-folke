@@ -13,6 +13,14 @@ tabs:
           - italic
           - link
           - ul
+      video:
+        type: files
+        label: 2025 video
+        help: One MP4 video, shown under the “2025: The Triennial Edition” heading.
+        max: 1
+        query: page.files.filterBy("extension", "mp4")
+        uploads:
+          template: video
       image1:
         type: files
         label: Image 1
