@@ -11,26 +11,26 @@ tabs:
               festivalyear:
                 type: number
                 label: Current festival year
-                help: Sponsors tagged with this year show under "Current" (with logo); all others show under "Previous". Bump this each edition.
+                help: Sponsors tagged with this year show under "Current" (with logo); all others show under "Previous".
                 step: 1
                 default: 2026
                 width: 1/2
               register_url:
                 type: url
                 label: Register link URL
-                help: External URL for the "Register" nav link. Leave blank to hide it.
+                help: Link to artists registration form. If you want to hide it, leave blank.
               donation_url:
                 type: url
                 label: Donation link
-                help: External link for the "Buy the OAF team a coffee" button on the Sponsor page. Leave blank to hide the button.
+                help: Donation link. Leave blank to hide the button.
               instagram_url:
                 type: url
                 label: Instagram URL
-                help: Link for the footer "Instagram" button. Leave blank to hide it.
+                help: Link to Instagram page. Leave blank to hide it.
               facebook_url:
                 type: url
                 label: Facebook URL
-                help: Link for the footer "Facebook" button. Leave blank to hide it.
+                help: Link to Facebook page. Leave blank to hide it.
           seo-defaults:
             type: fields
             label: SEO / Social defaults
@@ -44,7 +44,7 @@ tabs:
               ogimage:
                 type: files
                 label: Default social share image
-                help: Shown when a page is shared on social media and has no image of its own (ideally around 1200×630).
+                help: Shown when a page is shared on social media and has no image of its own (ideally, keep uploads to 1200×630).
                 max: 1
                 query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
                 uploads:

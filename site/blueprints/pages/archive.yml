@@ -16,10 +16,11 @@ tabs:
       video:
         type: files
         label: 2025 video
-        help: One MP4 video, shown under the “2025: The Triennial Edition” heading.
-        max: 1
-        query: page.files.filterBy("extension", "mp4")
+        help: Upload an MP4 (required). Optionally upload a WebM for better compression. WebM will be used automatically in browsers that support it.
+        max: 2
+        query: site.find('media').files.filterBy("extension", "in", ["mp4", "webm"])
         uploads:
+          parent: site.find('media')
           template: video
       image1:
         type: files

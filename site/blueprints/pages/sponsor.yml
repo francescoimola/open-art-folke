@@ -16,7 +16,7 @@ tabs:
       featureimage:
         type: files
         label: Feature image
-        help: Large photo, top-right of the sponsor grid.
+        help: First image at the top of the page.
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
@@ -25,7 +25,7 @@ tabs:
       detailimage:
         type: files
         label: Detail image
-        help: Small square photo, bottom-left of the sponsor grid.
+        help: Smaller photo, second on the page.
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
@@ -34,7 +34,7 @@ tabs:
       helptitle:
         type: text
         label: Help section title
-        help: Headline for the "Who and how does your support help" block.
+        help: Headline. Tells users what their support does for OAF.
       helptext:
         type: textarea
         label: Help section text
@@ -66,7 +66,7 @@ tabs:
       sponsors:
         type: structure
         label: Sponsors
-        help: One entry per sponsor, across every edition. Tag each with the years they supported — sponsors tagged with the site's current festival year show under "Current" (with logo); all others show under "Previous", most recent first.
+        help: One entry per sponsor, across every edition. Tag each with the years they supported — sponsors tagged with the site's current festival year show under "Current" (they need to have a logo); all others show under "Previous", most recent first.
         fields:
           name:
             type: text
@@ -77,12 +77,12 @@ tabs:
           years:
             type: tags
             label: Years supported
-            help: e.g. 2024, 2025, 2026. Decides Current vs Previous and the Previous ordering.
+            help: e.g. 2024, 2025, 2026. Impacts ordering.
             width: 1/2
           description:
             type: text
             label: Description
-            help: Shown above the website link in the dropdown (current sponsors). Optional.
+            help: Sponsor's website. Optional.
           logo:
             type: files
             label: Logo

@@ -8,7 +8,7 @@ tabs:
       heroimage:
         type: files
         label: Hero background
-        help: Full-screen background photo behind the “Open Art Folke” title.
+        help: Background photo at the top of the page.
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
@@ -26,7 +26,7 @@ tabs:
       programmeimage:
         type: files
         label: Programme section photo
-        help: Photo beside the “Looking for the Festival Programme?” copy.
+        help: Photo in the "Programme” section.
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
@@ -35,7 +35,7 @@ tabs:
       bannerimage:
         type: files
         label: Photo banner background
-        help: Full-width background photo behind the closing date banner.
+        help: Background photo behind the closing banner (before footer)
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
@@ -44,7 +44,7 @@ tabs:
       countdownimage:
         type: files
         label: Countdown image
-        help: Image revealed as vertical slices in the countdown banner (transparent PNG).
+        help: Image revealed as vertical slices in the countdown section.
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:

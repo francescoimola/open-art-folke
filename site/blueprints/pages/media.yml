@@ -13,3 +13,10 @@ sections:
     layout: cards
     sortBy: filename asc
     search: true
+  videos:
+    type: files
+    label: Videos
+    template: video
+    layout: cards
+    sortBy: filename asc
+    search: true

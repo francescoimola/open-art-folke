@@ -13,16 +13,12 @@
 <section class="panel even theme-blush stack-section flowing">
   <div class="stack gap-xl">
     <h1>2025: The Triennial Edition</h1>
-    <?php if ($video = $page->video()->toFile()): ?>
+    <?php if ($page->video()->isNotEmpty()): ?>
       <div class="layout-split">
-        <video
-          class="aspect-video"
-          controls
-          playsinline
-          preload="metadata"
-          <?= $video->caption()->isNotEmpty() ? 'aria-label="' . $video->caption()->esc('attr') . '"' : '' ?>>
-          <source src="<?= $video->url() ?>" type="<?= $video->mime() ?>">
-        </video>
+        <?php snippet('video', [
+          'files' => $page->video()->toFiles(),
+          'class' => 'aspect-video',
+        ]) ?>
       </div>
     <?php endif ?>
     <div class="stack gap-l readable">
