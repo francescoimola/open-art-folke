@@ -26,8 +26,20 @@
       <p>225 artists took part, across 115 projects and 74 Venues thanks to the support of 14 sponsors.</p>
       <p>Thanks to a 12-week season of art and events—which at points seemed it might as well become a permanent engagement(!)—we became one of the longest-running grassroots art festivals in Kent. This edition and its overlap with the 2025 Folkestone Triennial taught us a tremendous amount, above all about audience participation, assessing our impact, and caring for our volunteers.</p>
     </div>
+    <?php $gallery = $page->gallery()->toFiles() ?>
+    <?php if ($gallery->isNotEmpty()): ?>
+      <ul class="carousel archive-carousel">
+        <?php foreach ($gallery as $photo): ?>
+          <li>
+            <?php snippet('image', [
+              'file'  => $photo,
+              'sizes' => '(min-width: 768px) 28vw, 45vw',
+            ]) ?>
+          </li>
+        <?php endforeach ?>
+      </ul>
+    <?php endif ?>
   </div>
-  <p></p>
 </section>
 
 <section class="panel even theme-paper stack-section layout-split">

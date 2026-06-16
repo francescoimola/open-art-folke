@@ -1454,6 +1454,43 @@
   }
 
   // ─────────────────────────────────────────────────────────────────────
+  // 7b. Archive 2025 gallery carousel — natural-ratio photos, top-aligned,
+  //     fluid card width via container query, height-capped so tall shots
+  //     don't dominate. Built on Graffiti's .carousel (scroll + snap).
+  // ─────────────────────────────────────────────────────────────────────
+
+  .archive-carousel {
+    --gap: var(--vs-base);
+    --carousel-card-width: 28cqw;          // desktop: ~3–4 visible
+    --carousel-img-cap: min(60vh, 30rem);  // height cap for tall/portrait images
+    align-items: start;                    // top-align cards of differing heights
+    list-style: none;
+
+    @include cq-wide {                     // ≤768px container → mobile/tablet
+      --carousel-card-width: 45cqw;        // ~2 visible
+    }
+
+    >li {
+      inline-size: var(--carousel-card-width);
+    }
+
+    // Beat the global picture/img cover rules (same layer, higher specificity):
+    picture {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+    }
+
+    picture img {
+      inline-size: auto;            // width:auto + max-width:100% + max-height
+      block-size: auto;             // → preserves aspect ratio within both caps
+      max-inline-size: 100%;
+      max-block-size: var(--carousel-img-cap);
+      object-fit: initial;          // undo the global cover
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
   // 8. Buttons
   //    Base rule for any un-classed button (brand red surface) lives in
   //    @layer custom — was unlayered pre-refactor. Variants in

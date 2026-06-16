@@ -38,5 +38,14 @@ tabs:
         uploads:
           parent: site.find('media')
           template: image
+      gallery:
+        type: files
+        label: 2025 gallery
+        max: 12
+        help: Add up to 12 photos — they appear as a scrollable row. Leave empty to hide the row.
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
   seo:
     extends: tabs/seo
