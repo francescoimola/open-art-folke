@@ -517,9 +517,15 @@
     font-size: inherit;
   }
 
+  :is(body), :is(header) {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
   main {
     display: flex;
     flex-direction: column;
+    overflow-x: clip;
   }
 
   section {
