@@ -19,5 +19,6 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <?php snippet('menu') ?>
-  <main>
+  <main id="main" tabindex="-1">

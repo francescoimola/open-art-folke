@@ -342,6 +342,41 @@
 @layer custom {
 
   // ─────────────────────────────────────────────────────────────────────
+  // 0. Skip link (a11y bypass-blocks)
+  //    Built on Graffiti's own .visually-hidden technique + --focus-ring
+  //    tokens. Named to drop-in match Graffiti's documented .skip-link,
+  //    which is not yet in the published 4.30.0 package — delete this when
+  //    it ships and the markup keeps working unchanged.
+  // ─────────────────────────────────────────────────────────────────────
+
+  .skip-link {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+  }
+
+  .skip-link:focus {
+    position: fixed;
+    overflow: visible;
+    clip-path: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    inset-block-start: var(--pad-s);
+    inset-inline-start: var(--pad-s);
+    z-index: 1000; /* above .site-nav (z-index: 100) */
+    padding: var(--pad-s) var(--pad-m);
+    border-radius: var(--br-s);
+    background: var(--primary);
+    color: var(--bg);
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  // ─────────────────────────────────────────────────────────────────────
   // 1. Element defaults & typography
   //    Text-box trim → root tokens → body → headings/links/paragraphs
   //    → placeholder → main/section → text-wrap → image-cover
@@ -1066,6 +1101,10 @@
 
       }
     }
+  }
+
+  details > :not(summary) {
+    padding: var(--pad-m) 0;
   }
 
 

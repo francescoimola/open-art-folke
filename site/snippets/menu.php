@@ -1,5 +1,5 @@
 <header class="site-nav theme-brand" aria-label="<?= $site->title()->html() ?>">
-  <nav class="site-nav__group">
+  <nav class="site-nav__group" aria-label="Primary">
     <a href="<?= $site->url() ?>" class="site-nav__logo site-nav__logo--topbar" aria-label="<?= $site->title()->html() ?> — home">
       <?php snippet('logo') ?>
     </a>
