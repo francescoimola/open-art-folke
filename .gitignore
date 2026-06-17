@@ -56,3 +56,4 @@ node_modules/
 /site/plugins/kirby-alter
 /site/plugins/kirby-proofreader
 /site/plugins/kirby-thumbhash
+/site/plugins/humans
