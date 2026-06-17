@@ -151,4 +151,21 @@ return [
             'rss',
         ],
     ],
+
+    // humans.txt credits (sylvainallignol/humans), served at /humans.txt.
+    'sylvainallignol.humans' => [
+        'TEAM' => [
+            [
+                'Name'    => 'Francesco Imola',
+                'Job'     => 'Design, copy & build',
+                'Website' => 'https://francescoimola.com',
+            ],
+        ],
+        'SITE' => [
+            'Standards'  => 'HTML5, CSS3',
+            'Components' => 'Kirby CMS, Graffiti UI, Vite, Lenis',
+            'Software'   => 'PHP, SCSS, JavaScript',
+        ],
+        'THANKS' => 'Kirby CMS (https://getkirby.com)',
+    ],
 ];

@@ -39,14 +39,34 @@ $style = $style ?? '';
 // Honour the Panel focus point: translate it into `object-position` so the
 // browser's cover-crop keeps the chosen subject in frame. Skip when the caller
 // already set `object-position` explicitly, or when no focus point is stored.
+$objectPosition = null;
 if (
   $file instanceof \Kirby\Cms\File &&
   str_contains($style, 'object-position') === false &&
   ($focus = $file->focus()->value()) !== null &&
   $focus !== ''
 ) {
-  $position = 'object-position: ' . \Kirby\Image\Focus::normalize($focus) . ';';
+  $objectPosition = \Kirby\Image\Focus::normalize($focus);
+  $position = 'object-position: ' . $objectPosition . ';';
   $style    = $style === '' ? $position : $position . ' ' . $style;
+}
+
+// ThumbHash blur-up placeholder: a ~28-byte hash decoded to a tiny blurred
+// data-URI (from tobimori/kirby-thumbhash), painted as the <img>'s own
+// background so it shares the image box + cover-crop and shows until the real
+// photo paints over it — no JS needed for opaque photos. Encoding samples a
+// ~100px copy (memory-safe under Fortrabbit's worker ceiling) and is cached.
+// Fail soft: anything the GD engine can't decode (e.g. SVG) renders without one.
+try {
+  $placeholder = $file->thumbhashUri();
+} catch (\Throwable $e) {
+  $placeholder = null;
+}
+
+if (!empty($placeholder)) {
+  $bg    = 'background-image: url(' . $placeholder . '); background-size: cover; '
+         . 'background-repeat: no-repeat; background-position: ' . ($objectPosition ?? '50% 50%') . ';';
+  $style = $style === '' ? $bg : $style . ' ' . $bg;
 }
 
 ?>

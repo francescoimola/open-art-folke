@@ -9,7 +9,11 @@
     "mzur/kirby-uniform": "^5.7",
     "distantnative/retour-for-kirby": "^5.6",
     "afbora/kirby-minify-html": "^2.3",
-    "bnomei/kirby3-feed": "^5.2"
+    "bnomei/kirby3-feed": "^5.2",
+    "grommasdietz/kirby-proofreader": "^1.10",
+    "medienbaecker/kirby-alter": "^2.2",
+    "tobimori/kirby-thumbhash": "^2.1",
+    "sylvainallignol/humans": "^1.0"
   },
   "config": {
     "allow-plugins": {

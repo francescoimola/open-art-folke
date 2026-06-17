@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48d5eddefa59aa55feb134cfe8895b01",
+    "content-hash": "72b1fc2b35141380d227635f42480fd4",
     "packages": [
         {
             "name": "afbora/kirby-minify-html",
@@ -618,6 +618,59 @@
             "time": "2020-12-28T12:54:39+00:00"
         },
         {
+            "name": "grommasdietz/kirby-proofreader",
+            "version": "v1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/grommasdietz/kirby-proofreader.git",
+                "reference": "62457409934dc7209d38c5dfd60ef820d299223e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/grommasdietz/kirby-proofreader/zipball/62457409934dc7209d38c5dfd60ef820d299223e",
+                "reference": "62457409934dc7209d38c5dfd60ef820d299223e",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1.2",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.93",
+                "phpunit/phpunit": "^12.5",
+                "vimeo/psalm": "^6.15"
+            },
+            "type": "kirby-plugin",
+            "autoload": {
+                "psr-4": {
+                    "GrommasDietz\\Proofreader\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Grommas Dietz",
+                    "email": "info@grommas-dietz.com",
+                    "homepage": "https://grommas-dietz.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Typographic suggestions for Kirby CMS",
+            "keywords": [
+                "kirby",
+                "kirby-cms",
+                "kirby-plugin"
+            ],
+            "support": {
+                "issues": "https://github.com/grommasdietz/kirby-proofreader/issues",
+                "source": "https://github.com/grommasdietz/kirby-proofreader"
+            },
+            "time": "2026-06-06T18:43:59+00:00"
+        },
+        {
             "name": "laminas/laminas-escaper",
             "version": "2.18.0",
             "source": {
@@ -738,6 +791,41 @@
                 "source": "https://github.com/thephpleague/color-extractor/tree/0.4.0"
             },
             "time": "2022-09-24T15:57:16+00:00"
+        },
+        {
+            "name": "medienbaecker/kirby-alter",
+            "version": "2.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/medienbaecker/kirby-alter.git",
+                "reference": "1ed99a43ae9b06f6184aa0f70a6ee4698e17c563"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/medienbaecker/kirby-alter/zipball/1ed99a43ae9b06f6184aa0f70a6ee4698e17c563",
+                "reference": "1ed99a43ae9b06f6184aa0f70a6ee4698e17c563",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1.2",
+                "php": "^8.2"
+            },
+            "type": "kirby-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Günther",
+                    "email": "mail@medienbaecker.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/medienbaecker/kirby-alter/issues",
+                "source": "https://github.com/medienbaecker/kirby-alter/tree/2.2.2"
+            },
+            "time": "2026-06-10T19:54:26+00:00"
         },
         {
             "name": "michelf/php-smartypants",
@@ -1101,6 +1189,89 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
             "time": "2024-09-11T13:17:53+00:00"
+        },
+        {
+            "name": "srwiez/thumbhash",
+            "version": "v1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SRWieZ/thumbhash.git",
+                "reference": "65aa97704b9d3e242d16bc8115ffbb8fb6ed8177"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SRWieZ/thumbhash/zipball/65aa97704b9d3e242d16bc8115ffbb8fb6ed8177",
+                "reference": "65aa97704b9d3e242d16bc8115ffbb8fb6ed8177",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8.0"
+            },
+            "require-dev": {
+                "ext-gd": "*",
+                "ext-imagick": "*",
+                "pestphp/pest": "^1.0|^2.0|^3.0|^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Thumbhash\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eser DENIZ",
+                    "email": "srwiez@gmail.com"
+                }
+            ],
+            "description": "A brief description of your package",
+            "support": {
+                "issues": "https://github.com/SRWieZ/thumbhash/issues",
+                "source": "https://github.com/SRWieZ/thumbhash/tree/v1.5.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/SRWieZ",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-05-19T06:06:49+00:00"
+        },
+        {
+            "name": "sylvainallignol/humans",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://codeberg.org/SylvainAllignol/kirby-humans",
+                "reference": "37119d70eaefbcac166435817318aff9412d3b0d"
+            },
+            "require": {
+                "getkirby/cms": "^3.0 || ^4.0 || ^5.0",
+                "getkirby/composer-installer": "^1.1",
+                "php": ">=8.2"
+            },
+            "type": "kirby-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sylvain Allignol",
+                    "email": "sylvain@allignol.com",
+                    "homepage": "https://sylvainallignol.com"
+                }
+            ],
+            "description": "A Kirby plugin that generates a humans.txt file from a route",
+            "homepage": "https://plugins.getkirby.com/sylvainallignol/humans",
+            "time": "2026-02-20T13:41:35+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -1717,6 +1888,65 @@
                 }
             ],
             "time": "2025-11-20T14:34:30+00:00"
+        },
+        {
+            "name": "tobimori/kirby-thumbhash",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tobimori/kirby-thumbhash.git",
+                "reference": "733857e7b5b0b7993e014d900039ae0f5ab9fe87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tobimori/kirby-thumbhash/zipball/733857e7b5b0b7993e014d900039ae0f5ab9fe87",
+                "reference": "733857e7b5b0b7993e014d900039ae0f5ab9fe87",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "getkirby/composer-installer": "^1.2",
+                "php": ">=8.3.0",
+                "srwiez/thumbhash": "^1.1"
+            },
+            "require-dev": {
+                "getkirby/cms": "^5.0"
+            },
+            "suggest": {
+                "ext-imagick": "For better performance and quality with Imagick driver"
+            },
+            "type": "kirby-plugin",
+            "extra": {
+                "kirby-cms-path": false
+            },
+            "autoload": {
+                "psr-4": {
+                    "tobimori\\": "classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tobias Möritz",
+                    "email": "tobias@moeritz.io"
+                }
+            ],
+            "description": "Kirby Image placeholders with the smarter ThumbHash integration",
+            "homepage": "https://github.com/tobimori/kirby-thumbhash#readme",
+            "support": {
+                "issues": "https://github.com/tobimori/kirby-thumbhash/issues",
+                "source": "https://github.com/tobimori/kirby-thumbhash/tree/2.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tobimori",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-03-08T15:37:18+00:00"
         },
         {
             "name": "voku/html-min",
