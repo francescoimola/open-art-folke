@@ -13,8 +13,10 @@ $sponsorName = fn($s) => $s['url']->isNotEmpty()
   : esc($s['name']->value());
 ?>
 
-<!-- Mobile: a Graffiti carousel of cards, name + logo shown together. -->
-<ul class="sponsors-mobile show-mobile carousel">
+<!-- Mobile: a Graffiti carousel of cards, name + logo shown together.
+     tabindex + aria-label make the scroller keyboard-focusable and named
+     (WCAG 2.1.1); aria-label keeps the list role (role="region" would strip it). -->
+<ul class="sponsors-mobile show-mobile carousel" tabindex="0" aria-label="Sponsors">
   <?php foreach ($sponsors as $s): ?>
     <li class="theme-crimson box ghost split vertical center gap-xl">
       <?php if ($s['logo']): ?>

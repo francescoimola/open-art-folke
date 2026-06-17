@@ -51,24 +51,6 @@ if (
   $style    = $style === '' ? $position : $position . ' ' . $style;
 }
 
-// ThumbHash blur-up placeholder: a ~28-byte hash decoded to a tiny blurred
-// data-URI (from tobimori/kirby-thumbhash), painted as the <img>'s own
-// background so it shares the image box + cover-crop and shows until the real
-// photo paints over it — no JS needed for opaque photos. Encoding samples a
-// ~100px copy (memory-safe under Fortrabbit's worker ceiling) and is cached.
-// Fail soft: anything the GD engine can't decode (e.g. SVG) renders without one.
-try {
-  $placeholder = $file->thumbhashUri();
-} catch (\Throwable $e) {
-  $placeholder = null;
-}
-
-if (!empty($placeholder)) {
-  $bg    = 'background-image: url(' . $placeholder . '); background-size: cover; '
-         . 'background-repeat: no-repeat; background-position: ' . ($objectPosition ?? '50% 50%') . ';';
-  $style = $style === '' ? $bg : $style . ' ' . $bg;
-}
-
 ?>
 <picture>
   <?php /* WebP only; see "Responsive images" in AGENTS.md for why no AVIF. */ ?>
