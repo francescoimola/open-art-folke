@@ -42,6 +42,36 @@ tabs:
                 step: 1
                 default: 2026
                 width: 1/2
+              festivalstart:
+                type: date
+                label: Festival start date
+                help: First day of the festival. Used for the event details shown to Google (rich results).
+                default: 2026-10-09
+                width: 1/2
+              festivalend:
+                type: date
+                label: Festival end date
+                help: Last day of the festival. Used for the event details shown to Google.
+                default: 2026-10-11
+                width: 1/2
+              festivalvenue:
+                type: text
+                label: Venue / area name
+                help: e.g. "Across Folkestone". Shown as the event location name to search engines.
+                default: Across Folkestone
+                width: 1/2
+              festivallocality:
+                type: text
+                label: Town / city
+                help: e.g. "Folkestone".
+                default: Folkestone
+                width: 1/2
+              festivalregion:
+                type: text
+                label: County / region
+                help: e.g. "Kent".
+                default: Kent
+                width: 1/2
           links:
             type: fields
             label: Links

@@ -4,8 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b13d31c22f152361399c9e2a782644e",
+    "content-hash": "48d5eddefa59aa55feb134cfe8895b01",
     "packages": [
+        {
+            "name": "afbora/kirby-minify-html",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/afbora/kirby-minify-html.git",
+                "reference": "a62a9b75a142a68b24f934149f2f73672a189a16"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/afbora/kirby-minify-html/zipball/a62a9b75a142a68b24f934149f2f73672a189a16",
+                "reference": "a62a9b75a142a68b24f934149f2f73672a189a16",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1.2",
+                "php": "^8.0",
+                "voku/html-min": "^5.0"
+            },
+            "type": "kirby-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ahmet Bora",
+                    "email": "ahmet@getkirby.com"
+                }
+            ],
+            "description": "Enable minify HTML output for Kirby",
+            "homepage": "https://github.com/afbora/kirby-minify-html",
+            "keywords": [
+                "kirby3",
+                "kirby4",
+                "kirby5"
+            ],
+            "support": {
+                "email": "ahmet@getkirby.com",
+                "issues": "https://github.com/afbora/kirby-minify-html/issues",
+                "source": "https://github.com/afbora/kirby-minify-html/tree/2.3.0"
+            },
+            "time": "2026-05-02T08:05:58+00:00"
+        },
         {
             "name": "arnoson/kirby-vite",
             "version": "5.7.1",
@@ -45,6 +89,78 @@
                 "source": "https://github.com/arnoson/kirby-vite/tree/v5.7.1"
             },
             "time": "2026-03-18T13:22:15+00:00"
+        },
+        {
+            "name": "bnomei/kirby3-feed",
+            "version": "5.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bnomei/kirby3-feed.git",
+                "reference": "74f585a6a69f864a062826dcf25eeb51cfb56652"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bnomei/kirby3-feed/zipball/74f585a6a69f864a062826dcf25eeb51cfb56652",
+                "reference": "74f585a6a69f864a062826dcf25eeb51cfb56652",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/composer-installer": "^1.2",
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "getkirby/cms": "^5.0.0-alpha.4",
+                "larastan/larastan": "^v3.0.0",
+                "laravel/pint": "^1.13",
+                "pestphp/pest": "^v3.5.1",
+                "ramsey/uuid": "^4.9",
+                "spatie/ray": "^1.39"
+            },
+            "suggest": {
+                "bnomei/kirby3-htmlhead": "Best-practice HTML Head Element extendable with snippets.",
+                "bnomei/kirby3-robots-txt": "Automatic virtual robots.txt with auto-detection of XML-Sitemaps from plugins.",
+                "bnomei/kirby3-security-headers": "CSP headers to make the the web a saver place. Sensible defaults with zero configuration."
+            },
+            "type": "kirby-plugin",
+            "extra": {
+                "kirby-cms-path": "tests/kirby"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Bnomei\\": "classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bruno Meilick",
+                    "email": "b@bnomei.com"
+                }
+            ],
+            "description": "Generate a Atom/JSON/RSS-Feed and XML-Sitemap from Pages-Collections",
+            "homepage": "https://github.com/bnomei/kirby3-feed",
+            "keywords": [
+                "Sitemap",
+                "atom",
+                "atom-feed",
+                "feed",
+                "json",
+                "json-feed",
+                "kirby",
+                "kirby-cms",
+                "kirby-plugin",
+                "rss",
+                "rss-feed",
+                "sitemap-xml"
+            ],
+            "support": {
+                "issues": "https://github.com/bnomei/kirby3-feed/issues",
+                "source": "https://github.com/bnomei/kirby3-feed/tree/v5.2.0"
+            },
+            "time": "2026-05-13T14:28:32+00:00"
         },
         {
             "name": "christian-riesen/base32",
@@ -987,6 +1103,75 @@
             "time": "2024-09-11T13:17:53+00:00"
         },
         {
+            "name": "symfony/css-selector",
+            "version": "v8.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "dc0e2be45c9b5588c82414f02ac574b4b986abcd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/dc0e2be45c9b5588c82414f02ac574b4b986abcd",
+                "reference": "dc0e2be45c9b5588c82414f02ac574b4b986abcd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\CssSelector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Converts CSS selectors to XPath expressions",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/css-selector/tree/v8.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-05-29T05:06:50+00:00"
+        },
+        {
             "name": "symfony/deprecation-contracts",
             "version": "v3.7.0",
             "source": {
@@ -1472,6 +1657,215 @@
                 }
             ],
             "time": "2026-05-25T06:06:12+00:00"
+        },
+        {
+            "name": "tedivm/jshrink",
+            "version": "v1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tedious/JShrink.git",
+                "reference": "f76454d4c48ddae6354a2f0eeb16633d4e755c9a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tedious/JShrink/zipball/f76454d4c48ddae6354a2f0eeb16633d4e755c9a",
+                "reference": "f76454d4c48ddae6354a2f0eeb16633d4e755c9a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "php-coveralls/php-coveralls": "^2.5.0",
+                "phpunit/phpunit": "^9|^10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JShrink": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Hafner",
+                    "email": "tedivm@tedivm.com"
+                }
+            ],
+            "description": "Javascript Minifier built in PHP",
+            "homepage": "http://github.com/tedious/JShrink",
+            "keywords": [
+                "javascript",
+                "minifier"
+            ],
+            "support": {
+                "issues": "https://github.com/tedious/JShrink/issues",
+                "source": "https://github.com/tedious/JShrink/tree/v1.8.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tedivm",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/tedivm/jshrink",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-11-20T14:34:30+00:00"
+        },
+        {
+            "name": "voku/html-min",
+            "version": "5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/voku/HtmlMin.git",
+                "reference": "2c807961d65df94ce095803dc18cdf212cf0ec6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/voku/HtmlMin/zipball/2c807961d65df94ce095803dc18cdf212cf0ec6a",
+                "reference": "2c807961d65df94ce095803dc18cdf212cf0ec6a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": ">=7.1.0",
+                "tedivm/jshrink": "^1.8.1",
+                "voku/simple_html_dom": "^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0 || ~7.0 || ~8.0 || ~9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "voku\\": "src/voku/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lars Moelleken",
+                    "homepage": "https://www.moelleken.org/"
+                }
+            ],
+            "description": "HTML Compressor and Minifier",
+            "homepage": "https://github.com/voku/HtmlMin",
+            "keywords": [
+                "compress",
+                "compression",
+                "compressor",
+                "html",
+                "minifier"
+            ],
+            "support": {
+                "issues": "https://github.com/voku/HtmlMin/issues",
+                "source": "https://github.com/voku/HtmlMin/tree/5.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/moelleken",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/voku",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/voku",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2026-04-23T21:03:26+00:00"
+        },
+        {
+            "name": "voku/simple_html_dom",
+            "version": "5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/voku/simple_html_dom.git",
+                "reference": "091de9ee6daf73a7ee3a062fb53e3687bc54ef70"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/voku/simple_html_dom/zipball/091de9ee6daf73a7ee3a062fb53e3687bc54ef70",
+                "reference": "091de9ee6daf73a7ee3a062fb53e3687bc54ef70",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "php": ">=7.1.0",
+                "symfony/css-selector": "~3.0 || ~4.0 || ~5.0 || ~6.0 || ~7.0 || ~8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0 || ~7.0 || ~8.0 || ~9.0"
+            },
+            "suggest": {
+                "voku/portable-utf8": "If you need e.g. UTF-8 fixed output."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "voku\\helper\\": "src/voku/helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "dimabdc",
+                    "email": "support@titor.ru",
+                    "homepage": "https://github.com/dimabdc",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Lars Moelleken",
+                    "homepage": "https://www.moelleken.org/",
+                    "role": "Fork-Maintainer"
+                }
+            ],
+            "description": "Simple HTML DOM package.",
+            "homepage": "https://github.com/voku/simple_html_dom",
+            "keywords": [
+                "HTML Parser",
+                "dom",
+                "php dom"
+            ],
+            "support": {
+                "issues": "https://github.com/voku/simple_html_dom/issues",
+                "source": "https://github.com/voku/simple_html_dom/tree/5.0.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/moelleken",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/voku",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/voku",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/voku/simple_html_dom",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-04-21T08:58:52+00:00"
         }
     ],
     "packages-dev": [

@@ -22,6 +22,77 @@ $metaDesc = $page->seodescription()->or($site->seodescription())->value();
 $ogFile = $page->ogimage()->toFile() ?? $site->ogimage()->toFile();
 $ogUrl  = $ogFile ? $ogFile->crop(1200, 630)->url() : null;
 
+// ---------------------------------------------------------------------------
+// Structured data (JSON-LD, schema.org). Organization + WebSite are emitted on
+// every page; Event only on the home page (it describes the festival, of which
+// there is one). Google reads these for rich results. Optional keys are dropped
+// when their source data is empty, mirroring the defensive meta output below.
+//
+// Note: blueprint `default:` values only pre-fill the Panel — they are NOT
+// returned when reading a field on the frontend. So the festival fields use
+// `->or()` fallbacks (matching the blueprint defaults) so the Event renders
+// correctly even before anyone saves the Settings tab. Editing the fields in
+// the (production) Panel overrides these fallbacks.
+// ---------------------------------------------------------------------------
+
+$orgSameAs = array_values(array_filter([
+  $site->instagram_url()->value(),
+  $site->facebook_url()->value(),
+]));
+
+$organization = array_filter([
+  '@type'  => 'Organization',
+  '@id'    => $site->url() . '#organization',
+  'name'   => $site->title()->value(),
+  'url'    => $site->url(),
+  'logo'   => $ogUrl, // logo is an inline SVG with no URL; the OG image is a valid raster fallback
+  'sameAs' => $orgSameAs ?: null,
+]);
+
+$website = [
+  '@type'     => 'WebSite',
+  '@id'       => $site->url() . '#website',
+  'name'      => $site->title()->value(),
+  'url'       => $site->url(),
+  'publisher' => ['@id' => $site->url() . '#organization'],
+];
+
+$graph = [$organization, $website];
+
+if ($page->isHomePage()) {
+  $festivalName = trim($site->title() . ' ' . $site->festivalyear()->or('2026'));
+
+  $eventAddress = array_filter([
+    '@type'           => 'PostalAddress',
+    'addressLocality' => $site->festivallocality()->or('Folkestone')->value(),
+    'addressRegion'   => $site->festivalregion()->or('Kent')->value(),
+    'addressCountry'  => 'GB',
+  ]);
+
+  $graph[] = array_filter([
+    '@type'               => 'Event',
+    'name'                => $festivalName,
+    'startDate'           => $site->festivalstart()->or('2026-10-09')->toDate('Y-m-d'),
+    'endDate'             => $site->festivalend()->or('2026-10-11')->toDate('Y-m-d'),
+    'eventStatus'         => 'https://schema.org/EventScheduled',
+    'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+    'location'            => array_filter([
+      '@type'   => 'Place',
+      'name'    => $site->festivalvenue()->or('Across Folkestone')->value(),
+      'address' => $eventAddress ?: null,
+    ]),
+    'image'               => $ogUrl,
+    'description'         => $metaDesc ?: null,
+    'organizer'           => ['@id' => $site->url() . '#organization'],
+    'url'                 => $site->url(),
+  ]);
+}
+
+$jsonLd = [
+  '@context' => 'https://schema.org',
+  '@graph'   => $graph,
+];
+
 ?>
 <title><?= esc($metaTitle) ?></title>
 <?php if ($metaDesc): ?>
@@ -50,3 +121,8 @@ $ogUrl  = $ogFile ? $ogFile->crop(1200, 630)->url() : null;
 <?php if ($ogUrl): ?>
 <meta name="twitter:image" content="<?= $ogUrl ?>">
 <?php endif ?>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+<?= json_encode($jsonLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_PRETTY_PRINT) ?>
+</script>

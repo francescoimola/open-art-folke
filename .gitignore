@@ -11,23 +11,27 @@ node_modules/
 /public/dist/
 /public/assets/
 
-# Kirby core and plugins (managed by Composer)
+# Kirby core (managed by Composer)
 /kirby
+
+# Kirby plugins (managed by Composer)
 /site/plugins/kirby-vite
 /site/plugins/kirby-flash
 /site/plugins/kirby-form
 /site/plugins/kirby-uniform
+/site/plugins/kirby-minify-html
+/site/plugins/kirby3-feed
+/site/plugins/retour
 
 # Config secrets
 /site/config/vite.config.php
 /site/config/.license
 
-# Development
-.dev
-/site/webhook-mock.php
-
-# Storage (sync excluded)
+# Runtime data (never commit)
 /content
+/media
+/site/cache
+/site/logs
 /public/media/*
 !/public/media/index.html
 /storage/accounts/*
@@ -39,12 +43,13 @@ node_modules/
 /storage/logs/*
 !/storage/logs/.gitkeep
 
-# AI
+# Development
+.dev
+/site/webhook-mock.php
+
+# AI tooling
 /.claude
 /.kilo
 /opencode.json
-/site/commands
 /.kirby-mcp
-/media
-/site/cache
-/site/plugins/retour
+/site/commands
