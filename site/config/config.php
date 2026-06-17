@@ -87,7 +87,15 @@ return [
   // fresh server, set KIRBY_PANEL_INSTALL=true in the Fortrabbit ENV vars,
   // create the account at /panel, then remove the var again.
   'panel' => [
-    'install' => env('KIRBY_PANEL_INSTALL', false) === 'true'
+    'install' => env('KIRBY_PANEL_INSTALL', false) === 'true',
+
+    // Disable the runtime Vue template compiler in production. We don't ship
+    // any custom Panel plugins that rely on runtime-compiled templates, so the
+    // compiler is dead weight — turning it off clears Kirby's panel security
+    // recommendation and trims a little Panel overhead.
+    'vue' => [
+      'compiler' => false,
+    ],
   ],
 
   // In development (Vite running) the pages cache is OFF, so template,
