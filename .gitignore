@@ -47,3 +47,4 @@ node_modules/
 /.kirby-mcp
 /media
 /site/cache
+/site/plugins/retour

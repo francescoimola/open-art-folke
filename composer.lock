@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0217ae51dff0d26621bf526913745512",
+    "content-hash": "0b13d31c22f152361399c9e2a782644e",
     "packages": [
         {
             "name": "arnoson/kirby-vite",
@@ -234,6 +234,54 @@
                 }
             ],
             "time": "2025-08-20T19:15:30+00:00"
+        },
+        {
+            "name": "distantnative/retour-for-kirby",
+            "version": "5.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/distantnative/retour-for-kirby.git",
+                "reference": "a959f468e9f7608b7d372aca8be35f2d8d6adb14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/distantnative/retour-for-kirby/zipball/a959f468e9f7608b7d372aca8be35f2d8d6adb14",
+                "reference": "a959f468e9f7608b7d372aca8be35f2d8d6adb14",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/cms": "^4.3.1 || ^5.0",
+                "getkirby/composer-installer": "^1.1",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
+            },
+            "type": "kirby-plugin",
+            "extra": {
+                "installer-name": "retour",
+                "kirby-cms-path": false
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nico Hoffmann",
+                    "email": "nico@getkirby.com"
+                }
+            ],
+            "description": "Manage redirects and track 404s right from the Kirby CMS Panel",
+            "homepage": "https://distantnative.com/retour-for-kirby/",
+            "support": {
+                "issues": "https://github.com/distantnative/retour-for-kirby/issues",
+                "source": "https://github.com/distantnative/retour-for-kirby/tree/5.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/distantnative",
+                    "type": "custom"
+                }
+            ],
+            "time": "2026-02-28T21:35:54+00:00"
         },
         {
             "name": "filp/whoops",

@@ -6,7 +6,8 @@
   "require": {
     "getkirby/cms": "^4.0 || ^5.0",
     "arnoson/kirby-vite": "^5.0.0",
-    "mzur/kirby-uniform": "^5.7"
+    "mzur/kirby-uniform": "^5.7",
+    "distantnative/retour-for-kirby": "^5.6"
   },
   "config": {
     "allow-plugins": {
