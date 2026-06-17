@@ -87,7 +87,10 @@ $contactEmail = 'openartfolke@gmail.com';
 
   <div class="layout-split footer__legal">
     <small>Copyright ©️ Open Art Folke, 2026</small>
+    <div class="stack">
     <small>Site design and heartfelt support by <a href="https://francescoimola.com/" rel="noopener noreferrer" target="_blank">Francesco Imola</a></small>
+    <small>Powered by the wonderful CMS that is <a href="https://getkirby.com" rel="noopener noreferrer" target="_blank">Kirby</a>, and hosted by <a href="https://www.fortrabbit.com" rel="noopener noreferrer" target="_blank">Fortrabbit</a> in the EU.</small>
+  </div>
   </div>
 
 </footer>

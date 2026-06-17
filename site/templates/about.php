@@ -53,9 +53,9 @@
           </div>
         <?php endif ?>
         <article class="stack">
-          <span class="h5 fluid text-muted"><?= $person->name()->html() ?></span>
-          <span><?= $person->area()->html() ?></span>
-          <span><?= $person->role()->html() ?></span>
+          <span><strong><?= $person->name()->html() ?></strong></span>
+          <span class="text-muted"><?= $person->area()->html() ?></span>
+          <span class="text-muted"><?= $person->role()->html() ?></span>
         </article>
       </li>
     <?php endforeach ?>
@@ -66,21 +66,21 @@
   <h2>FAQs</h2>
     <div class="stack gap-m">
       <details class="minimal stack">
-      <summary class="fluid fs-xl"><p class="fs-xl">Who are we here for?</p></summary>
+      <summary><h4>Who are we here for?</h4></summary>
       <p class="readable">
-        Art and culture have emerged from, and found their way to Folkestone in various forms over the years. Open Art Folke is here to celebrate both, by supporting the active creative community that makes this coastal town so shit hot special.
+        Art and culture have emerged from, and found their way to Folkestone in various forms over the years. Open Art Folke is here to celebrate both, by supporting the active creative community that makes this coastal town so <s>shit hot</s> special.
       </p>
     </details>
     <hr>
     <details class="minimal stack">
-      <summary class="fluid fs-xl"><p class="fs-xl">Why not just open studios?</p></summary>
+      <summary><h4>Why not just open studios?</h4></summary>
       <p class="readable">
-        Since 2024, we've encouraged creatives to think of the Open Art festival as an opportunity to welcome the public into their studios, of course, but have a go at exhibiting work or hosting events in unlikely spaces too—for by doing so we bring art and creativity to the everyday lives of everyday people.
+        Since 2024, we've encouraged creatives to think of Open Art Folke's festival as an opportunity to welcome the public into their studios, of course, but equally have a go at exhibiting work or hosting events in unlikely spaces—for by doing so we bring art and creativity to the everyday lives of everyday people.
       </p>
     </details>
     <hr>
     <details class="minimal stack">
-      <summary class="fluid fs-xl"><p class="fs-xl">Are you a charity?</p></summary>
+      <summary><h4>Are you a charity?</h4></summary>
       <p class="readable">
         Not at the moment. We qualify as a non-profit, unincorporated association. That is, we are a group of individuals who have voluntarily come together for a common purpose, and like many volunteer-led groups, we are reliant on <a href="/sponsors">the generous support of our sponsors and venues</a>.
       </p>

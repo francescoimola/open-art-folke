@@ -372,6 +372,7 @@
 
     @include below-tablet {
       grid-template-columns: 1fr;
+      row-gap: var(--vs-xl);
     }
 
     li {
@@ -389,7 +390,6 @@
 
         >span:first-of-type {
           display: block;
-          margin-bottom: var(--vs-s);
         }
       }
 
