@@ -43,51 +43,60 @@
     outline-offset: var(--focus-ring-offset);
   }
 
-  // Native ← → buttons via CSS Overflow L5 scroll-button pseudo-elements:
-  // browser-generated, keyboard-operable, auto-disabled at the ends. Gated by
-  // @supports so unsupported browsers (Firefox, older) simply show no buttons
-  // and still scroll — the agreed graceful degradation. No ::scroll-marker()
-  // dots (current tablist-semantics a11y issues).
-  @supports selector(::scroll-button(*)) {
-    .carousel {
-      position: relative;
-      // Reserve a strip at the bottom so the absolutely-placed buttons clear
-      // the cards rather than overlapping them.
-      padding-block-end: calc(var(--vs-xl) + var(--pad-s));
+  // Prev/next arrows. JS (src/templates/archive.js) wraps the scroller in
+  // .carousel-wrap and injects the two buttons — a progressive enhancement so
+  // every browser gets working arrows (the CSS ::scroll-button() pseudo is
+  // Chrome-only). No JS → no buttons, but the carousel still scrolls by
+  // swipe/trackpad. Buttons sit centred on the inline edges and dim (not
+  // vanish) at the ends so they stay visible.
+  .carousel-wrap {
+    position: relative;
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    z-index: 2;
+    // Grid + place-items keeps the glyph optically centred in the circle.
+    display: grid;
+    place-items: center;
+    inline-size: var(--vs-l);
+    block-size: var(--vs-l);
+    padding: 0;
+    border: 1px solid color-mix(in oklch, var(--gray-12) 30%, transparent);
+    border-radius: 50%;
+    background: var(--bg);
+    // Explicit dark-grey glyph: --fg resolves to the button's own (light)
+    // foreground on these injected buttons, so we set a fixed neutral instead.
+    // Archive sections are all light themes (blush / paper), so grey-12 reads
+    // with strong contrast on both.
+    color: var(--gray-12);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    // The glyph lives in a <span>; make it the single centred grid child.
+    > span {
+      display: block;
+      text-box-trim: trim-both;
+      text-box-edge: cap alphabetic;
     }
 
-    .carousel::scroll-button(left),
-    .carousel::scroll-button(right) {
-      position: absolute;
-      inset-block-end: 0;
-      z-index: 1;
-      display: grid;
-      place-items: center;
-      inline-size: var(--vs-l);
-      block-size: var(--vs-l);
-      padding: 0;
-      border: 1px solid color-mix(in oklch, var(--fg) 30%, transparent);
-      border-radius: var(--br-s);
-      background: var(--bg);
-      color: var(--fg);
-      font-size: 1.25rem;
-      line-height: 1;
-      cursor: pointer;
+    &--prev { inset-inline-start: var(--pad-s); }
+    &--next { inset-inline-end: var(--pad-s); }
+
+    &:hover {
+      background: color-mix(in oklch, var(--gray-12) 8%, var(--bg));
     }
 
-    .carousel::scroll-button(left)  { content: "←" / "Scroll left";  inset-inline-start: 0; }
-    .carousel::scroll-button(right) { content: "→" / "Scroll right"; inset-inline-start: calc(var(--vs-l) + var(--vs-s)); }
-
-    .carousel::scroll-button(*):hover {
-      background: color-mix(in oklch, var(--fg) 10%, var(--bg));
-    }
-
-    .carousel::scroll-button(*):focus-visible {
+    &:focus-visible {
       outline: var(--focus-ring);
       outline-offset: var(--focus-ring-offset);
     }
 
-    .carousel::scroll-button(*):disabled {
+    &:disabled {
       opacity: 0.35;
       cursor: default;
     }
@@ -365,13 +374,13 @@
     // ~66cqw shows ~1.5 photos on mobile, narrowing to ~28cqw (~3.5 photos) on
     // wider containers. Counts are approximate — cells are fit-content (below),
     // so landscape shots can reveal more than the target.
-    --carousel-card-width: 66cqw;
+    --carousel-card-width: 80cqw;
     --carousel-img-cap: min(60vh, 30rem);
     align-items: start;
     list-style: none;
 
     @include cq-wide {
-      --carousel-card-width: 28cqw;
+      --carousel-card-width: 40cqw;
     }
 
     >li {
@@ -396,76 +405,6 @@
       max-block-size: var(--carousel-img-cap);
       object-fit: initial;
     }
-  }
-
-  // Pure-CSS (:target) lightbox — see site/snippets/lightbox-image.php. Hidden
-  // (display:none, so the close button is out of the tab order) until its id is
-  // the URL :target, then shown as a fixed overlay. No JS: caveats are no
-  // Escape key / focus trap; mitigated by a focusable, labelled close link and
-  // a backdrop-close link that both return to the gallery anchor (no jump-to-top).
-  .lightbox-trigger {
-    display: block;
-    inline-size: fit-content;
-    max-inline-size: 100%;
-    cursor: zoom-in;
-  }
-
-  .lightbox {
-    display: none;
-  }
-
-  .lightbox:target {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: grid;
-    place-items: center;
-    padding: var(--pad-xl);
-    background: color-mix(in oklch, var(--fg) 85%, transparent);
-  }
-
-  .lightbox__backdrop {
-    position: absolute;
-    inset: 0;
-  }
-
-  .lightbox__figure {
-    position: relative;
-    margin: 0;
-    max-inline-size: 90vw;
-    max-block-size: 90vh;
-  }
-
-  .lightbox__figure picture,
-  .lightbox__figure img {
-    display: block;
-    inline-size: auto;
-    block-size: auto;
-    max-inline-size: 90vw;
-    max-block-size: 90vh;
-    object-fit: contain;
-  }
-
-  .lightbox__close {
-    position: absolute;
-    inset-block-start: var(--pad-l);
-    inset-inline-end: var(--pad-l);
-    z-index: 1;
-    display: grid;
-    place-items: center;
-    inline-size: var(--vs-l);
-    block-size: var(--vs-l);
-    border-radius: var(--br-s);
-    background: var(--bg);
-    color: var(--fg);
-    font-size: 1.5rem;
-    line-height: 1;
-    text-decoration: none;
-  }
-
-  .lightbox__close:focus-visible {
-    outline: var(--focus-ring);
-    outline-offset: var(--focus-ring-offset);
   }
 
   // Form & dropdown

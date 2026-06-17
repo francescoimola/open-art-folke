@@ -29,10 +29,9 @@
         <ul class="carousel archive-carousel" tabindex="0" aria-label="<?= $edition->headline()->esc('attr') ?> photos">
           <?php foreach ($photos as $photo): ?>
             <li>
-              <?php snippet('lightbox-image', [
-                'file'    => $photo,
-                'sizes'   => '(min-width: 768px) 28vw, 66vw',
-                'closeTo' => '#edition-' . $i,
+              <?php snippet('image', [
+                'file'  => $photo,
+                'sizes' => '(min-width: 768px) 28vw, 66vw',
               ]) ?>
             </li>
           <?php endforeach ?>
