@@ -6,7 +6,7 @@ const lenis = new Lenis({
   anchors: true,
   allowNestedScroll: true,
   smoothWheel: true,
-  syncTouch: false,    // smooth touch devices (can be unstable on iOS<16)
+  syncTouch: false,    // Lenis smooth-scroll on iOS<16 can jitter during inertial scroll, so we leave native touch alone.
 })
 
 // Copy-to-clipboard buttons (progressive enhancement). Global so it works on

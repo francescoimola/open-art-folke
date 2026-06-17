@@ -1,0 +1,449 @@
+// Site components: .skip-link, .site-nav + .site-drawer, sponsors,
+// archive carousel, form/dropdown, view transitions, footer tweaks.
+@use './mixins' as *;
+
+@layer custom {
+
+  // Skip link (a11y bypass-blocks). Built on Graffiti's own .visually-hidden
+  // technique + --focus-ring tokens. Named to drop-in match Graffiti's
+  // documented .skip-link, which is not yet in the published 4.30.0 package —
+  // delete this when it ships and the markup keeps working unchanged.
+  .skip-link {
+    position: absolute;
+    overflow: hidden;
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+  }
+
+  .skip-link:focus {
+    position: fixed;
+    overflow: visible;
+    clip-path: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    inset-block-start: var(--pad-s);
+    inset-inline-start: var(--pad-s);
+    z-index: 1000; /* above .site-nav (z-index: 100) */
+    padding: var(--pad-s) var(--pad-m);
+    border-radius: var(--br-s);
+    background: var(--primary);
+    color: var(--bg);
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .site-nav {
+    position: fixed;
+    top: 0;
+    inset-inline: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg);
+    padding-inline: var(--pad-xl);
+    padding-block: var(--vs-base);
+
+    &__group {
+      display: flex;
+      align-items: center;
+      gap: var(--vs-m);
+    }
+
+    &__links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    &__logo {
+      display: flex;
+      flex-shrink: 0;
+      text-decoration: none;
+
+      // The logo instance that sits in the top bar (not the drawer) gets a
+      // small optical nudge upward. NOT a visibility toggle — purely a
+      // margin tweak.
+      &--topbar {
+        margin-top: calc(var(--vs-xs) * -1);
+      }
+
+      svg {
+        height: var(--vs-l);
+        width: auto;
+      }
+    }
+
+    &__register {
+      letter-spacing: var(--type-track-ui);
+    }
+
+    &__menu-toggle {
+      display: none;
+      letter-spacing: var(--type-track-ui);
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+
+      &:not(:last-child)::after {
+        content: ",\00a0";
+      }
+    }
+
+    a {
+      letter-spacing: var(--type-track-ui);
+      text-decoration: underline;
+      white-space: nowrap;
+    }
+
+    @include below-tablet {
+
+      &__links,
+      &__register {
+        display: none;
+      }
+
+      &__menu-toggle {
+        display: inline-flex;
+      }
+    }
+  }
+
+  // Lock background scroll while the mobile drawer (native popover) is open.
+  body:has(.site-drawer:popover-open) {
+    overflow: hidden;
+  }
+
+  .site-drawer {
+    &__header {
+      padding: var(--pad-l);
+      margin-block-end: var(--vs-l);
+    }
+
+    &__nav {
+      padding-inline: var(--pad-l);
+      padding-block-end: var(--pad-l);
+      --gap: var(--vs-m);
+    }
+
+    .close {
+      font-size: var(--fluid-type);
+      --fl: 5;
+    }
+
+    a {
+      font-size: var(--fluid-type);
+      letter-spacing: var(--type-track-ui);
+      text-decoration: none;
+
+      &[aria-current="page"] {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Sponsors — two self-contained layouts, swapped by breakpoint via
+  // .show-mobile / .show-desktop. Both are plain Graffiti (.carousel / .box /
+  // .split / .stack); the only custom bits are the few knobs below and the
+  // desktop hover-reveal. To restyle, change the knobs — leave the rest.
+  .sponsors {
+    --sponsor-card-width: min(80%, 24rem);
+    --sponsor-card-logo-size: min(12rem, 40%);
+    --sponsor-logo-size: min(22rem, 45%);
+    --sponsor-logo-fade: 0.3s;
+  }
+
+  .sponsor-logo {
+    inline-size: var(--sponsor-card-logo-size);
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: calc(var(--sponsor-card-logo-size) * 2);
+      color: var(--primary);
+    }
+  }
+
+  // Mobile carousel — full-bleed within the .panel parent so it scrolls
+  // edge-to-edge, with matching padding and scroll-padding so the last card
+  // never sits flush against the right edge.
+  .sponsors-mobile {
+    --gap: var(--vs-base);
+    --layout-padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+    list-style: none;
+    margin-inline: calc(-1 * var(--layout-padding));
+    padding-inline: var(--layout-padding);
+
+    >li {
+      inline-size: var(--sponsor-card-width);
+      padding: var(--vs-l);
+
+      >p {
+        text-align: center;
+      }
+    }
+
+    // Override .box.ghost's transparent background so the card's own --bg
+    // (derived from its theme class) is visible.
+    >li.box.ghost {
+      background: var(--bg);
+    }
+
+    // On the deep-red sponsor section the crimson cards would blend in, so
+    // lift them to theme-brand's brighter red endpoint to stand out. Scoped
+    // to the crimson section so the homepage (blush section) teaser keeps
+    // crimson cards.
+    :where(.theme-crimson) & >li.box.ghost {
+      --bg-light: var(--dark-Brand-600);
+      --bg-dark: var(--dark-Brand-600);
+    }
+
+    // Inside a deep-red card the SVG logo should use the light fg.
+    >li.theme-crimson .sponsor-logo svg {
+      color: var(--fg);
+    }
+
+    >li.split.vertical {
+      height: auto;
+      justify-content: space-between;
+    }
+
+    .sponsor-logo {
+      display: contents;
+
+      svg {
+        width: calc(var(--sponsor-card-logo-size) * 1.75);
+        max-height: calc(var(--sponsor-card-logo-size) * 1.25);
+      }
+    }
+  }
+
+  // Desktop list — names flow with Graffiti's natural stack gaps; each row's
+  // logo is taken out of flow and centred to the right, free to overshoot the
+  // row, revealed on hover/focus (blank until then).
+  .sponsors-desktop {
+    list-style: none;
+    padding: 0;
+
+    .h1 {
+      margin-bottom: var(--vs-xs);
+    }
+
+    >li {
+      position: relative;
+      cursor: default;
+
+      &:not(:first-child):not(:last-child) {
+        margin-block: var(--vs-l);
+      }
+
+      >.dropdown {
+        display: block;
+        height: auto;
+
+        >.reset {
+          all: unset;
+          display: block;
+          width: 100%;
+          --button-shadow: none;
+        }
+      }
+    }
+
+    .sponsor-logo {
+      position: absolute;
+      inset-inline-end: 14%;
+      inset-block-start: 50%;
+      translate: 0 -50%;
+      inline-size: var(--sponsor-logo-size);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--sponsor-logo-fade) ease;
+    }
+
+    >li:hover .sponsor-logo,
+    >li:focus-within .sponsor-logo {
+      opacity: 1;
+    }
+  }
+
+  // Past sponsors — a plain list of name + ↗ links (no dropdown/logo). The
+  // links inherit the surrounding .accent colour rather than re-colouring.
+  .sponsors-past {
+    list-style: none;
+    padding: 0;
+    gap: var(--vs-l);
+
+    a {
+      color: inherit;
+      text-decoration: none;
+
+      &:hover,
+      &:focus-visible {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .sponsors-roster hr {
+    inline-size: 100%;
+    border: 0;
+    border-block-start: 1px solid color-mix(in oklch, var(--fg) 60%, transparent);
+    opacity: 0.6;
+  }
+
+  // Archive gallery carousel — natural-ratio photos, top-aligned, fluid card
+  // width via container query, height-capped so tall shots don't dominate.
+  // Built on Graffiti's .carousel (scroll + snap).
+  .archive-carousel {
+    --gap: var(--vs-base);
+    --carousel-card-width: 28cqw;
+    --carousel-img-cap: min(60vh, 30rem);
+    align-items: start;
+    list-style: none;
+
+    @include cq-wide {
+      --carousel-card-width: 45cqw;
+    }
+
+    >li {
+      // Shrink the cell to the image's rendered width (so height-capped
+      // portrait shots don't leave a gap), but never wider than the card.
+      inline-size: fit-content;
+      max-inline-size: var(--carousel-card-width);
+    }
+
+    // Beat the global picture/img cover rules (same layer, higher
+    // specificity): hug the image rather than fill the cell.
+    picture {
+      display: block;
+      inline-size: fit-content;
+      block-size: auto;
+    }
+
+    picture img {
+      inline-size: auto;
+      block-size: auto;
+      max-inline-size: var(--carousel-card-width);
+      max-block-size: var(--carousel-img-cap);
+      object-fit: initial;
+    }
+  }
+
+  // Form & dropdown
+
+  // Let .input-group consume --gap so gap-* utilities work on it.
+  .input-group {
+    gap: var(--gap, 0);
+  }
+
+  // Square the email field to match the squared buttons (button
+  // border-radius is already 0 globally; inputs keep Graffiti's radius
+  // unless reset).
+  .input-group input {
+    border-radius: var(--br-s);
+  }
+
+  .uniform__potty {
+    position: absolute;
+    left: -9999px;
+  }
+
+  :where(.dropdown) {
+    cursor: context-menu;
+
+    .dropdown-menu {
+      --bg-light: var(--color-background);
+      background: var(--bg-light);
+      text-box: trim-both leading;
+    }
+  }
+
+  .theme-blush:has(.dropdown) .dropdown-menu {
+    --bg-light: var(--light-Neutral-50);
+    background: var(--bg-light);
+  }
+
+  .theme-crimson:has(.dropdown) .dropdown-menu {
+    --bg-light: var(--light-Brand-50);
+    --fg-light: var(--dark-Brand-500);
+    color-scheme: light;
+    background: var(--bg-light);
+    color: var(--fg-light);
+  }
+
+  :is(.dropdown-header) {
+    margin-top: var(--pad-xs);
+  }
+
+  .callout {
+    background: var(--gray-surface);
+    margin-top: var(--vs-base);
+
+    p {
+      color: var(--color-info);
+      text-wrap: balance;
+    }
+
+    &.hard {
+      border: var(--button-color) solid 2px;
+      border-radius: var(--br-s);
+    }
+  }
+
+  // View transitions — global cross-document transition (opted in via the
+  // unlayered @view-transition rule near the top of index.scss). The page
+  // content (the "root" snapshot) cross-fades and lifts ~8px; the persistent
+  // chrome (nav + footer) is named so it leaves the root group and stays
+  // visually stable rather than flickering.
+
+  @keyframes vt-content-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @keyframes vt-content-out {
+    to {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  ::view-transition-old(root) {
+    animation: vt-content-out 0.35s ease both;
+  }
+
+  ::view-transition-new(root) {
+    animation: vt-content-in 0.35s ease both;
+  }
+
+  // Lift the persistent chrome out of the root snapshot. A named element
+  // present on both pages morphs in place; since these are identical across
+  // pages, the morph is imperceptible — no fade flicker. Each name must be
+  // unique per page, and both .site-nav and .footer appear exactly once.
+  .site-nav {
+    view-transition-name: site-nav;
+  }
+
+  .footer {
+    view-transition-name: site-footer;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+
+}

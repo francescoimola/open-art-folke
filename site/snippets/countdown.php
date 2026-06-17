@@ -1,12 +1,6 @@
 <?php
 /**
- * Countdown banner — coat.png revealed as vertical slices.
- *
- * The number of filled slices reflects the share of time remaining; the rest
- * read as pale empty blocks. Decorative composite: the grid carries one
- * accessible name and the individual cells are hidden from assistive tech.
- *
- * coat.png is pre-edited — no filter, no blend mode is applied here.
+ * Countdown banner. coat.png is pre-edited — no filter, no blend mode here.
  */
 ?>
 <div class="stack panel even" style="width: 100%;">

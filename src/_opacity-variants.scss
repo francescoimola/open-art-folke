@@ -1,0 +1,10 @@
+// Shared mixin: opacity variants for primary color scales. Used by both
+// the sRGB and P3 color blocks in _tokens.scss.
+@mixin opacity-variants($space) {
+  @each $pct in 10, 20, 30, 40, 50, 60, 70, 80, 90 {
+    --red-9-#{$pct}: color-mix(in #{$space}, var(--red-9) #{$pct * 1%}, transparent);
+    --red-12-#{$pct}: color-mix(in #{$space}, var(--red-12) #{$pct * 1%}, transparent);
+    --gray-9-#{$pct}: color-mix(in #{$space}, var(--gray-9) #{$pct * 1%}, transparent);
+    --gray-12-#{$pct}: color-mix(in #{$space}, var(--gray-12) #{$pct * 1%}, transparent);
+  }
+}

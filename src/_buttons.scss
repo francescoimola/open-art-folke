@@ -1,0 +1,118 @@
+// Buttons — base rule for any un-classed button (brand red surface) lives in
+// @layer custom; variants in @layer button-variants still win via cascade
+// layer priority, and template-level unlayered CSS can still override the
+// base per page. The prefers-contrast media query is the a11y override.
+@use './mixins' as *;
+
+@layer custom {
+
+  // Default button: brand red surface without needing an extra class.
+  :is(button, .button):not(.minimal) {
+    --button-color: light-dark(var(--light-Brand-500), var(--dark-Brand-800));
+    color: light-dark(var(--light-Neutral-50), var(--dark-Neutral-50));
+    --button-bg-top: var(--button-color);
+    --button-bg-bottom: var(--button-color);
+    --button-border: color-mix(in oklab, var(--button-color) 95%, black);
+    --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
+    box-shadow: 0 1px 2px var(--button-shadow);
+
+    border-radius: var(--br-s);
+    padding-block: var(--vs-base);
+    padding-inline: var(--pad-l);
+    font-weight: 500;
+
+    @supports (font-variation-settings: "wght" 400) {
+      font-variation-settings: "wght" 500;
+    }
+
+    &:hover {
+      box-shadow: 0 2px 4px var(--button-shadow);
+      --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 85%, white),
+          color-mix(in oklab, var(--button-color) 95%, black));
+      --button-bg-bottom: var(--button-bg-top);
+    }
+
+    &:active {
+      box-shadow: 0 1px 2px var(--button-shadow);
+      --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 88%, black),
+          color-mix(in oklab, var(--button-color) 75%, black));
+      --button-bg-bottom: var(--button-bg-top);
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    .accent {
+      text-decoration: underline;
+    }
+
+    :is(button, .button):not(.minimal) {
+      --button-border: currentColor;
+      --button-shadow: none;
+    }
+  }
+
+}
+
+// Button variants in @layer button-variants win over the base rule via
+// cascade layer priority, not by selector specificity.
+@layer button-variants {
+
+  .btt--secondary {
+    --button-color: light-dark(var(--light-Brand-50), var(--dark-Brand-950));
+    color: light-dark(var(--light-Brand-900), var(--dark-Brand-400));
+    --button-border: transparent;
+  }
+
+  // Contrast CTA — surface = the theme's own --fg, text = its --bg (the
+  // inverted "fg/bg swap" buttons in the footer). Lives here (not Graffiti's
+  // .button.contrast) because the @layer custom base rule forces every
+  // button to brand red; this higher layer's --button-color override is
+  // what the base rule's --button-bg-top/bottom then resolve from.
+  .btt--contrast {
+    --button-color: var(--fg);
+    color: var(--bg);
+    --button-border: transparent;
+  }
+
+  // On blush the default secondary bg (Brand-50) equals the section bg, so
+  // it vanishes. Match Figma instead: bright-red text on a Brand-50
+  // (#FFE0DB) surface, with a faint Brand border so the box still reads
+  // against blush. Scoped to .theme-blush so it only applies inside blush
+  // sections.
+  .theme-blush {
+    .btt--secondary {
+      --button-color: var(--light-Neutral-50);
+    }
+
+    .accent .btt--secondary {
+      color: inherit;
+    }
+  }
+
+  // Graffiti's .footer component underlines all <a> on hover; override that
+  // for buttons so they don't get a link-style underline on hover.
+  .footer {
+    >nav {
+      padding-block: var(--vs-xl);
+      gap: clamp(var(--vs-base), 5vw, var(--vs-m));
+    }
+
+    :is(.button, button):hover {
+      text-decoration: none;
+    }
+
+    h3 {
+      color: var(--fg-8);
+    }
+
+    &__legal {
+      --layout-gap: var(--vs-xxl);
+    }
+
+    @include below-tablet {
+      &__legal {
+        --layout-gap: revert;
+      }
+    }
+  }
+}

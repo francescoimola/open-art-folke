@@ -1,13 +1,9 @@
 <?php
 /**
- * Current-sponsor list — mobile carousel + desktop hover-reveal list.
+ * Sponsor list — mobile carousel + desktop hover-reveal. Shared by the
+ * home teaser and the sponsor-page roster.
  *
- * Shared by the homepage teaser and the Sponsor page roster so both render the
- * same markup and interaction (native popover, no JS). Pass the data from
- * SponsorPage::sponsorsData().
- *
- * @var array  $sponsors  rows of ['name', 'url', 'description', 'logo']
- * @var string $idPrefix  unique prefix for popover IDs on this page
+ * @var array $sponsors  rows of ['name', 'url', 'description', 'logo']
  */
 $idPrefix ??= 'sponsor';
 

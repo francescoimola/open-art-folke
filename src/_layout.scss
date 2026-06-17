@@ -1,0 +1,526 @@
+// Layout primitives + section structures: .full-bleed, .anchor-target,
+// .center-both, visibility toggles, .stack-section, .hero, .panel,
+// .photo-banner, .principles, .page-hero, .darken-*, .table-flush,
+// .people-list, .about-grid, .sponsor-grid, .dots, .split:where(.no-wrap).
+@use './mixins' as *;
+
+@layer custom {
+
+  .full-bleed {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+
+  .full-height {
+    height: 100%;
+  }
+
+  // Non-sticky anchor sentinel. Sticky sections (.stack-section) report a
+  // pinned bounding rect once scrolled past, which makes rect-based anchor
+  // scrolling (native + Lenis) refuse to travel back up to them. Pointing the
+  // link at a zero-height, normal-flow marker just before the section restores
+  // correct two-way scroll. scroll-margin-top mirrors the nav offset (body
+  // already sets scroll-padding-top).
+  .anchor-target {
+    display: block;
+    height: 0;
+    scroll-margin-top: var(--nav-height, 6rem);
+  }
+
+  .center-both {
+    display: grid;
+    place-items: center;
+  }
+
+  // .split defaults to wrap in Graffiti — pin to no-wrap when the layout
+  // depends on a single row.
+  .split:where(.no-wrap) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  @include tablet {
+    .right-aligned {
+      width: 100%;
+      text-align: right;
+    }
+  }
+
+  // Breakpoint visibility utilities: .show-mobile is visible only below the
+  // tablet breakpoint, .show-desktop only at/above it. For swapping between two
+  // alternate Graffiti layouts of the same content (e.g. the sponsors carousel
+  // vs list) instead of overriding a component's internals.
+  @include tablet {
+    .show-mobile {
+      display: none;
+    }
+  }
+
+  @include below-tablet {
+    .show-desktop {
+      display: none;
+    }
+  }
+
+  .stack-section {
+    position: sticky;
+    top: var(--nav-height, 6rem);
+    min-height: calc(100svh - var(--nav-height, 6rem));
+    background: var(--section-bg, var(--bg));
+
+    &:is(.flowing) {
+      position: relative;
+      top: auto;
+    }
+  }
+
+  .stack-section.half {
+    min-height: calc(50dvh - var(--nav-height, 6rem));
+  }
+
+  section.hero {
+    &.stack-section {
+      top: 0;
+    }
+
+    height: 100svh;
+    margin-top: calc(-1 * var(--nav-height, 6rem));
+    padding: var(--pad-l);
+    background: var(--dark-Brand-600);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    >h1 {
+      --fl: 6;
+      color: white;
+      font-size: var(--fluid-type);
+      text-box-edge: cap alphabetic;
+    }
+
+    // The bg <img> is wrapped in a <picture>; exclude that wrapper (not the
+    // now-nested .hero__bg class) so it isn't lifted and doesn't become a
+    // zero-size containing block for the absolutely-positioned image.
+    >*:not(picture, .hero__arrow) {
+      position: relative;
+      z-index: 1;
+    }
+
+    // <picture> is a layout-transparent wrapper: let the .hero__bg <img>
+    // inside position against the .hero section itself.
+    >picture {
+      display: contents;
+    }
+
+    >.hero__arrow {
+      z-index: 1;
+    }
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero__arrow {
+    position: absolute;
+    text-decoration: none;
+    bottom: calc(var(--pad-xl) + env(safe-area-inset-bottom, 0px));
+    color: var(--light-Neutral-100);
+  }
+
+  .intro__date {
+    letter-spacing: var(--type-track-ui);
+  }
+
+  // Below the tablet breakpoint (where the nav collapses to the drawer), stop
+  // the per-section card-stacking: only the hero stays pinned, and every
+  // other section flows normally so the content scrolls up over the hero as
+  // one continuous block. Heights are left untouched.
+  @include below-tablet {
+    .stack-section:not(.hero) {
+      position: relative;
+      top: auto;
+    }
+  }
+
+  // Panel — the spacing shell. Padding + content rhythm only, no colour.
+  .panel {
+    padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+    padding-block: var(--vs-xl) calc(var(--vs-xl) * 2);
+
+    &.even {
+      padding-block: var(--vs-xl);
+    }
+  }
+
+  // Photo banner — pre-filtered background photo with 3-col identity grid.
+  // Reusable: compose with .stack-section/.half; override
+  // --photo-banner-img-position to shift the focal point.
+  .photo-banner {
+    container-type: inline-size;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: clip;
+    top: 0;
+
+    // <picture> is a layout-transparent wrapper: collapse it so the absolute
+    // .photo-banner__bg <img> inside leaves the flex flow (positioning against
+    // the section itself), leaving .photo-banner__grid as the sole flex child
+    // so its width: 100% spans the full section again.
+    >picture {
+      display: contents;
+    }
+
+    &__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: var(--photo-banner-img-position, center);
+    }
+
+    // Logo sizing — applies in both the 3-col grid and the logo-only layout
+    // (the only <svg> in this section is the logo; the backdrop is an <img>).
+    svg {
+      height: calc(var(--vs-xxl) * 2);
+      width: auto;
+    }
+
+    @container (max-width: 50rem) {
+      svg {
+        height: var(--vs-xxl);
+      }
+    }
+
+    &__grid {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
+      padding-block: var(--vs-xl);
+
+      >p {
+        width: fit-content;
+        font-weight: 500;
+
+        @supports (font-variation-settings: "wght" 450) {
+          font-variation-settings: "wght" 450;
+        }
+
+        &:last-child {
+          justify-self: end;
+        }
+      }
+
+      >div {
+        display: flex;
+        justify-content: center;
+      }
+
+      @container (max-width: 50rem) {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: var(--vs-xl);
+
+        >p {
+          text-align: center;
+
+          &:last-child {
+            justify-self: revert;
+          }
+        }
+      }
+    }
+  }
+
+  // Guiding principles — a bottom-anchored statement card over an un-filtered
+  // backdrop photo. Mirrors the .hero__bg / .photo-banner__bg backdrop idiom:
+  // the photo fills the section edge-to-edge (no filter applied), the card is
+  // a width-constrained theme-brand panel pinned to the bottom of the
+  // stack-section.
+  .principles {
+    overflow: clip;
+    display: grid;
+    place-items: end center;
+
+    &__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+
+      @include below-tablet {
+        position: relative;
+      }
+    }
+
+    &__card {
+      position: relative;
+      z-index: 1;
+      width: min(100%, calc(var(--vs-xxl) * 8));
+
+      h2 {
+        --fl: 5;
+        font-size: var(--fluid-type);
+      }
+    }
+  }
+
+  // Page hero — a short section hero (used to open the About page). Fills
+  // roughly half the viewport and bottom-centres its heading; pair with
+  // .panel for padding and a .theme-* class for colour.
+  .page-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+
+    // Extend under the fixed nav (like the homepage hero) so the body's
+    // nav-height top padding doesn't show as a gap above the section. The
+    // inherited .stack-section sticky positioning also contains the absolute
+    // .page-hero__bg below.
+    top: 0;
+    margin-top: calc(-1 * var(--nav-height, 6rem));
+    min-height: calc(50svh + var(--nav-height, 6rem));
+    overflow: clip;
+
+    // <picture> is a layout-transparent wrapper: collapse it so the absolute
+    // .page-hero__bg <img> inside positions against the section itself.
+    >picture {
+      display: contents;
+    }
+
+    >h1 {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      --fl: 6;
+      font-size: var(--fluid-type);
+    }
+  }
+
+  .page-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .darken {
+    &-50 {
+      filter: brightness(90%);
+    }
+
+    &-100 {
+      filter: brightness(70%);
+    }
+
+    &-200 {
+      filter: brightness(60%);
+    }
+
+    &-300 {
+      filter: brightness(50%);
+    }
+
+    &-400 {
+      filter: brightness(40%);
+    }
+  }
+
+  // Flush table — Graffiti's .table wrapper keeps its overflow-x: auto (so
+  // the table scrolls horizontally instead of squeezing) but drops the
+  // boxed border and radius for an open, editorial list. Cells stay on one
+  // line so the table overflows its container rather than wrapping.
+  // Compose: <div class="table table-flush"><table>…</table></div>.
+  .table-flush {
+    border-radius: var(--br-s);
+
+    :is(th, td) {
+      white-space: nowrap;
+    }
+  }
+
+  .people-list {
+    --gap: var(--vs-l);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--vs-l);
+    align-items: start;
+
+    @include below-tablet {
+      grid-template-columns: 1fr;
+    }
+
+    li {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--vs-m);
+      align-items: start;
+
+      article {
+        --gap: var(--vs-s);
+
+        >span {
+          text-box: trim-start text;
+        }
+
+        >span:first-of-type {
+          display: block;
+          margin-bottom: var(--vs-s);
+        }
+      }
+
+      @include mobile {
+        grid-template-columns: 1fr;
+      }
+
+      .people-row__photo {
+        flex-shrink: 0;
+        overflow: hidden;
+        border-radius: var(--br-xs);
+
+        >* {
+          inline-size: 100%;
+          block-size: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+
+  }
+
+  .about-grid {
+    grid-template-columns: repeat(12, 1fr);
+
+    @include below-tablet {
+      grid-template-columns: 1fr;
+    }
+
+    @include tablet {
+      figure:first-child {
+        grid-column: 1 / span 6;
+      }
+
+      figure:last-child {
+        grid-column: 7 / span 4;
+        align-self: end;
+      }
+    }
+  }
+
+  // Sponsor feature — 2×2 grid. Each cell is a direct child. Cell (2,1) is
+  // a subgrid that constrains the detail image to be smaller than the cell.
+  .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(2, auto);
+    column-gap: var(--vs-xl);
+    row-gap: var(--vs-xxl);
+    align-items: start;
+
+    &__intro {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    &__detail-cell {
+      grid-column: 1;
+      grid-row: 2;
+      display: grid;
+    }
+
+    &__detail {
+      justify-self: start;
+      align-self: start;
+      inline-size: min(20rem, 100%);
+    }
+
+    &__feature {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    &__help {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    @include cq-wide {
+      grid-template-columns: 1fr;
+
+      .sponsor-grid__intro {
+        grid-column: auto;
+        grid-row: auto;
+        order: 1;
+      }
+
+      .sponsor-grid__feature {
+        grid-column: auto;
+        grid-row: auto;
+        order: 2;
+      }
+
+      .sponsor-grid__help {
+        grid-column: auto;
+        grid-row: auto;
+        order: 3;
+      }
+
+      .sponsor-grid__detail-cell {
+        grid-column: auto;
+        grid-row: auto;
+        display: contents;
+      }
+
+      .sponsor-grid__detail {
+        grid-column: auto;
+        grid-row: auto;
+        order: 4;
+      }
+    }
+  }
+
+  ul:is(.dots) {
+    margin-inline-start: var(--pad-l);
+    margin-block: var(--pad-l);
+
+    >li {
+      list-style-type: "[✴\fe0e] "; // \fe0e = text-presentation selector (prevents emoji rendering)
+      list-style-position: inside;
+
+      p {
+        display: inline;
+        padding-inline-start: var(--pad-m);
+
+      }
+    }
+  }
+
+  details > :not(summary) {
+    padding: var(--pad-m) 0;
+  }
+
+}

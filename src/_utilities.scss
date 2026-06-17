@@ -1,0 +1,89 @@
+// Utility classes — margin scale, gap scale, fit-width, underline,
+// text-muted, split-gap, stack-gap-none.
+
+@layer custom {
+
+  // Margin utilities — Graffiti zeroes margins, these restore spacing:
+  // .mt-* → margin-block-start   .mb-* → margin-block-end
+  // .my-* → margin-block (both)  .mx-* → margin-inline (both)
+  // Scale: s=0.5rem  m=1.5rem  l=2rem  xl=4rem  xxl=6rem
+
+  $margin-scale: (
+    's': var(--vs-s),
+    'm': var(--vs-m),
+    'l': var(--vs-l),
+    'xl': var(--vs-xl),
+    'xxl': var(--vs-xxl),
+  );
+
+@each $name, $value in $margin-scale {
+  .mt-#{$name} {
+    margin-block-start: #{$value};
+  }
+
+  .mb-#{$name} {
+    margin-block-end: #{$value};
+  }
+
+  .my-#{$name} {
+    margin-block: #{$value};
+  }
+
+  .mx-#{$name} {
+    margin-inline: #{$value};
+  }
+}
+
+.fit-width {
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+// Gap utilities — set --gap on flex/grid/stack containers without inline styles.
+
+.gap-xs {
+  --gap: var(--vs-xs);
+}
+
+.gap-s {
+  --gap: var(--vs-s);
+}
+
+.gap-m {
+  --gap: var(--vs-m);
+}
+
+.gap-l {
+  --gap: var(--vs-l);
+}
+
+.gap-xl {
+  --gap: var(--vs-xl);
+}
+
+.gap-xxl {
+  --gap: var(--vs-xxl);
+}
+
+.stack-gap-none {
+  --gap: 0;
+}
+
+.split-gap-none {
+  --layout-gap: 0;
+}
+
+.split-gap-xxl {
+  --layout-gap: var(--vs-xxl);
+}
+
+.text-muted {
+  color: var(--fg-7);
+}
+
+}

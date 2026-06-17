@@ -1,0 +1,158 @@
+// Typography overlay — root tokens, body, headings, links, paragraphs,
+// placeholder, strong, small. Drives every heading via --fl (h6=0 … h1=5).
+@use './mixins' as *;
+
+@layer custom {
+
+  :where(*) {
+    @supports (text-box-trim: trim-both) {
+      text-box: trim-both cap text;
+    }
+  }
+
+  :root {
+    --font-sans: "Inclusive Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --primary: light-dark(var(--light-Brand-600), var(--dark-Brand-700));
+    --fg-light: var(--light-Neutral-900);
+    --fg-dark: var(--dark-Neutral-950);
+    --bg-light: var(--color-background);
+    --bg-dark: var(--dark-Neutral-100);
+
+    --color-success: light-dark(var(--light-Success-600), var(--dark-Success-700));
+    --color-warning: light-dark(var(--light-Warning-500), var(--dark-Warning-700));
+    --color-error: light-dark(var(--light-Error-600), var(--dark-Error-700));
+    --color-info: light-dark(var(--light-Info-500), var(--dark-Info-700));
+
+    --nav-height: calc(var(--vs-base) * 1.75 + var(--vs-l));
+    --text-underline-offset: 0.22rem;
+    --text-decoration-thickness: 7%;
+
+    --type-track-base: 0.01em;
+    --type-track-step: 0.015em;
+    --type-track-ui: calc(var(--type-track-base) - 0.03em);
+    --type-wght-base: 600;
+    --type-wght-step: 20;
+    --type-lh-base: 1.5;
+    --type-lh-step: 0.1;
+  }
+
+  body {
+    background: var(--bg);
+    padding-top: var(--nav-height, 6rem);
+    scroll-padding-top: var(--nav-height, 6rem);
+  }
+
+  :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, li, a, small, .ui-caption, body) {
+    --ls: calc(var(--type-track-base) - var(--type-track-step) * var(--fl, 0));
+    letter-spacing: var(--ls);
+    word-spacing: max(var(--ls), -0.06em);
+  }
+
+  :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+    font-weight: calc(var(--type-wght-base) - var(--type-wght-step) * var(--fl, 0));
+    --lh: calc(var(--type-lh-base) - var(--type-lh-step) * var(--fl, 0));
+    line-height: var(--lh);
+    text-box-edge: cap alphabetic;
+
+    @supports (font-variation-settings: "wght" 400) {
+      font-variation-settings: "wght" calc(var(--type-wght-base) - var(--type-wght-step) * var(--fl, 0));
+    }
+  }
+
+  a {
+    color: inherit;
+    text-underline-offset: var(--text-underline-offset);
+    text-decoration-thickness: var(--text-decoration-thickness);
+  }
+
+  :is(p, li, body) {
+    font-weight: 400;
+
+    @supports (font-variation-settings: "wght" 400) {
+      font-variation-settings: "wght" 400;
+    }
+  }
+
+  p {
+    color: var(--text-color, light-dark(var(--fg-7), var(--fg-8)));
+    text-box-edge: cap alphabetic;
+  }
+
+  ::placeholder {
+    color: var(--fg-5);
+    opacity: 1;
+  }
+
+  strong {
+    font-weight: 600;
+
+    @supports (font-variation-settings: "wght" 600) {
+      font-variation-settings: "wght" 600;
+    }
+  }
+
+  :is(small, .ui-caption) {
+    font-weight: 420;
+    color: var(--text-color, light-dark(var(--fg-6), var(--fg-7)));
+
+    @supports (font-variation-settings: "wght" 400) {
+      font-variation-settings: "wght" 420;
+    }
+  }
+
+  small a {
+    font-size: inherit;
+  }
+
+  :is(body), :is(header) {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    overflow-x: clip;
+  }
+
+  section {
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  p:not(.unwrapped) {
+    text-wrap: balance;
+  }
+
+  .pretty,
+  .pretty p {
+    text-wrap: pretty;
+  }
+
+  #credits-terms a {
+    text-decoration: underline;
+  }
+
+  .image-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  picture {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-self: stretch;
+  }
+
+  picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+}

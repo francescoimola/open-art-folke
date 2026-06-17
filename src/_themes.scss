@@ -1,0 +1,117 @@
+// Theme presets (.theme-*) plus theme-aware text (.accent, .statement, .tagline)
+// and ::selection. Each preset sets --bg/--fg/--primary endpoints; Graffiti's
+// :where([class*="theme-"]) re-derives all downstream scales from those values.
+@use './mixins' as *;
+
+@layer custom {
+
+  .theme-brand {
+    --bg-light: var(--dark-Brand-600);
+    --bg-dark: var(--dark-Brand-600);
+    --fg-light: var(--light-Neutral-50);
+    --fg-dark: var(--light-Neutral-50);
+    --primary: var(--light-Neutral-50);
+    color-scheme: dark;
+  }
+
+  .theme-paper {
+    --bg-light: var(--light-Neutral-50);
+    --bg-dark: var(--light-Neutral-50);
+    --fg-light: var(--light-Neutral-950);
+    --fg-dark: var(--light-Neutral-950);
+    --primary: var(--light-Brand-600);
+    color-scheme: light;
+  }
+
+  .theme-blush {
+    --bg-light: var(--light-Brand-50);
+    --bg-dark: var(--light-Brand-50);
+    --fg-light: var(--light-Neutral-950);
+    --fg-dark: var(--light-Neutral-950);
+    --primary: var(--light-Brand-600);
+    color-scheme: light;
+  }
+
+  .theme-ink {
+    --bg-light: var(--dark-Neutral-100);
+    --bg-dark: var(--dark-Neutral-100);
+    --fg-light: var(--dark-Neutral-950);
+    --fg-dark: var(--dark-Neutral-950);
+    --primary: var(--dark-Brand-950);
+    color-scheme: dark;
+  }
+
+  .theme-crimson {
+    --bg-light: var(--dark-Brand-500);
+    --bg-dark: var(--dark-Brand-500);
+    --fg-light: var(--light-Neutral-50);
+    --fg-dark: var(--light-Neutral-50);
+    --primary: var(--dark-Brand-950);
+    color-scheme: dark;
+  }
+
+  // Theme-aware text — .accent colors text with the current --primary (red on
+  // light themes, soft pink on dark/deep-red themes).
+  :is(.accent, .statement) {
+    --text-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .statement {
+    --fl: 4;
+    font-size: var(--fluid-type);
+    font-weight: 500;
+    text-box-edge: cap alphabetic;
+    --lh: 1.30;
+
+    @include below-tablet {
+      --fl: 3;
+    }
+
+    @include mobile {
+      --fl: 2;
+    }
+
+    @supports (font-variation-settings: "wght" 400) {
+      font-variation-settings: "wght" 500;
+    }
+  }
+
+  .statement a {
+    color: inherit;
+  }
+
+  // Tagline lead — the About page's opening "umbrella" statement reuses the
+  // .statement type scale but recolours it: the lead sits at full fg strength
+  // and the continuation drops to a muted tone (deliberately not the red
+  // accent the homepage statements use). Scoped so .statement stays red
+  // everywhere else.
+  .tagline>p:first-child {
+    --text-color: var(--fg);
+    color: var(--fg);
+  }
+
+  .tagline>p:nth-child(2) {
+    --text-color: var(--fg-5);
+    color: var(--fg-5);
+  }
+
+  // Selection — theme-aware inverted highlight. The highlight is each section's
+  // --fg at ~85% (a touch of transparency to soften it); selected text flips to
+  // the section's --bg, guaranteeing contrast in every theme — including the
+  // light-on-dark hero where the browser default obscured the title. --fg/--bg
+  // are re-derived per .theme-*, so this adapts to all current and future
+  // sections automatically.
+  ::selection {
+    background: color-mix(in oklab, var(--fg) 85%, transparent);
+    color: var(--bg);
+    text-shadow: none;
+  }
+
+  @media (prefers-contrast: more) {
+    ::selection {
+      background: var(--fg);
+    }
+  }
+
+}

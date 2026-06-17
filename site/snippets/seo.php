@@ -1,16 +1,12 @@
 <?php
 
 /**
- * <head> metadata: title, description, canonical, Open Graph & Twitter card.
+ * <head> metadata + JSON-LD (Organization + WebSite on every page; +Event on
+ * the home page). Fallback chain per field: page → site → omit.
  *
- * Fallback chain per field:
- *   title       page `seotitle`       → "{Page title} – {Site title}"
- *   description page `seodescription` → site `seodescription` (else tag omitted)
- *   image       page `ogimage`        → site `ogimage` (else image tags omitted)
- *
- * `$page` and `$site` are available globally in snippets. The OG image is
- * cropped to a 1200×630 social card via the shared `thumbs` recipe (config.php),
- * the same pipeline the `image` snippet uses.
+ * Blueprint `default:` values do NOT pre-fill reads on the frontend — every
+ * festival field below uses ->or() with the same default, so the Event
+ * renders before anyone saves the Settings tab.
  */
 
 $metaTitle = $page->seotitle()->isNotEmpty()
@@ -21,19 +17,6 @@ $metaDesc = $page->seodescription()->or($site->seodescription())->value();
 
 $ogFile = $page->ogimage()->toFile() ?? $site->ogimage()->toFile();
 $ogUrl  = $ogFile ? $ogFile->crop(1200, 630)->url() : null;
-
-// ---------------------------------------------------------------------------
-// Structured data (JSON-LD, schema.org). Organization + WebSite are emitted on
-// every page; Event only on the home page (it describes the festival, of which
-// there is one). Google reads these for rich results. Optional keys are dropped
-// when their source data is empty, mirroring the defensive meta output below.
-//
-// Note: blueprint `default:` values only pre-fill the Panel — they are NOT
-// returned when reading a field on the frontend. So the festival fields use
-// `->or()` fallbacks (matching the blueprint defaults) so the Event renders
-// correctly even before anyone saves the Settings tab. Editing the fields in
-// the (production) Panel overrides these fallbacks.
-// ---------------------------------------------------------------------------
 
 $orgSameAs = array_values(array_filter([
   $site->instagram_url()->value(),

@@ -1,28 +1,11 @@
 <?php
 
 /**
- * Responsive <video> with WebM → MP4 fallback from a collection of Kirby files.
+ * Responsive <video> from a collection of files. WebM first, MP4 fallback —
+ * the browser picks the first source it supports natively.
  *
- * Renders <source> elements in priority order (WebM first, MP4 fallback) so
- * browsers pick the first format they support natively. Zero JavaScript —
- * this is standard HTML source selection.
- *
- * Usage:
- *   snippet('video', [
- *     'files'  => $page->video()->toFiles(),
- *     'class'  => 'aspect-video',
- *   ]);
- *
- * @var \Kirby\Cms\Files|\Kirby\Cms\File[]|null $files   collection of video files
- * @var string|null $class                                CSS class for the <video>
- * @var string|null $caption                              overrides the MP4 file's caption field
- * @var bool       $controls                              show native playback controls (default true)
- * @var bool       $playsinline                           allow inline playback on iOS (default true)
- * @var string     $preload                               'metadata' (default), 'auto', or 'none'
- * @var bool       $muted                                 mute by default
- * @var bool       $autoplay                              autoplay (requires muted in most browsers)
- * @var bool       $loop                                  loop playback
- * @var \Kirby\Cms\File|string|null $poster               poster image File or URL
+ * @var \Kirby\Cms\File|string|null $poster  File or URL string
+ * @var string|null $caption                overrides the MP4 file's caption field
  */
 
 if (empty($files) || $files->count() === 0) {
