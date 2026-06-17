@@ -1,10 +1,35 @@
 title: Archive
 
+image:
+  query: page.thumbnail.toFile
+  back: black
+  cover: true
+
 tabs:
   content:
     label: Content
     icon: text
     fields:
+      thumbnail:
+        type: files
+        label: Panel thumbnail
+        help: Colourful image shown as this page's tile in the panel page list.
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
+      headline:
+        type: text
+        label: Intro heading
+      intro:
+        type: textarea
+        label: Intro text
+        help: Leave an empty line to separate a paragraph from the next.
+        buttons:
+          - bold
+          - italic
+          - link
       editions:
         type: structure
         label: Past editions

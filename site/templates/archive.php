@@ -2,11 +2,8 @@
 
 <section class="panel even theme-brand stack-section half">
   <div class="stack gap-xl readable mt-xl">
-    <h1>Revisit past festivals</h1>
-    <div class="stack gap-l text-muted">
-      <p>Nostalgia is the enemy of progress, we get it. But, as a nonprofit, we enjoy documenting our successes, and we know you love reminiscing about good times.</p>
-      <p>Here’s an archive of what took place at Open Art Folke in recent years. And if you weren’t there, honestly, what are you waiting for!?</p>
-    </div>
+    <h1><?= $page->headline()->esc() ?></h1>
+    <div class="stack gap-l text-muted"><?= $page->intro()->kt() ?></div>
   </div>
 </section>
 

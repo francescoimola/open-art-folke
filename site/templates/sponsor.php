@@ -22,14 +22,14 @@ $cell = function ($field) use ($tick) {
 ?>
 <?php snippet('header') ?>
 
-<section class="panel theme-ink sponsor-feature">
+<section class="panel even theme-ink stack-section flowing sponsor-feature">
   <div
     class="sponsor-grid">
 
     <!-- Cell 1,1: intro -->
     <div class="sponsor-grid__intro stack gap-xl">
-      <h1>Sponsor Open Art</h1>
-      <p>Open Art Folke is Folkestone’s first artist-led festival. We turn studios, shops, pubs, and public spaces across town into galleries, performance venues, and gathering points. We are a community of makers, artists, and all-around creatives living or working in Folkestone.</p>
+      <h1><?= $page->introtitle()->esc() ?></h1>
+      <?= $page->text()->kt() ?>
     </div>
 
     <!-- Cell 2,1: subgrid that constrains the detail image -->
@@ -58,10 +58,7 @@ $cell = function ($field) use ($tick) {
     <!-- Cell 2,2: help copy -->
     <div class="sponsor-grid__help stack gap-xl">
       <h2><?= $page->helptitle()->html() ?></h2>
-      <div class="stack gap-l">
-        <p>Sponsorship pays for printed programmes, our marketing costs, and low/subsidised entry fees for artists who couldn’t otherwise take part. Your support is what keeps OAF free and open to everyone.</p>
-        <p>In return, your business gets exposure across Folkestone during the festival, with your brand featured in programmes carried by thousands of visitors. It will also be visible online and advertised at our opening event. This is an opportunity to play a visible role in something that matters to this town, in front of an engaged, regional audience.</p>
-      </div>
+      <div class="stack gap-l"><?= $page->helptext()->kt() ?></div>
     </div>
 
   </div>

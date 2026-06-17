@@ -1,13 +1,30 @@
 title: Sponsor
 
+image:
+  query: page.thumbnail.toFile
+  back: black
+  cover: true
+
 tabs:
   content:
     label: Content
     icon: text
     fields:
+      thumbnail:
+        type: files
+        label: Panel thumbnail
+        help: Colourful image shown as this page's tile in the panel page list.
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
+      introtitle:
+        type: text
+        label: Intro heading
       text:
         type: textarea
-        label: Text
+        label: Intro text
         buttons:
           - bold
           - italic
