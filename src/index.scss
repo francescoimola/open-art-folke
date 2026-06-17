@@ -1475,20 +1475,23 @@
     }
 
     >li {
-      inline-size: var(--carousel-card-width);
+      // Shrink the cell to the image's rendered width (so height-capped
+      // portrait shots don't leave a gap), but never wider than the card.
+      inline-size: fit-content;
+      max-inline-size: var(--carousel-card-width);
     }
 
     // Beat the global picture/img cover rules (same layer, higher specificity):
     picture {
       display: block;
-      inline-size: 100%;
+      inline-size: fit-content;     // hug the image rather than fill the cell
       block-size: auto;
     }
 
     picture img {
-      inline-size: auto;            // width:auto + max-width:100% + max-height
+      inline-size: auto;            // width:auto + max-width + max-height
       block-size: auto;             // → preserves aspect ratio within both caps
-      max-inline-size: 100%;
+      max-inline-size: var(--carousel-card-width);
       max-block-size: var(--carousel-img-cap);
       object-fit: initial;          // undo the global cover
     }
