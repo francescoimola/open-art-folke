@@ -126,7 +126,7 @@ tabs:
               closed_intro:
                 type: info
                 label: “Closed” text
-                text: Shown in the Register popover and footer once registration has closed.
+                text: Shown in the popover and in the footer to explain why registration is closed and what to do next/instead.
                 when:
                   registration_status: closed
               closed_message:

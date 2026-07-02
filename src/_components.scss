@@ -502,7 +502,6 @@
     }
 
     &:popover-open {
-      display: grid;
       opacity: 1;
       translate: 0px 0px;
 
@@ -517,6 +516,7 @@
       inset: auto;
       position-area: block-end span-inline-end;
       position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+      align-self: start;
     }
   }
 
