@@ -13,7 +13,10 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
     'fetchpriority' => 'high',
     'sizes' => '100vw',
   ]) ?>
-  <h1>Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke</h1>
+  <div class="hero__title">
+    <h1>Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke<span aria-hidden="true"><span class="hero__typed"></span><span class="hero__cursor">|</span></span></h1>
+    <span class="hero__sizer h1" aria-hidden="true">Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke is cross-generational and cross-cultural</span>
+  </div>
   <a class="hero__arrow fs-xl" href="#intro" aria-label="Scroll to content">↓</a>
 </section>
 

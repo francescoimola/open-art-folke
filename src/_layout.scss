@@ -92,11 +92,23 @@
     justify-content: center;
     overflow: hidden;
 
-    >h1 {
-      --fl: 6;
-      color: white;
-      font-size: var(--fluid-type);
-      text-box-edge: cap alphabetic;
+    /* Title + typewriter tagline. The h1 and a hidden "sizer" (a .h1-classed
+     span holding the longest phrase) share one grid cell, so the block
+     reserves the tallest layout at every viewport and never jumps
+     vertically while the typed text grows, wraps, and re-centres.
+     --fl must sit on the children (not the container): Graffiti sets
+    --fl: 5 directly on h1/.h1, which would override an inherited value. */
+    >.hero__title {
+      display: grid;
+
+      >h1,
+      >.hero__sizer {
+        --fl: 6;
+        --lh: 1.10;
+        grid-area: 1 / 1;
+        color: white;
+        max-inline-size: 18ch; // keeps typed phrases off the section edges; tune to taste
+      }
     }
 
     // The bg <img> is wrapped in a <picture>; exclude that wrapper (not the
@@ -133,6 +145,12 @@
     text-decoration: none;
     bottom: calc(var(--pad-xl) + env(safe-area-inset-bottom, 0px));
     color: var(--light-Neutral-100);
+  }
+
+  // Invisible but still occupies its grid cell — reserves the height of the
+  // longest typed phrase (see .hero__title above).
+  .hero__sizer {
+    visibility: hidden;
   }
 
   .intro__date {
@@ -189,8 +207,7 @@
       object-position: var(--photo-banner-img-position, center);
     }
 
-    // Logo sizing — applies in both the 3-col grid and the logo-only layout
-    // (the only <svg> in this section is the logo; the backdrop is an <img>).
+    // Logo sizing
     svg {
       height: calc(var(--vs-xxl) * 2);
       width: auto;
@@ -246,11 +263,7 @@
     }
   }
 
-  // Guiding principles — a bottom-anchored statement card over an un-filtered
-  // backdrop photo. Mirrors the .hero__bg / .photo-banner__bg backdrop idiom:
-  // the photo fills the section edge-to-edge (no filter applied), the card is
-  // a width-constrained theme-brand panel pinned to the bottom of the
-  // stack-section.
+  /* Guiding principles — a bottom-anchored statement card over a backdrop photo. Mirrors the .hero__bg / .photo-banner__bg backdrop idiom: the photo fills the section edge-to-edge (no filter applied), the card is a width-constrained theme-brand panel pinned to the bottom of the stack-section. */
   .principles {
     overflow: clip;
     display: grid;
@@ -350,11 +363,10 @@
     }
   }
 
-  // Flush table — Graffiti's .table wrapper keeps its overflow-x: auto (so
-  // the table scrolls horizontally instead of squeezing) but drops the
-  // boxed border and radius for an open, editorial list. Cells stay on one
-  // line so the table overflows its container rather than wrapping.
-  // Compose: <div class="table table-flush"><table>…</table></div>.
+  /* Flush table — Graffiti's .table wrapper keeps its overflow-x: auto (so
+  the table scrolls horizontally instead of squeezing) but drops the
+  boxed border and radius for an open, editorial list. Cells stay on one
+  line so the table overflows its container rather than wrapping. */
   .table-flush {
     border-radius: var(--br-s);
 
@@ -519,7 +531,7 @@
     }
   }
 
-  details > :not(summary) {
+  details> :not(summary) {
     padding: var(--pad-m) 0;
   }
 
