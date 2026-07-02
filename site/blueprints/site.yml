@@ -72,14 +72,94 @@ tabs:
                 help: e.g. "Kent".
                 default: Kent
                 width: 1/2
+          registration:
+            type: fields
+            label: Registration
+            fields:
+              registration_status:
+                type: select
+                label: Registration status
+                required: true
+                empty: false
+                default: closed
+                options:
+                  soon: Not open yet
+                  open: "Open — accepting registrations"
+                  closed: Closed
+                help: Controls the Register buttons and popovers across the whole site.
+              register_url:
+                type: url
+                label: Register link URL
+                help: Where the Register buttons link to. Only used when the status is “Open”.
+                when:
+                  registration_status: open
+              soon_intro:
+                type: info
+                label: “Not open yet” text
+                text: Shown in the Register popover and footer while registration hasn’t opened.
+                when:
+                  registration_status: soon
+              soon_message:
+                type: textarea
+                label: Message
+                buttons: false
+                default: "Registration for the next edition isn’t open yet — check back soon."
+                when:
+                  registration_status: soon
+              soon_link_url:
+                type: url
+                label: Link URL (optional)
+                width: 1/2
+                when:
+                  registration_status: soon
+              soon_link_label:
+                type: text
+                label: Link label
+                width: 1/2
+                when:
+                  registration_status: soon
+              soon_footnote:
+                type: text
+                label: Footnote / deadline (optional)
+                when:
+                  registration_status: soon
+              closed_intro:
+                type: info
+                label: “Closed” text
+                text: Shown in the Register popover and footer once registration has closed.
+                when:
+                  registration_status: closed
+              closed_message:
+                type: textarea
+                label: Message
+                buttons: false
+                default: "Registration for the 2026 edition has now closed. However, you can still apply to exhibit at our sister event, held in partnership with Docker Brewery."
+                when:
+                  registration_status: closed
+              closed_link_url:
+                type: url
+                label: Link URL (optional)
+                width: 1/2
+                default: "https://docs.google.com/forms/d/e/1FAIpQLSd3-EqopTb0SHhlLaztdyvEdbh6LS9BdY-0iEL3-t7YejJOeQ/viewform"
+                when:
+                  registration_status: closed
+              closed_link_label:
+                type: text
+                label: Link label
+                width: 1/2
+                default: Apply to Docker's exhibition
+                when:
+                  registration_status: closed
+              closed_footnote:
+                type: text
+                label: Footnote / deadline (optional)
+                default: "Deadline: 19 July 2026"
+                when:
+                  registration_status: closed
           links:
             type: fields
             label: Links
             fields:
-              register_url:
-                type: url
-                label: Register link URL
-                help: Link to artists registration form. If you want to hide it, leave blank.
               donation_url:
                 type: url
                 label: Donation link

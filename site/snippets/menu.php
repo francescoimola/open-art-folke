@@ -1,3 +1,7 @@
+<?php
+$status = $site->registration_status()->or('closed')->value();
+$registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->value() : null;
+?>
 <header class="site-nav theme-brand" aria-label="<?= $site->title()->html() ?>">
   <nav class="site-nav__group" aria-label="Primary">
     <a href="<?= $site->url() ?>" class="site-nav__logo site-nav__logo--topbar" aria-label="<?= $site->title()->html() ?> — home">
@@ -16,10 +20,16 @@
   </nav>
   <div class="site-nav__group">
     <button class="site-nav__menu-toggle minimal" popovertarget="site-drawer">Menu</button>
-    <?php if ($registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->value() : null): ?>
-      <a href="<?= $registerUrl ?>" class="site-nav__register fs-s" rel="noopener noreferrer" target="_blank">
+    <?php if ($status === 'open'): ?>
+      <?php if ($registerUrl): ?>
+        <a href="<?= esc($registerUrl, 'attr') ?>" class="site-nav__register fs-s" rel="noopener noreferrer" target="_blank">
+          Register <span aria-hidden="true">↗</span>
+        </a>
+      <?php endif ?>
+    <?php else: ?>
+      <button type="button" popovertarget="registration-popover" data-popover-origin="nav" class="minimal site-nav__register fs-s">
         Register <span aria-hidden="true">↗</span>
-      </a>
+      </button>
     <?php endif ?>
   </div>
 </header>
@@ -37,10 +47,16 @@
     <?php foreach($site->children()->not('home', 'media') as $child): ?>
       <a href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
     <?php endforeach ?>
-    <?php if ($registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->value() : null): ?>
-      <a href="<?= $registerUrl ?>" rel="noopener noreferrer" target="_blank">
+    <?php if ($status === 'open'): ?>
+      <?php if ($registerUrl): ?>
+        <a href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank">
+          Register <span aria-hidden="true">↗</span>
+        </a>
+      <?php endif ?>
+    <?php else: ?>
+      <button type="button" popovertarget="registration-popover" data-popover-origin="nav" class="minimal site-nav__register fs-s">
         Register <span aria-hidden="true">↗</span>
-      </a>
+      </button>
     <?php endif ?>
   </nav>
 </aside>

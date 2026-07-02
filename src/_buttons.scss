@@ -89,8 +89,7 @@
     }
   }
 
-  // Graffiti's .footer component underlines all <a> on hover; override that
-  // for buttons so they don't get a link-style underline on hover.
+  
   .footer {
     >nav {
       padding-block: var(--vs-xl);
@@ -99,6 +98,10 @@
 
     :is(.button, button):hover {
       text-decoration: none;
+    }
+
+    article a {
+      text-decoration: underline;
     }
 
     h3 {

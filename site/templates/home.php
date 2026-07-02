@@ -1,3 +1,7 @@
+<?php
+$status = $site->registration_status()->or('closed')->value();
+$registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->value() : null;
+?>
 <?php snippet('header') ?>
 
 <section class="hero stack-section flex text-center stack-gap-none">
@@ -33,7 +37,13 @@
       </div>
       <div class="stack ">
         <a href="#programme" class="button fit-width">Explore the 2026 programme</a>
-        <a href="<?= $site->register_url() ?>" rel="noopener noreferrer" target="_blank" class="button btt--secondary fit-width">Register as an artist</a>
+        <?php if ($status === 'open'): ?>
+          <?php if ($registerUrl): ?>
+            <a href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank" class="button btt--secondary fit-width">Register as an artist</a>
+          <?php endif ?>
+        <?php else: ?>
+          <button popovertarget="registration-popover" data-popover-origin="body" class="button btt--secondary fit-width">Register as an artist</button>
+        <?php endif ?>
       </div>
     </div>
     <small class="mt-s">* Open Art is 99% free to attend, but some events require a paid reservation</small>

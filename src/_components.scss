@@ -26,7 +26,8 @@
     margin: 0;
     inset-block-start: var(--pad-s);
     inset-inline-start: var(--pad-s);
-    z-index: 1000; /* above .site-nav (z-index: 100) */
+    z-index: 1000;
+    /* above .site-nav (z-index: 100) */
     padding: var(--pad-s) var(--pad-m);
     border-radius: var(--br-s);
     background: var(--primary);
@@ -78,14 +79,19 @@
     transition: opacity 0.2s ease;
 
     // The glyph lives in a <span>; make it the single centred grid child.
-    > span {
+    >span {
       display: block;
       text-box-trim: trim-both;
       text-box-edge: cap alphabetic;
     }
 
-    &--prev { inset-inline-start: var(--pad-s); }
-    &--next { inset-inline-end: var(--pad-s); }
+    &--prev {
+      inset-inline-start: var(--pad-s);
+    }
+
+    &--next {
+      inset-inline-end: var(--pad-s);
+    }
 
     &:hover {
       background: color-mix(in oklch, var(--gray-12) 8%, var(--bg));
@@ -146,6 +152,16 @@
 
     &__register {
       letter-spacing: var(--type-track-ui);
+      text-decoration: underline;
+      white-space: nowrap;
+
+      &:is(button) {
+        display: inline;
+        padding: 0;
+        font-weight: inherit;
+        line-height: inherit;
+        color: inherit;
+      }
     }
 
     &__menu-toggle {
@@ -266,7 +282,7 @@
     // lift them to theme-brand's brighter red endpoint to stand out. Scoped
     // to the crimson section so the homepage (blush section) teaser keeps
     // crimson cards.
-    :where(.theme-crimson) & >li.box.ghost {
+    :where(.theme-crimson) &>li.box.ghost {
       --bg-light: var(--dark-Brand-600);
       --bg-dark: var(--dark-Brand-600);
     }
@@ -358,16 +374,14 @@
     }
   }
 
-  .sponsors-roster hr {
+  .sponsors-roster hr:is(.show-desktop) {
     inline-size: 100%;
     border: 0;
     border-block-start: 1px solid color-mix(in oklch, var(--fg) 60%, transparent);
     opacity: 0.6;
   }
 
-  // Archive gallery carousel — natural-ratio photos, top-aligned, fluid card
-  // width via container query, height-capped so tall shots don't dominate.
-  // Built on Graffiti's .carousel (scroll + snap).
+  // Archive gallery carousel
   .archive-carousel {
     --gap: var(--vs-base);
     // Card width drives how many photos are in view. Wide cards = fewer cards:
@@ -465,6 +479,44 @@
     &.hard {
       border: var(--button-color) solid 2px;
       border-radius: var(--br-s);
+    }
+  }
+
+  /* Popover */
+  .registration-popover {
+    border: var(--border-1);
+    border-radius: var(--br-s);
+    padding: var(--pad-xl);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.12);
+    inline-size: min(90vw, 32rem);
+
+    opacity: 0;
+    translate: 0 -30px;
+
+    transition-property: display, overlay, opacity, translate;
+    transition-duration: 0.75s;
+    transition-behavior: allow-discrete;
+
+    &>p {
+      text-wrap: pretty;
+    }
+
+    &:popover-open {
+      display: grid;
+      opacity: 1;
+      translate: 0px 0px;
+
+      @starting-style {
+        opacity: 0;
+        translate: 0 -30px;
+      }
+    }
+
+    @supports (anchor-name: --anchor) {
+      margin-block: var(--vs-s);
+      inset: auto;
+      position-area: block-end span-inline-end;
+      position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
     }
   }
 

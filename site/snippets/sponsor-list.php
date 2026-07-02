@@ -40,9 +40,9 @@ $sponsorName = fn($s) => $s['url']->isNotEmpty()
       <div id="<?= $menuId ?>" popover class="dropdown-menu">
         <?php if ($s['description']->isNotEmpty()): ?>
           <div class="dropdown-header"><?= $s['description']->esc() ?></div>
-          <hr>
         <?php endif ?>
         <?php if ($s['url']->isNotEmpty()): ?>
+          <hr>
           <a href="<?= $s['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a>
         <?php endif ?>
       </div>

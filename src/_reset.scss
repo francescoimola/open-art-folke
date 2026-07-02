@@ -96,6 +96,7 @@
   button {
     background: none;
     border: none;
+    user-select: none;
   }
 
   :where(input, button, textarea, select) {

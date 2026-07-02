@@ -64,6 +64,10 @@
     color: inherit;
     text-underline-offset: var(--text-underline-offset);
     text-decoration-thickness: var(--text-decoration-thickness);
+
+    &:is(.underline) {
+      text-decoration: underline;
+    }
   }
 
   :is(p, li, body) {
@@ -128,10 +132,6 @@
   .pretty,
   .pretty p {
     text-wrap: pretty;
-  }
-
-  #credits-terms a {
-    text-decoration: underline;
   }
 
   .image-cover {
