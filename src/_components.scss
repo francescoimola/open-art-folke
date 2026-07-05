@@ -44,70 +44,6 @@
     outline-offset: var(--focus-ring-offset);
   }
 
-  // Prev/next arrows. JS (src/templates/archive.js) wraps the scroller in
-  // .carousel-wrap and injects the two buttons — a progressive enhancement so
-  // every browser gets working arrows (the CSS ::scroll-button() pseudo is
-  // Chrome-only). No JS → no buttons, but the carousel still scrolls by
-  // swipe/trackpad. Buttons sit centred on the inline edges and dim (not
-  // vanish) at the ends so they stay visible.
-  .carousel-wrap {
-    position: relative;
-  }
-
-  .carousel-arrow {
-    position: absolute;
-    inset-block-start: 50%;
-    translate: 0 -50%;
-    z-index: 2;
-    // Grid + place-items keeps the glyph optically centred in the circle.
-    display: grid;
-    place-items: center;
-    inline-size: var(--vs-l);
-    block-size: var(--vs-l);
-    padding: 0;
-    border: 1px solid color-mix(in oklch, var(--gray-12) 30%, transparent);
-    border-radius: 50%;
-    background: var(--bg);
-    // Explicit dark-grey glyph: --fg resolves to the button's own (light)
-    // foreground on these injected buttons, so we set a fixed neutral instead.
-    // Archive sections are all light themes (blush / paper), so grey-12 reads
-    // with strong contrast on both.
-    color: var(--gray-12);
-    font-size: 1.25rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-
-    // The glyph lives in a <span>; make it the single centred grid child.
-    >span {
-      display: block;
-      text-box-trim: trim-both;
-      text-box-edge: cap alphabetic;
-    }
-
-    &--prev {
-      inset-inline-start: var(--pad-s);
-    }
-
-    &--next {
-      inset-inline-end: var(--pad-s);
-    }
-
-    &:hover {
-      background: color-mix(in oklch, var(--gray-12) 8%, var(--bg));
-    }
-
-    &:focus-visible {
-      outline: var(--focus-ring);
-      outline-offset: var(--focus-ring-offset);
-    }
-
-    &:disabled {
-      opacity: 0.35;
-      cursor: default;
-    }
-  }
-
   .site-nav {
     position: fixed;
     top: 0;
@@ -379,43 +315,38 @@
     opacity: 0.6;
   }
 
-  // Archive gallery carousel
-  .archive-carousel {
+  // Archive photo grid — plain CSS Grid (composes Graffiti's .layout-split:
+  // 2 columns, 1 below 768px), no JS, no feature-detection.
+  //
+  // Each cell's height is self-contained: derived from the cell's OWN width
+  // via a container query unit (cqi), never from vh and never from a
+  // sibling's intrinsic size. This deliberately sidesteps CSS Grid's row
+  // auto-sizing — a portrait photo's own (often much taller) intrinsic size
+  // would otherwise blow out the whole row no matter what min/max-height
+  // tricks are applied to the item itself, since the row-track sizing pass
+  // uses each item's intrinsic content size, not its final rendered size.
+  // Because every cell uses the same cqi formula against its own (equal,
+  // grid-column) width, both cells in a row land on the same height anyway.
+  //
+  // object-fit: contain then does the landscape/portrait distinction for
+  // free — a landscape photo spans the cell's full width (letterboxed
+  // top/bottom), a portrait photo spans the cell's full height (letterboxed
+  // left/right) — no per-photo orientation class needed.
+  .archive-gallery {
     --gap: var(--vs-base);
-    // Card width drives how many photos are in view. Wide cards = fewer cards:
-    // ~66cqw shows ~1.5 photos on mobile, narrowing to ~28cqw (~3.5 photos) on
-    // wider containers. Counts are approximate — cells are fit-content (below),
-    // so landscape shots can reveal more than the target.
-    --carousel-card-width: 80cqw;
-    --carousel-img-cap: min(60vh, 30rem);
-    align-items: start;
     list-style: none;
+    align-items: stretch; // align items to top; let them stretch horizontally
 
-    @include cq-wide {
-      --carousel-card-width: 40cqw;
-    }
-
-    >li {
-      // Shrink the cell to the image's rendered width (so height-capped
-      // portrait shots don't leave a gap), but never wider than the card.
-      inline-size: fit-content;
-      max-inline-size: var(--carousel-card-width);
-    }
-
-    // Beat the global picture/img cover rules (same layer, higher
-    // specificity): hug the image rather than fill the cell.
-    picture {
+    // Beat the global picture/img cover rules (same layer, higher specificity).
+    picture,
+    picture img {
       display: block;
-      inline-size: fit-content;
-      block-size: auto;
+      max-block-size: calc(var(--vs-xxl) * 7);
     }
 
     picture img {
-      inline-size: auto;
-      block-size: auto;
-      max-inline-size: var(--carousel-card-width);
-      max-block-size: var(--carousel-img-cap);
-      object-fit: initial;
+      object-fit: contain;
+      object-position: left top !important; // left-align any letterboxed space
     }
   }
 

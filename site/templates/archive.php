@@ -24,26 +24,17 @@
 
       <div class="stack gap-l readable"><?= $edition->text()->kt() ?></div>
 
-      <?php if ($photos->count() > 2): ?>
-        <ul class="carousel archive-carousel" tabindex="0" aria-label="<?= $edition->headline()->esc('attr') ?> photos">
+      <?php if ($photos->isNotEmpty()): ?>
+        <ul class="layout-split archive-gallery" aria-label="<?= $edition->headline()->esc('attr') ?> photos">
           <?php foreach ($photos as $photo): ?>
             <li>
               <?php snippet('image', [
                 'file'  => $photo,
-                'sizes' => '(min-width: 768px) 28vw, 66vw',
+                'sizes' => '(min-width: 768px) 50vw, 100vw',
               ]) ?>
             </li>
           <?php endforeach ?>
         </ul>
-      <?php elseif ($photos->isNotEmpty()): ?>
-        <div class="layout-split">
-          <?php foreach ($photos as $photo): ?>
-            <?php snippet('image', [
-              'file'  => $photo,
-              'sizes' => '(min-width: 768px) 50vw, 100vw',
-            ]) ?>
-          <?php endforeach ?>
-        </div>
       <?php endif ?>
     </div>
   </section>
