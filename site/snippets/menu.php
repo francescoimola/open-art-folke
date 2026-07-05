@@ -13,7 +13,7 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
       </li>
       <?php foreach($site->children()->not('home', 'media') as $child): ?>
         <li class="fs-s">
-          <a class="underline" href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
+          <a class="underline" href="<?= $child->url() ?>"<?= $child->isActive() ? ' aria-current="page"' : '' ?>><?= $child->title() ?></a>
         </li>
       <?php endforeach ?>
     </ul>
@@ -42,10 +42,10 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
     <button class="minimal close" popovertarget="mobile-drawer" popovertargetaction="hide" aria-label="Close menu">&times;</button>
   </div>
   <nav class="stack mobile-drawer__nav" aria-label="Mobile navigation">
-    <a href="<?= $site->url() ?>"<?= e($site->homePage()->isActive(), ' aria-current="page"') ?>>Home</a>
+    <a href="<?= $site->url() ?>"<?= $site->homePage()->isActive() ? ' aria-current="page"' : '' ?>>Home</a>
     <a href="<?= $site->homePage()->url() ?>#programme">Programme</a>
     <?php foreach($site->children()->not('home', 'media') as $child): ?>
-      <a href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
+      <a href="<?= $child->url() ?>"<?= $child->isActive() ? ' aria-current="page"' : '' ?>><?= $child->title() ?></a>
     <?php endforeach ?>
     <?php if ($status === 'open'): ?>
       <?php if ($registerUrl): ?>

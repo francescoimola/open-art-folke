@@ -8,10 +8,10 @@ $contactEmail = 'openartfolke@gmail.com';
 <footer class="footer theme-ink panel stack gap-xl stack-section">
 
   <nav class="cluster center" aria-label="Footer">
-    <a class="underline" href="<?= $site->url() ?>" <?= e($site->homePage()->isActive(), ' aria-current="page"') ?>>Home</a>
+    <a class="underline" href="<?= $site->url() ?>" <?= $site->homePage()->isActive() ? ' aria-current="page"' : '' ?>>Home</a>
     <a class="underline" href="<?= $site->homePage()->url() ?>#programme">Programme</a>
     <?php foreach ($site->children()->not('home', 'media') as $child): ?>
-      <a class="underline" href="<?= $child->url() ?>" <?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
+      <a class="underline" href="<?= $child->url() ?>" <?= $child->isActive() ? ' aria-current="page"' : '' ?>><?= $child->title() ?></a>
     <?php endforeach ?>
     <?php if ($status === 'open' && $registerUrl): ?>
       <a class="underline" href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank">Register
