@@ -42,6 +42,16 @@
 
 .underline {
   text-decoration: underline;
+  text-underline-offset: var(--text-underline-offset);
+}
+
+.underline-on-hover {
+    @extend .underline;
+    text-decoration: none;
+
+    &:hover, &:focus-visible {
+      text-decoration: underline;
+    }
 }
 
 // Gap utilities — set --gap on flex/grid/stack containers without inline styles.

@@ -48,26 +48,13 @@ tabs:
               - link
               - ul
           video:
-            type: files
-            label: Video (optional)
-            help: Upload an MP4. If your video is over 1 min, please export it WebM for better compression and upload that alongside the MP4 here. The compressed version will be used automatically on devices that support it.
-            max: 2
-            query: site.find('media').files.filterBy("extension", "in", ["mp4", "webm"])
-            uploads:
-              parent: site.find('media')
-              template: video
-          poster:
-            type: files
-            label: Poster image (optional)
+            type: url
+            label: Vimeo link (optional)
             help: >
-              A still image shown before the video plays. If left empty, the
-              browser uses the first frame of the video. JPG, PNG or WebP; one
-              image per row.
-            max: 1
-            query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-            uploads:
-              parent: site.find('media')
-              template: image
+              Paste the video's Vimeo share link, e.g.
+              https://vimeo.com/123456789 (or .../123456789/abcdef for an
+              unlisted video). Vimeo handles the poster and playback — no upload
+              needed. Leave empty for no video.
           gallery:
             type: files
             label: Photos

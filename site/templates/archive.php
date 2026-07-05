@@ -15,10 +15,9 @@
 
       <?php if ($edition->video()->isNotEmpty()): ?>
         <div class="layout-split">
-          <?php snippet('video', [
-            'files'  => $edition->video()->toFiles(),
-            'class'  => 'aspect-video',
-            'poster' => $edition->poster()->toFile(),
+          <?php snippet('vimeo', [
+            'url'   => $edition->video(),
+            'title' => $edition->headline(),
           ]) ?>
         </div>
       <?php endif ?>

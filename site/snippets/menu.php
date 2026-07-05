@@ -9,17 +9,17 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
     </a>
     <ul class="site-nav__links" role="list">
       <li class="fs-s">
-        <a href="<?= $site->homePage()->url() ?>#programme">Programme</a>
+        <a class="underline" href="<?= $site->homePage()->url() ?>#programme">Programme</a>
       </li>
       <?php foreach($site->children()->not('home', 'media') as $child): ?>
         <li class="fs-s">
-          <a href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
+          <a class="underline" href="<?= $child->url() ?>"<?= e($child->isActive(), ' aria-current="page"') ?>><?= $child->title() ?></a>
         </li>
       <?php endforeach ?>
     </ul>
   </nav>
   <div class="site-nav__group">
-    <button class="site-nav__menu-toggle minimal" popovertarget="site-drawer">Menu</button>
+    <button class="site-nav__menu-toggle minimal underline-on-hover" popovertarget="mobile-drawer">Menu</button>
     <?php if ($status === 'open'): ?>
       <?php if ($registerUrl): ?>
         <a href="<?= esc($registerUrl, 'attr') ?>" class="site-nav__register fs-s" rel="noopener noreferrer" target="_blank">
@@ -27,21 +27,21 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
         </a>
       <?php endif ?>
     <?php else: ?>
-      <button type="button" popovertarget="registration-popover" data-popover-origin="nav" class="minimal site-nav__register fs-s">
+      <button type="button" popovertarget="registration-popover" data-popover-origin="nav" class="minimal underline site-nav__register fs-s">
         Register <span aria-hidden="true">↗</span>
       </button>
     <?php endif ?>
   </div>
 </header>
 
-<aside id="site-drawer" popover="auto" class="drawer site-drawer theme-brand">
-  <div class="split site-drawer__header">
+<aside id="mobile-drawer" popover="auto" class="drawer mobile-drawer theme-brand">
+  <div class="split mobile-drawer__header">
     <a href="<?= $site->url() ?>" class="site-nav__logo" aria-label="<?= $site->title()->html() ?> — home">
       <?php snippet('logo') ?>
     </a>
-    <button class="minimal close" popovertarget="site-drawer" popovertargetaction="hide" aria-label="Close menu">&times;</button>
+    <button class="minimal close" popovertarget="mobile-drawer" popovertargetaction="hide" aria-label="Close menu">&times;</button>
   </div>
-  <nav class="stack site-drawer__nav" aria-label="Mobile navigation">
+  <nav class="stack mobile-drawer__nav" aria-label="Mobile navigation">
     <a href="<?= $site->url() ?>"<?= e($site->homePage()->isActive(), ' aria-current="page"') ?>>Home</a>
     <a href="<?= $site->homePage()->url() ?>#programme">Programme</a>
     <?php foreach($site->children()->not('home', 'media') as $child): ?>
@@ -54,7 +54,7 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
         </a>
       <?php endif ?>
     <?php else: ?>
-      <button type="button" popovertarget="registration-popover" data-popover-origin="nav" class="minimal site-nav__register fs-s">
+      <button type="button" popovertarget="registration-popover" data-popover-origin="nav" class="minimal underline-on-hover">
         Register <span aria-hidden="true">↗</span>
       </button>
     <?php endif ?>

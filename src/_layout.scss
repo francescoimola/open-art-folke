@@ -15,6 +15,15 @@
     height: 100%;
   }
 
+  // Responsive video embed: an iframe (Vimeo) that fills a ratio box — compose
+  // with Graffiti's .aspect-video. The reset gives iframes height:auto and a
+  // 300×150 intrinsic size, so the child must be told to fill its parent.
+  .video-embed > iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
   // Non-sticky anchor sentinel. Sticky sections (.stack-section) report a
   // pinned bounding rect once scrolled past, which makes rect-based anchor
   // scrolling (native + Lenis) refuse to travel back up to them. Pointing the
@@ -531,8 +540,33 @@
     }
   }
 
-  details> :not(summary) {
-    padding: var(--pad-m) 0;
+  // Accordion divider: when a <details> sits directly next to another
+  // <details> (any accordion, anywhere), give it a border-bottom instead of
+  // a manual <hr> between items. A details with no following-sibling details
+  // (a standalone disclosure) gets no line, matching the old hr-only-between
+  // behaviour.
+  details {
+    > :not(summary) {
+      padding-inline: 0;
+      padding-block-start: var(--pad-xl);
+    }
+
+    &:has(+ details) {
+      padding-block-end: var(--vs-l);
+      border-block-end: var(--border-1);
+    }
+
+    summary {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &.minimal > summary::after {
+      font-weight: var(--fw-bold);
+      font-size: 200%;
+    }
   }
 
 }
