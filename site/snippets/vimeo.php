@@ -16,8 +16,13 @@
  */
 
 $url = $url ?? '';
+// Kirby Fields with empty YAML arrays can't cast to string. Check if the
+// Field's raw value is an array (empty or otherwise) and skip if so.
+if ($url instanceof \Kirby\Content\Field) {
+	$url = $url->value;
+}
 if (is_array($url)) {
-	$url = '';
+	return;
 }
 $url = trim((string) $url);
 if ($url === '') {
