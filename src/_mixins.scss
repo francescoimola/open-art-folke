@@ -9,3 +9,14 @@
 @mixin cq-narrow     { @container (max-width: 500px) { @content; } }
 @mixin cq-medium     { @container (max-width: 600px) { @content; } }
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
+
+// Absolute full-bleed background image — the shared `&__bg` cover idiom
+@mixin cover-bg($position: center) {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: $position;
+}

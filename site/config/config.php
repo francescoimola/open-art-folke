@@ -35,6 +35,15 @@ return [
   // debug is dev-only; override with KIRBY_DEBUG=true for short-lived troubleshooting.
   'debug' => $isDev ? true : (env('KIRBY_DEBUG', false) === 'true'),
 
+  // Secure random values for media/preview URLs and cookie signing.
+  // See: https://getkirby.com/docs/reference/system/options/content
+  'content' => [
+    'salt' => env('KIRBY_CONTENT_SALT'),
+  ],
+  'cookie' => [
+    'key' => env('KIRBY_COOKIE_KEY'),
+  ],
+
   'hooks' => [
     'route:after' => function () use ($isDev) {
       if ($isDev && headers_sent() === false) {

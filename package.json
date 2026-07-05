@@ -7,7 +7,13 @@
     "dev": "concurrently --kill-others \"pnpm:server\" \"pnpm:vite\" -c yellow,green",
     "server": "/opt/homebrew/opt/php@8.4/bin/php -S localhost:8888 -t public ./kirby/router.php",
     "build": "vite build",
-    "preview": "pnpm run build && pnpm run server"
+    "preview": "pnpm run build && pnpm run server",
+    "fallow": "fallow",
+    "fallow:audit": "fallow audit",
+    "fallow:dead-code": "fallow dead-code",
+    "fallow:dupes": "fallow dupes",
+    "fallow:health": "fallow health",
+    "fallow:fix": "fallow fix --no-create-config"
   },
   "author": "Open Art Folke",
   "license": "GPL-3.0-or-later",
@@ -19,7 +25,7 @@
   "devDependencies": {
     "autoprefixer": "^10.5.0",
     "concurrently": "^10.0.3",
-    "opencode-ai": "^1.15.13",
+    "fallow": "^3.0.0",
     "postcss": "^8.5.15",
     "postcss-preset-env": "^11.3.0",
     "sass": "^1.100.0",

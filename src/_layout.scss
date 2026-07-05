@@ -140,13 +140,7 @@
   }
 
   .hero__bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    @include cover-bg;
   }
 
   .hero__arrow {
@@ -207,13 +201,7 @@
     }
 
     &__bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: var(--photo-banner-img-position, center);
+      @include cover-bg(var(--photo-banner-img-position, center));
     }
 
     // Logo sizing
@@ -279,13 +267,7 @@
     place-items: end center;
 
     &__bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+      @include cover-bg;
 
       @include below-tablet {
         position: relative;
@@ -341,13 +323,7 @@
   }
 
   .page-hero__bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    @include cover-bg;
   }
 
   .darken {

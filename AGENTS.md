@@ -64,10 +64,9 @@ Vite compiles assets into `public/dist/` with hashed filenames; the Vite helper 
 
 ### Key details
 
-- **Vite `root` is `src/`** (`vite.config.js`), so SCSS/JS paths are relative to `src/` — fonts are `./assets/...`, not `../src/assets/...`.
-- **Entry points** (glob in `vite.config.js`): `src/index.{js,scss}` (global; only SCSS exists, JS uses `try: true`) and `src/templates/*.{js,scss,css}` (per-page, auto-detected by template name).
-- **PostCSS** (`postcss.config.js`, auto-detected, runs after Sass→CSS): postcss-preset-env (stage 2) transforms modern CSS (`light-dark()`, `color-mix()`, `oklch()`) for the browserslist; autoprefixer adds prefixes. The `cascade-layers` polyfill is **disabled** — it rewrites selectors and breaks Graffiti UI specificity.
-- **Browserslist** (`package.json`): `> 0.5%, last 2 versions, not dead`.
+- **Vite `root` is `src/`**; entry points (`src/index.{js,scss}` global + `src/templates/*.{js,scss,css}` per-page) auto-detected via glob.
+- **PostCSS:** postcss-preset-env (stage 2) transforms modern CSS for the browserslist; autoprefixer adds prefixes. The `cascade-layers` polyfill is **disabled** — it rewrites selectors and breaks Graffiti UI specificity.
+- **Browserslist:** `> 0.5%, last 2 versions, not dead`.
 
 ## Templates and snippets
 
@@ -79,9 +78,9 @@ Native PHP via Kirby's built-in engine. Every page type needs a matching `.php` 
 
 ## Styling
 
-Uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`), a standards-first CSS library that styles native HTML directly. Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before custom CSS — keep custom CSS minimal, for edge cases only.
+Uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`). Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before custom CSS — keep custom CSS minimal, for edge cases only.
 
-> **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, token bridge, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.mobile-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-*`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → Graffiti translation. Rationale: `superpowers/specs/2026-05-29-graffiti-workflow-design.md`.
+> **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, token bridge, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.mobile-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-*`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → Graffiti translation.
 
 `src/index.scss` is organised with cascade layers in this precedence; it imports `_mixins.scss` at the top via `@use './mixins' as *;`:
 
@@ -114,7 +113,7 @@ Swapping the theme class makes `.accent` auto-adjust (red on light themes, pink 
 
 All images render through `snippet('image', [...])` (`site/snippets/image.php`): a `<picture>` with a WebP `<source>` plus an original-format (`jpg`/`png`) `<img>` fallback, driving every width from the `thumbs.srcsets` recipe in `config.php`. Pass a Kirby `File` and a `sizes` string; see the docblock for options (`hidden`, `loading`, `fetchpriority`, focus-point cropping).
 
-**WebP-only, on purpose — do not re-add AVIF.** This host's workers have a hard ~128 MB per-request memory ceiling, and AVIF encoding (libavif) allocates *outside* PHP's `memory_limit`, so generating AVIF from our large source photos OOM-kills the worker and 503s — reproducibly, even at 1920w. WebP encodes cheaply, generates the full ladder (to 2400w) reliably, and `srcset` still serves every device the right resolution. AVIF only becomes viable again with right-sized sources or more container RAM.
+**WebP-only, on purpose — do not re-add AVIF.** This host's workers have a ~128 MB per-request memory ceiling, and AVIF encoding (libavif) allocates outside PHP's `memory_limit`, OOM-killing the worker — reproducibly, even at 1920w. WebP encodes cheaply, generates the full ladder (to 2400w) reliably. AVIF only becomes viable again with right-sized sources or more container RAM.
 
 **Right-size source images before uploading.** Thumbnails generate on-demand from whatever is uploaded; multi-MB 2560px+ PNG *photos* are the main cause of slow/borderline generation. Export photos as JPEG at roughly the largest display size (heroes ~2000px, smaller slots less), not oversized PNGs.
 
@@ -133,31 +132,25 @@ All images render through `snippet('image', [...])` (`site/snippets/image.php`):
 
 ### Deploying code = `git push origin main`
 
-The **only** way code reaches live. Fortrabbit's GitHub App picks up the push and rebuilds server-side (`composer install` + `pnpm build`) — so `vendor/`, `kirby/`, `public/dist/` are generated on the server, never uploaded. `pnpm dev`, local saves, and `git commit` do **not** touch live; only the push does.
+The **only** way code reaches live. Fortrabbit's GitHub App picks up the push and rebuilds server-side (`composer install` + `pnpm build`) — so `vendor/`, `kirby/`, `public/dist/` are generated on the server, never uploaded.
 
 ### Page cache — auto-flushes on deploy
 
-Production caches rendered HTML (`cache.pages` in `config.php`, all pages except `home`). That HTML embeds Vite's hashed asset names and thumbnail URLs, which change every build, so a stale cache would 404 its CSS/images. A `route:before` hook in `config.php` fingerprints the Vite manifest's mtime and flushes the page cache once on the first request after it changes — **no manual cache step needed after `git push`**; it self-heals.
+Production caches rendered HTML (`cache.pages` in `config.php`, all pages except `home`). A `route:before` hook fingerprints the Vite manifest's mtime and flushes the page cache on the first request after it changes — **no manual cache step needed after `git push`**; it self-heals.
 
-Do **not** put the flush in `pnpm build` — Fortrabbit builds in an isolated stage, so `rm`-ing the cache there hits a throwaway dir, not live `storage/`. Emergency manual flush: `ssh en-0li4gv@ssh.eu-w1a.frbit.app 'rm -rf storage/cache/*/pages'`.
+Do **not** put the flush in `pnpm build` — Fortrabbit builds in an isolated stage. Emergency manual flush: `ssh en-0li4gv@ssh.eu-w1a.frbit.app 'rm -rf storage/cache/*/pages'`.
 
 ### Two separate streams — never let one overwrite the other
 
-`/content` and `/media` are gitignored and excluded from deploys, so a deploy never overwrites them.
-- **Code** → Git → `git push` rebuilds. Source of truth = the repo.
-- **Content** (text, uploaded images, panel data) → edited in the **production Panel**, live instantly, persists across deploys. Source of truth = the server.
-
-### Uploading images / creating content
-
-Always use the **production Panel** (`…/panel`). The localhost Panel only edits your local `content/` copy and **never reaches live**. New image-bearing section: build the *code* locally and `git push`, then add the *image and text* via the production Panel.
+`/content` and `/media` are gitignored and excluded from deploys.
+- **Code** → Git → `git push` rebuilds.
+- **Content** → edited in the **production Panel** (`…/panel`), live instantly, persists across deploys. Always use the production Panel to upload images — the local Panel never reaches live.
 
 ### Reverting a bad content edit
 
 Content isn't in git, so `git revert` can't help. Restore from Fortrabbit's **automatic daily file backup** (`.tar` of all files incl. `content/`, retained **14 days** — [help.fortrabbit.com/backups](https://help.fortrabbit.com/backups)): Dashboard → app → **Backups** → download an archive from before the mistake, unpack, find the file under `content/`, re-upload via the Panel. Caveat: daily snapshots, 14-day retention.
 
 ### Pull content down to local
-
-Pull `content/` down for a local copy (and required for the preview workflow below):
 
 ```bash
 # run after colleagues edit via the Panel
@@ -170,12 +163,12 @@ rsync -av en-0li4gv@ssh.eu-w1a.frbit.app:/data/www/content ./
 
 There is **no Fortrabbit staging URL**. A staging site would mean a second paid app deploying from a `staging` branch, and (content being gitignored and isolated per app) it would start empty and need content rsync'd in. For everyday work, preview locally — it shows the **real, current site** because the content folder is shared across every branch.
 
-1. **Branch off `main`** (always = live; never do experimental work directly on it): `git checkout main && git pull` then `git checkout -b feature/<name>`.
-2. **Pull live content once** (refresh as needed) using the rsync above. Because `/content` is gitignored, that folder is **shared by every local branch automatically** — switching branches never touches it.
-3. **Preview:** `pnpm dev` (hot reload, ideal for building) or `pnpm preview` (real production build from `public/dist/` — run before merging, especially after CSS/asset changes).
-4. **Merge & deploy:** merge the branch into `main` and `git push origin main`. (Optionally open a PR first with `gh pr create`.)
+1. **Branch off `main`** (always = live; never work directly on it): `git checkout main && git pull` then `git checkout -b feature/<name>`.
+2. **Pull live content once** (refresh as needed) using the rsync above. Because `/content` is gitignored, it's **shared by every local branch** — switching branches never touches it.
+3. **Preview:** `pnpm dev` (hot reload) or `pnpm preview` (production build — run before merging, especially after CSS/asset changes).
+4. **Merge & deploy:** merge into `main` and `git push origin main`. (Optionally open a PR with `gh pr create`.)
 
-**Limitation:** local previews run on your Mac, not the Fortrabbit server, so they don't reproduce the ~128 MB per-request memory ceiling (cause of past thumbnail/AVIF failures — see responsive images). Right-size sources before uploading. For a change you can't trust without the real server, spin up an **on-demand staging app** (second Fortrabbit app on a `staging` branch) just for that test and delete it after — billed only while it exists.
+**Limitation:** local previews don't reproduce the ~128 MB per-request memory ceiling. Right-size sources before uploading.
 
 ## Boundaries: Always safe to do
 - Edit `.php` templates in `site/templates/` and `site/snippets/`
@@ -196,3 +189,54 @@ There is **no Fortrabbit staging URL**. A staging site would mean a second paid 
 - Create `.twig` templates in `site/templates/` — only `.php` is used here
 - Delete `storage/` or its contents — sessions and cache; data-loss risk
 - Commit `site/config/.license` or any credentials
+
+## Fallow (codebase intelligence)
+
+[Fallow](https://fallow.ai) analyses the JS/TS/SCSS frontend for dead code, duplication, and complexity. The config (`.fallowrc.json`) models the Vite+SCSS architecture: entry points match Vite's glob (`src/index.{js,scss}`, `src/templates/*.{js,scss,css}`), and Sass partials are marked as `dynamicallyLoaded` since Fallow cannot trace SCSS `@use`.
+
+**Known false positives (full-scan `health --css` only, don't re-investigate):** Fallow's CSS analytics abstains on Sass semantics (`preprocessor_reachability_abstained: true`), so it reports `@layer fonts`/`@layer graffiti` as "unused layers" (both are populated in `src/index.scss`) and `vt-content-in`/`vt-content-out` as "undefined keyframes" (both are defined in `src/_components.scss`, wired to `@view-transition`). No config silences these — they're benign. The pre-commit `fallow:audit` gate is unaffected.
+
+### Commands
+
+```bash
+pnpm fallow               # Full analysis (dead code + dupes + health)
+pnpm fallow:audit         # PR gate — only files changed vs. merge-base
+pnpm fallow:dead-code     # Dead code only
+pnpm fallow:dupes         # Code duplication only
+pnpm fallow:health        # Complexity hotspots only
+pnpm fallow:fix           # Apply auto-fixes (unused exports, deps)
+```
+
+### PR gate workflow
+
+Before merging any branch into `main` (or `development`), run:
+
+```bash
+pnpm fallow:audit
+```
+
+This checks only the changed files against the merge-base and returns `"verdict": "pass"` or a non-zero exit if it finds:
+- new dead code (unused files/exports/dependencies)
+- new complexity violations (cyclomatic >20, cognitive >15, CRAP >30)
+- new code duplication (≥3 occurrences)
+
+No CI pipeline is configured — the gate is a manual pre-merge step. If you add CI later, wire in `pnpm fallow:audit`.
+
+### Current thresholds
+
+| Metric           | Threshold | Status |
+|------------------|-----------|--------|
+| Cyclomatic       | ≤20       | 0 violations (max 11) |
+| Cognitive        | ≤15       | 0 violations (max 5)  |
+| CRAP             | ≤30       | 0 violations (max 12) |
+| Health score     | ≥90 (A)   | 90 (A) |
+| Code duplication | 0%        | 0 clones |
+| Dead code        | 0         | 0 issues |
+
+### Adding exceptions
+
+- **SCSS/CSS files** that are part of the Sass import chain: add to `dynamicallyLoaded` in `.fallowrc.json`
+- **One-off false positive** in JS: use `// fallow-ignore-next-line <rule-id> -- <reason>`
+- **Intentionally unused export**: use `/** @expected-unused */` JSDoc tag on the export
+- **Generated/third-party code pattern**: use `health.ignore` or `ignorePatterns` in config
+- **Dependency needed but not imported**: use `ignoreDependencies` in config

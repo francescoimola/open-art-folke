@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+
+  "entry": [
+    "src/index.{js,mjs,scss}",
+    "src/templates/*.{js,mjs,scss,css}"
+  ],
+
+  "dynamicallyLoaded": [
+    "src/_*.{scss,css}"
+  ],
+
+  "health": {
+    "maxCyclomatic": 20,
+    "maxCognitive": 15,
+    "maxCrap": 30.0
+  },
+
+  "rules": {
+    "unused-dev-dependencies": "warn",
+    "type-only-dependencies": "warn"
+  },
+
+  "duplicates": {
+    "minOccurrences": 3
+  },
+
+  "audit": {
+    "maxCyclomatic": 20,
+    "maxCognitive": 15,
+    "maxCrap": 30.0
+  }
+}
