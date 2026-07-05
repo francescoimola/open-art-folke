@@ -15,7 +15,11 @@
  * @var string|null $class                        Extra classes on the wrapper
  */
 
-$url = trim((string) ($url ?? ''));
+$url = $url ?? '';
+if (is_array($url)) {
+	$url = '';
+}
+$url = trim((string) $url);
 if ($url === '') {
 	return;
 }
