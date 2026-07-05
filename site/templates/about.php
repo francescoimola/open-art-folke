@@ -80,7 +80,7 @@
     <details class="minimal">
       <summary><h4>Are you a charity?</h4></summary>
       <p class="readable">
-        Not at the moment. We qualify as a non-profit, unincorporated association. That is, we are a group of individuals who have voluntarily come together for a common purpose, and like many volunteer-led groups, we are reliant on <a href="/sponsors">the generous support of our sponsors and venues</a>.
+        Not at the moment. We qualify as a non-profit, unincorporated association. That is, we are a group of individuals who have voluntarily come together for a common purpose, and like many volunteer-led groups, we are reliant on <a href="/sponsor">the generous support of our sponsors and venues</a>.
       </p>
     </details>
     </div>

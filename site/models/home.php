@@ -52,10 +52,10 @@ class HomePage extends Page
     return self::TOTAL_BLOCKS;
   }
 
-  /** Number of revealed (image) slices = remaining fraction, nearest block. */
+  /** Number of revealed (image) slices = elapsed fraction, nearest block. */
   public function countdownFilled(): int
   {
-    $filled = (int) round($this->countdownFraction() * self::TOTAL_BLOCKS);
+    $filled = (int) round((1.0 - $this->countdownFraction()) * self::TOTAL_BLOCKS);
 
     return max(0, min(self::TOTAL_BLOCKS, $filled));
   }
