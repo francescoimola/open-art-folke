@@ -21,6 +21,8 @@
     }
   },
   "require-dev": {
-    "bnomei/kirby-mcp": "^1.8"
+    "bnomei/kirby-mcp": "^1.8",
+    "vimeo/psalm": "^6.16",
+    "phpstan/phpstan": "^2.2"
   }
 }

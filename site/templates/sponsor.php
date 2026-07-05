@@ -181,4 +181,3 @@ $cell = function ($field) use ($tick) {
 ]) ?>
 
 <?php snippet('site-footer') ?>
-
