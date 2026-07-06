@@ -1,7 +1,6 @@
 <?php
 /**
- * Registration notice — shared body for the "not open yet" and "closed" states.
- * Rendered inside the registration popover and the footer "I'm a creative" block.
+ * Registration notice — shared body for the "not open yet" and "closed" states. Rendered in popover and footer block.
  *
  * @var \Kirby\Cms\Site $site
  * @var string $status  'soon' or 'closed'
@@ -13,8 +12,7 @@ $linkUrl   = $site->{$prefix . '_link_url'}();
 $linkLabel = $site->{$prefix . '_link_label'}();
 $footnote  = $site->{$prefix . '_footnote'}();
 
-// Fallbacks mirror the blueprint defaults, so the notice is never blank
-// between a deploy and the first Panel save (defaults aren't read on the front end).
+/* Fallbacks mirror blueprint defaults so the notice is never blank between deploy and first Panel save. */
 $fallback = [
   'soon'   => ['message' => 'Registration for the next edition isn’t open yet — check back soon.'],
   'closed' => [

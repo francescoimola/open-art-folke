@@ -1,12 +1,9 @@
 <?php
 
 /**
- * <head> metadata + JSON-LD (Organization + WebSite on every page; +Event on
- * the home page). Fallback chain per field: page → site → omit.
+ * <head> metadata + JSON-LD (Organization + WebSite on every page; +Event on home). Fallback chain: page → site → omit.
  *
- * Blueprint `default:` values do NOT pre-fill reads on the frontend — every
- * festival field below uses ->or() with the same default, so the Event
- * renders before anyone saves the Settings tab.
+ * Blueprint defaults don't pre-fill frontend reads; festival fields use ->or() so Event renders before Settings are saved.
  */
 
 $metaTitle = $page->seotitle()->isNotEmpty()

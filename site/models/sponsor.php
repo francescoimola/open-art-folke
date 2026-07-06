@@ -5,11 +5,7 @@ use Kirby\Cms\Page;
 /**
  * Sponsor page model.
  *
- * Holds the single sponsors list (a structure field authored in the panel) and
- * splits it into "current" and "past" by year. Each sponsor is tagged with the
- * years they supported; whichever match the site's current festival year are
- * current (shown with logo), the rest are past (ordered most-recent first).
- * Templates only call methods and never touch raw SVG markup.
+ * Splits the sponsors list into "current" (matching festival year, with logo) and "past" (most-recent first). Templates call methods, not raw SVG.
  */
 class SponsorPage extends Page
 {
@@ -23,10 +19,8 @@ class SponsorPage extends Page
   }
 
   /**
-   * Every sponsor as a flat row, with its years parsed once.
-   *
-   * Each row is ['name', 'url', 'description' => Field, 'logo' => string,
-   * 'years' => int[], 'maxYear' => int]. Logos are sanitised here exactly once.
+   * Every sponsor as a flat row, with years parsed once.
+   * Each row: ['name', 'url', 'description', 'logo', 'years' => int[], 'maxYear']. Logos sanitised here once.
    */
   protected function sponsorRows(): array
   {
@@ -80,15 +74,7 @@ class SponsorPage extends Page
   }
 
   /**
-   * Sanitised, theme-aware inline SVG for one sponsor's logo.
-   *
-   * Kirby's Sane\Svg already strips dangerous markup on upload; this is a
-   * second, defensive pass plus the cosmetic transforms we always want:
-   *   - drop <script>/<style>/<foreignObject> and any on* event attributes
-   *   - force every fill onto currentColor so the logo inherits --primary
-   *   - strip width/height from the root <svg> so it scales by its viewBox
-   *   - add role="img" + an accessible label
-   * Returns '' when no file is set or the SVG can't be parsed.
+   * Sanitised, theme-aware inline SVG for one sponsor's logo. Second defensive pass after Kirby's Sane\Svg. Returns '' on failure.
    */
   public function sponsorLogo(Kirby\Cms\StructureObject $sponsor): string
   {

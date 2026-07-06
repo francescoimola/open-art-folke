@@ -1,7 +1,4 @@
-// Layout primitives + section structures: .full-bleed, .anchor-target,
-// .center-both, visibility toggles, .stack-section, .hero, .panel,
-// .photo-banner, .principles, .page-hero, .darken-*, .table-flush,
-// .people-list, .about-grid, .sponsor-grid, .dots, .split:where(.no-wrap).
+// Layout primitives + structures: .full-bleed, .anchor-target, .center-both, .stack-section, .hero, .panel, .photo-banner, .principles, .page-hero, .sponsor-grid, .dots, .split:where(.no-wrap).
 @use './mixins' as *;
 
 @layer custom {
@@ -15,24 +12,18 @@
     height: 100%;
   }
 
-  // Responsive video embed: an iframe (Vimeo) that fills a ratio box — compose
-  // with Graffiti's .aspect-video. The reset gives iframes height:auto and a
-  // 300×150 intrinsic size, so the child must be told to fill its parent.
+  // Responsive Vimeo embed that fills Graffiti's .aspect-video ratio box.
+  // Reset gives iframes 300×150 intrinsic size; child must fill parent.
   .video-embed > iframe {
     width: 100%;
     height: 100%;
     border: 0;
   }
 
-  // Non-sticky anchor sentinel. Sticky sections (.stack-section) report a
-  // pinned bounding rect once scrolled past, which makes rect-based anchor
-  // scrolling (native + Lenis) refuse to travel back up to them. Pointing the
-  // link at a zero-height, normal-flow marker just before the section restores
-  // correct two-way scroll. scroll-margin-top mirrors the nav offset (body
-  // already sets scroll-padding-top).
+  // Anchor sentinel: sticky sections pin their rect, breaking anchor scrolling (native + Lenis).
   .anchor-target {
     display: block;
-    height: 0;
+    height: 0; // Zero-height marker before the section restores two-way scroll.
     scroll-margin-top: var(--nav-height, 6rem);
   }
 
@@ -41,8 +32,7 @@
     place-items: center;
   }
 
-  // .split defaults to wrap in Graffiti — pin to no-wrap when the layout
-  // depends on a single row.
+  // .split defaults to wrap in Graffiti — pin to no-wrap when layout depends on a single row.
   .split:where(.no-wrap) {
     flex-direction: row;
     flex-wrap: nowrap;
@@ -55,10 +45,8 @@
     }
   }
 
-  // Breakpoint visibility utilities: .show-mobile is visible only below the
-  // tablet breakpoint, .show-desktop only at/above it. For swapping between two
-  // alternate Graffiti layouts of the same content (e.g. the sponsors carousel
-  // vs list) instead of overriding a component's internals.
+  // Breakpoint visibility: .show-mobile below tablet, .show-desktop at/above it.
+  // Swaps between alternate Graffiti layouts (e.g. sponsors carousel vs list) instead of overriding internals.
   @include tablet {
     .show-mobile {
       display: none;
@@ -160,10 +148,8 @@
     letter-spacing: var(--type-track-ui);
   }
 
-  // Below the tablet breakpoint (where the nav collapses to the drawer), stop
-  // the per-section card-stacking: only the hero stays pinned, and every
-  // other section flows normally so the content scrolls up over the hero as
-  // one continuous block. Heights are left untouched.
+  // Below tablet: stop per-section card-stacking. Only hero stays pinned;
+  // other sections flow normally over it as one block. Heights untouched.
   @include below-tablet {
     .stack-section:not(.hero) {
       position: relative;
@@ -171,7 +157,7 @@
     }
   }
 
-  // Panel — the spacing shell. Padding + content rhythm only, no colour.
+  // Panel — spacing shell: padding + content rhythm only, no colour.
   .panel {
     padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
     padding-block: var(--vs-xl) calc(var(--vs-xl) * 2);
@@ -181,9 +167,7 @@
     }
   }
 
-  // Photo banner — pre-filtered background photo with 3-col identity grid.
-  // Reusable: compose with .stack-section/.half; override
-  // --photo-banner-img-position to shift the focal point.
+  // Photo banner — pre-filtered background photo with 3-col identity grid. Compose with .stack-section/.half; override --photo-banner-img-position for focal point.
   .photo-banner {
     container-type: inline-size;
     display: flex;
@@ -286,9 +270,7 @@
     }
   }
 
-  // Page hero — a short section hero (used to open the About page). Fills
-  // roughly half the viewport and bottom-centres its heading; pair with
-  // .panel for padding and a .theme-* class for colour.
+  // Page hero — short section hero filling ~half the viewport, bottom-centres its heading. Pair with .panel and a .theme-* class.
   .page-hero {
     display: flex;
     flex-direction: column;
@@ -428,8 +410,8 @@
     }
   }
 
-  // Sponsor feature — 2×2 grid. Each cell is a direct child. Cell (2,1) is
-  // a subgrid that constrains the detail image to be smaller than the cell.
+  // Sponsor feature — 2×2 grid. Each cell is a direct child.
+  // Cell (2,1) is a subgrid constraining the detail image.
   .sponsor-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -516,11 +498,7 @@
     }
   }
 
-  // Accordion divider: when a <details> sits directly next to another
-  // <details> (any accordion, anywhere), give it a border-bottom instead of
-  // a manual <hr> between items. A details with no following-sibling details
-  // (a standalone disclosure) gets no line, matching the old hr-only-between
-  // behaviour.
+  // Accordion divider: adjacent <details> get border-bottom instead of manual <hr>.
   details {
     > :not(summary) {
       padding-inline: 0;

@@ -1,6 +1,5 @@
 // Color tokens — Radix scales for --red-* and --gray-* in sRGB and P3.
-// Set inside :where(:root, .light, .light-theme) so Graffiti's
-// :where([class*="theme-"]) rule can re-derive them per section.
+// Set inside :where(:root, .light, .light-theme) so Graffiti re-derives them per section.
 @use './opacity-variants' as *;
 
 @layer colors {

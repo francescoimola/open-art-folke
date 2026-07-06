@@ -54,10 +54,8 @@ if (typed && cursor) {
         master.add(tl, '+=0.3');
       });
 
-      // The hero is pinned (later sections scroll over it), so its own box
-      // never leaves the viewport — "past the hero" means scrolled beyond one
-      // viewport height. Pause all work while covered; restart from the first
-      // word when it comes back into view.
+      /* The hero is pinned (later sections scroll over it); its box never leaves the viewport. "Past the hero" = scrolled beyond one viewport height. */
+      /* Pause all work while covered; restart from the first word when it comes back into view. */
       let heroCovered = false;
       window.addEventListener('scroll', () => {
         const covered = window.scrollY >= window.innerHeight;
@@ -73,8 +71,7 @@ if (typed && cursor) {
       }, { passive: true });
     };
 
-    // Defer the GSAP fetch and animation start until after load, when the
-    // browser is idle — keeps it out of the LCP/CLS measurement window.
+    /* Defer GSAP fetch and animation until after load, when browser is idle — keeps it out of the LCP/CLS window. */
     const whenIdle = (fn) =>
       'requestIdleCallback' in window
         ? requestIdleCallback(fn, { timeout: 2000 })

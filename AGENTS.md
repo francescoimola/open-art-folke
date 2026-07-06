@@ -43,29 +43,14 @@ vendor/                # Composer dependencies — DO NOT MODIFY
 
 ## Architecture — how Kirby and Vite work together
 
-### Request flow
+**Request flow:** `public/index.php` boots Kirby → matches the URL to a template (`site/templates/*.php`) → template renders snippets → a snippet calls `vite()->css()`/`vite()->js()` to inject asset URLs.
 
-```
-Browser request
-  → public/index.php boots Kirby
-    → Kirby matches URL to a page (e.g. home)
-      → renders the matching template (site/templates/home.php)
-        → template renders snippets (header.php, footer.php, menu.php)
-          → header.php calls vite()->css() / vite()->js() to inject asset URLs
-```
+**Dev** (`pnpm dev`): PHP on :8888 + Vite on 5173 (HMR). The `.dev` file at the project root tells the Vite helper to serve assets from the dev server, not `public/dist/`; SCSS/JS hot-reloads instantly.
 
-### Dev mode (`pnpm dev`)
-
-Two servers run concurrently: **PHP** on 8888 (built-in server + `kirby/router.php`) and **Vite** on 5173 (HMR). The `.dev` file at the project root signals the Vite helper to serve assets from the dev server (not `public/dist/`); SCSS/JS changes hot-reload instantly.
-
-### Production (`pnpm build`)
-
-Vite compiles assets into `public/dist/` with hashed filenames; the Vite helper reads `.vite/manifest.json` to resolve them at runtime.
-
-### Key details
+**Build** (`pnpm build`): Vite compiles to `public/dist/` with hashed filenames; the Vite helper reads `.vite/manifest.json` to resolve them at runtime.
 
 - **Vite `root` is `src/`**; entry points (`src/index.{js,scss}` global + `src/templates/*.{js,scss,css}` per-page) auto-detected via glob.
-- **PostCSS:** postcss-preset-env (stage 2) transforms modern CSS for the browserslist; autoprefixer adds prefixes. The `cascade-layers` polyfill is **disabled** — it rewrites selectors and breaks Graffiti UI specificity.
+- **PostCSS:** postcss-preset-env + autoprefixer. The `cascade-layers` polyfill is **disabled** — it rewrites selectors and breaks Graffiti UI specificity.
 - **Browserslist:** `> 0.5%, last 2 versions, not dead`.
 
 ## Templates and snippets
@@ -82,14 +67,7 @@ Uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`). Prefer Graff
 
 > **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, token bridge, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.mobile-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-*`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → Graffiti translation.
 
-`src/index.scss` is organised with cascade layers in this precedence; it imports `_mixins.scss` at the top via `@use './mixins' as *;`:
-
-1. `@layer reset` — hand-rolled reset (box-sizing, margin/padding zero, media defaults, reduced-motion)
-2. `@layer fonts` — Inclusive Sans Variable (300–700, normal + italic)
-3. `@layer graffiti` — `@import "@drop-in/graffiti" layer(graffiti)`
-4. `@layer colors` — Radix Color scales for `--red-*`/`--gray-*` (sRGB + P3 variants)
-5. `@layer custom` — site rules: token bridge, typography overlay, hero, layout overrides
-6. `@layer button-variants` — `.btt--secondary` + theme-specific overrides
+`src/index.scss` imports `_mixins.scss` via `@use './mixins' as *;` and declares cascade layers in this precedence: `reset` (hand-rolled reset) → `fonts` (Inclusive Sans Variable) → `graffiti` (`@import "@drop-in/graffiti" layer(graffiti)`) → `colors` (Radix scales for `--red-*`/`--gray-*`) → `custom` (site rules: token bridge, typography, hero, layout) → `button-variants` (`.btt--secondary` + theme overrides).
 
 ### Color system & Figma rem scale
 
@@ -99,23 +77,15 @@ Custom palette (Brand red + Neutral gray) bridged via five root endpoints; deriv
 
 ### Reusable sections
 
-Build sections with `.panel` (spacing) + `.theme-*` (colour: `brand`, `paper`, `blush`, `crimson`, `ink`) + `.statement` (lead para) + `.accent` (theme-aware text colour):
-
-```html
-<section class="panel full-bleed theme-paper">
-  <p><span class="accent">Coloured text</span></p>
-</section>
-```
-
-Swapping the theme class makes `.accent` auto-adjust (red on light themes, pink on dark).
+Build sections with `.panel` (spacing) + `.theme-*` (colour: `brand`, `paper`, `blush`, `crimson`, `ink`) + `.statement` (lead para) + `.accent` (theme-aware text colour, e.g. `<section class="panel full-bleed theme-paper"><p><span class="accent">text</span></p></section>`). Swapping the theme class makes `.accent` auto-adjust (red on light themes, pink on dark).
 
 ### Responsive images — the `image` snippet
 
 All images render through `snippet('image', [...])` (`site/snippets/image.php`): a `<picture>` with a WebP `<source>` plus an original-format (`jpg`/`png`) `<img>` fallback, driving every width from the `thumbs.srcsets` recipe in `config.php`. Pass a Kirby `File` and a `sizes` string; see the docblock for options (`hidden`, `loading`, `fetchpriority`, focus-point cropping).
 
-**WebP-only, on purpose — do not re-add AVIF.** This host's workers have a ~128 MB per-request memory ceiling, and AVIF encoding (libavif) allocates outside PHP's `memory_limit`, OOM-killing the worker — reproducibly, even at 1920w. WebP encodes cheaply, generates the full ladder (to 2400w) reliably. AVIF only becomes viable again with right-sized sources or more container RAM.
+**WebP-only, on purpose — do not re-add AVIF.** This host's workers have a ~128 MB per-request memory ceiling; AVIF encoding (libavif) OOM-kills the worker reproducibly, even at 1920w. Only revisit with right-sized sources or more container RAM.
 
-**Right-size source images before uploading.** Thumbnails generate on-demand from whatever is uploaded; multi-MB 2560px+ PNG *photos* are the main cause of slow/borderline generation. Export photos as JPEG at roughly the largest display size (heroes ~2000px, smaller slots less), not oversized PNGs.
+**Right-size source images before uploading.** Multi-MB 2560px+ PNG photos are the main cause of slow thumbnail generation — export photos as JPEG near display size (heroes ~2000px), not oversized PNGs.
 
 ---
 
@@ -128,17 +98,15 @@ All images render through `snippet('image', [...])` (`site/snippets/image.php`):
 
 ## Content and deployment
 
-**Hosting:** Fortrabbit Universal (flat-file) app `en-0li4gv`, region `eu-w1a`. Live + Panel: `https://en-0li4gv.eu-w1a.frbit.app` (+ `/panel`).
+**Hosting:** Fortrabbit Universal app `en-0li4gv`, region `eu-w1a`. Live + Panel: `https://en-0li4gv.eu-w1a.frbit.app` (+ `/panel`).
 
 ### Deploying code = `git push origin main`
 
-The **only** way code reaches live. Fortrabbit's GitHub App picks up the push and rebuilds server-side (`composer install` + `pnpm build`) — so `vendor/`, `kirby/`, `public/dist/` are generated on the server, never uploaded.
+The **only** way code reaches live. Fortrabbit's GitHub App rebuilds server-side (`composer install` + `pnpm build`) — `vendor/`, `kirby/`, `public/dist/` are generated there, never uploaded.
 
 ### Page cache — auto-flushes on deploy
 
-Production caches rendered HTML (`cache.pages` in `config.php`, all pages except `home`). A `route:before` hook fingerprints the Vite manifest's mtime and flushes the page cache on the first request after it changes — **no manual cache step needed after `git push`**; it self-heals.
-
-Do **not** put the flush in `pnpm build` — Fortrabbit builds in an isolated stage. Emergency manual flush: `ssh en-0li4gv@ssh.eu-w1a.frbit.app 'rm -rf storage/cache/*/pages'`.
+Production caches rendered HTML (`cache.pages` in `config.php`, all pages except `home`). A `route:before` hook flushes the page cache on the first request after the Vite manifest changes — no manual step needed after `git push`. Don't add a flush to `pnpm build` (Fortrabbit builds in an isolated stage). Emergency manual flush: `ssh en-0li4gv@ssh.eu-w1a.frbit.app 'rm -rf storage/cache/*/pages'`.
 
 ### Two separate streams — never let one overwrite the other
 
@@ -148,7 +116,7 @@ Do **not** put the flush in `pnpm build` — Fortrabbit builds in an isolated st
 
 ### Reverting a bad content edit
 
-Content isn't in git, so `git revert` can't help. Restore from Fortrabbit's **automatic daily file backup** (`.tar` of all files incl. `content/`, retained **14 days** — [help.fortrabbit.com/backups](https://help.fortrabbit.com/backups)): Dashboard → app → **Backups** → download an archive from before the mistake, unpack, find the file under `content/`, re-upload via the Panel. Caveat: daily snapshots, 14-day retention.
+Content isn't in git. Restore from Fortrabbit's automatic daily file backup (14-day retention — [help.fortrabbit.com/backups](https://help.fortrabbit.com/backups)): Dashboard → app → **Backups** → download an archive from before the mistake, find the file under `content/`, re-upload via the Panel.
 
 ### Pull content down to local
 
@@ -159,16 +127,16 @@ rsync -av en-0li4gv@ssh.eu-w1a.frbit.app:/data/www/content ./
 
 **Pull only — never rsync content *up***, or you overwrite live Panel edits. (Port 22 is blocked on some public WiFi; use a hotspot if it times out.)
 
-### Local preview & branching workflow — test before it goes live
+### Local preview & branching workflow
 
-There is **no Fortrabbit staging URL**. A staging site would mean a second paid app deploying from a `staging` branch, and (content being gitignored and isolated per app) it would start empty and need content rsync'd in. For everyday work, preview locally — it shows the **real, current site** because the content folder is shared across every branch.
+No Fortrabbit staging URL — preview locally instead; it shows the **real, current site** since `/content` is gitignored and shared across every branch.
 
 1. **Branch off `main`** (always = live; never work directly on it): `git checkout main && git pull` then `git checkout -b feature/<name>`.
-2. **Pull live content once** (refresh as needed) using the rsync above. Because `/content` is gitignored, it's **shared by every local branch** — switching branches never touches it.
+2. **Pull live content once** (refresh as needed) using the rsync above.
 3. **Preview:** `pnpm dev` (hot reload) or `pnpm preview` (production build — run before merging, especially after CSS/asset changes).
 4. **Merge & deploy:** merge into `main` and `git push origin main`. (Optionally open a PR with `gh pr create`.)
 
-**Limitation:** local previews don't reproduce the ~128 MB per-request memory ceiling. Right-size sources before uploading.
+**Limitation:** local previews don't reproduce the ~128 MB per-request memory ceiling — right-size sources before uploading.
 
 ## Boundaries: Always safe to do
 - Edit `.php` templates in `site/templates/` and `site/snippets/`
@@ -194,7 +162,7 @@ There is **no Fortrabbit staging URL**. A staging site would mean a second paid 
 
 [Fallow](https://fallow.ai) analyses the JS/TS/SCSS frontend for dead code, duplication, and complexity. The config (`.fallowrc.json`) models the Vite+SCSS architecture: entry points match Vite's glob (`src/index.{js,scss}`, `src/templates/*.{js,scss,css}`), and Sass partials are marked as `dynamicallyLoaded` since Fallow cannot trace SCSS `@use`.
 
-**Known false positives (full-scan `health --css` only, don't re-investigate):** Fallow's CSS analytics abstains on Sass semantics (`preprocessor_reachability_abstained: true`), so it reports `@layer fonts`/`@layer graffiti` as "unused layers" (both are populated in `src/index.scss`) and `vt-content-in`/`vt-content-out` as "undefined keyframes" (both are defined in `src/_components.scss`, wired to `@view-transition`). No config silences these — they're benign. The pre-commit `fallow:audit` gate is unaffected.
+**Known false positives (full-scan `health --css` only, don't re-investigate):** Fallow's CSS analytics abstains on Sass semantics, so it reports `@layer fonts`/`@layer graffiti` as "unused" (both populated in `src/index.scss`) and `vt-content-in`/`vt-content-out` as "undefined keyframes" (both defined in `src/_components.scss`, wired to `@view-transition`). Benign — the `fallow:audit` gate is unaffected.
 
 ### Commands
 
@@ -209,29 +177,7 @@ pnpm fallow:fix           # Apply auto-fixes (unused exports, deps)
 
 ### PR gate workflow
 
-Before merging any branch into `main` (or `development`), run:
-
-```bash
-pnpm fallow:audit
-```
-
-This checks only the changed files against the merge-base and returns `"verdict": "pass"` or a non-zero exit if it finds:
-- new dead code (unused files/exports/dependencies)
-- new complexity violations (cyclomatic >20, cognitive >15, CRAP >30)
-- new code duplication (≥3 occurrences)
-
-No CI pipeline is configured — the gate is a manual pre-merge step. If you add CI later, wire in `pnpm fallow:audit`.
-
-### Current thresholds
-
-| Metric           | Threshold | Status |
-|------------------|-----------|--------|
-| Cyclomatic       | ≤20       | 0 violations (max 11) |
-| Cognitive        | ≤15       | 0 violations (max 5)  |
-| CRAP             | ≤30       | 0 violations (max 12) |
-| Health score     | ≥90 (A)   | 90 (A) |
-| Code duplication | 0%        | 0 clones |
-| Dead code        | 0         | 0 issues |
+Before merging into `main` (or `development`), run `pnpm fallow:audit`. It checks only files changed vs. merge-base and returns `"verdict": "pass"` or a non-zero exit on new dead code, complexity violations (cyclomatic >20, cognitive >15, CRAP >30), or duplication (≥3 occurrences). No CI is configured — this is a manual pre-merge step; wire it into CI if one gets added. Current status: 0 violations on all metrics, health score 90 (A).
 
 ### Adding exceptions
 
@@ -240,3 +186,13 @@ No CI pipeline is configured — the gate is a manual pre-merge step. If you add
 - **Intentionally unused export**: use `/** @expected-unused */` JSDoc tag on the export
 - **Generated/third-party code pattern**: use `health.ignore` or `ignorePatterns` in config
 - **Dependency needed but not imported**: use `ignoreDependencies` in config
+
+---
+
+## Comment style
+
+- **SCSS**: single-line `//` only (stripped at compile time — never appears in production CSS)
+- **PHP**: `/* */` for multi-line block comments; `/** */` for formal PHPDoc docblocks
+- **JS**: `/* */` for multi-line block comments
+- **25-word max per comment line**: if a comment needs more context, split it across multiple lines placed near the specific code they describe
+- **YAML**: `#` only (no alternative); `help:` strings are Panel UI text and exempt from length rules.

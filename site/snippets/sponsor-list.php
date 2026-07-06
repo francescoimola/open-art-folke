@@ -1,7 +1,6 @@
 <?php
 /**
- * Sponsor list — mobile carousel + desktop hover-reveal. Shared by the
- * home teaser and the sponsor-page roster.
+ * Sponsor list — mobile carousel + desktop hover-reveal. Shared by home teaser and sponsor-page roster.
  *
  * @var array $sponsors  rows of ['name', 'url', 'description', 'logo']
  */

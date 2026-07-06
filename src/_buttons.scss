@@ -1,7 +1,5 @@
-// Buttons — base rule for any un-classed button (brand red surface) lives in
-// @layer custom; variants in @layer button-variants still win via cascade
-// layer priority, and template-level unlayered CSS can still override the
-// base per page. The prefers-contrast media query is the a11y override.
+// Button base rule (brand red surface) lives in @layer custom; variants in @layer button-variants win via cascade priority.
+// Template-level unlayered CSS can override per page. prefers-contrast is the a11y override.
 @use './mixins' as *;
 
 @layer custom {
@@ -53,8 +51,7 @@
 
 }
 
-// Button variants in @layer button-variants win over the base rule via
-// cascade layer priority, not by selector specificity.
+// Button variants in @layer button-variants win over base rule via cascade layer priority, not selector specificity.
 @layer button-variants {
 
   .btt--secondary {
@@ -63,22 +60,17 @@
     --button-border: transparent;
   }
 
-  // Contrast CTA — surface = the theme's own --fg, text = its --bg (the
-  // inverted "fg/bg swap" buttons in the footer). Lives here (not Graffiti's
-  // .button.contrast) because the @layer custom base rule forces every
-  // button to brand red; this higher layer's --button-color override is
-  // what the base rule's --button-bg-top/bottom then resolve from.
+  // Contrast CTA: inverts fg/bg for footer buttons.
+  // Lives here (not Graffiti's .button.contrast) because @layer custom forces brand red;
+  // this layer's --button-color override is what base rule's --button-bg-* resolve from.
   .btt--contrast {
     --button-color: var(--fg);
     color: var(--bg);
     --button-border: transparent;
   }
 
-  // On blush the default secondary bg (Brand-50) equals the section bg, so
-  // it vanishes. Match Figma instead: bright-red text on a Brand-50
-  // (#FFE0DB) surface, with a faint Brand border so the box still reads
-  // against blush. Scoped to .theme-blush so it only applies inside blush
-  // sections.
+  // On blush, secondary bg (Brand-50) equals section bg — match Figma: bright-red text on Brand-50 (#FFE0DB) with faint border.
+  // Scoped to .theme-blush so it only applies inside blush sections.
   .theme-blush {
     .btt--secondary {
       --button-color: var(--light-Neutral-50);

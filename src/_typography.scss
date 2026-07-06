@@ -1,5 +1,4 @@
-// Typography overlay — root tokens, body, headings, links, paragraphs,
-// placeholder, strong, small. Drives every heading via --fl (h6=0 … h1=5).
+// Typography overlay — root tokens, body, headings, links, paragraphs, placeholder, strong, small. Drives headings via --fl (h6=0 … h1=5).
 @use './mixins' as *;
 
 @layer custom {

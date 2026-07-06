@@ -5,10 +5,7 @@ use Kirby\Cms\Page;
 /**
  * Home page model.
  *
- * Holds the countdown maths so templates and snippets only call methods and
- * never compute dates inline. All comparisons run at day granularity (dates
- * normalised to midnight) so the count is stable through the day and free of
- * hour/timezone off-by-one.
+ * Holds countdown maths so templates only call methods. Day-granularity comparisons (dates normalised to midnight) avoid hour/timezone off-by-one.
  */
 class HomePage extends Page
 {

@@ -129,7 +129,7 @@
     quotes: none;
   }
 
-  /* Pseudo-elements aren't valid inside :is()/:where(), so this stays a list. */
+  // Pseudo-elements aren't valid inside :is()/:where(), so this stays a list.
   blockquote::before,
   blockquote::after,
   q::before,

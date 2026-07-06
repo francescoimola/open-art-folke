@@ -9,9 +9,7 @@ const lenis = new Lenis({
   syncTouch: false,    // Lenis smooth-scroll on iOS<16 can jitter during inertial scroll, so we leave native touch alone.
 })
 
-// Registration popover — swap its theme class to whichever theme the
-// popover itself declares for the origin of whichever trigger opened it
-// (data-nav-theme / data-body-theme).
+/* Registration popover — swap its theme class to the popover's declared one for whichever trigger opened it (data-nav-theme / data-body-theme). */
 document.querySelectorAll('[popovertarget="registration-popover"]').forEach((btn) => {
   btn.addEventListener('click', () => {
     const popover = document.getElementById('registration-popover')
@@ -20,9 +18,7 @@ document.querySelectorAll('[popovertarget="registration-popover"]').forEach((btn
   })
 })
 
-// Copy-to-clipboard buttons (progressive enhancement). Global so it works on
-// every page — the footer's copy button and the Sponsor page both rely on it.
-// On failure we stay silent — the address is always shown as text nearby.
+/* Copy-to-clipboard buttons (progressive enhancement). Global — footer copy button and Sponsor page both rely on it. On failure, stay silent (address is shown as text nearby). */
 document.querySelectorAll('[data-copy]').forEach((btn) => {
   btn.addEventListener('click', async () => {
     try {

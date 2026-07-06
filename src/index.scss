@@ -1,9 +1,5 @@
-// Global entry point. Composes per-concern partials in cascade order:
-// reset → fonts → graffiti → colors → custom → button-variants.
-//
-// @use does not support layer(), so the layer() calls inside the imports
-// below are necessary to declare layer order. Remove this workaround when
-// Sass adds @use … layer() support.
+// Global entry point: composes partials in cascade order (reset → fonts → graffiti → colors → custom → button-variants).
+// @use doesn't support layer(), so layer() calls inside imports declare the order. Remove when Sass adds @use … layer().
 @use './mixins' as *;
 @use './opacity-variants';
 @use './reset';
@@ -19,10 +15,7 @@
 @import "@drop-in/graffiti" layer(graffiti);
 @import "lenis/dist/lenis.css" layer(graffiti);
 
-// Cross-document (MPA) view transitions — global opt-in. Standalone
-// at-rule, so it sits outside the cascade layers. Unsupported browsers
-// (e.g. Firefox) ignore it and navigate normally — pure progressive
-// enhancement.
+// Cross-document (MPA) view transitions — global opt-in, standalone at-rule outside cascade layers. Unsupported browsers ignore it — progressive enhancement.
 @view-transition {
   navigation: auto;
 }

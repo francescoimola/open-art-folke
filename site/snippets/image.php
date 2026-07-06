@@ -2,8 +2,7 @@
 
 /**
  * Responsive <picture> for a Kirby file. WebP + original-format fallback
- * (no AVIF — see the comment inside the <picture> below for why). Renders
- * the focus point as `object-position` unless the caller already set it.
+ * (no AVIF). Renders focus point as object-position unless caller already set it.
  *
  * @var mixed $file Kirby File or Asset; null renders nothing
  * @var string|null $sizes defaults to '100vw'
@@ -29,16 +28,13 @@ $hidden   = $hidden ?? false;
 if ($hidden === true) {
   $alt = '';
 } elseif (($alt ?? null) === null) {
-  // Cms\File exposes alt() as a magic content field (so method_exists is false);
-  // Asset has no content fields. Read the panel `alt` field for real files only.
+  /* Cms\File exposes alt() as a magic content field; Asset has none. Read panel alt field for real files only. */
   $alt = $file instanceof \Kirby\Cms\File ? $file->alt()->or('')->value() : '';
 }
 
 $style = $style ?? '';
 
-// Honour the Panel focus point: translate it into `object-position` so the
-// browser's cover-crop keeps the chosen subject in frame. Skip when the caller
-// already set `object-position` explicitly, or when no focus point is stored.
+/* Honour Panel focus point as object-position so cover-crop keeps subject in frame. Skip when caller already set it or no focus stored. */
 $objectPosition = null;
 if (
   $file instanceof \Kirby\Cms\File &&

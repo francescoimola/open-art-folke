@@ -1,13 +1,10 @@
-// Site components: .skip-link, .site-nav + .mobile-drawer, sponsors,
-// archive carousel, form/dropdown, view transitions, footer tweaks.
+// Site components: .skip-link, .site-nav + .mobile-drawer, sponsors, archive carousel, form/dropdown, view transitions, footer tweaks.
 @use './mixins' as *;
 
 @layer custom {
 
-  // Skip link (a11y bypass-blocks). Built on Graffiti's own .visually-hidden
-  // technique + --focus-ring tokens. Named to drop-in match Graffiti's
-  // documented .skip-link, which is not yet in the published 4.30.0 package —
-  // delete this when it ships and the markup keeps working unchanged.
+  // Skip link (a11y bypass-blocks) using Graffiti's .visually-hidden + --focus-ring tokens.
+  // Named to match Graffiti's documented .skip-link — delete when it ships in the package.
   .skip-link {
     position: absolute;
     overflow: hidden;
@@ -27,7 +24,7 @@
     inset-block-start: var(--pad-s);
     inset-inline-start: var(--pad-s);
     z-index: 1000;
-    /* above .site-nav (z-index: 100) */
+    // above .site-nav (z-index: 100)
     padding: var(--pad-s) var(--pad-m);
     border-radius: var(--br-s);
     background: var(--primary);
@@ -36,9 +33,7 @@
     outline-offset: var(--focus-ring-offset);
   }
 
-  // Carousel enhancements (applies to every Graffiti .carousel).
-  // The scroller is keyboard-focusable (tabindex in markup); show a ring so
-  // keyboard users see where arrow-key scrolling lands.
+  // Carousel enhancements: scroller is keyboard-focusable (tabindex); show ring so keyboard users see arrow-key landing.
   .carousel:focus-visible {
     outline: var(--focus-ring);
     outline-offset: var(--focus-ring-offset);
@@ -73,9 +68,7 @@
       flex-shrink: 0;
       text-decoration: none;
 
-      // The logo instance that sits in the top bar (not the drawer) gets a
-      // small optical nudge upward. NOT a visibility toggle — purely a
-      // margin tweak.
+      // Top-bar logo gets an optical nudge upward — purely a margin tweak.
       &--topbar {
         margin-top: calc(var(--vs-xs) * -1);
       }
@@ -124,7 +117,7 @@
     }
   }
 
-  // Lock background scroll while the mobile drawer (native popover) is open.
+  // Lock background scroll while mobile drawer (native popover) is open.
   body:has(&:popover-open) {
     overflow: hidden;
   }
@@ -164,10 +157,9 @@
         color: inherit;
   }
 
-  // Sponsors — two self-contained layouts, swapped by breakpoint via
-  // .show-mobile / .show-desktop. Both are plain Graffiti (.carousel / .box /
-  // .split / .stack); the only custom bits are the few knobs below and the
-  // desktop hover-reveal. To restyle, change the knobs — leave the rest.
+  // Sponsors — two layouts swapped by breakpoint via .show-mobile / .show-desktop.
+  // Both are plain Graffiti (.carousel / .box / .split / .stack); custom bits are below.
+  // To restyle, change the knobs — leave the rest.
   .sponsors {
     --sponsor-card-width: min(80%, 24rem);
     --sponsor-card-logo-size: min(12rem, 40%);
@@ -187,9 +179,7 @@
     }
   }
 
-  // Mobile carousel — full-bleed within the .panel parent so it scrolls
-  // edge-to-edge, with matching padding and scroll-padding so the last card
-  // never sits flush against the right edge.
+  // Mobile carousel — full-bleed within .panel parent, edge-to-edge with matching padding so last card never sits flush against right edge.
   .sponsors-mobile {
     --gap: var(--vs-base);
     --layout-padding: clamp(var(--pad-l), 5vw, var(--pad-xxl));
@@ -206,22 +196,19 @@
       }
     }
 
-    // Override .box.ghost's transparent background so the card's own --bg
-    // (derived from its theme class) is visible.
+    // Override .box.ghost's transparent bg so the card's own --bg (from theme class) is visible.
     >li.box.ghost {
       background: var(--bg);
     }
 
-    // On the deep-red sponsor section the crimson cards would blend in, so
-    // lift them to theme-brand's brighter red endpoint to stand out. Scoped
-    // to the crimson section so the homepage (blush section) teaser keeps
-    // crimson cards.
+    // In deep-red sponsor section, crimson cards blend in — lift them to theme-brand's brighter red.
+    // Scoped to crimson section so homepage (blush) teaser keeps crimson cards.
     :where(.theme-crimson) &>li.box.ghost {
       --bg-light: var(--dark-Brand-600);
       --bg-dark: var(--dark-Brand-600);
     }
 
-    // Inside a deep-red card the SVG logo should use the light fg.
+    // Inside deep-red card, SVG logo uses light fg.
     >li.theme-crimson .sponsor-logo svg {
       color: var(--fg);
     }
@@ -241,9 +228,7 @@
     }
   }
 
-  // Desktop list — names flow with Graffiti's natural stack gaps; each row's
-  // logo is taken out of flow and centred to the right, free to overshoot the
-  // row, revealed on hover/focus (blank until then).
+  // Desktop list: names flow with Graffiti's stack gaps; each row's logo is out of flow, centred right, revealed on hover/focus.
   .sponsors-desktop {
     list-style: none;
     padding: 0;
@@ -290,8 +275,7 @@
     }
   }
 
-  // Past sponsors — a plain list of name + ↗ links (no dropdown/logo). The
-  // links inherit the surrounding .accent colour rather than re-colouring.
+  // Past sponsors — plain list of name + ↗ links (no dropdown/logo). Links inherit .accent colour.
   .sponsors-past {
     list-style: none;
     padding: 0;
@@ -315,29 +299,14 @@
     opacity: 0.6;
   }
 
-  // Archive photo grid — plain CSS Grid (composes Graffiti's .layout-split:
-  // 2 columns, 1 below 768px), no JS, no feature-detection.
-  //
-  // Each cell's height is self-contained: derived from the cell's OWN width
-  // via a container query unit (cqi), never from vh and never from a
-  // sibling's intrinsic size. This deliberately sidesteps CSS Grid's row
-  // auto-sizing — a portrait photo's own (often much taller) intrinsic size
-  // would otherwise blow out the whole row no matter what min/max-height
-  // tricks are applied to the item itself, since the row-track sizing pass
-  // uses each item's intrinsic content size, not its final rendered size.
-  // Because every cell uses the same cqi formula against its own (equal,
-  // grid-column) width, both cells in a row land on the same height anyway.
-  //
-  // object-fit: contain then does the landscape/portrait distinction for
-  // free — a landscape photo spans the cell's full width (letterboxed
-  // top/bottom), a portrait photo spans the cell's full height (letterboxed
-  // left/right) — no per-photo orientation class needed.
+  // Archive photo grid — plain CSS Grid (composes .layout-split: 2 cols), no JS.
+  // Each cell derives height from its own width via cqi, not vh or siblings — sidesteps Grid row auto-sizing.
   .archive-gallery {
     --gap: var(--vs-base);
     list-style: none;
     align-items: stretch; // align items to top; let them stretch horizontally
 
-    // Beat the global picture/img cover rules (same layer, higher specificity).
+    // Beat global picture/img cover rules (same layer, higher specificity).
     picture,
     picture img {
       display: block;
@@ -346,11 +315,12 @@
 
     picture img {
       object-fit: contain;
-      object-position: left top !important; // left-align any letterboxed space
+      // !important load-bearing: inline object-position from image.php outranks selectors — forces top-left pin regardless of stored focus point.
+      object-position: left top !important;
     }
   }
 
-  // Form & dropdown
+  // Form & dropdown.
 
   // Let .input-group consume --gap so gap-* utilities work on it.
   .input-group {
@@ -411,7 +381,7 @@
     }
   }
 
-  /* Popover */
+  // Popover.
   .registration-popover {
     border: var(--border-1);
     border-radius: var(--br-s);
@@ -449,11 +419,8 @@
     }
   }
 
-  // View transitions — global cross-document transition (opted in via the
-  // unlayered @view-transition rule near the top of index.scss). The page
-  // content (the "root" snapshot) cross-fades and lifts ~8px; the persistent
-  // chrome (nav + footer) is named so it leaves the root group and stays
-  // visually stable rather than flickering.
+  // View transitions — cross-document (opted in via @view-transition in index.scss). Page content cross-fades and lifts ~8px;
+  // persistent chrome (nav + footer) is named to leave the root group and stay visually stable.
 
   @keyframes vt-content-in {
     from {
@@ -477,10 +444,8 @@
     animation: vt-content-in 0.35s ease both;
   }
 
-  // Lift the persistent chrome out of the root snapshot. A named element
-  // present on both pages morphs in place; since these are identical across
-  // pages, the morph is imperceptible — no fade flicker. Each name must be
-  // unique per page, and both .site-nav and .footer appear exactly once.
+  // Lift persistent chrome out of the root snapshot. Named elements on both pages morph in place (identical = imperceptible).
+  // Each name must be unique per page; .site-nav and .footer each appear once.
   .site-nav {
     view-transition-name: site-nav;
   }

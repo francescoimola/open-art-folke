@@ -1,6 +1,5 @@
-// Theme presets (.theme-*) plus theme-aware text (.accent, .statement, .tagline)
-// and ::selection. Each preset sets --bg/--fg/--primary endpoints; Graffiti's
-// :where([class*="theme-"]) re-derives all downstream scales from those values.
+// Theme presets (.theme-*) plus theme-aware text (.accent, .statement, .tagline) and ::selection.
+// Each preset sets --bg/--fg/--primary endpoints; Graffiti re-derives downstream scales.
 @use './mixins' as *;
 
 @layer custom {
@@ -50,8 +49,7 @@
     color-scheme: dark;
   }
 
-  // Theme-aware text — .accent colors text with the current --primary (red on
-  // light themes, soft pink on dark/deep-red themes).
+  // .accent colours text with --primary: red on light themes, soft pink on dark/deep-red.
   :is(.accent, .statement) {
     --text-color: var(--primary);
     color: var(--primary);
@@ -81,27 +79,19 @@
     color: inherit;
   }
 
-  // Tagline lead — the About page's opening "umbrella" statement reuses the
-  // .statement type scale but recolours it: the lead sits at full fg strength
-  // and the continuation drops to a muted tone (deliberately not the red
-  // accent the homepage statements use). Scoped so .statement stays red
-  // everywhere else.
+  // Tagline lead: reuses .statement's type scale but recolours it.
   .tagline>p:first-child {
     --text-color: var(--fg);
-    color: var(--fg);
+    color: var(--fg); // Lead at full fg strength (not the red accent).
   }
 
-  .tagline>p:nth-child(2) {
+  .tagline>p:nth-child(2) { // Continuation drops to muted tone.
     --text-color: var(--fg-5);
     color: var(--fg-5);
   }
 
-  // Selection — theme-aware inverted highlight. The highlight is each section's
-  // --fg at ~85% (a touch of transparency to soften it); selected text flips to
-  // the section's --bg, guaranteeing contrast in every theme — including the
-  // light-on-dark hero where the browser default obscured the title. --fg/--bg
-  // are re-derived per .theme-*, so this adapts to all current and future
-  // sections automatically.
+  // Theme-aware inverted highlight. Each section's --fg at ~85% with transparency; selected text flips to --bg.
+  // --fg/--bg re-derive per .theme-*, so this adapts to all sections automatically.
   ::selection {
     background: color-mix(in oklab, var(--fg) 85%, transparent);
     color: var(--bg);
