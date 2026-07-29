@@ -107,6 +107,7 @@ tabs:
             max: 1
             query: page.files.filterBy("extension", "svg")
             uploads:
+              template: svg
               accept: image/svg+xml
   seo:
     extends: tabs/seo
