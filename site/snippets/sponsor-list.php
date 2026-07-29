@@ -27,7 +27,7 @@ $sponsorName = fn($s) => $s['url']->isNotEmpty()
 </ul>
 
 <!-- Desktop: a stacked list; each row reveals its own logo on hover/focus. -->
-<ul class="sponsors-desktop show-desktop stack accent mt-m" style="gap: 0;">
+<ul class="sponsors-desktop show-desktop stack accent mt-m">
   <?php foreach ($sponsors as $i => $s): ?>
     <?php $menuId = $idPrefix . '-' . $i ?>
     <li style="--anchor: --sponsor-<?= $i ?>">

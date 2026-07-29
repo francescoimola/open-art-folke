@@ -230,6 +230,9 @@
 
   // Desktop list: names flow with Graffiti's stack gaps; each row's logo is out of flow, centred right, revealed on hover/focus.
   .sponsors-desktop {
+    // Uniform row rhythm — .stack reads --gap. Never fake this with item margins:
+    // flex margins don't collapse, so middle rows would double up.
+    --gap: var(--vs-l);
     list-style: none;
     padding: 0;
 
@@ -240,10 +243,6 @@
     >li {
       position: relative;
       cursor: default;
-
-      &:not(:first-child):not(:last-child) {
-        margin-block: var(--vs-l);
-      }
 
       >.dropdown {
         display: block;
