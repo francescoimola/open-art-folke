@@ -78,7 +78,7 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
 
 <?php $sponsorPage = page('sponsor') ?>
 <?php if ($sponsorPage): ?>
-<section class="sponsors theme-blush stack-section half panel even stack gap-xl">
+<section class="sponsors theme-blush stack-section flowing half panel even stack gap-xl">
   <h2>Recent sponsors</h2>
 
   <?php snippet('sponsor-list', [
