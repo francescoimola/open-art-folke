@@ -2,3 +2,6 @@ allowBuilds:
   esbuild: true
   '@parcel/watcher': false
   opencode-ai: false
+
+overrides:
+  immutable: '>=5.1.8'
