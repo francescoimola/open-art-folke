@@ -50,6 +50,8 @@ return [
 
     /* After a deploy, Vite's hashed asset names change and invalidate cached HTML. */
     /* Can't flush from pnpm build (Fortrabbit builds in isolated stage). Fingerprint manifest's mtime and flush cache once. */
+    /* Marker lives per-hostname, matching Kirby's own page-cache prefix — otherwise Fortrabbit's */
+    /* internal health-check host consumes the marker first and the real domain stays stale. */
     'route:before' => function () use ($isDev) {
       if ($isDev === true) {
         return;
@@ -60,7 +62,8 @@ return [
         return;
       }
 
-      $marker      = kirby()->root('cache') . '/.build';
+      $prefix      = str_replace(['/', ':'], '_', kirby()->system()->indexUrl());
+      $marker      = kirby()->root('cache') . '/' . $prefix . '/.build';
       $fingerprint = (string) filemtime($manifest);
       $seen        = is_file($marker) ? @file_get_contents($marker) : null;
 

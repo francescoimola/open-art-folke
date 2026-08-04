@@ -106,7 +106,7 @@ The **only** way code reaches live. Fortrabbit's GitHub App rebuilds server-side
 
 ### Page cache — auto-flushes on deploy
 
-Production caches rendered HTML (`cache.pages` in `config.php`, all pages except `home`). A `route:before` hook flushes the page cache on the first request after the Vite manifest changes — no manual step needed after `git push`. Don't add a flush to `pnpm build` (Fortrabbit builds in an isolated stage). Emergency manual flush: `ssh en-0li4gv@ssh.eu-w1a.frbit.app 'rm -rf storage/cache/*/pages'`.
+Production caches rendered HTML (`cache.pages` in `config.php`, all pages except `home`). A `route:before` hook flushes the page cache on the first request after the Vite manifest changes — no manual step needed after `git push`. The flush fingerprint is tracked per hostname (page caches are per-host in Kirby), so each hostname — including Fortrabbit's internal health-check host — flushes independently on its own first post-deploy request. Don't add a flush to `pnpm build` (Fortrabbit builds in an isolated stage). Emergency manual flush: `ssh en-0li4gv@ssh.eu-w1a.frbit.app 'rm -rf storage/cache/*/pages'`.
 
 ### Two separate streams — never let one overwrite the other
 
