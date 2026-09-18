@@ -7,7 +7,7 @@
  */
 ?>
 <section class="stack-section layout-split split-gap-none programme-choice">
-  <div class="panel even theme-crimson stack gap-xl programme-choice__intro">
+  <div class="panel even theme-crimson stack gap-l programme-choice__intro">
     <?php snippet('image', [
       'file' => $page->programmeheroimage()->toFile(),
       'class' => 'programme-choice__bg',

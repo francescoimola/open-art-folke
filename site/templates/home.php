@@ -36,7 +36,7 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
     <h2><?= $days === 1 ? 'There is' : 'There are' ?>
       <?= $days ?>
       <?= $days === 1 ? 'day' : 'days' ?>
-      until the next edition of Open Art Folke
+      until Open Art Folke 2026
     </h2>
     <p class="close-trim">Almost there baby, almost there.</p>
   </div>

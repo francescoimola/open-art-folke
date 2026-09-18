@@ -89,6 +89,12 @@
     display: block;
   }
 
+  // <source> defaults to display: block. Inside a display: contents <picture> it becomes
+  // an empty flex/grid item and picks up a stray gap.
+  source {
+    display: none;
+  }
+
   svg[width][height] {
     max-width: revert;
   }
