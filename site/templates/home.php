@@ -17,7 +17,30 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
     <h1>Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke<span aria-hidden="true"><span class="hero__typed"></span><span class="hero__cursor">|</span></span></h1>
     <span class="hero__sizer h1" aria-hidden="true">Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke is cross-generational and cross-cultural</span>
   </div>
-  <a class="hero__arrow fs-xl" href="#intro" aria-label="Scroll to content">↓</a>
+  <a class="hero__arrow fs-xl" href="#programme" aria-label="Scroll to content">↓</a>
+</section>
+
+<div id="programme" class="anchor-target" aria-hidden="true"></div>
+<?php /* Programme section: toggled in the Panel (Home → Programme). Falls back to sign-up until a PDF is uploaded. */ ?>
+<?php $programmePdf = $page->programmepdf()->toFile() ?>
+<?php if ($page->programmemode()->value() === 'programme' && $programmePdf): ?>
+  <?php snippet('programme-choice', ['pdf' => $programmePdf]) ?>
+<?php else: ?>
+  <?php snippet('programme-signup', ['form' => $form]) ?>
+<?php endif ?>
+
+<section class="theme-blush stack-section half layout-split">
+  <div
+    class="stack panel even readable gap-l">
+    <?php $days = $page->daysRemaining() ?>
+    <h2><?= $days === 1 ? 'There is' : 'There are' ?>
+      <?= $days ?>
+      <?= $days === 1 ? 'day' : 'days' ?>
+      until the next edition of Open Art Folke
+    </h2>
+    <p class="close-trim">Almost there baby, almost there.</p>
+  </div>
+  <?php snippet('countdown') ?>
 </section>
 
 <section id="intro" class="panel stack-section half layout-split theme-brand">
@@ -33,21 +56,34 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
   <div class="split vertical panel even gap-l">
     <div class="stack readable gap-xl">
       <h2>
-        <span class="text-muted">Open Art</span><br>The Festival</h2>
+        <span class="text-muted">Open Art Folke</span><br>The Festival</h2>
       <div class="stack gap-m">
         <p>A free pass* to connect with talented local creatives, experience their work, and learn about how it’s made.</p>
         <p>Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
       </div>
-      <div class="stack ">
-        <a href="#programme" class="button fit-width">Explore the 2026 programme</a>
-        <?php if ($status === 'open'): ?>
-          <?php if ($registerUrl): ?>
-            <a href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank" class="button btt--secondary fit-width">Register as an artist</a>
-          <?php endif ?>
-        <?php else: ?>
-          <button popovertarget="registration-popover" data-popover-origin="body" class="button btt--secondary fit-width">Register as an artist</button>
-        <?php endif ?>
-      </div>
+      <?php
+      /* Until an editor first saves the field, fall back to the blueprint defaults so buttons don't vanish on deploy. */
+      $festivalButtons = $page->content()->has('festivalbuttons')
+        ? $page->festivalbuttons()->toStructure()
+        : Kirby\Cms\Structure::factory($page->blueprint()->field('festivalbuttons')['default'] ?? [], ['parent' => $page]);
+      ?>
+      <?php if ($festivalButtons->isNotEmpty()): ?>
+        <div class="stack">
+          <?php foreach ($festivalButtons->limit(2)->values() as $i => $button): ?>
+            <?php $class = $i === 0 ? 'button fit-width' : 'button btt--secondary fit-width' ?>
+            <?php if ($button->registration()->toBool()): ?>
+              <?php if ($status !== 'open'): ?>
+                <button popovertarget="registration-popover" data-popover-origin="body" class="<?= $class ?>"><?= $button->label()->esc() ?></button>
+              <?php elseif ($registerUrl): ?>
+                <a href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank" class="<?= $class ?>"><?= $button->label()->esc() ?></a>
+              <?php endif ?>
+            <?php elseif ($href = $button->link()->toUrl()): ?>
+              <?php $external = str_starts_with($button->link()->value(), 'http') ?>
+              <a href="<?= esc($href, 'attr') ?>"<?= $external ? ' rel="noopener noreferrer" target="_blank"' : '' ?> class="<?= $class ?>"><?= $button->label()->esc() ?></a>
+            <?php endif ?>
+          <?php endforeach ?>
+        </div>
+      <?php endif ?>
     </div>
     <small class="mt-s">* Open Art is 99% free to attend, but some events require a paid reservation</small>
   </div>
@@ -58,23 +94,6 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
     'sizes' => '(min-width: 768px) 50vw, 100vw',
   ]) ?>
 </section>
-
-<section class="theme-blush stack-section half layout-split">
-  <div
-    class="stack panel even readable gap-l">
-    <?php $days = $page->daysRemaining() ?>
-    <h2><?= $days === 1 ? 'There is' : 'There are' ?>
-      <?= $days ?>
-      <?= $days === 1 ? 'day' : 'days' ?>
-      until the next edition of Open Art Folke
-    </h2>
-      <p class="close-trim">Some things, as you know, just take time</p>
-  </div>
-  <?php snippet('countdown') ?>
-</section>
-
-<div id="programme" class="anchor-target" aria-hidden="true"></div>
-<?php snippet('programme-signup', ['form' => $form]) ?>
 
 <?php $sponsorPage = page('sponsor') ?>
 <?php if ($sponsorPage): ?>

@@ -51,6 +51,14 @@
     }
 }
 
+// Link arrows (↗) fall back to another font; Firefox then draws their underline lower than the text's.
+// inline-block stops decoration propagating, so only the label is underlined in every browser.
+// Markup has no space before the arrow; the margin makes the gap so it isn't underlined.
+:is(a, button) span[aria-hidden="true"] {
+  display: inline-block;
+  margin-inline-start: 0.3em;
+}
+
 // Gap utilities: set --gap on flex/grid/stack containers without inline styles.
 
 .gap-xs {

@@ -14,8 +14,7 @@ $contactEmail = 'openartfolke@gmail.com';
       <a class="underline" href="<?= $child->url() ?>" <?= $child->isActive() ? ' aria-current="page"' : '' ?>><?= $child->title() ?></a>
     <?php endforeach ?>
     <?php if ($status === 'open' && $registerUrl): ?>
-      <a class="underline" href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank">Register
-        <span aria-hidden="true">↗</span></a>
+      <a class="underline" href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank">Register<span aria-hidden="true">↗</span></a>
     <?php endif ?>
   </nav>
 
@@ -60,11 +59,11 @@ $contactEmail = 'openartfolke@gmail.com';
         <div class="stack gap-m">
           <?php if ($site->instagram_url()->isNotEmpty()): ?>
             <a class="underline" href="<?= $site->instagram_url()->esc('attr') ?>"
-              rel="noopener noreferrer" target="_blank">Instagram <span aria-hidden="true">↗</span></a>
+              rel="noopener noreferrer" target="_blank">Instagram<span aria-hidden="true">↗</span></a>
           <?php endif ?>
           <?php if ($site->facebook_url()->isNotEmpty()): ?>
             <a class="underline" href="<?= $site->facebook_url()->esc('attr') ?>"
-              rel="noopener noreferrer" target="_blank">Facebook <span aria-hidden="true">↗</span></a>
+              rel="noopener noreferrer" target="_blank">Facebook<span aria-hidden="true">↗</span></a>
           <?php endif ?>
         </div>
       </div>

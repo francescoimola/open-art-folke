@@ -37,15 +37,42 @@ tabs:
         uploads:
           parent: site.find('media')
           template: image
-      programmeimage:
-        type: files
-        label: Programme section photo
-        help: Photo in the "Programme” section.
-        max: 1
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-        uploads:
-          parent: site.find('media')
-          template: image
+      festivalbuttons:
+        type: structure
+        label: Festival section buttons
+        help: Up to two. The first is solid red, the second is pale. Remove both to hide the buttons.
+        max: 2
+        default:
+          - label: Explore the 2026 programme
+            registration: false
+            link: "#programme"
+          - label: Register as an artist
+            registration: true
+        columns:
+          label: true
+          registration: true
+        fields:
+          label:
+            type: text
+            label: Button text
+            required: true
+          registration:
+            type: toggle
+            label: Registration button
+            text:
+              - Custom link
+              - Uses registration status
+            help: Links to the sign-up form when registration is open; otherwise opens the registration notice popover.
+          link:
+            type: link
+            label: Goes to
+            options:
+              - page
+              - url
+              - anchor
+            required: true
+            when:
+              registration: false
       bannerimage:
         type: files
         label: Photo banner background
@@ -72,5 +99,97 @@ tabs:
         type: date
         label: Countdown end
         default: 2026-10-09
+
+  # The homepage #programme section (the nav's "Programme" link) has two versions; this tab picks one.
+  # Both groups stay editable so the next version's copy can be prepared before switching.
+  programme:
+    label: Programme
+    icon: book
+    fields:
+      programmemode:
+        type: toggles
+        label: Programme section shows
+        default: signup
+        grow: true
+        options:
+          - value: signup
+            text: Sign-up (programme coming soon)
+          - value: programme
+            text: Read or download the programme
+        help: >
+          “Read or download” only appears once a PDF is uploaded below — until then the sign-up stays up.
+          Switch back to sign-up after the festival.
+
+      programmeheadline:
+        type: headline
+        label: Read or download the programme
+      programmeheading:
+        type: text
+        label: Heading
+        placeholder: See our 2026 programme
+        help: Leave blank to use the placeholder text.
+      programmetext:
+        type: textarea
+        label: Intro text
+        buttons: false
+        placeholder: It’s time to explore Open Art Folke. Flick through the programme, or download the PDF to keep on your device.
+        help: Explains the two buttons. Leave blank to use the placeholder text.
+      programmeheroimage:
+        type: files
+        label: Background illustration
+        help: Decorative artwork behind the heading and text. Leave empty to show flat colour instead.
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
+      programmepdf:
+        type: files
+        label: Programme PDF
+        help: >
+          Powers both buttons. Visitors' downloads keep this file's name, so upload it as
+          e.g. open-art-folke-2026-programme.pdf. Keep it under ~10 MB so it opens quickly on phones.
+        max: 1
+        query: page.files.template('pdf')
+        uploads:
+          template: pdf
+
+      signupheadline:
+        type: headline
+        label: Sign-up (programme coming soon)
+      signupheading:
+        type: text
+        label: Heading
+        placeholder: Looking for the Festival Programme?
+        width: 1/2
+      signupsubheading:
+        type: text
+        label: Subheading (muted)
+        placeholder: You’re early
+        width: 1/2
+      signuptext:
+        type: textarea
+        label: Intro text
+        buttons: false
+        placeholder: "We're still setting the stage for the 3rd edition of Open Art Folke: <i>Art This Way</i>, and we'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can."
+        help: Leave any of these blank to use the placeholder text.
+      signupsuccess:
+        type: text
+        label: Message after signing up
+        placeholder: Wooho! We'll send you an email as soon as the programme drops 😉
+      signupfootnote:
+        type: text
+        label: Footnote
+        placeholder: "*Spam? We want nothing to do with him either—and we'll never send you unsolicited communications."
+      programmeimage:
+        type: files
+        label: Photo
+        help: Photo beside the sign-up form.
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
+
   seo:
     extends: tabs/seo

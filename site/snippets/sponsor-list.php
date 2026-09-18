@@ -42,7 +42,7 @@ $sponsorName = fn($s) => $s['url']->isNotEmpty()
         <?php endif ?>
         <?php if ($s['url']->isNotEmpty()): ?>
           <hr>
-          <a href="<?= $s['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">↗</span></a>
+          <a href="<?= $s['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">Visit website<span aria-hidden="true">↗</span></a>
         <?php endif ?>
       </div>
 
