@@ -83,7 +83,7 @@ $cell = function ($field) use ($tick) {
         <li>
           <?php if ($p['url']->isNotEmpty()): ?>
             <a class="h3" href="<?= $p['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">
-              <?= esc($p['name']->value()) ?> <span aria-hidden="true">↗</span>
+              <?= esc($p['name']->value()) ?><span aria-hidden="true">↗</span>
             </a>
           <?php else: ?>
             <p class="h3"><?= esc($p['name']->value()) ?></p>
@@ -138,8 +138,7 @@ $cell = function ($field) use ($tick) {
     <h2 class="mb-m">Buy us a coffee</h2>
     <p class="readable">Donating, however you can, helps to keep the lights on, prepare for the upcoming festival cycle, and support local creatives in making and showcasing their work.</p>
     <?php if ($site->donation_url()->isNotEmpty()): ?>
-      <a class="button btt--secondary fit-width" href="<?= $site->donation_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">Buy the OAF team a coffee
-        <span aria-hidden="true">↗</span>
+      <a class="button btt--secondary fit-width" href="<?= $site->donation_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">Buy the OAF team a coffee<span aria-hidden="true">↗</span>
       </a>
     <?php endif ?>
   </div>

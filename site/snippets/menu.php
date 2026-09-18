@@ -22,13 +22,13 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
     <button class="site-nav__menu-toggle minimal underline-on-hover" popovertarget="mobile-drawer">Menu</button>
     <?php if ($status === 'open'): ?>
       <?php if ($registerUrl): ?>
-        <a href="<?= esc($registerUrl, 'attr') ?>" class="site-nav__register fs-s" rel="noopener noreferrer" target="_blank">
-          Register <span aria-hidden="true">↗</span>
+        <a href="<?= esc($registerUrl, 'attr') ?>" class="underline site-nav__register fs-s" rel="noopener noreferrer" target="_blank">
+          Register<span aria-hidden="true">↗</span>
         </a>
       <?php endif ?>
     <?php else: ?>
       <button type="button" popovertarget="registration-popover" data-popover-origin="nav" class="minimal underline site-nav__register fs-s">
-        Register <span aria-hidden="true">↗</span>
+        Register<span aria-hidden="true">↗</span>
       </button>
     <?php endif ?>
   </div>
@@ -50,12 +50,12 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
     <?php if ($status === 'open'): ?>
       <?php if ($registerUrl): ?>
         <a href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank">
-          Register <span aria-hidden="true">↗</span>
+          Register<span aria-hidden="true">↗</span>
         </a>
       <?php endif ?>
     <?php else: ?>
       <button type="button" popovertarget="registration-popover" data-popover-origin="nav" class="minimal underline-on-hover">
-        Register <span aria-hidden="true">↗</span>
+        Register<span aria-hidden="true">↗</span>
       </button>
     <?php endif ?>
   </nav>

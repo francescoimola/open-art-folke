@@ -23,7 +23,7 @@ $fallback = [
 <p class="readable"><?= $message->or($fallback['message'])->html() ?></p>
 <?php if ($linkUrl->isNotEmpty()): ?>
   <hr>
-  <a href="<?= $linkUrl->esc('attr') ?>" rel="noopener noreferrer" target="_blank"><?= $linkLabel->or('Apply')->html() ?> <span aria-hidden="true">↗</span></a>
+  <a href="<?= $linkUrl->esc('attr') ?>" rel="noopener noreferrer" target="_blank"><?= $linkLabel->or('Apply')->html() ?><span aria-hidden="true">↗</span></a>
 <?php endif ?>
 <?php if ($footnote->isNotEmpty()): ?>
   <small><?= $footnote->html() ?></small>

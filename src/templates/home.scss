@@ -1,4 +1,5 @@
 @use '../mixins' as *;
+@use '../programme-choice'; // #programme section's "read or download" state
 
 // Countdown: image behind a row of cells. Empty cells are opaque (section --bg), filled cells are transparent windows.
 // Side-borders form pale gutters; swapping .theme-* recolours empties + gutters.

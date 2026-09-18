@@ -1,0 +1,112 @@
+@use 'sass:list';
+@use './mixins' as *;
+
+// Eased fade: opacity follows an ease-out curve instead of a straight line, so there's no visible edge or band.
+// Each pair is (progress through the fade, colour strength). Positions scale between --fade-solid and --fade-clear.
+$fade-curve: (0: 100%, 0.19: 74%, 0.34: 54%, 0.47: 38%, 0.565: 28%, 0.65: 19%, 0.73: 13%, 0.8: 7.5%, 0.86: 4%, 0.91: 2%, 0.95: 0.8%, 1: 0%);
+$fade-stops: ();
+
+@each $t, $strength in $fade-curve {
+  $fade-stops: list.append($fade-stops,
+    color-mix(in oklab, var(--fade-color) $strength, transparent) calc(var(--fade-solid) + (var(--fade-clear) - var(--fade-solid)) * $t),
+    comma);
+}
+
+// Homepage #programme section, "programme is out" state (site/snippets/programme-choice.php).
+// Split screen: intro half beside a half filled by two tall CTA buttons. Loaded by templates/home.scss.
+@layer custom {
+
+  // .layout-split top-aligns its columns; stretch them so each half's theme fills the screen.
+  .programme-choice {
+    align-items: stretch;
+
+    // Stacked on mobile: the intro hugs its content, the buttons half takes the rest of the screen.
+    @include below-tablet {
+      grid-template-rows: auto 1fr;
+    }
+
+    // Site-wide <small> uses the section's muted --fg, which clashes on the button surface.
+    small {
+      color: inherit;
+      font-size: 50%;
+    }
+  }
+
+  // Intro half: plain theme colour, the illustration starting partway down with a fade over its top, then grain.
+  // All knobs live here. --fade-* percentages are measured on the image, not the panel.
+  .programme-choice__intro {
+    --image-offset: calc(32% - 100% / 6); // how far down the panel the image starts
+    --image-position: center bottom; // which part of the image stays in view when it's cropped
+    --fade-color: var(--bg); // theme-crimson's red, so the fade melts into the panel
+    --fade-solid: 12%; // solid colour down to here…
+    --fade-clear: 90%; // …easing to fully transparent here (50% = top half of the image)
+    --grain-opacity: 0.28;
+
+    position: relative;
+    isolation: isolate; // keeps the image/fade/grain layers above the panel colour but under the text
+    overflow: clip; // the shifted image hangs off the bottom
+
+    // <picture> is a layout-transparent wrapper — collapse it so .programme-choice__bg
+    // positions against the panel itself, matching the .hero__bg / .page-hero__bg idiom.
+    > picture {
+      display: contents;
+    }
+
+    // Stacked on mobile: height is one screen-width (2/3, then +50% so the text has room
+    // above the image instead of sitting over it). Grows past that if the text needs more room.
+    @include below-tablet {
+      --image-offset: 32%;
+      min-block-size: calc(100vi * 2 / 3 * 1.5);
+    }
+
+    // Panel-uploaded illustration (Kirby thumbs handle the resizing/compression) — pushed down by
+    // --image-offset. Renders nothing if no image is uploaded, leaving flat theme colour behind the text.
+    .programme-choice__bg {
+      position: absolute;
+      inset-inline: 0;
+      inset-block-start: var(--image-offset);
+      block-size: 100%;
+      z-index: -3;
+      object-fit: cover;
+      object-position: var(--image-position);
+    }
+
+    // Fade: sits directly over the image, same position/size, so the two align exactly.
+    &::before {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      inset-block-start: var(--image-offset);
+      block-size: 100%;
+      z-index: -2;
+      pointer-events: none;
+      background: linear-gradient(to bottom, $fade-stops) no-repeat;
+    }
+
+    // Grain: SVG turbulence noise, tiled and blended over everything behind the text.
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: var(--grain-opacity);
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+  }
+
+  // Buttons share the half's height; the min height keeps them tall on short screens.
+  // Column direction puts the <small> note under the label.
+  .programme-choice__actions > .button {
+    flex: 1 1 0;
+    flex-direction: column;
+    min-block-size: calc(var(--vs-xxl) * 2);
+    text-align: center;
+
+    // "See programme" uses a deeper red than the default button so it reads as the primary action.
+    &:first-child {
+      --button-color: var(--dark-Brand-600);
+    }
+  }
+}

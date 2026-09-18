@@ -2,6 +2,19 @@
 // Template-level unlayered CSS can override per page. prefers-contrast is the a11y override.
 @use './mixins' as *;
 
+// Typed as colours so the button's background gradient can transition; unregistered custom properties swap instantly.
+@property --button-bg-top {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@property --button-bg-bottom {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
 @layer custom {
 
   // Default button: brand red surface without needing an extra class.
@@ -12,12 +25,19 @@
     --button-bg-bottom: var(--button-color);
     --button-border: color-mix(in oklab, var(--button-color) 95%, black);
     --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
-    box-shadow: 0 1px 2px var(--button-shadow);
+    box-shadow: 0 1px 2px transparent;
 
     border-radius: var(--br-s);
     padding-block: var(--vs-base);
     padding-inline: var(--pad-l);
     font-weight: 500;
+    // Background is a gradient of --button-bg-*; those are @property colours (top of file) so they can interpolate.
+    // translate is Graffiti's 1px hover lift.
+    transition:
+      --button-bg-top 0.5s ease,
+      --button-bg-bottom 0.5s ease,
+      box-shadow 0.5s ease,
+      translate 0.5s ease;
 
     @supports (font-variation-settings: "wght" 400) {
       font-variation-settings: "wght" 500;
