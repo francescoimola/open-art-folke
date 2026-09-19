@@ -30,7 +30,8 @@
     </a>
     <a class="button btt--secondary fs-xl" href="<?= $pdf->url() ?>" download>
       <span>Download PDF programme<span aria-hidden="true">↓</span></span>
-      <small><?= $pdf->niceSize() ?></small>
+      <?php /* Decimal units, 1 dp (e.g. "3.6 MB") — matches what Finder/Explorer show; Kirby's niceSize() is binary, 2 dp. */ ?>
+      <small><?= $pdf->size() >= 1e6 ? round($pdf->size() / 1e6, 1) . ' MB' : max(1, round($pdf->size() / 1e3)) . ' KB' ?></small>
     </a>
   </div>
 </section>

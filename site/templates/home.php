@@ -59,7 +59,7 @@ $registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->valu
         <span class="text-muted">Open Art Folke</span><br>The Festival</h2>
       <div class="stack gap-m">
         <p>A free pass* to connect with talented local creatives, experience their work, and learn about how it’s made.</p>
-        <p>Find great art waiting to be discovered in studios, shops, parks, cafes, and upstairs in that pub you didn't even know had an upstairs.</p>
+        <p>Find great art waiting to be discovered in studios, gardens, pubs, cafes, galleries, and upstairs in that shop you didn't even know had an upstairs.</p>
       </div>
       <?php
       /* Until an editor first saves the field, fall back to the blueprint defaults so buttons don't vanish on deploy. */
