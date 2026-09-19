@@ -2,16 +2,11 @@
 // Template-level unlayered CSS can override per page. prefers-contrast is the a11y override.
 @use './mixins' as *;
 
-// Typed as colours so the button's background gradient can transition; unregistered custom properties swap instantly.
-@property --button-bg-top {
+// Typed as a colour so the button's background can transition; unregistered custom properties swap instantly.
+// inherits: false — only read on the button itself, never by descendants, so recalcs don't need to reach the subtree.
+@property --button-bg {
   syntax: '<color>';
-  inherits: true;
-  initial-value: transparent;
-}
-
-@property --button-bg-bottom {
-  syntax: '<color>';
-  inherits: true;
+  inherits: false;
   initial-value: transparent;
 }
 
@@ -19,10 +14,15 @@
 
   // Default button: brand red surface without needing an extra class.
   :is(button, .button):not(.minimal) {
+    // Graffiti's reset only strips user-select on <button>; .button is also used on <a> CTAs,
+    // which stay text-selectable and can eat a click as a selection-drag instead of activating.
+    user-select: none;
     --button-color: light-dark(var(--light-Brand-500), var(--dark-Brand-800));
     color: light-dark(var(--light-Neutral-50), var(--dark-Neutral-50));
-    --button-bg-top: var(--button-color);
-    --button-bg-bottom: var(--button-color);
+    --button-bg: var(--button-color);
+    // Graffiti's base rule paints a two-stop gradient; OAF only ever uses a flat colour, so
+    // override to background-color — cheaper to repaint on hover/active than a gradient.
+    background: var(--button-bg);
     --button-border: color-mix(in oklab, var(--button-color) 95%, black);
     --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
     box-shadow: 0 1px 2px transparent;
@@ -31,13 +31,14 @@
     padding-block: var(--vs-base);
     padding-inline: var(--pad-l);
     font-weight: 500;
-    // Background is a gradient of --button-bg-*; those are @property colours (top of file) so they can interpolate.
-    // translate is Graffiti's 1px hover lift.
+    // Trims font leading so label text sits optically centred instead of hugging the top of the padding box.
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+    // --button-bg is a @property colour (top of file) so it can interpolate. translate is Graffiti's 1px hover lift.
     transition:
-      --button-bg-top 0.5s ease,
-      --button-bg-bottom 0.5s ease,
-      box-shadow 0.5s ease,
-      translate 0.5s ease;
+      --button-bg 0.25s ease,
+      box-shadow 0.3s ease,
+      translate 0.2s ease;
 
     @supports (font-variation-settings: "wght" 400) {
       font-variation-settings: "wght" 500;
@@ -45,16 +46,14 @@
 
     &:hover {
       box-shadow: 0 2px 4px var(--button-shadow);
-      --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 85%, white),
+      --button-bg: light-dark(color-mix(in oklab, var(--button-color) 85%, white),
           color-mix(in oklab, var(--button-color) 95%, black));
-      --button-bg-bottom: var(--button-bg-top);
     }
 
     &:active {
       box-shadow: 0 1px 2px var(--button-shadow);
-      --button-bg-top: light-dark(color-mix(in oklab, var(--button-color) 88%, black),
+      --button-bg: light-dark(color-mix(in oklab, var(--button-color) 88%, black),
           color-mix(in oklab, var(--button-color) 75%, black));
-      --button-bg-bottom: var(--button-bg-top);
     }
   }
 
@@ -82,7 +81,7 @@
 
   // Contrast CTA: inverts fg/bg for footer buttons.
   // Lives here (not Graffiti's .button.contrast) because @layer custom forces brand red;
-  // this layer's --button-color override is what base rule's --button-bg-* resolve from.
+  // this layer's --button-color override is what base rule's --button-bg resolves from.
   .btt--contrast {
     --button-color: var(--fg);
     color: var(--bg);

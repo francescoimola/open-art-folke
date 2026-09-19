@@ -399,6 +399,12 @@
       text-wrap: pretty;
     }
 
+    // Graffiti's .stack sets display: flex, overriding the UA's closed-popover display: none —
+    // without this the invisible closed popover stays on screen and swallows clicks beneath it.
+    &:not(:popover-open) {
+      display: none;
+    }
+
     &:popover-open {
       opacity: 1;
       translate: 0px 0px;
