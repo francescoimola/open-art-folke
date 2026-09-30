@@ -395,14 +395,14 @@
     transition-duration: 0.75s;
     transition-behavior: allow-discrete;
 
-    &>p {
+    p {
       text-wrap: pretty;
     }
 
-    // Graffiti's .stack sets display: flex, overriding the UA's closed-popover display: none —
-    // without this the invisible closed popover stays on screen and swallows clicks beneath it.
+    // allow-discrete keeps the popover rendered through its 0.75s fade-out; stop the fading
+    // (invisible) box — and its link — catching clicks meant for whatever sits beneath it.
     &:not(:popover-open) {
-      display: none;
+      pointer-events: none;
     }
 
     &:popover-open {
