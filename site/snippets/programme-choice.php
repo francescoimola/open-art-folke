@@ -4,10 +4,11 @@
  * Swapped with programme-signup.php by the Home page's "Programme section" toggle (see home.php).
  *
  * @var \Kirby\Cms\File $pdf  Home page's programme PDF (home.php only renders this snippet when it exists).
+ * @var string $theme  Panel-picked section colour; tints the intro half, the buttons half stays paper.
  */
 ?>
 <section class="stack-section layout-split split-gap-none programme-choice">
-  <div class="panel even theme-crimson stack gap-l programme-choice__intro">
+  <div class="panel even <?= $theme ?> stack gap-l programme-choice__intro">
     <?php snippet('image', [
       'file' => $page->programmeheroimage()->toFile(),
       'class' => 'programme-choice__bg',

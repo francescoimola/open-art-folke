@@ -1,4 +1,4 @@
-<section class="theme-paper stack-section layout-split">
+<section class="<?= $theme ?> stack-section layout-split">
   <div class="split vertical panel even gap-l">
     <div class="stack readable gap-xl">
       <h2>

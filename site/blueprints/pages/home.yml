@@ -26,6 +26,33 @@ tabs:
           intro: Intro
           festival: The Festival
           sponsors: Sponsors
+      # One colour per middle section, so reordering never forces two same-coloured neighbours.
+      # Values are .theme-* suffixes; HomePage::sectionTheme() maps them to classes.
+      sectioncolours:
+        type: headline
+        label: Section colours
+        help: Avoid giving two neighbouring sections the same colour. The footer is Black.
+      programmetheme:
+        extends: fields/section-theme
+        label: Programme
+        default: crimson
+        help: Colours the left half when the programme is out; the buttons half stays Off-white.
+      countdowntheme:
+        extends: fields/section-theme
+        label: Countdown
+        default: blush
+      introtheme:
+        extends: fields/section-theme
+        label: Intro
+        default: brand
+      festivaltheme:
+        extends: fields/section-theme
+        label: The Festival
+        default: paper
+      sponsorstheme:
+        extends: fields/section-theme
+        label: Sponsors
+        default: blush
       thumbnail:
         type: files
         label: Panel thumbnail

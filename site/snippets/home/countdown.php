@@ -1,4 +1,4 @@
-<section class="theme-blush stack-section half layout-split">
+<section class="<?= $theme ?> stack-section half layout-split">
   <div
     class="stack panel even readable gap-l">
     <?php if ($page->festivalIsOver()): ?>

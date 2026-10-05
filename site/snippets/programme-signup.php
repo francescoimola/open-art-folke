@@ -2,8 +2,9 @@
 /* Homepage #programme section, "programme coming soon" state: photo + email sign-up. */
 /* Swapped with programme-choice.php by the Home page's "Programme section" toggle (see home.php). */
 /* Copy comes from the Home page's Programme tab; the fallbacks are the original wording. */
+/* $theme is the section colour picked in the Panel (Home → Content). */
 ?>
-<section class="theme-crimson stack-section layout-split">
+<section class="<?= $theme ?> stack-section layout-split">
   <?php snippet('image', [
     'file' => $page->programmeimage()->toFile(),
     'class' => 'image-cover',

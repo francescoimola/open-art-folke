@@ -16,9 +16,9 @@
   <span class="hero__arrow fs-xl" aria-hidden="true">↓</span>
 </section>
 
-<?php /* Middle sections: order and visibility set in the Panel (Home → Content → Homepage sections). */ ?>
+<?php /* Middle sections: order, visibility and colour set in the Panel (Home → Content → Homepage sections). */ ?>
 <?php foreach ($page->homeSections() as $section): ?>
-  <?php snippet('home/' . $section, ['form' => $form]) ?>
+  <?php snippet('home/' . $section, ['form' => $form, 'theme' => $page->sectionTheme($section)]) ?>
 <?php endforeach ?>
 
 <?php snippet('photo-banner', ['image' => $page->bannerimage()->toFile()]) ?>

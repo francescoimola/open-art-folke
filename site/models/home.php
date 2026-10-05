@@ -16,7 +16,15 @@ class HomePage extends Page
   private const DEFAULT_FESTIVAL_END = '2026-10-11';
   private const TOTAL_BLOCKS = 16;
   private const TIMEZONE = 'Europe/London';
-  private const SECTIONS = ['programme', 'countdown', 'intro', 'festival', 'sponsors'];
+  /** Middle sections in default order, each with its default colour (a .theme-* suffix). */
+  private const SECTIONS = [
+    'programme' => 'crimson',
+    'countdown' => 'blush',
+    'intro' => 'brand',
+    'festival' => 'paper',
+    'sponsors' => 'blush',
+  ];
+  private const THEMES = ['brand', 'crimson', 'blush', 'paper', 'ink'];
 
   public function countdownStartDate(): DateTimeImmutable
   {
@@ -83,11 +91,28 @@ class HomePage extends Page
    */
   public function homeSections(): array
   {
+    $keys = array_keys(self::SECTIONS);
+
     if (!$this->content()->has('sections')) {
-      return self::SECTIONS;
+      return $keys;
     }
 
-    return array_values(array_unique(array_intersect($this->content()->get('sections')->split(), self::SECTIONS)));
+    return array_values(array_unique(array_intersect($this->content()->get('sections')->split(), $keys)));
+  }
+
+  /**
+   * Theme class for a middle section, from its "<key>theme" Panel field (e.g. "theme-crimson").
+   * Unsaved or unknown values fall back to the section's default colour.
+   */
+  public function sectionTheme(string $section): string
+  {
+    $theme = $this->content()->get($section . 'theme')->value();
+
+    if (!in_array($theme, self::THEMES, true)) {
+      $theme = self::SECTIONS[$section] ?? 'paper';
+    }
+
+    return 'theme-' . $theme;
   }
 
   /** Panel toggle wins; "auto" shows the message from the day after the festival ends. */

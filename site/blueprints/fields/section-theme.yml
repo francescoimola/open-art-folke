@@ -1,0 +1,14 @@
+# Colour picker for a homepage section. Values are .theme-* suffixes (see src/_themes.scss).
+type: toggles
+grow: true
+options:
+  - value: brand
+    text: Bright red
+  - value: crimson
+    text: Deep red
+  - value: blush
+    text: Pink
+  - value: paper
+    text: Off-white
+  - value: ink
+    text: Black
