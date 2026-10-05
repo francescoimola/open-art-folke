@@ -52,11 +52,19 @@ $fade-stops: ();
       display: contents;
     }
 
-    // Stacked on mobile: height is one screen-width (2/3, then +50% so the text has room
-    // above the image instead of sitting over it). Grows past that if the text needs more room.
+    // Stacked on mobile: height is one screen-width up to 430px, so the text has room above the image.
+    // Wider than that the text wraps less, so height grows at an eighth of the rate (≈472px at 767px).
+    // Grows past that if the text needs more room.
     @include below-tablet {
       --image-offset: 32%;
-      min-block-size: calc(100vi * 2 / 3 * 1.5);
+      // Small phones wrap the text onto more lines: 0 at 430px+, growing as the screen narrows (≈55px at 375px), capped.
+      --narrow-boost: clamp(0rem, 26.875rem - 100vi, 3.5rem);
+      // Fade starts lower than desktop's 12% so the text keeps solid colour behind it; lower still on small phones.
+      --fade-solid: calc(20% + var(--narrow-boost) * 0.4);
+      // Clears further down than desktop's 90%, so the longer fade feels more gradual.
+      --fade-clear: 100%;
+      // A little taller there too; --image-offset is a %, so the image moves down with it.
+      min-block-size: calc(min(100vi, 26.875rem + (100vi - 26.875rem) / 8) + var(--narrow-boost) * 0.6);
     }
 
     // Panel-uploaded illustration (Kirby thumbs handle the resizing/compression) — pushed down by
@@ -93,6 +101,14 @@ $fade-stops: ();
       opacity: var(--grain-opacity);
       mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+  }
+
+  // Stacked on mobile: trim the top/bottom padding to match the side padding, so the buttons get the room.
+  // Extra .programme-choice beats .panel.even's padding without relying on stylesheet order.
+  .programme-choice > .programme-choice__actions.panel {
+    @include below-tablet {
+      padding-block: clamp(var(--pad-l), 5vw, var(--pad-xxl));
     }
   }
 

@@ -82,6 +82,64 @@ tabs:
         uploads:
           parent: site.find('media')
           template: image
+
+  # The homepage countdown section: counts down to the festival, then swaps to a "you've just missed it" message.
+  countdown:
+    label: Countdown
+    icon: clock
+    fields:
+      countdownmode:
+        type: toggles
+        label: Countdown section shows
+        default: auto
+        grow: true
+        options:
+          - value: auto
+            text: Automatic
+          - value: countdown
+            text: Countdown
+          - value: over
+            text: Festival's over message
+        help: >
+          Automatic shows the countdown until the festival end date, then the message from the next day (UK time).
+          For the next edition, set the new dates below and pick Automatic or Countdown.
+
+      countdownheadline:
+        type: headline
+        label: Countdown
+      countdownstart:
+        type: date
+        label: Countdown start
+        default: 2026-01-01
+        width: 1/3
+      countdownend:
+        type: date
+        label: Countdown end
+        help: Opening day — the count reaches 0 here.
+        default: 2026-10-09
+        width: 1/3
+      festivalend:
+        type: date
+        label: Festival end
+        help: Last day of the festival.
+        default: 2026-10-11
+        width: 1/3
+      countdownheading:
+        type: text
+        label: Heading ending
+        placeholder: until Open Art Folke 2026
+        help: Follows “There are X days”. A 🥳 is added automatically on 0 days.
+      countdowntext:
+        type: text
+        label: Text
+        placeholder: Almost there baby, almost there.
+        width: 1/2
+      countdownzerotext:
+        type: text
+        label: Text on 0 days (festival days)
+        placeholder: Time to leave the house, dear
+        width: 1/2
+        help: Leave any of these blank to use the placeholder text.
       countdownimage:
         type: files
         label: Countdown image
@@ -91,14 +149,20 @@ tabs:
         uploads:
           parent: site.find('media')
           template: image
-      countdownstart:
-        type: date
-        label: Countdown start
-        default: 2026-01-01
-      countdownend:
-        type: date
-        label: Countdown end
-        default: 2026-10-09
+
+      overheadline:
+        type: headline
+        label: Festival's over message
+      overheading:
+        type: text
+        label: Heading
+        placeholder: You've just missed this year's festival
+      overtext:
+        type: textarea
+        label: Text
+        buttons: false
+        placeholder: It was a blast and we're still recovering. Keep an eye here and on your socials to know what's coming next. In the meantime, godspeed my friend!
+        help: Leave either blank to use the placeholder text. The countdown graphic is hidden while this shows.
 
   # The homepage #programme section (the nav's "Programme" link) has two versions; this tab picks one.
   # Both groups stay editable so the next version's copy can be prepared before switching.
