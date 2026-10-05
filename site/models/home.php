@@ -1,6 +1,7 @@
 <?php
 
 use Kirby\Cms\Page;
+use Kirby\Cms\Structure;
 
 /**
  * Home page model.
@@ -15,6 +16,7 @@ class HomePage extends Page
   private const DEFAULT_FESTIVAL_END = '2026-10-11';
   private const TOTAL_BLOCKS = 16;
   private const TIMEZONE = 'Europe/London';
+  private const SECTIONS = ['programme', 'countdown', 'intro', 'festival', 'sponsors'];
 
   public function countdownStartDate(): DateTimeImmutable
   {
@@ -30,6 +32,62 @@ class HomePage extends Page
   public function festivalEndDate(): DateTimeImmutable
   {
     return $this->countdownDate('festivalend', self::DEFAULT_FESTIVAL_END);
+  }
+
+  /** Opening day — the same date the countdown runs down to. */
+  public function festivalStartDate(): DateTimeImmutable
+  {
+    return $this->countdownEndDate();
+  }
+
+  /** Festival year as shown in copy, e.g. "2026". */
+  public function festivalYear(): string
+  {
+    return $this->festivalEndDate()->format('Y');
+  }
+
+  /** Human date range, e.g. "9–11 October 2026" or "30 September – 2 October 2026". */
+  public function festivalDateRange(): string
+  {
+    $start = $this->festivalStartDate();
+    $end = $this->festivalEndDate();
+
+    if ($start->format('Y-m') === $end->format('Y-m')) {
+      return $start == $end
+        ? $end->format('j F Y')
+        : $start->format('j') . '–' . $end->format('j F Y');
+    }
+
+    $startFormat = $start->format('Y') === $end->format('Y') ? 'j F' : 'j F Y';
+
+    return $start->format($startFormat) . ' – ' . $end->format('j F Y');
+  }
+
+  /**
+   * Up to two "The Festival" CTAs. Until an editor first saves the field,
+   * falls back to the blueprint defaults so buttons don't vanish on deploy.
+   */
+  public function festivalButtons(): Structure
+  {
+    // Read via content(): PHP method names are case-insensitive, so $this->festivalbuttons() would recurse into this method.
+    $buttons = $this->content()->has('festivalbuttons')
+      ? $this->content()->get('festivalbuttons')->toStructure()
+      : Structure::factory($this->blueprint()->field('festivalbuttons')['default'] ?? [], ['parent' => $this]);
+
+    return $buttons->limit(2);
+  }
+
+  /**
+   * Middle homepage sections in Panel order; each key maps to site/snippets/home/<key>.php.
+   * Unsaved field falls back to the default order; unknown or duplicate keys are dropped.
+   */
+  public function homeSections(): array
+  {
+    if (!$this->content()->has('sections')) {
+      return self::SECTIONS;
+    }
+
+    return array_values(array_unique(array_intersect($this->content()->get('sections')->split(), self::SECTIONS)));
   }
 
   /** Panel toggle wins; "auto" shows the message from the day after the festival ends. */

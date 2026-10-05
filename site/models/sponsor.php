@@ -9,6 +9,9 @@ use Kirby\Cms\Page;
  */
 class SponsorPage extends Page
 {
+  /** Built once per request; both lists and the homepage teaser read from it. */
+  private ?array $rows = null;
+
   /**
    * The current festival year, from the site setting. Falls back to the actual
    * calendar year if the setting is empty.
@@ -20,38 +23,48 @@ class SponsorPage extends Page
 
   /**
    * Every sponsor as a flat row, with years parsed once.
-   * Each row: ['name', 'url', 'description', 'logo', 'years' => int[], 'maxYear']. Logos sanitised here once.
+   * Each row: ['name', 'url', 'description', 'item' => StructureObject, 'years' => int[], 'maxYear'].
    */
   protected function sponsorRows(): array
   {
-    $rows = [];
+    if ($this->rows !== null) {
+      return $this->rows;
+    }
+
+    $this->rows = [];
 
     foreach ($this->sponsors()->toStructure() as $s) {
       $years = array_map('intval', $s->years()->split(','));
-      $rows[] = [
+      $this->rows[] = [
         'name' => $s->name(),
         'url' => $s->url(),
         'description' => $s->description(),
-        'logo' => $this->sponsorLogo($s),
+        'item' => $s,
         'years' => $years,
         'maxYear' => $years ? max($years) : 0,
       ];
     }
 
-    return $rows;
+    return $this->rows;
   }
 
   /**
    * Sponsors supporting the current festival year — shown under "Current" with
    * their logo. Shared by the homepage teaser and the sponsor-page roster.
+   * Logos are sanitised here only, so past sponsors (never shown with a logo) skip the SVG work.
    */
   public function currentSponsors(): array
   {
     $year = $this->festivalYear();
 
-    return array_values(array_filter(
+    $rows = array_filter(
       $this->sponsorRows(),
       fn($r) => in_array($year, $r['years'], true)
+    );
+
+    return array_values(array_map(
+      fn($r) => $r + ['logo' => $this->sponsorLogo($r['item'])],
+      $rows
     ));
   }
 

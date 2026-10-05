@@ -10,6 +10,22 @@ tabs:
     label: Content
     icon: text
     fields:
+      sections:
+        type: multiselect
+        label: Homepage sections
+        help: Drag to reorder. Remove a section to hide it. The hero stays first; the photo banner and footer stay last. Hiding Programme breaks the nav's “Programme” link.
+        default:
+          - programme
+          - countdown
+          - intro
+          - festival
+          - sponsors
+        options:
+          programme: Programme
+          countdown: Countdown
+          intro: Intro
+          festival: The Festival
+          sponsors: Sponsors
       thumbnail:
         type: files
         label: Panel thumbnail
