@@ -133,7 +133,6 @@
 
   .hero__arrow {
     position: absolute;
-    text-decoration: none;
     bottom: calc(var(--pad-xl) + env(safe-area-inset-bottom, 0px));
     color: var(--light-Neutral-100);
   }

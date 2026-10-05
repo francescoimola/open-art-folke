@@ -1,6 +1,7 @@
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const signupCallout = document.querySelector('.callout.success, .callout.error');
 if (signupCallout) {
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   signupCallout.scrollIntoView({
     behavior: reduceMotion ? 'auto' : 'smooth',
     block: 'center',
@@ -22,7 +23,7 @@ if (typed && cursor) {
     ' is Folkestone',
   ];
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (reduceMotion) {
     // Static fallback — GSAP never downloaded.
     typed.textContent = words[0];
     cursor.style.visibility = 'hidden';
@@ -86,7 +87,7 @@ if (typed && cursor) {
 
 const countdown = document.querySelector('.countdown');
 
-if (countdown && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+if (countdown && !reduceMotion) {
   countdown.classList.add('countdown--primed');
 
   new IntersectionObserver((entries, obs) => {

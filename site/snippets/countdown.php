@@ -2,11 +2,14 @@
 /**
  * Countdown banner. coat.png is pre-edited — no filter, no blend mode here.
  */
+$days = $page->daysRemaining();
+$total = $page->countdownTotalBlocks();
+$filled = $page->countdownFilled();
 ?>
-<div class="stack panel even" style="width: 100%;">
-  <div class="split no-wrap">
+<div class="countdown-panel stack panel even">
+  <div class="countdown-range split no-wrap">
     <small><?= $page->countdownStartDate()->format('M Y') ?></small>
-    <small style="margin-right: var(--vs-s)"><?= $page->countdownEndDate()->format('M Y') ?></small>
+    <small><?= $page->countdownEndDate()->format('M Y') ?></small>
   </div>
   <div class="countdown">
     <?php snippet('image', [
@@ -16,9 +19,9 @@
       'sizes' => '(min-width: 768px) 50vw, 100vw',
     ]) ?>
     <div
-      class="countdown__grid" role="img" aria-label="<?= $page->daysRemaining() ?> days remaining until Open Art Folke">
-      <?php for ($i = 0; $i < $page->countdownTotalBlocks(); $i++): ?>
-        <span class="countdown__cell<?= $i < $page->countdownFilled() ? ' is-filled' : '' ?>" <?= $i < $page->countdownFilled() ? " style=\"--i: $i\"" : '' ?> aria-hidden="true"></span>
+      class="countdown__grid" role="img" aria-label="<?= $days ?> <?= $days === 1 ? 'day' : 'days' ?> remaining until Open Art Folke">
+      <?php for ($i = 0; $i < $total; $i++): ?>
+        <span class="countdown__cell<?= $i < $filled ? ' is-filled' : '' ?>" <?= $i < $filled ? " style=\"--i: $i\"" : '' ?> aria-hidden="true"></span>
       <?php endfor ?>
     </div>
   </div>

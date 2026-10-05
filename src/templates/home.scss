@@ -5,6 +5,16 @@
 // Side-borders form pale gutters; swapping .theme-* recolours empties + gutters.
 @layer custom {
 
+  // Panel wrapping the date range + band: fill its .layout-split cell.
+  .countdown-panel {
+    inline-size: 100%;
+  }
+
+  // End-date label sits a touch in from the edge, over the band's last cell.
+  .countdown-range > :last-child {
+    margin-inline-end: var(--vs-s);
+  }
+
   .countdown {
     position: relative;
     aspect-ratio: 1312 / 325; // matches the Figma band

@@ -88,7 +88,8 @@ return [
   /* Home excluded: kirby-uniform needs a fresh CSRF token per request. */
   'cache' => [
     'pages' => $isDev ? false : [
-      'home' => false,
+      'active' => true,
+      'ignore' => ['home'],
     ],
   ],
 
