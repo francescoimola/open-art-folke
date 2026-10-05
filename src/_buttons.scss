@@ -88,6 +88,13 @@
     --button-border: transparent;
   }
 
+  // On deep-red themes the dark-scheme default (salmon + black text) blends into the bg.
+  // Reuse the secondary palette there: pink surface with deep-red text.
+  :is(.theme-brand, .theme-crimson) :is(button, .button):not(.minimal, .btt--contrast) {
+    --button-color: var(--dark-Brand-950);
+    color: var(--dark-Brand-400);
+  }
+
   // On blush, secondary bg (Brand-50) equals section bg — match Figma: bright-red text on Brand-50 (#FFE0DB) with faint border.
   // Scoped to .theme-blush so it only applies inside blush sections.
   .theme-blush {
