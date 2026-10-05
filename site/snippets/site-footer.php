@@ -20,7 +20,7 @@ $contactEmail = 'openartfolke@gmail.com';
 
   <hr>
 
-  <div class="layout-split" style="--layout-gap: var(--vs-xxl);">
+  <div class="layout-split split-gap-xxl">
     <h2 class="fs-xxl">Key information</h2>
     <div class="stack gap-xl">
       <div class="stack gap-l">
@@ -45,7 +45,7 @@ $contactEmail = 'openartfolke@gmail.com';
 
   <hr>
 
-  <div class="layout-split" style="--layout-gap: var(--vs-xxl);">
+  <div class="layout-split split-gap-xxl">
     <h2 class="fs-xxl">Questions</h2>
     <div class="stack gap-xl">
       <div class="stack gap-m">
@@ -72,7 +72,7 @@ $contactEmail = 'openartfolke@gmail.com';
 
   <hr>
 
-  <div id="credits-terms" class="layout-split" style="--layout-gap: var(--vs-xxl);">
+  <div id="credits-terms" class="layout-split split-gap-xxl">
     <h2 class="fs-xxl">Provisions</h2>
     <div class="stack gap-xl">
       <?php if ($site->media_credits()->isNotEmpty()): ?>

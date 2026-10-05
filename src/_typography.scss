@@ -18,10 +18,14 @@
     --bg-light: var(--color-background);
     --bg-dark: var(--dark-Neutral-100);
 
-    --color-success: light-dark(var(--light-Success-600), var(--dark-Success-700));
-    --color-warning: light-dark(var(--light-Warning-500), var(--dark-Warning-700));
-    --color-error: light-dark(var(--light-Error-600), var(--dark-Error-700));
     --color-info: light-dark(var(--light-Info-500), var(--dark-Info-700));
+
+    // Unused state colours: dev-only (see _tokens.scss). Move out of this block before using one.
+    @include dev-only {
+      --color-success: light-dark(var(--light-Success-600), var(--dark-Success-700));
+      --color-warning: light-dark(var(--light-Warning-500), var(--dark-Warning-700));
+      --color-error: light-dark(var(--light-Error-600), var(--dark-Error-700));
+    }
 
     --nav-height: calc(var(--vs-base) * 1.75 + var(--vs-l));
     --text-underline-offset: 0.22rem;

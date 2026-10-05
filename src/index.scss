@@ -1,7 +1,6 @@
 // Global entry point: composes partials in cascade order (reset → fonts → graffiti → colors → custom → button-variants).
 // @use doesn't support layer(), so layer() calls inside imports declare the order. Remove when Sass adds @use … layer().
-@use './mixins' as *;
-@use './opacity-variants';
+@use './mixins' as * with ($is-dev: $vite-dev); // $vite-dev injected by vite.config.js
 @use './reset';
 @use './tokens';
 @use './typography';

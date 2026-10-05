@@ -468,4 +468,34 @@
     }
   }
 
+  // Footer tweaks: nav rhythm, CTA hover, legal-copy links, muted headings.
+  .footer {
+    >nav {
+      padding-block: var(--vs-xl);
+      gap: clamp(var(--vs-base), 5vw, var(--vs-m));
+    }
+
+    :is(.button, button):hover {
+      text-decoration: none;
+    }
+
+    article a {
+      text-decoration: underline;
+    }
+
+    h3 {
+      color: var(--fg-8);
+    }
+
+    &__legal {
+      --layout-gap: var(--vs-xxl);
+    }
+
+    @include below-tablet {
+      &__legal {
+        --layout-gap: revert;
+      }
+    }
+  }
+
 }

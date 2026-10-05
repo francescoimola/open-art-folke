@@ -73,6 +73,8 @@ Uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`). Prefer Graff
 
 Custom palette (Brand red + Neutral gray) bridged via five root endpoints; derived scales auto-compute via `light-dark()` and relative color syntax. Use tokens (`--pad-l`, `--vs-xl`, `--primary`, `--fg`, `--bg`) — never hardcode.
 
+**Dev-only tokens:** palette steps nothing reads yet sit in `@include dev-only { … }` blocks (`src/_tokens.scss`, `src/_typography.scss`) — compiled under `pnpm dev`, stripped by `pnpm build`. Move a token out of its block before using it, or it resolves to nothing in production.
+
 **Figma note:** OAF Figma frame is ~31px-rooted. Convert: `browser_rem = figma_px ÷ 16` (not 1.93688 inflation). Map to Graffiti tokens within ~15%.
 
 ### Reusable sections

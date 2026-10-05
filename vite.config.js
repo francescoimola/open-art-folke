@@ -20,6 +20,13 @@ export default ({ mode }) => ({
     rollupOptions: { input },
   },
 
+  // $vite-dev feeds the `dev-only` Sass mixin (src/_mixins.scss, via src/index.scss): reference-only tokens ship in dev, never in production.
+  css: {
+    preprocessorOptions: {
+      scss: { additionalData: `$vite-dev: ${mode === "development"};\n` },
+    },
+  },
+
   plugins: [kirby()],
 
   server: {

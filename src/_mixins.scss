@@ -2,12 +2,8 @@
 @mixin mobile        { @media (width < 640px)   { @content; } }
 @mixin below-tablet  { @media (width < 768px)   { @content; } }
 @mixin tablet        { @media (width >= 768px)  { @content; } }
-@mixin below-desktop { @media (width < 1024px)  { @content; } }
 
 // Container queries — match Graffiti UI 4.29.0
-@mixin cq-compact    { @container (max-width: 30rem) { @content; } }
-@mixin cq-narrow     { @container (max-width: 500px) { @content; } }
-@mixin cq-medium     { @container (max-width: 600px) { @content; } }
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
 
 // Absolute full-bleed background image — the shared `&__bg` cover idiom
@@ -19,4 +15,14 @@
   height: 100%;
   object-fit: cover;
   object-position: $position;
+}
+
+// Dev-only output. vite.config.js injects $vite-dev into entry files; src/index.scss forwards it here via `@use … with`.
+// Content compiles into `pnpm dev` CSS only; `pnpm build` never ships it.
+$is-dev: false !default;
+
+@mixin dev-only {
+  @if $is-dev {
+    @content;
+  }
 }
