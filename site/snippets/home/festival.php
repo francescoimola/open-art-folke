@@ -1,6 +1,6 @@
 <section class="<?= $theme ?> stack-section layout-split">
   <div class="split vertical panel even gap-l">
-    <div class="stack readable gap-xl">
+    <div class="stack readable gap-l">
       <h2>
         <span class="text-muted">Open Art Folke</span><br>The Festival</h2>
       <div class="stack gap-m">

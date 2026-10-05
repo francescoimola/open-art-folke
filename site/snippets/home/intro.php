@@ -4,5 +4,5 @@
       <a href="/about">an open house-style festival</a>
       to keep the creative energy alive, welcome people into our studios, and take over public spaces to share what we've been making.</p>
   </div>
-  <p class="intro__date right-aligned row">Open Art '<?= $page->festivalEndDate()->format('y') ?> runs <?= $page->festivalDateRange() ?></p>
+  <p class="intro__date right-aligned row">This year, OAF is on <?= $page->festivalDateRange() ?></p>
 </section>
