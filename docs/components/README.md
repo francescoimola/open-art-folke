@@ -17,6 +17,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Button | [button.md](button.md) | figma |
 | Icon | [icon.md](icon.md) | figma |
 | Image | [image.md](image.md) | figma |
+| Video | [video.md](video.md) | figma |
 | Logo | [logo.md](logo.md) | figma |
 | Sponsor logo | [sponsor-logo.md](sponsor-logo.md) | figma |
 
@@ -44,6 +45,8 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Photo pair | [photo-pair.md](photo-pair.md) | figma |
 | Split group | [split-group.md](split-group.md) | figma |
 | Sponsor grid | [sponsor-grid.md](sponsor-grid.md) | figma |
+| Edition | [edition.md](edition.md) | figma |
+| Lightbox | [lightbox.md](lightbox.md) | figma |
 | Footer | [footer.md](footer.md) | figma |
 
 Docs are written as each component is built, in this order: primitives, then composites, then sections. After that, the homepage frames are rebuilt from instances to check that everything fits together.
@@ -123,4 +126,12 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
   - 16 people in 3 columns leave one card alone on the last row.
   - [Disclosure](disclosure.md) is in the library but unused, since FAQs were dropped.
 
-**Next:** redesign the other pages (Archive, Sponsor, default) using these components. New components or names go into this index and `GLOSSARY.md`.
+**Archive redesign: done in Figma (2026-10-20).** Section "Archive · Redesign" `423:1675`, to the right of the live capture `411:4662`. Frames: Desktop `423:1676`, Mobile `424:1879`, Lightbox Desktop `424:2381`, Lightbox Mobile `424:2440`.
+
+- Order: Header → Statement (**Red**, h1 + intro in the Aside + year links; Ink was tried first) → one [Edition](edition.md) per year (Flow) → Footer. No Photo band.
+- Library changes: Statement gained **Show links / Links**; Image gained **Ratio=Natural**; Icon gained **Close**, **Arrow left**, **Arrow right**; new [Video](video.md), [Edition](edition.md) and [Lightbox](lightbox.md).
+- Panel: each edition gets a new required `year` field.
+- Lightbox in code: Parvus on a native `<dialog>` (see [lightbox.md](lightbox.md)).
+- Still open: a lone photo on the last row (see [edition.md](edition.md)); video posters are grey placeholders.
+
+**Next:** redesign the other pages (Sponsor, default) using these components. New components or names go into this index and `GLOSSARY.md`.

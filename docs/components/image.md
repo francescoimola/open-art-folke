@@ -15,7 +15,7 @@ Every photo on the site. It has a fixed aspect ratio, fills the width of its con
 
 | Property | Values | Notes |
 | --- | --- | --- |
-| Ratio | 3:2, 2:3, 1:1, 2:1 | 2:1 is for wide bands only. Video is always 16:9 (not part of this set). |
+| Ratio | 3:2, 2:3, 1:1, 2:1, Natural | 2:1 is for wide bands only. **Natural** keeps the photo's own ratio and never crops: Archive [Edition](edition.md) photos and the [Lightbox](lightbox.md). In Figma, resize each Natural instance to its photo's ratio. Video is always 16:9 (see [Video](video.md)). |
 
 ## Layout (Stacked ↔ Split)
 

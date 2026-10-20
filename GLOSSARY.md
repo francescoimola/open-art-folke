@@ -54,6 +54,10 @@ _Avoid_: Row, two-column section, text group
 **Homepage section**:
 A Split group on the homepage whose order and visibility editors control in the Panel (Programme, About, Sponsors…). A section's photo belongs to it and moves with it.
 
+**Edition**:
+One past festival year on the Archive page: its title, text, optional video and uncropped photos. The Archive Statement links to each Edition by its year.
+_Avoid_: Year block, archive entry, past-edition section
+
 **Drawer**:
 The mobile presentation of the site navigation, opened from the header's Menu button.
 _Avoid_: Mobile menu, overlay, off-canvas
@@ -78,6 +82,10 @@ _Avoid_: Team card, profile, bio
 **Disclosure**:
 A question that opens to reveal its answer, with a + / − Icon; used for FAQs.
 _Avoid_: Accordion, toggle, details
+
+**Lightbox**:
+A single photo opened large over the page, from an Edition's photos; closing it returns the reader to where they were.
+_Avoid_: Modal, popup, zoom view
 
 **Site menu**:
 The one Panel-managed list of navigation links shown in the header, the Drawer and the Footer.

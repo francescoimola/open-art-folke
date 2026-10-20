@@ -23,6 +23,7 @@ The opening band of every page: one h1 on a Theme. On the homepage, it's the "Op
 | Heading, Body, Kicker | text | Mobile: one line group each. |
 | Arrow | on / off | Stacked only. Desktop has no arrow (user decision). |
 | Show aside / Aside | on / off + text | Off by default. An optional Body paragraph (or two): in the right column on Split, with the h1 in the left; below the h1 on Stacked. Used on About. |
+| Show links / Links | on / off + slot | Off by default. A row of [Links](link.md) under the Aside, Space XS apart with "·" between them. Archive uses it for the year links ("2025 · 2024", most recent first), each jumping to its [Edition](edition.md). Needs Show aside on. |
 
 Theme is **Red** by default, pinned on the main; switch the Theme mode on the instance for inner pages.
 

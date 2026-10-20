@@ -14,12 +14,15 @@ The drawn arrows used after link labels and as the Statement's ↓. They replace
   - Arrow down ↓: shaft `M3.5 0 L3.5 7`, head `M0 3.5 L3.5 7 L7 3.5`.
   - Plus +: `M3.5 0 L3.5 7`, `M0 3.5 L7 3.5`.
   - Minus −: `M0 3.5 L7 3.5`.
+  - Close ×: `M1 1 L6 6`, `M6 1 L1 6`.
+  - Arrow left ←: shaft `M7 3.5 L0 3.5`, head `M3.5 0 L0 3.5 L3.5 7`.
+  - Arrow right →: shaft `M0 3.5 L7 3.5`, head `M3.5 0 L7 3.5 L3.5 7`.
 
 ## Props & variants
 
 | Property | Values | Notes |
 | --- | --- | --- |
-| Glyph | External, Arrow down, Plus, Minus | External = opens in a new tab. Arrow down = a download, or the Statement arrow. Plus / Minus = a closed / open [Disclosure](disclosure.md). |
+| Glyph | External, Arrow down, Plus, Minus, Close, Arrow left, Arrow right | External = opens in a new tab. Arrow down = a download, or the Statement arrow. Plus / Minus = a closed / open [Disclosure](disclosure.md). Close and Arrow left / right = the [Lightbox](lightbox.md) controls. |
 | Size | Default, Large | Matches the Link size it sits in. Link picks it automatically. |
 
 Inside [Link](link.md), the Icon is an exposed nested instance: turn on **Show icon**, then pick **Glyph** in the Link's own panel.
