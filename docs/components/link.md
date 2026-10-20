@@ -1,6 +1,6 @@
 # Link
 
-**Layer:** Primitive · **Status:** figma · **Figma:** `333:255` · **Code:** `.link` (planned; today, plain `<a>` styled by the global typography)
+**Layer:** Primitive · **Status:** code · **Figma:** `333:255` · **Code:** `site/snippets/link.php` + `src/_link.scss`, `.link`
 
 ## Purpose
 

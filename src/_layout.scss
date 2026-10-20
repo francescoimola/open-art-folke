@@ -24,7 +24,7 @@
   .anchor-target {
     display: block;
     height: 0; // Zero-height marker before the section restores two-way scroll.
-    scroll-margin-top: var(--nav-height, 6rem);
+    scroll-margin-top: var(--nav-h);
   }
 
   .center-both {
@@ -61,8 +61,8 @@
 
   .stack-section {
     position: sticky;
-    top: var(--nav-height, 6rem);
-    min-height: calc(100svh - var(--nav-height, 6rem));
+    top: var(--nav-h);
+    min-height: calc(100svh - var(--nav-h));
     background: var(--section-bg, var(--bg));
 
     &:is(.flowing) {
@@ -72,7 +72,7 @@
   }
 
   .stack-section.half {
-    min-height: calc(50dvh - var(--nav-height, 6rem));
+    min-height: calc(50dvh - var(--nav-h));
   }
 
   section.hero {
@@ -81,7 +81,7 @@
     }
 
     height: 100svh;
-    margin-top: calc(-1 * var(--nav-height, 6rem));
+    margin-top: calc(-1 * var(--nav-h));
     padding: var(--pad-l);
     background: var(--dark-Brand-600);
     flex-direction: column;
@@ -278,12 +278,12 @@
     text-align: center;
 
     // Extend under the fixed nav (like the homepage hero) so the body's
-    // nav-height top padding doesn't show as a gap above the section. The
+    // nav-h top padding doesn't show as a gap above the section. The
     // inherited .stack-section sticky positioning also contains the absolute
     // .page-hero__bg below.
     top: 0;
-    margin-top: calc(-1 * var(--nav-height, 6rem));
-    min-height: calc(50svh + var(--nav-height, 6rem));
+    margin-top: calc(-1 * var(--nav-h));
+    min-height: calc(50svh + var(--nav-h));
     overflow: clip;
 
     // <picture> is a layout-transparent wrapper: collapse it so the absolute

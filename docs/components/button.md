@@ -1,6 +1,6 @@
 # Button
 
-**Layer:** Primitive · **Status:** figma · **Figma:** `333:267` · **Code:** `.btt` buttons in `src/_buttons.scss`; copy behaviour on `[data-copy]` in `src/index.js`
+**Layer:** Primitive · **Status:** code · **Figma:** `333:267` · **Code:** `site/snippets/button.php` + `src/_buttons.scss`, `.button`; copy behaviour on `[data-copy]` in `src/index.js`
 
 ## Purpose
 

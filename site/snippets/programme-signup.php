@@ -42,7 +42,7 @@
               value="<?= esc($form->old('email'), 'attr') ?>"
               <?= $emailError ? 'aria-invalid="true"' : '' ?>
             />
-            <button class="btt--secondary" type="submit">Keep me posted</button>
+            <button class="button btt--secondary" type="submit">Keep me posted</button>
             <?= honeypot_field() ?>
             <?= csrf_field() ?>
           </form>

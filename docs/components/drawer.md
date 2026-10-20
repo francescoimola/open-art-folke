@@ -1,6 +1,6 @@
 # Drawer
 
-**Layer:** Section · **Status:** figma · **Figma:** `383:875` · **Code:** part of `site/snippets/header.php` (planned), `.drawer`
+**Layer:** Section · **Status:** code · **Figma:** `383:875` · **Code:** `site/snippets/header.php` + `src/_header.scss` + `src/drawer.js`, `.drawer`
 
 ## Purpose
 

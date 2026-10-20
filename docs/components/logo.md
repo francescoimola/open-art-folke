@@ -1,6 +1,6 @@
 # Logo
 
-**Layer:** Primitive · **Status:** figma · **Figma:** `375:537` · **Code:** `site/snippets/logo.php` (exists, inline SVG)
+**Layer:** Primitive · **Status:** code · **Figma:** `375:537` · **Code:** `site/snippets/logo.php` + `src/_logo.scss`, `.logo`
 
 ## Purpose
 

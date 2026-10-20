@@ -51,7 +51,7 @@ $contactEmail = 'openartfolke@gmail.com';
       <div class="stack gap-m">
         <h3 class="fs-xxl text-muted">Contact us</h3>
         <p>Email us at <?= esc($contactEmail) ?></p>
-        <button class="btt--contrast fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email
+        <button class="button btt--contrast fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email
           address</button>
       </div>
       <div class="stack gap-l">
@@ -118,7 +118,6 @@ $contactEmail = 'openartfolke@gmail.com';
 
 </footer>
 
-<?php snippet('registration-popover') ?>
 </body>
 
 </html>

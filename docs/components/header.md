@@ -1,6 +1,6 @@
 # Header
 
-**Layer:** Section · **Status:** figma · **Figma:** `383:874` · **Code:** `site/snippets/header.php` + `menu.php` (exist; to be reworked)
+**Layer:** Section · **Status:** code · **Figma:** `383:874` · **Code:** `site/snippets/header.php` (with the Drawer) + `src/_header.scss`, `.header`
 
 ## Purpose
 

@@ -1,0 +1,16 @@
+// Icon (docs/components/icon.md): drawn SVG glyphs sized in em, so one SVG follows any text size.
+@layer custom {
+
+  .icon {
+    // Atomic inline box: a link's underline never runs under it (replaces the Firefox arrow fix).
+    display: inline-block;
+    flex-shrink: 0;
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+    // Bottom on the baseline puts the top near cap height, at both Utopia endpoints.
+    vertical-align: baseline;
+    // Butt-capped strokes sit on the 7×7 grid edge; don't clip their outer half.
+    overflow: visible;
+  }
+
+}

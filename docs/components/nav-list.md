@@ -1,6 +1,6 @@
 # Nav list
 
-**Layer:** Composite · **Status:** figma · **Figma:** `377:600` · **Code:** `site/snippets/menu.php` (exists; to be reworked), `.nav-list`
+**Layer:** Composite · **Status:** code · **Figma:** `377:600` · **Code:** `site/snippets/nav-list.php` + `src/_nav-list.scss`, `.nav-list`
 
 ## Purpose
 
@@ -40,13 +40,13 @@ In the Header, Split becomes the Drawer's Stacked below the switch point. In the
 ## States & interactions
 
 - Each item has the Link states.
-- **The current page** gets `aria-current="page"`, shown with no underline, like Hover. It isn't designed in Figma yet.
-- **Hidden sections.** If Programme is hidden on the homepage, the "Festival programme" item disappears too ([ADR-0004](../adr/0004-homepage-sections-order-and-visibility-only.md)).
+- **The current page** gets `aria-current="page"`, with no visual style (spec #6).
+- **Hidden sections.** If Programme is hidden on the homepage, the "Festival programme" item (any item linking to the homepage's `programme` anchor) disappears too, via `HomePage::showsProgramme()`.
 
 ## Panel fields / content rules
 
-- Site → **Menu**: a structure of label + page/URL, edited once and used everywhere. Labels are the same in every context.
-- Footer adds "Start here" (home) at the front. Register comes from the site's registration URL and shows only while registration is open.
+- Site → Settings → **Site menu**: a structure of label + link (page or URL) + optional section anchor, edited once and used everywhere. Labels are the same in every context. While it is empty, the designed items are used.
+- Footer adds "Start here" (home; its own label field) at the front. Register uses the registration URL and label, and shows only while registration is open.
 
 ## HTML & accessibility
 
@@ -62,6 +62,16 @@ In the Header, Split becomes the Drawer's Stacked below the switch point. In the
 - Commas are CSS (`li:not(:last-child)::after { content: ","; }`) so screen readers don't announce them.
 - The Footer list uses `aria-label="Footer"` so it can be told apart from the main nav.
 
+## Code
+
+```php
+<nav aria-label="Footer">
+  <?php snippet('nav-list', ['layout' => ['stacked', 'row'], 'startHere' => true, 'register' => true]) ?>
+</nav>
+```
+
+`layout` is `stacked`, `row` or `inline`, or a pair `[below tablet, tablet and up]`. The Header uses `['stacked', 'inline']`.
+
 ## Open questions
 
-- **Current-page style.** A no-underline "current" style hasn't been designed yet. Add it as a Link state?
+-

@@ -1,6 +1,6 @@
 <?php
 /**
- * Registration notice — shared body for the "not open yet" and "closed" states. Rendered in popover and footer block.
+ * Registration notice — shared body for the "not open yet" and "closed" states. Rendered in the footer.
  *
  * @var \Kirby\Cms\Site $site
  * @var string $status  'soon' or 'closed'

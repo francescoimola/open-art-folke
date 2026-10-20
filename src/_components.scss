@@ -1,4 +1,4 @@
-// Site components: .skip-link, .site-nav + .mobile-drawer, sponsors, archive carousel, form/dropdown, view transitions, footer tweaks.
+// Site components: .skip-link, sponsors, archive carousel, form/dropdown, view transitions, footer tweaks.
 @use './mixins' as *;
 
 @layer custom {
@@ -24,7 +24,7 @@
     inset-block-start: var(--pad-s);
     inset-inline-start: var(--pad-s);
     z-index: 1000;
-    // above .site-nav (z-index: 100)
+    // above .header (z-index: 100)
     padding: var(--pad-s) var(--pad-m);
     border-radius: var(--br-s);
     background: var(--primary);
@@ -37,124 +37,6 @@
   .carousel:focus-visible {
     outline: var(--focus-ring);
     outline-offset: var(--focus-ring-offset);
-  }
-
-  .site-nav {
-    position: fixed;
-    top: 0;
-    inset-inline: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--bg);
-    padding-inline: var(--pad-xl);
-    padding-block: var(--vs-base);
-
-    &__group {
-      display: flex;
-      align-items: center;
-      gap: var(--vs-m);
-    }
-
-    &__links {
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-
-    &__logo {
-      display: flex;
-      flex-shrink: 0;
-      text-decoration: none;
-
-      // Top-bar logo gets an optical nudge upward — purely a margin tweak.
-      &--topbar {
-        margin-top: calc(var(--vs-xs) * -1);
-      }
-
-      svg {
-        height: var(--vs-l);
-        width: auto;
-      }
-    }
-
-    &__register {
-      letter-spacing: var(--type-track-ui);
-      white-space: nowrap;
-    }
-
-    &__menu-toggle {
-      display: none;
-      letter-spacing: var(--type-track-ui);
-    }
-
-    li {
-      display: flex;
-      align-items: center;
-
-      &:not(:last-child)::after {
-        content: ",\00a0";
-      }
-    }
-
-    a {
-      text-decoration: underline;
-      letter-spacing: var(--type-track-ui);
-      white-space: nowrap;
-    }
-
-    @include below-tablet {
-
-      &__links,
-      &__register {
-        display: none;
-      }
-
-      &__menu-toggle {
-        display: inline-flex;
-      }
-    }
-  }
-
-  // Lock background scroll while mobile drawer (native popover) is open.
-  body:has(&:popover-open) {
-    overflow: hidden;
-  }
-
-  .mobile-drawer {
-    &__header {
-      padding: var(--pad-l);
-      margin-block-end: var(--vs-l);
-    }
-
-    &__nav {
-      padding-inline: var(--pad-l);
-      padding-block-end: var(--pad-l);
-      --gap: var(--vs-m);
-    }
-
-    .close {
-      font-size: var(--fluid-type);
-      --fl: 5;
-    }
-
-    a {
-      font-size: var(--fluid-type);
-      letter-spacing: var(--type-track-ui);
-      text-decoration: none;
-
-      &[aria-current="page"], &:hover, &:focus-visible {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  header button, .mobile-drawer button {
-        display: inline;
-        inline-size: fit-content;
-        padding: 0;
-        color: inherit;
   }
 
   // Sponsors — two layouts swapped by breakpoint via .show-mobile / .show-desktop.
@@ -380,50 +262,6 @@
     }
   }
 
-  // Popover.
-  .registration-popover {
-    border: var(--border-1);
-    border-radius: var(--br-s);
-    padding: var(--pad-xl);
-    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.12);
-    inline-size: min(90vw, 32rem);
-
-    opacity: 0;
-    translate: 0 -30px;
-
-    transition-property: display, overlay, opacity, translate;
-    transition-duration: 0.75s;
-    transition-behavior: allow-discrete;
-
-    p {
-      text-wrap: pretty;
-    }
-
-    // allow-discrete keeps the popover rendered through its 0.75s fade-out; stop the fading
-    // (invisible) box — and its link — catching clicks meant for whatever sits beneath it.
-    &:not(:popover-open) {
-      pointer-events: none;
-    }
-
-    &:popover-open {
-      opacity: 1;
-      translate: 0px 0px;
-
-      @starting-style {
-        opacity: 0;
-        translate: 0 -30px;
-      }
-    }
-
-    @supports (anchor-name: --anchor) {
-      margin-block: var(--vs-s);
-      inset: auto;
-      position-area: block-end span-inline-end;
-      position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
-      align-self: start;
-    }
-  }
-
   // View transitions — cross-document (opted in via @view-transition in index.scss). Page content cross-fades and lifts ~8px;
   // persistent chrome (nav + footer) is named to leave the root group and stay visually stable.
 
@@ -450,11 +288,7 @@
   }
 
   // Lift persistent chrome out of the root snapshot. Named elements on both pages morph in place (identical = imperceptible).
-  // Each name must be unique per page; .site-nav and .footer each appear once.
-  .site-nav {
-    view-transition-name: site-nav;
-  }
-
+  // Each name must be unique per page; .header (site-header, in _header.scss) and .footer each appear once.
   .footer {
     view-transition-name: site-footer;
   }

@@ -72,6 +72,39 @@ tabs:
                 help: e.g. "Kent".
                 default: Kent
                 width: 1/2
+          menu:
+            type: fields
+            label: Site menu
+            fields:
+              menu:
+                type: structure
+                label: Site menu
+                help: The links in the header, the mobile menu and the footer, in this order. Leave empty to use the default menu (Festival programme, About OA, Explore past editions, How to help). A link to the homepage’s “programme” section hides itself while Programme is hidden on the homepage. Register is added automatically while registration is open.
+                fields:
+                  label:
+                    type: text
+                    label: Label
+                    required: true
+                    help: What the link does, without arrows (e.g. “About OA”).
+                    width: 1/2
+                  link:
+                    type: link
+                    label: Link
+                    required: true
+                    options:
+                      - page
+                      - url
+                    width: 1/2
+                  anchor:
+                    type: text
+                    label: Section on that page (optional)
+                    help: The id of a section to jump to, without the # (e.g. “programme”).
+                    width: 1/2
+              menu_start_label:
+                type: text
+                label: “Start here” label
+                help: The extra home link at the front of the footer menu. Leave empty for “Start here”.
+                placeholder: Start here
           registration:
             type: fields
             label: Registration
@@ -86,17 +119,26 @@ tabs:
                   soon: Not open yet
                   open: "Open — accepting registrations"
                   closed: Closed
-                help: Controls the Register buttons and popovers across the whole site.
+                help: Controls the Register links across the whole site (header, mobile menu and footer).
               register_url:
                 type: url
                 label: Register link URL
-                help: Where the Register buttons link to. Only used when the status is “Open”.
+                help: Where the Register links go. Only used when the status is “Open”.
+                width: 1/2
+                when:
+                  registration_status: open
+              register_label:
+                type: text
+                label: Register link label
+                help: Shown in the header, the mobile menu and the footer. Leave empty for “Register”.
+                placeholder: Register
+                width: 1/2
                 when:
                   registration_status: open
               soon_intro:
                 type: info
                 label: “Not open yet” text
-                text: Shown in the Register popover and footer while registration hasn’t opened.
+                text: Shown in the footer while registration hasn’t opened.
                 when:
                   registration_status: soon
               soon_message:
@@ -126,7 +168,7 @@ tabs:
               closed_intro:
                 type: info
                 label: “Closed” text
-                text: Shown in the popover and in the footer to explain why registration is closed and what to do next/instead.
+                text: Shown in the footer to explain why registration is closed and what to do next/instead.
                 when:
                   registration_status: closed
               closed_message:

@@ -131,7 +131,7 @@ $cell = function ($field) use ($tick) {
     <h2 class="mb-m">Become a sponsor</h2>
     <p class="readable">To discuss sponsoring OAF, please email Jackie at
       <strong>openartfolke at gmail dot com</strong>. We’ll chat through what your support helps us achieve and how your brand will be highlighted, and we’ll answer any questions.</p>
-    <button class="btt--secondary fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email address</button>
+    <button class="button btt--secondary fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email address</button>
   </div>
 
   <div class="stack gap-l">

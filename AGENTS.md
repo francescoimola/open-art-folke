@@ -25,7 +25,7 @@ site/
     config.php         # Kirby config
     vite.config.php    # Vite ↔ Kirby bridge config
   plugins/kirby-vite/  # Vite asset integration plugin
-  snippets/            # Reusable PHP partials (header, footer, menu)
+  snippets/            # Reusable PHP partials: one per component (header, nav-list, link, icon, …)
   templates/           # One .php file per page type
 src/
   index.{js,scss}      # Global entry points (Lenis in JS, global SCSS)
@@ -65,7 +65,7 @@ Native PHP via Kirby's built-in engine. Every page type needs a matching `.php` 
 
 Uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`). Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before custom CSS — keep custom CSS minimal, for edge cases only.
 
-> **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, the Utopia token rules, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.mobile-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-flow`/`.theme-red`/`.theme-ink`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → code translation.
+> **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, the Utopia token rules, sanctioned custom classes (`.full-bleed`, the component blocks such as `.header`, `.drawer`, `.nav-list`, `.link`, `.button`, `.hero`/`.stack-section`, `.panel`, `.theme-flow`/`.theme-red`/`.theme-ink`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → code translation.
 
 `src/index.scss` imports `_mixins.scss` via `@use './mixins' as *;` and declares cascade layers in this precedence: `reset` (hand-rolled reset) → `fonts` (Inclusive Sans Variable) → `graffiti` (`@import "@drop-in/graffiti" layer(graffiti)`) → `colors` (Radix scales for `--red-*`/`--gray-*`) → `custom` (site rules: Utopia tokens, themes, typography, hero, layout) → `button-variants` (`.btt--secondary` + theme overrides).
 

@@ -105,7 +105,7 @@ tabs:
             text:
               - Custom link
               - Uses registration status
-            help: Links to the sign-up form when registration is open; otherwise opens the registration notice popover.
+            help: Links to the sign-up form while registration is open; otherwise it is hidden.
           link:
             type: link
             label: Goes to

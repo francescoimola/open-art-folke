@@ -1,6 +1,6 @@
 # Icon
 
-**Layer:** Primitive · **Status:** figma · **Figma:** `372:825` · **Code:** `site/snippets/icon.php` (planned)
+**Layer:** Primitive · **Status:** code · **Figma:** `372:825` · **Code:** `site/snippets/icon.php` + `src/_icon.scss`, `.icon`
 
 ## Purpose
 
@@ -76,4 +76,4 @@ renders
 
 ## Open questions
 
-- Vertical alignment: in Figma the icon is centred on the line. In code, align it to the cap height (`vertical-align: -0.05em` or similar) and check it at both endpoints.
+- ~~Vertical alignment~~: settled. `vertical-align: baseline` puts the box's bottom on the baseline and its top at about cap height, at both endpoints.

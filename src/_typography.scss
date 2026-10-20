@@ -23,7 +23,6 @@
       --color-error: light-dark(var(--light-Error-600), var(--dark-Error-700));
     }
 
-    --nav-height: calc(var(--vs-base) * 1.75 + var(--vs-l));
     --text-underline-offset: 0.22rem;
     --text-decoration-thickness: 7%;
 
@@ -36,10 +35,15 @@
     --type-lh-step: 0.1;
   }
 
+  // The fixed Header (--nav-h tall) sits over the top of the page.
   body {
     background: var(--bg);
-    padding-top: var(--nav-height, 6rem);
-    scroll-padding-top: var(--nav-height, 6rem);
+    padding-top: var(--nav-h);
+  }
+
+  // Anchor targets land below the Header, for native jumps and Lenis alike (Lenis reads scroll-margin-top).
+  :where([id]) {
+    scroll-margin-top: var(--nav-h);
   }
 
   :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, li, a, small, .ui-caption, body) {

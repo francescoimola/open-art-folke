@@ -101,6 +101,15 @@ class HomePage extends Page
   }
 
   /**
+   * Whether the Programme section is on the homepage. The Nav list hides its
+   * "Festival programme" item when it isn't, so no link points to a missing section.
+   */
+  public function showsProgramme(): bool
+  {
+    return in_array('programme', $this->homeSections(), true);
+  }
+
+  /**
    * Theme class for a middle section, from its "<key>theme" Panel field (e.g. "theme-crimson").
    * Unsaved or unknown values fall back to the section's default colour.
    */

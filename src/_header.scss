@@ -1,0 +1,107 @@
+// Header (docs/components/header.md) + Drawer (docs/components/drawer.md). Always Red, via .theme-red on the <header>.
+// Tablet up: logo + inline Nav list, Register pushed right. Below: logo + Menu, which opens the same <nav> as the Drawer.
+@use './mixins' as *;
+
+@layer custom {
+
+  .header {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    block-size: var(--nav-h);
+    padding: var(--space-xs) var(--margin);
+    background: var(--bg);
+    color: var(--fg);
+    // Stays in place during cross-document view transitions (one per page).
+    view-transition-name: site-header;
+  }
+
+  // Home link around the Logo: Link focus ring, no hover change.
+  .header__home {
+    display: flex;
+    flex-shrink: 0;
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+
+  // Menu / Close: a <button> drawn as a Link (.link), so strip Graffiti's button surface.
+  .header__menu {
+    margin-inline-start: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    translate: none;
+    cursor: pointer;
+    text-box: normal;
+  }
+
+  @include tablet {
+    .header__menu {
+      display: none;
+    }
+
+    .header__nav {
+      flex: 1;
+      min-inline-size: 0;
+
+      > .nav-list {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+      }
+    }
+
+    .header .nav-list__item--register {
+      margin-inline-start: auto;
+    }
+  }
+
+  // Drawer: the same <nav>, a Red panel covering the viewport below the Header.
+  // Fades and slides down in 200ms ease-out; [data-open] on the Header comes from src/drawer.js.
+  @include below-tablet {
+    .drawer {
+      position: fixed;
+      inset-block-start: var(--nav-h);
+      inset-inline: 0;
+      block-size: calc(100dvh - var(--nav-h));
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: var(--space-l-xl) var(--margin);
+      background: var(--bg);
+      opacity: 0;
+      translate: 0 calc(-1 * var(--space-xs));
+      visibility: hidden;
+      transition:
+        opacity var(--d-base) ease-out,
+        translate var(--d-base) ease-out,
+        visibility 0s linear var(--d-base);
+    }
+
+    [data-open] > .drawer {
+      opacity: 1;
+      translate: none;
+      visibility: visible;
+      transition-delay: 0s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .drawer {
+      transition: none;
+    }
+  }
+
+  // Page scroll is locked while the Drawer is open.
+  .has-drawer-open {
+    overflow: hidden;
+  }
+
+}

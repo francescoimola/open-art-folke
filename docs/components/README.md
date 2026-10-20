@@ -13,12 +13,12 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 
 | Component | Doc | Status |
 | --- | --- | --- |
-| Link | [link.md](link.md) | figma |
-| Button | [button.md](button.md) | figma |
-| Icon | [icon.md](icon.md) | figma |
+| Link | [link.md](link.md) | code |
+| Button | [button.md](button.md) | code |
+| Icon | [icon.md](icon.md) | code |
 | Image | [image.md](image.md) | figma |
 | Video | [video.md](video.md) | figma |
-| Logo | [logo.md](logo.md) | figma |
+| Logo | [logo.md](logo.md) | code |
 | Sponsor logo | [sponsor-logo.md](sponsor-logo.md) | figma |
 
 ### Composites
@@ -27,7 +27,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | --- | --- | --- |
 | Link + hint | [link-hint.md](link-hint.md) | figma |
 | Link list | [link-list.md](link-list.md) | figma |
-| Nav list | [nav-list.md](nav-list.md) | figma |
+| Nav list | [nav-list.md](nav-list.md) | code |
 | Sponsor card | [sponsor-card.md](sponsor-card.md) | figma |
 | Info item | [info-item.md](info-item.md) | figma |
 | Copy email | [copy-email.md](copy-email.md) | figma |
@@ -39,8 +39,8 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 
 | Component | Doc | Status |
 | --- | --- | --- |
-| Header | [header.md](header.md) | figma |
-| Drawer | [drawer.md](drawer.md) | figma |
+| Header | [header.md](header.md) | code |
+| Drawer | [drawer.md](drawer.md) | code |
 | Statement | [statement.md](statement.md) | figma |
 | Photo band | [photo-band.md](photo-band.md) | figma |
 | Photo pair | [photo-pair.md](photo-pair.md) | figma |
@@ -108,12 +108,12 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 **Open design questions** (each one is detailed in its doc)
 
 - [Footer](footer.md): the HTML order of nav and logo, and whether to keep the mobile 2px top rule.
-- [Nav list](nav-list.md): a current-page link state.
+- ~~[Nav list](nav-list.md): a current-page link state~~: settled, `aria-current="page"` only, no visual style (spec #6).
 - [Logo](logo.md): should the footer logo link home?
 - [Copy email](copy-email.md): should the visible address look like a link?
 - [Sponsor logo](sponsor-logo.md) / [Sponsor card](sponsor-card.md): a fluid logo slot, which would remove the card's `Layout` axis.
 - [Link](link.md): is Link/Compact (sponsor names) a third Link size?
-- [Icon](icon.md): vertical alignment against cap height, to settle in code.
+- ~~[Icon](icon.md): vertical alignment against cap height~~: settled in code. The box sits on the baseline, so its top meets the cap height.
 
 **About redesign: done in Figma (2026-10-20).** Final frames: Desktop v2 `399:1839` and Mobile v2 `399:2255`, in section "About · Redesign" `393:1068`. The v1 frames (`393:1069`, `393:1450`, `393:1487`, `394:1536`) are superseded and kept only for comparison.
 
