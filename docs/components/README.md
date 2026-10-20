@@ -103,7 +103,7 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 **Waiting on the user**
 
 - ~~Import the variables in Variables Plus~~: done 2026-10-20. The import file now lives at [`docs/tokens/variables-utopia-formulas.json`](../tokens/variables-utopia-formulas.json), the source for porting tokens to CSS.
-- **Deferred: rebuilding the homepage frames from instances** (in Figma section `331:285`). The recommended approach is to build new frames alongside the prototype, rewire flows and anchors, strip typed ↗↓ from labels, and delete the old frames only after comparing.
+- ~~Rebuilding the homepage frames from instances~~: done. Section "Homepage - redesign" `331:285` is built from library instances and is the homepage's design source. Only the four "… Redesign" sections are build sources; everything else in the file is the library or earlier exploration.
 
 **Open design questions** (each one is detailed in its doc)
 

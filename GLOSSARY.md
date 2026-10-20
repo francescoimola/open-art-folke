@@ -52,7 +52,11 @@ A heading in the left column with content in the right column, plus an optional 
 _Avoid_: Row, two-column section, text group
 
 **Homepage section**:
-A Split group on the homepage whose order and visibility editors control in the Panel (Programme, About, Sponsors…). A section's photo belongs to it and moves with it.
+A Split group on the homepage whose order and visibility editors control in the Panel: the fixed Programme, About and Sponsors, plus any Custom sections. A section's photo belongs to it and moves with it.
+
+**Custom section**:
+A Homepage section an editor creates in the Panel, with its own heading, text, links and optional photo; at most two at a time. Always in the Flow Theme.
+_Avoid_: Extra section, free block, countdown replacement
 
 **Edition**:
 One past festival year on the Archive page: its title, text, optional video and uncropped photos. The Archive Statement links to each Edition by its year.

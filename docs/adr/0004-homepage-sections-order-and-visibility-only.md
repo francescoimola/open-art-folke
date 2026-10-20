@@ -1,5 +1,7 @@
 # Homepage sections: order and visibility only; photos belong to their section
 
+**Superseded by [ADR-0007](0007-homepage-sections-are-blocks.md).**
+
 Editors reorder and hide Homepage sections through the existing Panel multiselect. Each section's photo is an optional media slot of its Split group, picked in the Panel, so it moves with its section and can never be stranded. The Statement's arrow links to a fixed `#content` anchor by default, or to a section chosen in the Panel ("Arrow goes to"), falling back to `#content` if that section is hidden. Nav links to a hidden section (e.g. Programme) are hidden too.
 
 ## Considered Options
