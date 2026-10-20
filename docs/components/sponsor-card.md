@@ -55,4 +55,4 @@ From each sponsor page: name, logo (SVG, coloured to Theme/Text via `currentColo
 
 ## Open questions
 
--
+- **Dark Themes:** the Neutral/100 fill is fixed, but the logo, name and corner follow Theme/Text, so on Ink they turn light on light. The Sponsor page pins the grid to Flow inside its Ink band. Should the card instead get theme-aware colours?

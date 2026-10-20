@@ -9,7 +9,7 @@ The smallest reusable piece of UI, with no other components inside it (Link, But
 _Avoid_: Atom, element
 
 **Composite**:
-A small group of primitives that always travel together (Link + hint, Link list, Nav list, Sponsor card, Info item, Copy email).
+A small group of primitives that always travel together (Link + hint, Link list, Nav list, Sponsor card, Info item, Copy email, Benefits table).
 _Avoid_: Molecule, widget
 
 **Section**:
@@ -58,6 +58,17 @@ A Split group on the homepage whose order and visibility editors control in the 
 One past festival year on the Archive page: its title, text, optional video and uncropped photos. The Archive Statement links to each Edition by its year.
 _Avoid_: Year block, archive entry, past-edition section
 
+**Current sponsor**:
+A sponsor tagged with the site's current festival year. Current sponsors show as Sponsor cards in a Sponsor grid.
+
+**Previous sponsor**:
+A sponsor tagged only with other years. Previous sponsors show as a Link list on the Sponsor page.
+_Avoid_: Past sponsor, former sponsor
+
+**Tier**:
+One sponsorship level: Gold, Silver or Bronze.
+_Avoid_: Package, level
+
 **Drawer**:
 The mobile presentation of the site navigation, opened from the header's Menu button.
 _Avoid_: Mobile menu, overlay, off-canvas
@@ -86,6 +97,10 @@ _Avoid_: Accordion, toggle, details
 **Lightbox**:
 A single photo opened large over the page, from an Edition's photos; closing it returns the reader to where they were.
 _Avoid_: Modal, popup, zoom view
+
+**Benefits table**:
+The comparison of what each Tier gets, on the Sponsor page: one row per benefit, one column per Tier.
+_Avoid_: Tier table, pricing table
 
 **Site menu**:
 The one Panel-managed list of navigation links shown in the header, the Drawer and the Footer.

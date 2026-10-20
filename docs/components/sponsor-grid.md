@@ -4,7 +4,7 @@
 
 ## Purpose
 
-The square Sponsor cards in the Sponsors Homepage section. It replaces the old mobile carousel and the desktop list of names.
+The square Sponsor cards for the Current sponsors: in the Sponsors Homepage section and under "Our sponsors" on the Sponsor page. It replaces the old mobile carousel and the desktop list of names.
 
 ## Anatomy
 
@@ -33,8 +33,10 @@ Only the cards' own (Red on Hover and Focus). The cards follow source order, wit
 
 ## Panel fields / content rules
 
-- Shows the sponsors marked "recent" on the Sponsor page, in Panel order.
-- A "See all our sponsors" Link sits under the grid, in the Split group's Content.
+- Shows the **Current sponsors**: those tagged with the site's current festival year in the Sponsor page's `sponsors` structure, in Panel order. Each needs a logo.
+- Homepage: a "See all our sponsors" Link sits under the grid, in the Split group's Content.
+- Sponsor page: a "Current" label sits above the grid, and the Previous sponsors follow as a [Link list](link-list.md).
+- In an Ink (or Red) section, pin the grid instance to **Flow** (`.theme-flow` on the `ul`), because the cards' fill is fixed light. See [Sponsor card](sponsor-card.md).
 
 ## HTML & accessibility
 
@@ -46,4 +48,4 @@ CSS: `display: grid; grid-template-columns: repeat(2, 1fr)`, and `repeat(3, 1fr)
 
 ## Open questions
 
--
+- **Naming clash:** `.sponsor-grid` in `src/_layout.scss` is the old Sponsor page intro/photo layout. Remove it (retired by the redesign) before building this component.

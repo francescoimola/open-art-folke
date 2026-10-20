@@ -33,6 +33,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Copy email | [copy-email.md](copy-email.md) | figma |
 | Person card | [person-card.md](person-card.md) | figma |
 | Disclosure | [disclosure.md](disclosure.md) | figma |
+| Benefits table | [benefits-table.md](benefits-table.md) | figma |
 
 ### Sections
 
@@ -119,6 +120,7 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 - Order: Header → Statement (Red, h1 + Aside) → Photo band → `section#how` (three Split groups) → [Photo pair](photo-pair.md) → People ([Person card](person-card.md) grid) → principles → Footer.
 - The principles Photo band sits **before** the principles on desktop and **after** them on mobile, so it's the last thing before the footer.
 - Copy is the user's own, set on desktop and mirrored on mobile. Hardcoded for now; Panel fields come at build time.
+- Statement skip link (added later): "Here's how ↓" in the Links row, jumping past the Photo band to `#how`.
 - Still open:
   - Link targets for "Who makes for a good sponsor" (probably /sponsor) and "Message us about volunteering" (email or Instagram?).
   - Real photos: the principles band has none yet, and 14 of 16 people use placeholders.
@@ -134,4 +136,22 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 - Lightbox in code: Parvus on a native `<dialog>` (see [lightbox.md](lightbox.md)).
 - Still open: a lone photo on the last row (see [edition.md](edition.md)); video posters are grey placeholders.
 
-**Next:** redesign the other pages (Sponsor, default) using these components. New components or names go into this index and `GLOSSARY.md`.
+**Sponsor redesign: done in Figma (2026-10-20).** Section "Sponsor · Redesign" `445:2918`, to the right of the live capture "Support" `438:2534`. Frames: Desktop `445:2919`, Mobile `448:3031`.
+
+- Order: Header → Statement (**Ink**, h1 + intro in the Aside, no links) → `section#why` (**Ink**: [Photo pair](photo-pair.md) + the Why support us Split group) → Our sponsors → What sponsors get → Become a sponsor (**Red**) → Buy us a coffee + Other ways to support us → Photo band → Footer. Everything else is Flow.
+- `section#why` is one section: Photo pair then Split group on desktop. On mobile the pair's photos wrap the text (square → Why support us → portrait); see [Photo pair](photo-pair.md).
+- Our sponsors: "Current" + [Sponsor grid](sponsor-grid.md), then "Previous" + a [Link list](link-list.md) of the 10 previous sponsors (↗), then the thank-you line.
+- What sponsors get: the new [Benefits table](benefits-table.md) (Layout Split / Stacked) plus the small print.
+- Become a sponsor: copy + [Copy email](copy-email.md); the bold "openartfolke at gmail dot com" in prose is gone.
+- `section#support` (Flow) holds two Split groups:
+  - **Buy us a coffee** (`#donate`): the donating paragraph and a [Link + hint](link-hint.md), "Buy the OAF team a coffee ↗" (was a button).
+  - **Other ways to support us** (`#help`, non-monetary help): the intro, the Venues / Equipment loans / Volunteer list (bold lead-ins, plain `ul`), the closing line, then a Large [Link](link.md), "Why volunteer with us", to About (internal, no icon).
+- Photos: the Photo pair uses `featureimage` (family-drawing, 1:1) and `detailimage` (froude, 2:3), which fit the pair as they are. The closing Photo band uses a new optional `bandimage` field; Figma shows the homepage's closing photo as a stand-in.
+- Statement skip link: "Read on ↓" in the Links row. It jumps to the Why support us Split group (give it its own id, e.g. `#why-support`), not to `section#why`, which opens with the photos on desktop.
+- Library changes: Icon gained **Check**; new [Benefits table](benefits-table.md).
+- Retired: the old intro/photo 2×2 layout (`.sponsor-grid` in `src/_layout.scss`). Its class name clashes with the library's Sponsor grid, so rename or remove it at build time.
+- Still open:
+  - [Sponsor card](sponsor-card.md) on a dark Theme: its Neutral/100 fill is fixed while the logo and name follow Theme/Text, so on Ink they vanish unless the grid is pinned to Flow. It no longer arises here (Our sponsors went back to Flow), but it's still open for the library.
+  - The mobile Sponsor grid leaves one card alone on the last row (9 cards in 2 columns).
+
+**Next:** redesign the remaining page (default) using these components. New components or names go into this index and `GLOSSARY.md`.

@@ -4,7 +4,7 @@
 
 ## Purpose
 
-The drawn arrows used after link labels and as the Statement's ↓. They replace the typed ↗ and ↓ characters: Inclusive Sans has no ↗, so the browser drew it in a fallback font that varied by device, and it needed a Firefox underline fix (`src/_utilities.scss`).
+The drawn arrows used after link labels and as the Statement's ↓, plus a few UI glyphs (+ −, × ← →, ✓). They replace the typed ↗ and ↓ characters: Inclusive Sans has no ↗, so the browser drew it in a fallback font that varied by device, and it needed a Firefox underline fix (`src/_utilities.scss`).
 
 ## Anatomy
 
@@ -17,12 +17,13 @@ The drawn arrows used after link labels and as the Statement's ↓. They replace
   - Close ×: `M1 1 L6 6`, `M6 1 L1 6`.
   - Arrow left ←: shaft `M7 3.5 L0 3.5`, head `M3.5 0 L0 3.5 L3.5 7`.
   - Arrow right →: shaft `M0 3.5 L7 3.5`, head `M3.5 0 L7 3.5 L3.5 7`.
+  - Check ✓: `M0.3 3.8 L2.6 6 L6.7 1.1`.
 
 ## Props & variants
 
 | Property | Values | Notes |
 | --- | --- | --- |
-| Glyph | External, Arrow down, Plus, Minus, Close, Arrow left, Arrow right | External = opens in a new tab. Arrow down = a download, or the Statement arrow. Plus / Minus = a closed / open [Disclosure](disclosure.md). Close and Arrow left / right = the [Lightbox](lightbox.md) controls. |
+| Glyph | External, Arrow down, Plus, Minus, Close, Arrow left, Arrow right, Check | External = opens in a new tab. Arrow down = a download, or the Statement arrow. Plus / Minus = a closed / open [Disclosure](disclosure.md). Close and Arrow left / right = the [Lightbox](lightbox.md) controls. Check = an included benefit in the [Benefits table](benefits-table.md), coloured Theme/Accent. |
 | Size | Default, Large | Matches the Link size it sits in. Link picks it automatically. |
 
 Inside [Link](link.md), the Icon is an exposed nested instance: turn on **Show icon**, then pick **Glyph** in the Link's own panel.

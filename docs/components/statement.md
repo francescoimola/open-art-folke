@@ -23,7 +23,7 @@ The opening band of every page: one h1 on a Theme. On the homepage, it's the "Op
 | Heading, Body, Kicker | text | Mobile: one line group each. |
 | Arrow | on / off | Stacked only. Desktop has no arrow (user decision). |
 | Show aside / Aside | on / off + text | Off by default. An optional Body paragraph (or two): in the right column on Split, with the h1 in the left; below the h1 on Stacked. Used on About. |
-| Show links / Links | on / off + slot | Off by default. A row of [Links](link.md) under the Aside, Space XS apart with "·" between them. Archive uses it for the year links ("2025 · 2024", most recent first), each jumping to its [Edition](edition.md). Needs Show aside on. |
+| Show links / Links | on / off + slot | Off by default. A row of [Links](link.md) under the Aside, Space XS apart with "·" between them. Archive uses it for the year links ("2025 · 2024", most recent first), each jumping to its [Edition](edition.md). About and Sponsor use it for one **skip link** with a drawn ↓ [Icon](icon.md) that jumps past the photos to the first text ("Here's how", "Read on"). Never "Learn more". Needs Show aside on. |
 
 Theme is **Red** by default, pinned on the main; switch the Theme mode on the instance for inner pages.
 
@@ -71,6 +71,7 @@ Figma can't flow three text layers as one paragraph, so Split carries the joined
 
 - `.statement__line { display: block }` on mobile and `inline` on desktop, so the h1 stays one heading for screen readers.
 - The arrow's hidden label names its actual target section.
+- A **skip link** in Links is a normal same-page `<a href="#…">` with the ↓ Icon `aria-hidden`; Lenis scrolls to it (instant with reduced motion). Its target must be the first *text* after the photos, not the section that starts with them.
 
 ## Open questions
 

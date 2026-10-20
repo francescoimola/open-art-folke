@@ -23,6 +23,7 @@ The photos are image overrides on the nested Images.
 
 - **Split**: one row. The widths split 3 : 2, so a 1:1 and a 2:3 come out at the same height. Gap Layout/Gutter.
 - **Stacked**: one column, each photo at full width, gap Layout/Gutter.
+- **Wrapping a Split group (Sponsor page):** the pair and a Split group share one section. On desktop the pair comes first. On mobile the photos wrap the text (First → Split group → Second). Figma shows the two Images loose around the Split group. In code: one `<section>`, `.photo-pair { display: contents }` below the switch point, and `order` on its two figures.
 
 ## Tokens
 
