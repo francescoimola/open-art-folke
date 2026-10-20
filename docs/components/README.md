@@ -101,7 +101,7 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 
 **Waiting on the user**
 
-- Import `variables-utopia-formulas.json` in Variables Plus. This adds the icon formulas and the footer logo values, plus the earlier letter-spacing and Step 3 fixes. Then `variables.json` and `variables-utopia-formulas.json` can leave the repo root.
+- ~~Import the variables in Variables Plus~~: done 2026-10-20. The import file now lives at [`docs/tokens/variables-utopia-formulas.json`](../tokens/variables-utopia-formulas.json), the source for porting tokens to CSS.
 - **Deferred: rebuilding the homepage frames from instances** (in Figma section `331:285`). The recommended approach is to build new frames alongside the prototype, rewire flows and anchors, strip typed ↗↓ from labels, and delete the old frames only after comparing.
 
 **Open design questions** (each one is detailed in its doc)

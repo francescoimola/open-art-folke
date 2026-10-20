@@ -44,7 +44,7 @@ None, fluid only.
 | Gap from label | Space 3XS (Default), Space 2XS (Large) | 3.5 → 4.5, 7 → 9 | `margin-inline-start: 0.25em` |
 | Colour | Theme/Link | | `currentColor` |
 
-In CSS, all of these reduce to `em` units, because the icon inherits its link's font size. That's why one SVG serves both sizes. The Figma variables are formulas in `variables-utopia-formulas.json`, so they follow any change to Type/Base or Type/Ratio.
+In CSS, all of these reduce to `em` units, because the icon inherits its link's font size. That's why one SVG serves both sizes. The Figma variables are formulas in [`docs/tokens/variables-utopia-formulas.json`](../tokens/variables-utopia-formulas.json), so they follow any change to Type/Base or Type/Ratio.
 
 ## States & interactions
 

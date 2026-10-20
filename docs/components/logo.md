@@ -30,7 +30,7 @@ None. Both sizes are fluid.
 | Footer height | Layout/Footer logo height | 76.64 → 189 (7 body lines at Max) |
 | Colour | Theme/Text | adapts to Red (header) and Ink (footer) |
 
-The footer sizes are values the designer chose, not derived from the type scale, so they're stored as fixed values in `variables-utopia-formulas.json`. In CSS: `width: clamp(6.75rem, …, 16.65rem)` using the Utopia viewport range, with `height: auto`.
+The footer sizes are values the designer chose, not derived from the type scale, so they're stored as fixed values in [`docs/tokens/variables-utopia-formulas.json`](../tokens/variables-utopia-formulas.json). In CSS: `width: clamp(6.75rem, …, 16.65rem)` using the Utopia viewport range, with `height: auto`.
 
 ## States & interactions
 

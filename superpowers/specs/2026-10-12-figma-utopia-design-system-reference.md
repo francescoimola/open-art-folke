@@ -174,7 +174,7 @@ M-L, **L-XL** (section padding), XL-2XL, 2XL-3XL.
 
 **Type system (V3.5, 2026-10-13): five sizes, all formula-driven.**
 Only **Type/Base** (14 Min | 18 Max) and **Type/Ratio** (1.2 | 1.25) are typed in.
-Everything else is a Variables Plus formula (import file: `variables-utopia-formulas.json`).
+Everything else is a Variables Plus formula (import file: `docs/tokens/variables-utopia-formulas.json`).
 
 | Size | Formula | Min → Max | Styles |
 |---|---|---|---|
@@ -332,9 +332,8 @@ Everything else is a Variables Plus formula (import file: `variables-utopia-form
 - **Hero typewriter** layers are missing from both frames.
 - **Responsive drafts, in order:** mobile first (Utopia Min), then tablet, once the mobile set-up is agreed.
   Both start as duplicates of V3.5 so all variables and styles carry over.
-- **Variables Plus re-import pending:** `variables-utopia-formulas.json` carries the letter-spacing fraction
-  fix and the Step 3 / H3 formulas. After importing, check that H1 letter spacing ≈ −5.49 at Max and Step 3 = 24.19 → 35.16.
-  Then `variables.json` and `variables-utopia-formulas.json` can leave the repo root.
+- **Variables Plus re-import: done 2026-10-20.** The file now lives at `docs/tokens/variables-utopia-formulas.json`
+  (see `docs/tokens/README.md`). Spot-check: H1 letter spacing ≈ −5.49 at Max, Step 3 = 24.19 → 35.16.
 - Colour themes are now Figma variables (§3.4.2), but only in V3. The other frames still use raw
   primitives. Light/dark mode is not modelled.
 - In the flow, adjacent sections each keep their own L→XL padding, so the gap between them is

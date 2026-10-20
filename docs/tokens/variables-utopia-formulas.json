@@ -1,0 +1,757 @@
+{
+  "version": 1,
+  "collections": [
+    {
+      "name": "Utopia",
+      "modes": [
+        {
+          "name": "Min"
+        },
+        {
+          "name": "Max"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:256:5",
+          "name": "Font/Family",
+          "resolvedType": "STRING",
+          "description": "",
+          "valuesByMode": {
+            "Min": "Inclusive Sans",
+            "Max": "Inclusive Sans"
+          },
+          "expressionsByMode": {},
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:285:4",
+          "name": "Type/Base",
+          "resolvedType": "FLOAT",
+          "description": "DRIVER: body size at each pole (Min 320w, Max 1500w). Everything typographic derives from this.",
+          "valuesByMode": {
+            "Min": 14,
+            "Max": 18
+          },
+          "expressionsByMode": {},
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:285:5",
+          "name": "Type/Ratio",
+          "resolvedType": "FLOAT",
+          "description": "DRIVER: modular scale ratio at each pole.",
+          "valuesByMode": {
+            "Min": 1.2,
+            "Max": 1.25
+          },
+          "expressionsByMode": {},
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:6",
+          "name": "Step/-2",
+          "resolvedType": "FLOAT",
+          "description": "Caption",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Type%2FBase}} / POWER({{Utopia::Type%2FRatio}}, 2)",
+            "Max": "{{Utopia::Type%2FBase}} / POWER({{Utopia::Type%2FRatio}}, 2)"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:7",
+          "name": "Step/0",
+          "resolvedType": "FLOAT",
+          "description": "Body, H4, links, buttons",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Type%2FBase}}",
+            "Max": "{{Utopia::Type%2FBase}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:291:4",
+          "name": "Step/3",
+          "resolvedType": "FLOAT",
+          "description": "H3, Link/Large",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Type%2FBase}} * POWER({{Utopia::Type%2FRatio}}, 3)",
+            "Max": "{{Utopia::Type%2FBase}} * POWER({{Utopia::Type%2FRatio}}, 3)"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:11",
+          "name": "Step/4",
+          "resolvedType": "FLOAT",
+          "description": "H2, H3, Link/Large",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Type%2FBase}} * POWER({{Utopia::Type%2FRatio}}, 4)",
+            "Max": "{{Utopia::Type%2FBase}} * POWER({{Utopia::Type%2FRatio}}, 4)"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:13",
+          "name": "Step/6",
+          "resolvedType": "FLOAT",
+          "description": "H1",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Type%2FBase}} * POWER({{Utopia::Type%2FRatio}}, 6)",
+            "Max": "{{Utopia::Type%2FBase}} * POWER({{Utopia::Type%2FRatio}}, 6)"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:14",
+          "name": "Space/3XS",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 0.25",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 0.25",
+            "Max": "{{Utopia::Step%2F0}} * 0.25"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:15",
+          "name": "Space/2XS",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 0.5",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 0.5",
+            "Max": "{{Utopia::Step%2F0}} * 0.5"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:16",
+          "name": "Space/XS",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 0.75",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 0.75",
+            "Max": "{{Utopia::Step%2F0}} * 0.75"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:17",
+          "name": "Space/S",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 1",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 1",
+            "Max": "{{Utopia::Step%2F0}} * 1"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:18",
+          "name": "Space/M",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 1.5",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 1.5",
+            "Max": "{{Utopia::Step%2F0}} * 1.5"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:19",
+          "name": "Space/L",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 2",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 2",
+            "Max": "{{Utopia::Step%2F0}} * 2"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:20",
+          "name": "Space/XL",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 3",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 3",
+            "Max": "{{Utopia::Step%2F0}} * 3"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:21",
+          "name": "Space/2XL",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 4",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 4",
+            "Max": "{{Utopia::Step%2F0}} * 4"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:22",
+          "name": "Space/3XL",
+          "resolvedType": "FLOAT",
+          "description": "Step/0 × 6",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * 6",
+            "Max": "{{Utopia::Step%2F0}} * 6"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:23",
+          "name": "Space pair/3XS-2XS",
+          "resolvedType": "FLOAT",
+          "description": "Min = Space/3XS, Max = Space/2XS",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2F3XS}}",
+            "Max": "{{Utopia::Space%2F2XS}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:24",
+          "name": "Space pair/2XS-XS",
+          "resolvedType": "FLOAT",
+          "description": "Min = Space/2XS, Max = Space/XS",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2F2XS}}",
+            "Max": "{{Utopia::Space%2FXS}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:25",
+          "name": "Space pair/XS-S",
+          "resolvedType": "FLOAT",
+          "description": "Min = Space/XS, Max = Space/S",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FXS}}",
+            "Max": "{{Utopia::Space%2FS}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:26",
+          "name": "Space pair/S-M",
+          "resolvedType": "FLOAT",
+          "description": "Min = Space/S, Max = Space/M",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FS}}",
+            "Max": "{{Utopia::Space%2FM}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:27",
+          "name": "Space pair/M-L",
+          "resolvedType": "FLOAT",
+          "description": "Min = Space/M, Max = Space/L",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FM}}",
+            "Max": "{{Utopia::Space%2FL}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:28",
+          "name": "Space pair/L-XL",
+          "resolvedType": "FLOAT",
+          "description": "Min = Space/L, Max = Space/XL",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FL}}",
+            "Max": "{{Utopia::Space%2FXL}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:29",
+          "name": "Space pair/XL-2XL",
+          "resolvedType": "FLOAT",
+          "description": "Min = Space/XL, Max = Space/2XL",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FXL}}",
+            "Max": "{{Utopia::Space%2F2XL}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:30",
+          "name": "Space pair/2XL-3XL",
+          "resolvedType": "FLOAT",
+          "description": "Min = Space/2XL, Max = Space/3XL",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2F2XL}}",
+            "Max": "{{Utopia::Space%2F3XL}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:31",
+          "name": "Layout/Unit",
+          "resolvedType": "FLOAT",
+          "description": "Baseline unit: every line-height and spacing is a multiple of this",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2F2XS}}",
+            "Max": "{{Utopia::Space%2F2XS}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:32",
+          "name": "Layout/Gutter",
+          "resolvedType": "FLOAT",
+          "description": "Column + row gutter = one line of body type",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FS}}",
+            "Max": "{{Utopia::Space%2FS}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:33",
+          "name": "Layout/Margin",
+          "resolvedType": "FLOAT",
+          "description": "Outer margin (fluid pair S→M)",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%20pair%2FS-M}}",
+            "Max": "{{Utopia::Space%20pair%2FS-M}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:34",
+          "name": "Line height/H1",
+          "resolvedType": "FLOAT",
+          "description": "1.1 rounded up to half a unit, from Step pair 4-6",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "CEILING({{Utopia::Step%20pair%2F4-6}} * 11 / 10, {{Utopia::Space%2F2XS}} / 2)",
+            "Max": "CEILING({{Utopia::Step%20pair%2F4-6}} * 11 / 10, {{Utopia::Space%2F2XS}} / 2)"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:35",
+          "name": "Letter spacing/H1",
+          "resolvedType": "FLOAT",
+          "description": "-0.05em at Min (as H2), -0.08em at Max",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%20pair%2F4-6}} * -5 / 100",
+            "Max": "{{Utopia::Step%20pair%2F4-6}} * -8 / 100"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:38",
+          "name": "Line height/H2",
+          "resolvedType": "FLOAT",
+          "description": "1.1 rounded up to half a unit",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "CEILING({{Utopia::Step%2F4}} * 11 / 10, {{Utopia::Space%2F2XS}} / 2)",
+            "Max": "CEILING({{Utopia::Step%2F4}} * 11 / 10, {{Utopia::Space%2F2XS}} / 2)"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:39",
+          "name": "Letter spacing/H2",
+          "resolvedType": "FLOAT",
+          "description": "-0.05em",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F4}} * -5 / 100",
+            "Max": "{{Utopia::Step%2F4}} * -5 / 100"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:291:5",
+          "name": "Line height/H3",
+          "resolvedType": "FLOAT",
+          "description": "1.1 rounded up to a whole unit",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "CEILING({{Utopia::Step%2F3}} * 11 / 10, {{Utopia::Space%2F2XS}})",
+            "Max": "CEILING({{Utopia::Step%2F3}} * 11 / 10, {{Utopia::Space%2F2XS}})"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:291:6",
+          "name": "Letter spacing/H3",
+          "resolvedType": "FLOAT",
+          "description": "-0.035em",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F3}} * -35 / 1000",
+            "Max": "{{Utopia::Step%2F3}} * -35 / 1000"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:45",
+          "name": "Line height/Body",
+          "resolvedType": "FLOAT",
+          "description": "1.5 rounded up to a whole unit",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "CEILING({{Utopia::Step%2F0}} * 3 / 2, {{Utopia::Space%2F2XS}})",
+            "Max": "CEILING({{Utopia::Step%2F0}} * 3 / 2, {{Utopia::Space%2F2XS}})"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:354:477",
+          "name": "Line height/Body tight",
+          "resolvedType": "FLOAT",
+          "description": "Graffiti --lh-s (1.2) rounded up to half a unit. Short multi-line labels (sponsor card names)",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "CEILING({{Utopia::Step%2F0}} * 6 / 5, {{Utopia::Space%2F2XS}} / 2)",
+            "Max": "CEILING({{Utopia::Step%2F0}} * 6 / 5, {{Utopia::Space%2F2XS}} / 2)"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:46",
+          "name": "Letter spacing/Body",
+          "resolvedType": "FLOAT",
+          "description": "-0.05em",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} * -5 / 100",
+            "Max": "{{Utopia::Step%2F0}} * -5 / 100"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:47",
+          "name": "Line height/Caption",
+          "resolvedType": "FLOAT",
+          "description": "1.4 rounded up to a whole unit",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "CEILING({{Utopia::Step%2F-2}} * 7 / 5, {{Utopia::Space%2F2XS}})",
+            "Max": "CEILING({{Utopia::Step%2F-2}} * 7 / 5, {{Utopia::Space%2F2XS}})"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:256:48",
+          "name": "Letter spacing/Caption",
+          "resolvedType": "FLOAT",
+          "description": "+0.01em",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F-2}} / 100",
+            "Max": "{{Utopia::Step%2F-2}} / 100"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:258:4",
+          "name": "Layout/Nav height",
+          "resolvedType": "FLOAT",
+          "description": "XS padding top + bottom + one body line",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FXS}} * 2 + {{Utopia::Line%20height%2FBody}}",
+            "Max": "{{Utopia::Space%2FXS}} * 2 + {{Utopia::Line%20height%2FBody}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:323:4",
+          "name": "Step pair/4-6",
+          "resolvedType": "FLOAT",
+          "description": "H1 size: Min = Step/4, Max = Step/6",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F4}}",
+            "Max": "{{Utopia::Step%2F6}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:323:5",
+          "name": "Space pair/XL-M",
+          "resolvedType": "FLOAT",
+          "description": "Main section row gap, decreasing: Min = Space/XL, Max = Space/M",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FXL}}",
+            "Max": "{{Utopia::Space%2FM}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:323:6",
+          "name": "Space pair/S-XL",
+          "resolvedType": "FLOAT",
+          "description": "Space above footer logo: Min = Space/S, Max = Space/XL",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FS}}",
+            "Max": "{{Utopia::Space%2FXL}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:323:7",
+          "name": "Layout/Logo width",
+          "resolvedType": "FLOAT",
+          "description": "Nav logo width = body line height x 38.0412/27",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Line%20height%2FBody}} * 380412 / 270000",
+            "Max": "{{Utopia::Line%20height%2FBody}} * 380412 / 270000"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:372:487",
+          "name": "Icon/Default",
+          "resolvedType": "FLOAT",
+          "description": "Link icon box, Link Default (0.75em of step 0 = Space/XS). CSS 0.75em",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Space%2FXS}}",
+            "Max": "{{Utopia::Space%2FXS}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:372:488",
+          "name": "Icon/Large",
+          "resolvedType": "FLOAT",
+          "description": "Link icon box, Link Large (0.75em of step 3). CSS 0.75em",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F3}} * 3 / 4",
+            "Max": "{{Utopia::Step%2F3}} * 3 / 4"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:372:489",
+          "name": "Icon stroke/Default",
+          "resolvedType": "FLOAT",
+          "description": "Icon stroke, Link Default (0.1em of step 0). SVG stroke-width 0.93 in a 7-unit viewBox",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F0}} / 10",
+            "Max": "{{Utopia::Step%2F0}} / 10"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:372:490",
+          "name": "Icon stroke/Large",
+          "resolvedType": "FLOAT",
+          "description": "Icon stroke, Link Large (0.1em of step 3). SVG stroke-width 0.93 in a 7-unit viewBox",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Min": "{{Utopia::Step%2F3}} / 10",
+            "Max": "{{Utopia::Step%2F3}} / 10"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:375:525",
+          "name": "Layout/Footer logo width",
+          "resolvedType": "FLOAT",
+          "description": "Designer-set: 108 on mobile, 266.33 on desktop (height = 7 body lines). Not type-derived.",
+          "valuesByMode": {
+            "Min": 108,
+            "Max": 266.33
+          },
+          "expressionsByMode": {},
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:375:526",
+          "name": "Layout/Footer logo height",
+          "resolvedType": "FLOAT",
+          "description": "Footer logo width / 1.4098 (logo aspect). Max = 7 x Line height/Body.",
+          "valuesByMode": {
+            "Min": 76.64,
+            "Max": 189
+          },
+          "expressionsByMode": {},
+          "expressionMetadataByMode": {}
+        }
+      ]
+    },
+    {
+      "name": "Theme",
+      "modes": [
+        {
+          "name": "Flow"
+        },
+        {
+          "name": "Red"
+        },
+        {
+          "name": "Ink"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:268:11",
+          "name": "Background",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {
+            "Flow": {
+              "r": 1,
+              "g": 0.9843137264251709,
+              "b": 0.9803921580314636,
+              "a": 1
+            }
+          },
+          "expressionsByMode": {
+            "Red": "{{VariableID:ceaca702293cd02c6342b95d816f0867ed794051/7:36}}",
+            "Ink": "{{VariableID:ec6cc21f442dc145eba5119f6f9f790ab233e019/7:70}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:268:12",
+          "name": "Text",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Flow": "{{VariableID:0f080842e05bb3755b5a8836eeb3a1850e976b95/7:64}}",
+            "Red": "{{VariableID:e9fe51b6f0cef46009405d9f87c05329b3c0312a/7:46}}",
+            "Ink": "{{VariableID:c56cf89c64c153cec08256131b83d55149d61605/7:88}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:268:13",
+          "name": "Accent",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Flow": "{{VariableID:ceaca702293cd02c6342b95d816f0867ed794051/7:36}}",
+            "Red": "{{VariableID:e9fe51b6f0cef46009405d9f87c05329b3c0312a/7:46}}",
+            "Ink": "{{VariableID:a2a00e56ce6718108ee26dec147aff98e5334a3c/7:44}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:268:14",
+          "name": "Button/Background",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Flow": "{{VariableID:ceaca702293cd02c6342b95d816f0867ed794051/7:36}}",
+            "Red": "{{VariableID:e9fe51b6f0cef46009405d9f87c05329b3c0312a/7:46}}",
+            "Ink": "{{VariableID:a2a00e56ce6718108ee26dec147aff98e5334a3c/7:44}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:268:15",
+          "name": "Button/Text",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Flow": "{{VariableID:e9fe51b6f0cef46009405d9f87c05329b3c0312a/7:46}}",
+            "Red": "{{VariableID:ceaca702293cd02c6342b95d816f0867ed794051/7:36}}",
+            "Ink": "{{VariableID:500266d92fdc4682339980f82915ea573dc026dc/7:32}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:268:16",
+          "name": "Button secondary/Background",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Flow": "{{VariableID:40f1b2b29f2d4ed31faa5593cb3645690fe4e308/7:2}}",
+            "Red": "{{VariableID:079778fd05dc097e34731e33a49e22de612a2338/7:34}}",
+            "Ink": "{{VariableID:c56cf89c64c153cec08256131b83d55149d61605/7:88}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:268:17",
+          "name": "Button secondary/Text",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Flow": "{{VariableID:ceaca702293cd02c6342b95d816f0867ed794051/7:36}}",
+            "Red": "{{VariableID:e9fe51b6f0cef46009405d9f87c05329b3c0312a/7:46}}",
+            "Ink": "{{VariableID:eec3d31d50a95c309b656e3cd0c848dd864a7b91/7:66}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:279:17",
+          "name": "Link",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Flow": "{{VariableID:ceaca702293cd02c6342b95d816f0867ed794051/7:36}}",
+            "Red": "{{VariableID:e9fe51b6f0cef46009405d9f87c05329b3c0312a/7:46}}",
+            "Ink": "{{VariableID:c56cf89c64c153cec08256131b83d55149d61605/7:88}}"
+          },
+          "expressionMetadataByMode": {}
+        },
+        {
+          "id": "VariableID:279:18",
+          "name": "Text secondary",
+          "resolvedType": "COLOR",
+          "description": "",
+          "valuesByMode": {},
+          "expressionsByMode": {
+            "Flow": "{{VariableID:d6afbe85362e5e366676d330dd586fb554b798be/7:80}}",
+            "Red": "{{VariableID:89813fca1d45d052efde2bccfb4fcf62d6befc46/7:48}}",
+            "Ink": "{{VariableID:51c0aeb5ddde552f192d2b8581ba3d303f10ca1d/7:84}}"
+          },
+          "expressionMetadataByMode": {}
+        }
+      ]
+    }
+  ]
+}
