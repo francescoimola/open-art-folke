@@ -17,4 +17,6 @@
 
 Each Utopia variable becomes one fluid custom property, `clamp(Min, …, Max)` across 320 → 1500px, named as in its Figma code syntax (`--step-n`, `--space-*`, pairs). Theme modes map to `.theme-*` classes ([ADR-0002](../adr/0002-theme-is-a-variable-mode.md)).
 
+Ported in `src/_utopia.scss` (drivers and formulas in Sass, so a changed variable is a changed driver) and `src/_themes.scss` (one map entry per Theme mode).
+
 Keep this file in sync: re-export after changing variables in Figma.

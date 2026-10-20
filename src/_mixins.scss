@@ -1,9 +1,9 @@
-// Breakpoints — match Graffiti UI 4.29.0
+// Breakpoints — match Graffiti UI 4.30.0
 @mixin mobile        { @media (width < 640px)   { @content; } }
 @mixin below-tablet  { @media (width < 768px)   { @content; } }
 @mixin tablet        { @media (width >= 768px)  { @content; } }
 
-// Container queries — match Graffiti UI 4.29.0
+// Container queries — match Graffiti UI 4.30.0
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
 
 // Absolute full-bleed background image — the shared `&__bg` cover idiom
@@ -16,6 +16,28 @@
   object-fit: cover;
   object-position: $position;
 }
+
+// Type roles — the Figma text styles, built from the Utopia tokens in _utopia.scss.
+// Weight goes through font-variation-settings too: the variable font ignores font-weight once it is set.
+@mixin type-role($size, $line-height, $letter-spacing, $weight) {
+  font-size: $size;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+  font-weight: $weight;
+  font-variation-settings: "wght" $weight;
+}
+
+@mixin type-h1         { @include type-role(var(--step-4-6), var(--lh-h1), var(--ls-h1), 500); }
+@mixin type-h2         { @include type-role(var(--step-4), var(--lh-h2), var(--ls-h2), 500); }
+// Figma's H3 style binds Letter spacing/H2, not /H3 (Link large uses /H3).
+@mixin type-h3         { @include type-role(var(--step-3), var(--lh-h3), var(--ls-h2), 500); }
+@mixin type-h4         { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 600); }
+@mixin type-body       { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 400); }
+@mixin type-caption    { @include type-role(var(--step--2), var(--lh-caption), var(--ls-caption), 400); }
+@mixin type-button     { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 500); }
+@mixin type-link       { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 500); }
+@mixin type-link-large { @include type-role(var(--step-3), var(--lh-h3), var(--ls-h3), 500); }
+@mixin type-link-compact { @include type-role(var(--step-0), var(--lh-body-tight), var(--ls-body), 500); }
 
 // Dev-only output. vite.config.js injects $vite-dev into entry files; src/index.scss forwards it here via `@use … with`.
 // Content compiles into `pnpm dev` CSS only; `pnpm build` never ships it.

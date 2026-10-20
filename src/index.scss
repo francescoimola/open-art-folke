@@ -3,6 +3,7 @@
 @use './mixins' as * with ($is-dev: $vite-dev); // $vite-dev injected by vite.config.js
 @use './reset';
 @use './tokens';
+@use './utopia';
 @use './typography';
 @use './themes';
 @use './layout';

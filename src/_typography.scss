@@ -12,11 +12,7 @@
   :root {
     --font-sans: "Inclusive Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-    --primary: light-dark(var(--light-Brand-600), var(--dark-Brand-700));
-    --fg-light: var(--light-Neutral-900);
-    --fg-dark: var(--dark-Neutral-950);
-    --bg-light: var(--color-background);
-    --bg-dark: var(--dark-Neutral-100);
+    // Theme colours (--bg, --fg, --primary, --link, --fg-muted, --theme-button*) live in _themes.scss.
 
     --color-info: light-dark(var(--light-Info-500), var(--dark-Info-700));
 

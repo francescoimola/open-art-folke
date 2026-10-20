@@ -1,6 +1,6 @@
 # Open Art Folke — Agent Instructions
 
-**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 8 · pnpm · PostCSS (autoprefixer + postcss-preset-env) · [Graffiti UI](https://graffiti-ui.com/) 4.29.0 (CSS) · SCSS (Sass) · Lenis 1.3.23
+**Stack:** Kirby CMS 5 (PHP 8.4) · native PHP templates · Vite 8 · pnpm · PostCSS (autoprefixer + postcss-preset-env) · [Graffiti UI](https://graffiti-ui.com/) 4.30.0 (CSS) · SCSS (Sass) · Lenis 1.3.23
 
 ---
 
@@ -65,17 +65,19 @@ Native PHP via Kirby's built-in engine. Every page type needs a matching `.php` 
 
 Uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`). Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before custom CSS — keep custom CSS minimal, for edge cases only.
 
-> **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, token bridge, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.mobile-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-*`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → Graffiti translation.
+> **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, the Utopia token rules, sanctioned custom classes (`.full-bleed`, `.site-nav*`, `.mobile-drawer*`, `.hero`/`.stack-section`, `.panel`, `.theme-flow`/`.theme-red`/`.theme-ink`, `.accent`, `.statement`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → code translation.
 
-`src/index.scss` imports `_mixins.scss` via `@use './mixins' as *;` and declares cascade layers in this precedence: `reset` (hand-rolled reset) → `fonts` (Inclusive Sans Variable) → `graffiti` (`@import "@drop-in/graffiti" layer(graffiti)`) → `colors` (Radix scales for `--red-*`/`--gray-*`) → `custom` (site rules: token bridge, typography, hero, layout) → `button-variants` (`.btt--secondary` + theme overrides).
+`src/index.scss` imports `_mixins.scss` via `@use './mixins' as *;` and declares cascade layers in this precedence: `reset` (hand-rolled reset) → `fonts` (Inclusive Sans Variable) → `graffiti` (`@import "@drop-in/graffiti" layer(graffiti)`) → `colors` (Radix scales for `--red-*`/`--gray-*`) → `custom` (site rules: Utopia tokens, themes, typography, hero, layout) → `button-variants` (`.btt--secondary` + theme overrides).
 
-### Color system & Figma rem scale
+### Tokens: Utopia drives Graffiti ([ADR-0006](docs/adr/0006-utopia-tokens-drive-graffiti.md))
 
-Custom palette (Brand red + Neutral gray) bridged via five root endpoints; derived scales auto-compute via `light-dark()` and relative color syntax. Use tokens (`--pad-l`, `--vs-xl`, `--primary`, `--fg`, `--bg`) — never hardcode.
+**Sizes.** `src/_utopia.scss` turns every Figma Utopia variable (`docs/tokens/variables-utopia-formulas.json`) into a fluid `clamp()` property across 320 → 1500px, named as the Figma code syntax: `--step-*` (`--step--2`, `--step-0`, `--step-3`, `--step-4`, `--step-6`, `--step-4-6`), `--space-*` (`3xs` … `3xl`), pairs (`--space-s-m`, …, plus `--space-xl-m`, `--space-s-xl`), `--lh-*`, `--ls-*`, `--gutter`, `--margin`, `--nav-h`, `--logo-w`, `--footer-logo-*`, `--icon-size`, `--icon-stroke`. Graffiti is re-pointed at them: `--fl: n` renders `--step-n`, and `--vs-*`/`--pad-*` are Utopia spaces. **Use the Utopia token** named in the Figma design; never round to a "nearest" token or write a raw `clamp()`. Figma text styles are Sass mixins in `src/_mixins.scss` (`@include type-h1`, `type-body`, `type-link`, …). To change the scale, edit the drivers in `_utopia.scss` and re-export the JSON from Figma.
+
+**Colours.** Primitives (Brand red + Neutral) live in `src/_tokens.scss`; the Figma Theme collection maps them in `src/_themes.scss`. Use theme tokens (`--bg`, `--fg`, `--primary` = Accent, `--link`, `--fg-muted` = Text secondary, `--theme-button*`) — never hardcode.
 
 **Dev-only tokens:** palette steps nothing reads yet sit in `@include dev-only { … }` blocks (`src/_tokens.scss`, `src/_typography.scss`) — compiled under `pnpm dev`, stripped by `pnpm build`. Move a token out of its block before using it, or it resolves to nothing in production.
 
-**Figma note:** OAF Figma frame is ~31px-rooted. Convert: `browser_rem = figma_px ÷ 16` (not 1.93688 inflation). Map to Graffiti tokens within ~15%.
+**Figma note:** read sizes as variables (Min = 320, Max = 1500 modes), not pixels. Any raw Figma px converts with `÷ 16` to rem.
 
 ### Component library (Figma ↔ code)
 
@@ -83,7 +85,7 @@ The Oct 2026 redesign's components (Figma section "Components" on page "Design U
 
 ### Reusable sections
 
-Build sections with `.panel` (spacing) + `.theme-*` (colour: `brand`, `paper`, `blush`, `crimson`, `ink`) + `.statement` (lead para) + `.accent` (theme-aware text colour, e.g. `<section class="panel full-bleed theme-paper"><p><span class="accent">text</span></p></section>`). Swapping the theme class makes `.accent` auto-adjust (red on light themes, pink on dark).
+Every section carries one Theme class ([ADR-0002](docs/adr/0002-theme-is-a-variable-mode.md)): `.theme-flow` (off-white, the default), `.theme-red` (Header, Drawer, Statement) or `.theme-ink` (Footer). The class sets background, text and the theme tokens; components never take a theme option. `.accent` colours text with the Theme's Accent (red on Flow, off-white on Red, pink on Ink). The pre-redesign `.theme-brand`, `.theme-paper`, `.theme-blush` and `.theme-crimson` remain only until the old templates are replaced; don't use them in new work.
 
 ### Responsive images — the `image` snippet
 

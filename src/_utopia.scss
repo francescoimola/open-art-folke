@@ -1,0 +1,160 @@
+// Utopia tokens (ADR-0006): every variable in docs/tokens/variables-utopia-formulas.json as a fluid property.
+// Names follow the Figma code syntax. Sass computes each Min/Max pole from the drivers, as the Figma formulas do.
+// Graffiti's own type and spacing tokens are re-pointed at these at the bottom of the file.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+
+// Drivers (Figma Utopia collection, modes Min = 320px, Max = 1500px).
+$min-vw: 320;
+$max-vw: 1500;
+$base-min: 14;
+$base-max: 18;
+$ratio-min: 1.2;
+$ratio-max: 1.25;
+
+// Converts px to rem (root 16px), rounded to 4 decimals like the Utopia calculator.
+@function to-rem($px) {
+  @return math.div(math.round(math.div($px, 16) * 10000), 10000) * 1rem;
+}
+
+// clamp() from $min px at 320px to $max px at 1500px. Handles decreasing pairs (min > max) and negative values.
+@function fluid($min, $max) {
+  @if $min == $max {
+    @return to-rem($min);
+  }
+  $slope: math.div($max - $min, $max-vw - $min-vw);
+  $intercept: $min - $slope * $min-vw;
+  $vi: math.div(math.round($slope * 100 * 10000), 10000) * 1vi;
+  @return clamp(#{to-rem(math.min($min, $max))}, #{to-rem($intercept)} + #{$vi}, #{to-rem(math.max($min, $max))});
+}
+
+// Figma CEILING(value, significance).
+@function ceil-to($value, $step) {
+  @return math.ceil(math.div($value, $step)) * $step;
+}
+
+@function step-at($n, $base, $ratio) {
+  @return $base * math.pow($ratio, $n);
+}
+
+// Pole values in px: (min, max).
+$step: ();
+@each $n in (-2, 0, 3, 4, 6) {
+  $step: map.set($step, $n, (step-at($n, $base-min, $ratio-min), step-at($n, $base-max, $ratio-max)));
+}
+
+$space-multipliers: ('3xs': 0.25, '2xs': 0.5, 'xs': 0.75, 's': 1, 'm': 1.5, 'l': 2, 'xl': 3, '2xl': 4, '3xl': 6);
+$space: ();
+@each $name, $m in $space-multipliers {
+  $space: map.set($space, $name, ($base-min * $m, $base-max * $m));
+}
+
+@function lo($pair) { @return list.nth($pair, 1); }
+@function hi($pair) { @return list.nth($pair, 2); }
+
+
+// Derived pole values (formulas from the export).
+$step-4-6: (lo(map.get($step, 4)), hi(map.get($step, 6)));
+$unit: map.get($space, '2xs');
+
+@function lh($size, $factor, $unit-divisor) {
+  @return (
+    ceil-to(lo($size) * $factor, math.div(lo($unit), $unit-divisor)),
+    ceil-to(hi($size) * $factor, math.div(hi($unit), $unit-divisor))
+  );
+}
+
+$lh-body: lh(map.get($step, 0), 1.5, 1);
+$line-heights: (
+  'h1': lh($step-4-6, 1.1, 2),
+  'h2': lh(map.get($step, 4), 1.1, 2),
+  'h3': lh(map.get($step, 3), 1.1, 1),
+  'body': $lh-body,
+  'body-tight': lh(map.get($step, 0), 1.2, 2),
+  'caption': lh(map.get($step, -2), 1.4, 1),
+);
+
+// Letter spacing as lengths, like Figma: H1 goes from -0.05em at Min to -0.08em at Max.
+$letter-spacings: (
+  'h1': (lo($step-4-6) * -0.05, hi($step-4-6) * -0.08),
+  'h2': (lo(map.get($step, 4)) * -0.05, hi(map.get($step, 4)) * -0.05),
+  'h3': (lo(map.get($step, 3)) * -0.035, hi(map.get($step, 3)) * -0.035),
+  'body': (lo(map.get($step, 0)) * -0.05, hi(map.get($step, 0)) * -0.05),
+  'caption': (lo(map.get($step, -2)) * 0.01, hi(map.get($step, -2)) * 0.01),
+);
+
+$space-xs: map.get($space, 'xs');
+$nav-h: (lo($space-xs) * 2 + lo($lh-body), hi($space-xs) * 2 + hi($lh-body));
+$logo-w: (math.div(lo($lh-body) * 380412, 270000), math.div(hi($lh-body) * 380412, 270000));
+
+@layer custom {
+
+  :root {
+    // Type steps and the H1 step pair.
+    --type-base: #{fluid($base-min, $base-max)};
+    @each $n, $pair in $step {
+      --step-#{$n}: #{fluid(lo($pair), hi($pair))};
+    }
+    --step-4-6: #{fluid(lo($step-4-6), hi($step-4-6))};
+
+    // Space steps.
+    @each $name, $pair in $space {
+      --space-#{$name}: #{fluid(lo($pair), hi($pair))};
+    }
+
+    // Space pairs: one step to the next, plus the two custom multi-step pairs.
+    @each $from, $to in ('3xs' '2xs', '2xs' 'xs', 'xs' 's', 's' 'm', 'm' 'l', 'l' 'xl', 'xl' '2xl', '2xl' '3xl', 'xl' 'm', 's' 'xl') {
+      --space-#{$from}-#{$to}: #{fluid(lo(map.get($space, $from)), hi(map.get($space, $to)))};
+    }
+
+    // Line heights and letter spacing per text style (lengths: use each on its own type role).
+    @each $name, $pair in $line-heights {
+      --lh-#{$name}: #{fluid(lo($pair), hi($pair))};
+    }
+    @each $name, $pair in $letter-spacings {
+      --ls-#{$name}: #{fluid(lo($pair), hi($pair))};
+    }
+
+    // Layout. --gutter and --margin alias Layout/Gutter (Space S) and Layout/Margin (pair S-M).
+    --gutter: var(--space-s);
+    --margin: var(--space-s-m);
+    --nav-h: #{fluid(lo($nav-h), hi($nav-h))};
+    --logo-w: #{fluid(lo($logo-w), hi($logo-w))};
+    --footer-logo-w: #{fluid(108, 266.33)};
+    --footer-logo-h: #{fluid(76.64, 189)};
+
+    // Icons scale with the link's own font size (0.75em box, 0.1em stroke).
+    --icon-size: 0.75em;
+    --icon-stroke: 0.1em;
+
+    // Graffiti re-pointed: its --fl scale now renders the Utopia steps (--fl: n equals --step-n).
+    --font-size-min: #{$base-min};
+    --font-size-max: #{$base-max};
+    --font-ratio-min: #{$ratio-min};
+    --font-ratio-max: #{$ratio-max};
+    --font-width-min: #{$min-vw};
+    --font-width-max: #{$max-vw};
+
+    // Graffiti spacing keeps its proportions, in units of Step 0 (1rem became Space S).
+    --vs-xs: var(--space-3xs);
+    --vs-s: var(--space-2xs);
+    --vs-base: var(--space-s);
+    --vs-m: var(--space-m);
+    --vs-l: var(--space-l);
+    --vs-xl: var(--space-2xl);
+    --vs-xxl: var(--space-3xl);
+    --vs-xxxl: calc(var(--space-s) * 8);
+
+    --pad-xs: var(--space-3xs);
+    --pad-s: var(--space-2xs);
+    --pad-m: var(--space-xs);
+    --pad-l: var(--space-s);
+    --pad-xl: var(--space-m);
+    --pad-xxl: var(--space-l);
+    --pad-xxxl: var(--space-2xl);
+
+    // Graffiti's --lh (1.5) already equals Line height/Body at both poles; --lh-s (1.2) is Body tight's source.
+  }
+
+}
