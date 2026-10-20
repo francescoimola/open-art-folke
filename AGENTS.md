@@ -77,6 +77,10 @@ Custom palette (Brand red + Neutral gray) bridged via five root endpoints; deriv
 
 **Figma note:** OAF Figma frame is ~31px-rooted. Convert: `browser_rem = figma_px ÷ 16` (not 1.93688 inflation). Map to Graffiti tokens within ~15%.
 
+### Component library (Figma ↔ code)
+
+The Oct 2026 redesign's components (Figma section "Components" on page "Design Update Oct 2026") are documented in `docs/components/README.md`: index, conventions, cross-cutting behaviour and open questions. Names follow `GLOSSARY.md`; decisions are in `docs/adr/`. Read these before designing or building any page.
+
 ### Reusable sections
 
 Build sections with `.panel` (spacing) + `.theme-*` (colour: `brand`, `paper`, `blush`, `crimson`, `ink`) + `.statement` (lead para) + `.accent` (theme-aware text colour, e.g. `<section class="panel full-bleed theme-paper"><p><span class="accent">text</span></p></section>`). Swapping the theme class makes `.accent` auto-adjust (red on light themes, pink on dark).
