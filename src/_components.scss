@@ -79,7 +79,6 @@
     }
 
     // In deep-red sponsor section, crimson cards blend in — lift them to theme-brand's brighter red.
-    // Scoped to crimson section so homepage (blush) teaser keeps crimson cards.
     :where(.theme-crimson) &>li.box.ghost {
       --bg-light: var(--dark-Brand-600);
       --bg-dark: var(--dark-Brand-600);
@@ -185,11 +184,6 @@
       background: var(--bg-light);
       text-box: trim-both leading;
     }
-  }
-
-  .theme-blush:has(.dropdown) .dropdown-menu {
-    --bg-light: var(--light-Neutral-50);
-    background: var(--bg-light);
   }
 
   .theme-crimson:has(.dropdown) .dropdown-menu {

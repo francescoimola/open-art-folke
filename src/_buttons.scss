@@ -87,15 +87,4 @@
     --button-color: var(--dark-Brand-950);
     color: var(--dark-Brand-400);
   }
-
-  // On blush, secondary bg (Brand-50) equals section bg — match Figma: bright-red text on Brand-50 (#FFE0DB) with faint border.
-  .theme-blush {
-    .btt--secondary {
-      --button-color: var(--light-Neutral-50);
-    }
-
-    .accent .btt--secondary {
-      color: inherit;
-    }
-  }
 }

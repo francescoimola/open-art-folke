@@ -85,7 +85,7 @@ The Oct 2026 redesign's components (Figma section "Components" on page "Design U
 
 ### Reusable sections
 
-Every section carries one Theme class ([ADR-0002](docs/adr/0002-theme-is-a-variable-mode.md)): `.theme-flow` (off-white, the default), `.theme-red` (Header, Drawer, Statement) or `.theme-ink` (Footer). The class sets background, text and the theme tokens; components never take a theme option. `.accent` colours text with the Theme's Accent (red on Flow, off-white on Red, pink on Ink). The pre-redesign `.theme-brand`, `.theme-paper`, `.theme-blush` and `.theme-crimson` remain only until the old templates are replaced; don't use them in new work.
+Every section carries one Theme class ([ADR-0002](docs/adr/0002-theme-is-a-variable-mode.md)): `.theme-flow` (off-white, the default), `.theme-red` (Header, Drawer, Statement) or `.theme-ink` (Footer). The class sets background, text and the theme tokens; components never take a theme option. `.accent` colours text with the Theme's Accent (red on Flow, off-white on Red, pink on Ink). The pre-redesign `.theme-brand`, `.theme-paper` and `.theme-crimson` remain only until the old templates are replaced; don't use them in new work.
 
 ### Responsive images — the `image` snippet
 
