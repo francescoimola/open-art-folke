@@ -14,12 +14,12 @@ The square Sponsor cards for the Current sponsors: in the Sponsors Homepage sect
 
 | Layout | Columns | Card |
 | --- | --- | --- |
-| Split | 3, in the right column of a Split group | Sponsor card Layout=Split |
+| Split | 3 above a 1210px viewport (2 below), in the right column of a Split group | Sponsor card Layout=Split |
 | Stacked | 2, full content width | Sponsor card Layout=Stacked |
 
 ## Layout (Stacked ↔ Split)
 
-Columns change from 2 to 3. Cards stay square and fill their cells. In code the switch is a container query on the grid's own width (`cq-medium`, 480px), so a tablet's narrow Split group column keeps 2 columns (3 would make cards smaller than Figma's 139px Min card).
+Columns change from 2 to 3. Cards stay square and fill their cells. User decision (#28): 2 columns up to a 1210px viewport, 3 only above it, on the Sponsor page and the homepage alike (mixin `sponsor-grid-wide`, `width > 1210px`). The grid must also be at least 480px wide (`cq-medium`), so a narrow placement keeps 2 columns. At 1210px the grid is about 570px wide on both pages.
 
 ## Tokens
 

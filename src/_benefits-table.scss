@@ -15,8 +15,10 @@
     inline-size: 100%;
     border-collapse: collapse;
 
+    // Graffiti draws a rule under every thead; the header row draws its own (below), so only one line shows.
     > :is(thead, tbody) {
       display: block;
+      border: 0;
     }
   }
 
@@ -45,9 +47,10 @@
     }
   }
 
-  // Header row: Text secondary, a full-strength rule. "Benefit" is visually hidden while Stacked.
+  // Header row: Text secondary, a 2px rule at the rows' 20% strength. "Benefit" is visually hidden while Stacked.
+  // User decision (#28): of the old double line (1px Text + Graffiti's 2px thead rule) only the thicker stays.
   thead > .benefits-table__row {
-    border-block-end-color: var(--fg);
+    border-block-end-width: 2px;
 
     > th {
       color: var(--fg-muted);

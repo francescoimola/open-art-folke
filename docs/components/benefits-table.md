@@ -8,7 +8,7 @@ The Gold / Silver / Bronze comparison on the Sponsor page: what each Tier gets. 
 
 ## Anatomy
 
-- **thead · tr**: `th · Benefit` (hidden on Stacked), then **Tiers**: `th · Gold`, `th · Silver`, `th · Bronze`. Body/Default in Theme/Text secondary, with a 1px Theme/Text rule below.
+- **thead · tr**: `th · Benefit` (hidden on Stacked), then **Tiers**: `th · Gold`, `th · Silver`, `th · Bronze`. Body/Default in Theme/Text secondary, with a 2px Theme/Text at 20% rule below (one line only, see Tokens).
 - **tr** (one per benefit), with a 1px Theme/Text rule at 20% below:
   - `th[scope=row]`: the benefit, Body/Default in Theme/Text.
   - **Tiers**: three `td` cells. Each holds one of:
@@ -39,7 +39,9 @@ Rows are plain frames inside the component; edit their text on the instance. In 
 | Column gap | Layout/Gutter | 14 → 18 |
 | Benefit → tiers (Stacked) | Space 2XS | 7 → 9 |
 | Tick | Icon/Large, Icon stroke/Large | 18.14 → 26.37 |
-| Rules | 1px Theme/Text (header), Theme/Text at 20% (rows) | |
+| Rules | 2px Theme/Text at 20% (header), 1px Theme/Text at 20% (rows) | |
+
+- **Header rule** (user decision, #28): the header row had a double line, our 1px Theme/Text rule over Graffiti's own 2px `thead` rule. Only the thicker one stays: the CSS removes Graffiti's `thead` border and draws 2px at 20% on the header row, in both layouts.
 
 ## States & interactions
 
