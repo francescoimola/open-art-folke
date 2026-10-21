@@ -25,7 +25,7 @@ One past festival year on the Archive page: its title, text, an optional video a
 
 Both layouts read heading → text → video → photos.
 
-- **Split** (tablet and up): the text column and the video under it share the left half (`1fr 1fr`, column gap Layout/Gutter); the right half stays empty. Photos full width below.
+- **Split** (tablet and up): the text column and the video under it share the left half (`1fr 1fr`, column gap Space L, the [Split group](split-group.md) gap, #32); the right half stays empty. Photos full width below.
 - **Stacked**: text and video full width.
 - Changed after the user's Archive review (#31): the Figma frames still show the video beside the text; the code follows the review.
 - **Photos, justified rows**: every photo in a row shares one height and keeps its own ratio, so nothing is cropped and rows fill the width.
@@ -37,7 +37,8 @@ Both layouts read heading → text → video → photos.
 | Use | Token | Min (320) → Max (1500) |
 | --- | --- | --- |
 | Row → photos, text → video | Space pair/XL-M | 42 → 27 |
-| Column gap (Split), photo gaps | Layout/Gutter | 14 → 18 |
+| Column gap (Split) | Space L (the Split group gap, #32) | 28 → 36 |
+| Photo gaps | Layout/Gutter | 14 → 18 |
 | Heading → text | Space pair/S-M | 14 → 27 |
 | Between paragraphs | Space M | 21 → 27 |
 | Section padding | Space pair/L-XL block, Layout/Margin inline | |

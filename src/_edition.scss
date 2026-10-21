@@ -51,7 +51,8 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: start;
-      gap: var(--space-xl-m) var(--gutter);
+      // Column gap Space L, the Split group gap (#32), so the text column matches the Statement's.
+      gap: var(--space-xl-m) var(--space-l);
     }
 
     .edition__row > * {

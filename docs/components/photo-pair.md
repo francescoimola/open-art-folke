@@ -21,7 +21,7 @@ The photos are image overrides on the nested Images.
 
 ## Layout (Stacked ↔ Split)
 
-- **Split**: one row. The widths split 3 : 2, so a 1:1 and a 2:3 come out at the same height. Gap Layout/Gutter.
+- **Split**: one row. The widths split 3 : 2, so a 1:1 and a 2:3 come out at the same height (whatever the gap). Gap Space L, the [Split group](split-group.md) column gap (2 × Layout/Gutter, #32).
 - **Stacked**: one column, each photo at full width, gap Layout/Gutter.
 - **Tablet (code):** Split starts at 640px, not 768px, because two stacked full-width photos are very tall on a portrait tablet. The Sponsor wrap applies below 640px.
 - **Wrapping a Split group (Sponsor page):** the pair and a Split group share one section. On desktop the pair comes first. On mobile the photos wrap the text (First → Split group → Second). Figma shows the two Images loose around the Split group. In code: one `<section>`, `.photo-pair { display: contents }` below the switch point, and `order` on its two figures.
@@ -30,7 +30,8 @@ The photos are image overrides on the nested Images.
 
 | Use | Token | Min (320) → Max (1500) |
 | --- | --- | --- |
-| Gap | Layout/Gutter | 14 → 18 |
+| Gap (Stacked) | Layout/Gutter | 14 → 18 |
+| Column gap (Split) | Space L (the Split group gap, #32) | 28 → 36 |
 | Section padding | Space pair/L-XL block, Layout/Margin inline | |
 
 ## States & interactions
@@ -50,7 +51,7 @@ About: `image1` (first) and `image2` (second). Set focus points, because both ar
 </section>
 ```
 
-CSS: `display: grid; grid-template-columns: 3fr 2fr; gap: var(--gutter)`, with one column below the switch point. Alt text comes from each file.
+CSS: `display: grid; gap: var(--gutter)`; from the switch point `grid-template-columns: 3fr 2fr; column-gap: var(--space-l)`. Alt text comes from each file.
 
 ## Open questions
 

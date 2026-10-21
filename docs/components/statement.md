@@ -31,7 +31,7 @@ Figma can't flow three text layers as one paragraph, so Split carries the joined
 
 ## Layout (Stacked ↔ Split)
 
-- **Split**: Heading, Body and Kicker run on as one paragraph. With the Aside on, the band becomes two equal columns, gap Layout/Gutter, matching the [Split group](split-group.md) grid.
+- **Split**: Heading, Body and Kicker run on as one paragraph. With the Aside on, the band becomes two equal columns, gap Space L (2 × Layout/Gutter, #32), matching the [Split group](split-group.md) grid.
 - **Stacked**: each starts on its own line, one H1 line apart. The arrow sits Space XL below.
 
 ## Tokens
@@ -41,6 +41,7 @@ Figma can't flow three text layers as one paragraph, so Split carries the joined
 | Type | Step pair/4-6, Line height/H1, Letter spacing/H1 | 29.03 → 68.66 |
 | Gap between parts (Stacked) | Line height/H1 | 35 → 76.5 |
 | Text → arrow | Space XL | 42 → 54 |
+| Column gap (Split, with Aside) | Space L (the Split group gap, #30/#32) | 28 → 36 |
 | Padding block | Space pair/S-M | 14 → 27 |
 | Padding inline | Layout/Margin | 14 → 27 |
 

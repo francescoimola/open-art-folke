@@ -1,4 +1,5 @@
-// Photo pair (docs/components/photo-pair.md): a 1:1 and a 2:3 photo at the same height, gap Layout/Gutter.
+// Photo pair (docs/components/photo-pair.md): a 1:1 and a 2:3 photo at the same height.
+// Gap Layout/Gutter stacked, Space L split (the Split group gap, #32).
 // Split from 640px (widths 3 : 2, so the heights match); Stacked below, one photo per row.
 @use './mixins' as *;
 
@@ -28,6 +29,8 @@
   @include above-mobile {
     .photo-pair {
       grid-template-columns: 3fr 2fr;
+      // 3fr : 2fr of the same remaining width keeps the heights equal whatever the gap.
+      column-gap: var(--space-l);
     }
   }
 
