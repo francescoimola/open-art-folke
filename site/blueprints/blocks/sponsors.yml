@@ -4,4 +4,4 @@ icon: heart
 fields:
   note:
     type: info
-    text: The Sponsors section shows the current sponsors from the Sponsor page. Drag this block to move the section; hide it to take the section off the homepage.
+    text: The Sponsors section shows the current sponsors from the Sponsor page; its heading and link text live in the Home page's Sponsors tab. Drag this block to move the section; hide it to take the section off the homepage.
