@@ -39,6 +39,7 @@ None. Images lazy-load, except the first Photo band (`loading="eager"`, `fetchpr
 ## Panel fields / content rules
 
 - One Kirby `File` per image. The focus point sets the crop position.
+- Optional **Caption** (`caption`, separate from alt): shown under the photo in the [Lightbox](lightbox.md) only. Alt text stays the screen-reader description.
 - Upload sources sized to how they're shown: JPEG, with heroes around 2000px. Never multi-MB PNGs (see `AGENTS.md`, "Responsive images").
 
 ## HTML & accessibility
