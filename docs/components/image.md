@@ -1,6 +1,6 @@
 # Image
 
-**Layer:** Primitive · **Status:** figma · **Figma:** `264:12` · **Code:** `site/snippets/image.php` (exists)
+**Layer:** Primitive · **Status:** code · **Figma:** `264:12` · **Code:** `site/snippets/image.php` (Ratio Natural: `.edition__photo`)
 
 ## Purpose
 

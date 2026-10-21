@@ -1,6 +1,6 @@
 # Video
 
-**Layer:** Primitive · **Status:** figma · **Figma:** `421:19` · **Code:** `site/snippets/vimeo.php` (exists)
+**Layer:** Primitive · **Status:** code · **Figma:** `421:19` · **Code:** `site/snippets/vimeo.php`, `.video-embed` (`src/_layout.scss`)
 
 ## Purpose
 
