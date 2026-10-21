@@ -5,21 +5,28 @@
  * Each block renders first, so an empty one (e.g. Sponsors before #18) leaves no gap and is never an arrow target.
  */
 
-/* Rendered sections keyed by block type; a type renders at most once, except Custom sections (max two, keyed by id). */
-$sections = [];
-foreach ($page->homeSections() as $block) {
-  $html = trim($block->toHtml());
-  if ($html !== '') $sections[$block->type() === 'custom' ? $block->id() : $block->type()] = $html;
-}
-
-/* The Statement's ↓ arrow: the chosen section, or the first one (#content) if it is hidden or empty. */
+/* The Statement's ↓ arrow labels; Custom sections get "Skip to <heading>". */
 $arrowLabels = [
   'programme' => 'Skip to the festival programme',
   'about'     => 'Skip to about the festival',
   'sponsors'  => 'Skip to our sponsors',
 ];
+
+/* Rendered sections keyed by block type; a type renders at most once, except Custom sections (max two, keyed by block id). */
+$sections = [];
+$anchors = [];
+foreach ($page->homeSections() as $block) {
+  $html = trim($block->toHtml());
+  if ($html === '') continue;
+  $key = $block->type() === 'custom' ? $block->id() : $block->type();
+  $sections[$key] = $html;
+  $anchors[$key] = $page->sectionId($block);
+  if ($block->type() === 'custom') $arrowLabels[$key] = 'Skip to ' . $block->heading()->value();
+}
+
+/* The arrow goes to the chosen section, or the first one (#content) if it is hidden or empty. */
 $arrowTarget = $page->arrow_target()->value();
-$arrowHref = isset($sections[$arrowTarget]) ? '#' . $arrowTarget : '#content';
+$arrowHref = isset($sections[$arrowTarget]) ? '#' . $anchors[$arrowTarget] : '#content';
 if (!isset($sections[$arrowTarget])) $arrowTarget = array_key_first($sections);
 ?>
 <?php snippet('header') ?>

@@ -31,14 +31,13 @@ tabs:
       arrow_target:
         type: select
         label: Arrow goes to
-        help: Where the ↓ arrow under the Statement jumps to (phones only). If that section is hidden, it goes to the first section instead.
+        help: Where the ↓ arrow under the Statement jumps to (phones only). If that section is hidden, it goes to the first section instead. A new Custom section appears here once the page is saved.
         default: content
         empty: false
+        # HomePage::arrowTargets(): First section, the placeholders, then each Custom section (by block id).
         options:
-          content: First section
-          programme: Programme
-          about: About
-          sponsors: Sponsors
+          type: query
+          query: page.arrowTargets
       heroimage:
         type: files
         label: Opening photo
@@ -55,14 +54,16 @@ tabs:
         label: Homepage sections
         help: >
           The sections between the opening and closing photos, top to bottom. Drag to reorder; use a block's
-          menu to hide it (or delete it) to take that section off the homepage. Only one of each section shows,
-          even if you add it twice. While this list is empty, the homepage shows Programme, About and Sponsors.
-          Hiding Programme also hides the “Festival programme” links in the menu and footer.
+          menu to hide it (or delete it) to take that section off the homepage. Programme, About and Sponsors
+          show once each, even if you add them twice. Add up to two Custom sections for anything else (heading,
+          text, links, photo); a third one doesn't show. While this list is empty, the homepage shows Programme,
+          About and Sponsors. Hiding Programme also hides the “Festival programme” links in the menu and footer.
         empty: Showing Programme, About and Sponsors (the default). Add blocks to change the order.
         fieldsets:
           - programme
           - about
           - sponsors
+          - custom
       bannerimage:
         type: files
         label: Closing photo

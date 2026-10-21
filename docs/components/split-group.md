@@ -52,6 +52,8 @@ None of its own. Photos lazy-load.
 - **Homepage sections** are Split groups. Editors control their order and visibility ([ADR-0004](../adr/0004-homepage-sections-order-and-visibility-only.md)).
 - Each section's photo is part of it (`<section>image`) and moves with it.
 - Each section gets a stable `id` (`#programme`, `#about`, `#sponsors`) for anchors and the Statement arrow.
+- **Custom sections** (up to two, `site/snippets/blocks/custom.php`) are Split groups too: heading (required), text, up to two links (Link, or Link + hint when a hint is given), optional photo. Photo size Column = Column media, Wide = Media; position Before the text = media above the Row. Their `id` is the heading's slug, suffixed `-2`, `-3`… if it clashes with another id on the page (`HomePage::sectionId()`).
+- A heading-only group renders no content box, so no gap hangs under the heading.
 - The first section's wrapper carries `#content`.
 
 ## HTML & accessibility

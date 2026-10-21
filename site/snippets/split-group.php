@@ -61,9 +61,12 @@ $attributes = array_merge([
     <?php if ($heading !== ''): ?>
       <h2 class="split-group__heading" id="<?= esc($headingId, 'attr') ?>"><?= esc($heading) ?></h2>
     <?php endif ?>
+    <?php /* No content (a heading-only Custom section) → no empty box adding a gap under the heading. */ ?>
+    <?php if (trim($content) !== ''): ?>
     <div class="split-group__content">
       <?= $content ?>
     </div>
+    <?php endif ?>
   </div>
   <?php if (!$mediaFirst) echo $figures ?>
 </<?= $tag ?>>
