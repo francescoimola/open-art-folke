@@ -31,7 +31,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Sponsor card | [sponsor-card.md](sponsor-card.md) | code |
 | Info item | [info-item.md](info-item.md) | code |
 | Copy email | [copy-email.md](copy-email.md) | code |
-| Person card | [person-card.md](person-card.md) | figma |
+| Person card | [person-card.md](person-card.md) | code |
 | Disclosure | [disclosure.md](disclosure.md) | figma |
 | Benefits table | [benefits-table.md](benefits-table.md) | code |
 
@@ -122,10 +122,10 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 - Copy is the user's own, set on desktop and mirrored on mobile. Hardcoded for now; Panel fields come at build time.
 - Statement skip link (added later): "Here's how ↓" in the Links row, jumping past the Photo band to `#how`.
 - Still open:
-  - Link targets for "Who makes for a good sponsor" (probably /sponsor) and "Message us about volunteering" (email or Instagram?).
+  - ~~Link targets~~: settled (spec #6): "Who makes for a good sponsor" goes to the Sponsor page; "Message us about volunteering" is a `mailto:` to the Site contact email.
   - Real photos: the principles band has none yet, and 14 of 16 people use placeholders.
-  - [Person card](person-card.md): a person without a photo.
-  - 16 people in 3 columns leave one card alone on the last row.
+  - ~~[Person card](person-card.md): a person without a photo~~: settled, a Neutral/100 tile (spec #6).
+  - ~~16 people in 3 columns leave one card alone on the last row~~: settled, it stays left-aligned (spec #6).
   - [Disclosure](disclosure.md) is in the library but unused, since FAQs were dropped.
 
 **Archive redesign: done in Figma (2026-10-20).** Section "Archive · Redesign" `423:1675`, to the right of the live capture `411:4662`. Frames: Desktop `423:1676`, Mobile `424:1879`, Lightbox Desktop `424:2381`, Lightbox Mobile `424:2440`.
