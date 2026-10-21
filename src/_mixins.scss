@@ -8,6 +8,8 @@
 // The Header still switches at `tablet`.
 @mixin footer-stacked { @media (width <= 820px) { @content; } }
 @mixin footer-split   { @media (width > 820px)  { @content; } }
+// Sponsor grid only (user decision, #28): 2 columns up to a 1210px viewport, 3 above.
+@mixin sponsor-grid-wide { @media (width > 1210px) { @content; } }
 
 // Container queries — match Graffiti UI 4.30.0
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
