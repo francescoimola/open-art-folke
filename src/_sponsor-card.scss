@@ -7,7 +7,7 @@
 @layer custom {
 
   .sponsor-card {
-    --card-bg: var(--light-Neutral-100);
+    --card-bg: var(--placeholder-bg);
     --card-fg: var(--fg);
     // The corner's arrow is cut out in the Theme's background colour.
     --card-arrow: var(--bg);

@@ -158,6 +158,11 @@ tabs:
         help: Links to the donation URL in Site → Settings. No URL, no link.
         placeholder: Buy the OAF team a coffee
         width: 1/2
+      donate_hint:
+        type: text
+        label: Donation link hint
+        help: Short line under the donation link.
+        placeholder: Opens in a new tab
       donate_text:
         type: textarea
         label: Donation text

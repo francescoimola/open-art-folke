@@ -1,14 +1,26 @@
 <?php
+use Kirby\Toolkit\Str;
+
 /* Archive (docs/components/README.md, "Archive redesign"): Statement (Red) with one year link per Edition, then one Edition per year (Flow). */
 $editions = $page->editions()->toStructure();
 
-/* Year links: only Editions with a year get one (an empty year renders the Edition without an anchor). */
+/*
+ * Each Edition's key (id, heading id, Lightbox group): "edition-<year>", else "edition-<heading slug>".
+ * A repeated year or heading gets "-2", "-3"…, so no two Editions share an id or a Lightbox group.
+ * Year links: only Editions with a year get one (an empty year renders the Edition without an anchor).
+ */
+$keys = [];
 $yearLinks = [];
 foreach ($editions as $edition) {
   $year = trim((string)$edition->year()->value());
-  if (preg_match('/^\d{4}$/', $year)) {
-    $yearLinks[] = ['url' => '#edition-' . $year, 'label' => $year];
+  $hasYear = preg_match('/^\d{4}$/', $year) === 1;
+  $base = $hasYear ? 'edition-' . $year : 'edition-' . Str::slug($edition->headline()->value());
+  $key = $base;
+  for ($n = 2; in_array($key, $keys, true); $n++) {
+    $key = $base . '-' . $n;
   }
+  $keys[$edition->id()] = $key;
+  if ($hasYear) $yearLinks[] = ['url' => '#' . $key, 'label' => $year];
 }
 ?>
 <?php snippet('header') ?>
@@ -23,6 +35,7 @@ foreach ($editions as $edition) {
   <?php snippet('edition', [
     'heading' => $edition->headline(),
     'year'    => $edition->year(),
+    'key'     => $keys[$edition->id()],
     'text'    => $edition->text(),
     'video'   => $edition->video(),
     'photos'  => $edition->gallery()->toFiles(),

@@ -73,7 +73,7 @@ $previousLinks = array_map(fn ($sponsor) => [
       <?php snippet('link-hint', [
         'url'   => $site->donation_url()->value(),
         'label' => $page->donate_label()->or('Buy the OAF team a coffee')->value(),
-        'hint'  => 'Opens in a new tab',
+        'hint'  => $page->donate_hint()->or('Opens in a new tab')->value(),
         'id'    => 'hint-donate',
       ]) ?>
     <?php endif ?>

@@ -96,9 +96,9 @@ These rules apply site-wide; component docs reference them instead of repeating 
 
 Copy [`_template.md`](_template.md) for each new component.
 
-## Open questions & next steps (as of 2026-10-20)
+## Open questions & next steps (as of 2026-10-21)
 
-The component library is complete in Figma (status `figma`). Code is **not** started.
+The component library is complete in Figma and built in code (spec #6): every component is `code` except [Disclosure](disclosure.md), unused since FAQs were dropped. The Homepage, About, Archive and Sponsor pages are rebuilt from these components, and the pre-redesign snippets and CSS are retired (#34).
 
 **Waiting on the user**
 

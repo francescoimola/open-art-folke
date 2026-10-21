@@ -14,19 +14,21 @@ use Kirby\Toolkit\Str;
  */
 class HomePage extends Page
 {
-  /** Block types the homepage renders, each with the most instances that render; later extras are dropped. */
-  public const SECTION_LIMITS = [
-    'programme' => 1,
-    'about'     => 1,
-    'sponsors'  => 1,
-    'custom'    => 2,
+  /**
+   * The placeholder block types, in their default order: the one list the limits, fallback order,
+   * reserved ids and arrow options derive from. `label` names the arrow option; `skip` is the arrow's label.
+   */
+  public const PLACEHOLDERS = [
+    'programme' => ['label' => 'Programme', 'skip' => 'Skip to the festival programme'],
+    'about'     => ['label' => 'About', 'skip' => 'Skip to about the festival'],
+    'sponsors'  => ['label' => 'Sponsors', 'skip' => 'Skip to our sponsors'],
   ];
 
-  /** Order used while the field is empty (live, right after the switch-over). */
-  private const DEFAULT_SECTIONS = ['programme', 'about', 'sponsors'];
+  /** Custom sections that render; later extras are dropped. Each placeholder renders once. */
+  public const CUSTOM_LIMIT = 2;
 
-  /** Ids already on the homepage; a Custom section's id avoids them (and each "<id>-title" heading id). */
-  private const RESERVED_IDS = ['main', 'drawer', 'content', 'programme', 'about', 'sponsors'];
+  /** Fixed ids on the homepage besides the placeholders' own (each type is its section's id). */
+  private const FIXED_IDS = ['main', 'drawer', 'content'];
 
   private ?Blocks $sections = null;
 
@@ -34,7 +36,7 @@ class HomePage extends Page
   private ?array $customIds = null;
 
   /**
-   * Visible Homepage sections in Panel order, capped per type (SECTION_LIMITS).
+   * Visible Homepage sections in Panel order, capped per type (sectionLimit()).
    * An empty field (or one Kirby can't parse) falls back to Programme → About → Sponsors.
    */
   public function homeSections(): Blocks
@@ -55,7 +57,7 @@ class HomePage extends Page
     }
 
     $blocks ??= Blocks::factory(
-      array_map(fn (string $type) => ['type' => $type, 'id' => 'default-' . $type, 'content' => []], self::DEFAULT_SECTIONS),
+      array_map(fn (string $type) => ['type' => $type, 'id' => 'default-' . $type, 'content' => []], array_keys(self::PLACEHOLDERS)),
       ['parent' => $this]
     );
 
@@ -63,10 +65,17 @@ class HomePage extends Page
     $this->sections = $blocks->filter(function (Block $block) use (&$counts): bool {
       $type = $block->type();
       $counts[$type] = ($counts[$type] ?? 0) + 1;
-      return $counts[$type] <= (self::SECTION_LIMITS[$type] ?? 0);
+      return $counts[$type] <= self::sectionLimit($type);
     });
 
     return $this->sections;
+  }
+
+  /** How many blocks of a type render: one per placeholder, CUSTOM_LIMIT Custom sections, none of an unknown type. */
+  public static function sectionLimit(string $type): int
+  {
+    if ($type === 'custom') return self::CUSTOM_LIMIT;
+    return isset(self::PLACEHOLDERS[$type]) ? 1 : 0;
   }
 
   /**
@@ -82,7 +91,7 @@ class HomePage extends Page
     if ($this->customIds === null) {
       $this->customIds = [];
       $taken = [];
-      foreach (self::RESERVED_IDS as $id) {
+      foreach ([...self::FIXED_IDS, ...array_keys(self::PLACEHOLDERS)] as $id) {
         $taken[$id] = $taken[$id . '-title'] = true;
       }
 
@@ -111,12 +120,7 @@ class HomePage extends Page
    */
   public function arrowTargets(): array
   {
-    $targets = [
-      'content'   => 'First section',
-      'programme' => 'Programme',
-      'about'     => 'About',
-      'sponsors'  => 'Sponsors',
-    ];
+    $targets = ['content' => 'First section', ...array_map(fn (array $p) => $p['label'], self::PLACEHOLDERS)];
     foreach ($this->homeSections()->filterBy('type', 'custom') as $block) {
       if ($block->heading()->isNotEmpty()) $targets[$block->id()] = 'Custom section: ' . $block->heading()->value();
     }

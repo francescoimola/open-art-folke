@@ -1,15 +1,10 @@
-// Layout primitives + structures: .full-bleed, .center-both, .page-section (--home, --flush-start), .stack-section, .panel, .photo-banner, .dots, .split:where(.no-wrap).
-@use './mixins' as *;
+// Layout primitives + structures: .full-bleed, .video-embed, .page-section (--home, --flush-start), .dots, .split:where(.no-wrap).
 
 @layer custom {
 
   .full-bleed {
     width: 100vw;
     margin-inline: calc(50% - 50vw);
-  }
-
-  .full-height {
-    height: 100%;
   }
 
   // Responsive Vimeo embed that fills Graffiti's .aspect-video ratio box.
@@ -20,53 +15,10 @@
     border: 0;
   }
 
-  .center-both {
-    display: grid;
-    place-items: center;
-  }
-
   // .split defaults to wrap in Graffiti — pin to no-wrap when layout depends on a single row.
   .split:where(.no-wrap) {
     flex-direction: row;
     flex-wrap: nowrap;
-  }
-
-  // Breakpoint visibility: .show-mobile below tablet, .show-desktop at/above it.
-  // Swaps between alternate Graffiti layouts (e.g. sponsors carousel vs list) instead of overriding internals.
-  @include tablet {
-    .show-mobile {
-      display: none;
-    }
-  }
-
-  @include below-tablet {
-    .show-desktop {
-      display: none;
-    }
-  }
-
-  .stack-section {
-    position: sticky;
-    top: var(--nav-h);
-    min-height: calc(100svh - var(--nav-h));
-    background: var(--section-bg, var(--bg));
-
-    &:is(.flowing) {
-      position: relative;
-      top: auto;
-    }
-  }
-
-  .stack-section.half {
-    min-height: calc(50dvh - var(--nav-h));
-  }
-
-  // Below tablet: stop per-section card-stacking; sections flow normally. Heights untouched.
-  @include below-tablet {
-    .stack-section {
-      position: relative;
-      top: auto;
-    }
   }
 
   // Page section — the redesign's content band: Space pair/L-XL block × Layout/Margin inline, children Space XL apart.
@@ -84,130 +36,10 @@
     padding: var(--margin);
   }
 
-  // Continues the band above in the same Theme: no top padding, so the two read as one (About #get-involved after the Photo pair).
+  // Continues the band above in the same Theme: no top padding, so the two read as one.
+  // Used by About's #get-involved, after the Photo pair.
   .page-section--flush-start {
     padding-block-start: 0;
-  }
-
-  // Panel — spacing shell: padding + content rhythm only, no colour.
-  .panel {
-    padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
-    padding-block: var(--vs-xl) calc(var(--vs-xl) * 2);
-
-    &.even {
-      padding-block: var(--vs-xl);
-    }
-  }
-
-  // Photo banner — pre-filtered background photo with 3-col identity grid. Compose with .stack-section/.half; override --photo-banner-img-position for focal point.
-  .photo-banner {
-    container-type: inline-size;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: clip;
-    top: 0;
-
-    // <picture> is a layout-transparent wrapper: collapse it so the absolute
-    // .photo-banner__bg <img> inside leaves the flex flow (positioning against
-    // the section itself), leaving .photo-banner__grid as the sole flex child
-    // so its width: 100% spans the full section again.
-    >picture {
-      display: contents;
-    }
-
-    &__bg {
-      @include cover-bg(var(--photo-banner-img-position, center));
-    }
-
-    // Logo sizing
-    svg {
-      height: calc(var(--vs-xxl) * 2);
-      width: auto;
-    }
-
-    @container (max-width: 50rem) {
-      svg {
-        height: var(--vs-xxl);
-      }
-    }
-
-    &__grid {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
-      padding-block: var(--vs-xl);
-
-      >p {
-        width: fit-content;
-        font-weight: 500;
-
-        @supports (font-variation-settings: "wght" 450) {
-          font-variation-settings: "wght" 450;
-        }
-
-        &:last-child {
-          justify-self: end;
-        }
-      }
-
-      >div {
-        display: flex;
-        justify-content: center;
-      }
-
-      @container (max-width: 50rem) {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        gap: var(--vs-xl);
-
-        >p {
-          text-align: center;
-
-          &:last-child {
-            justify-self: revert;
-          }
-        }
-      }
-    }
-  }
-
-  .darken {
-    &-50 {
-      filter: brightness(90%);
-    }
-
-    &-100 {
-      filter: brightness(70%);
-    }
-
-    &-200 {
-      filter: brightness(60%);
-    }
-
-    &-300 {
-      filter: brightness(50%);
-    }
-
-    &-400 {
-      filter: brightness(40%);
-    }
-  }
-
-  /* Flush table — Graffiti's .table wrapper keeps its overflow-x: auto (so
-  the table scrolls horizontally instead of squeezing) but drops the
-  boxed border and radius for an open, editorial list. Cells stay on one
-  line so the table overflows its container rather than wrapping. */
-  .table-flush {
-    border-radius: var(--br-s);
-
-    :is(th, td) {
-      white-space: nowrap;
-    }
   }
 
   ul:is(.dots) {

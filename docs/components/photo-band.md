@@ -1,6 +1,6 @@
 # Photo band
 
-**Layer:** Section · **Status:** code · **Figma:** `382:1137` · **Code:** `site/snippets/photo-band.php`, `.photo-band` (`src/_photo-band.scss`; the legacy `photo-banner.php` goes with the old templates)
+**Layer:** Section · **Status:** code · **Figma:** `382:1137` · **Code:** `site/snippets/photo-band.php`, `.photo-band` (`src/_photo-band.scss`)
 
 ## Purpose
 

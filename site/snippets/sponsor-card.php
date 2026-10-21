@@ -2,7 +2,8 @@
 /**
  * Sponsor card — one square card in the Sponsor grid (docs/components/sponsor-card.md).
  * Logo top-left, name bottom-left (Link/Compact), ↗ corner top-right. The whole card links out in a new tab.
- * Hover and keyboard Focus switch it to the Red Theme's colours. Without a URL it renders as a plain card (no link, no corner).
+ * Hover and keyboard Focus switch it to the Red Theme's colours.
+ * Without a URL it renders as a plain card (no link, no corner).
  * Renders the <li>: use it inside the Sponsor grid's list.
  *
  * Usage: snippet('sponsor-card', ['name' => $row['name'], 'url' => $row['url'], 'logo' => $row['logo']])

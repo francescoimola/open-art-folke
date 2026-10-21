@@ -1,5 +1,6 @@
 // Person card (docs/components/person-card.md): a 1:1 photo, then name, area and role in Caption, Space XS apart.
-// Its grid, .people: 2 columns, 3 once the container fits three cards of about 200px. Gap Space S; a lone last card stays left.
+// Its grid, .people: 2 columns, 3 once the container fits three cards of about 200px.
+// Gap Space S; a lone last card stays left.
 @use './mixins' as *;
 
 @layer custom {
@@ -42,10 +43,10 @@
     aspect-ratio: 1;
   }
 
-  // No photo: a solid tile. Figma binds the Image placeholder to the Neutral/100 primitive, not a Theme
-  // colour; the grid only sits on Flow.
+  // No photo: a solid tile in --placeholder-bg (Neutral/100 in Figma, not a Theme
+  // colour); the grid only sits on Flow.
   .person-card__photo--empty {
-    background: var(--light-Neutral-100);
+    background: var(--placeholder-bg);
   }
 
   // Two classes: the typography overlay's p rule compiles to (0,1,1) and would set its own tracking and colour.

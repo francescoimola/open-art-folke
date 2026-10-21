@@ -19,11 +19,13 @@
  *   ])
  *
  * @var string|\Kirby\Content\Field      $heading  required; the h2 (plain text, escaped here)
- * @var string|int|\Kirby\Content\Field  $year     drives id="edition-<year>"; empty or not a year = no id (the page still renders)
+ * @var string|int|\Kirby\Content\Field  $year     a 4-digit year gives the section an id (the key); empty or not a year = no id
+ * @var string|null                      $key      unique base for the ids and Lightbox group; default "edition-<year>",
+ *                                                else "edition-<heading slug>". Pass a de-duplicated one when repeats are possible.
  * @var string|\Kirby\Content\Field|null $text     KirbyText field (rendered with ->kt()) or HTML string
  * @var string|\Kirby\Content\Field|null $video    Vimeo URL; empty = no Video (the text column is unchanged)
  * @var \Kirby\Cms\Files|null            $photos   images in order; empty = no photo list
- * @var string|null                      $group    Lightbox group key; defaults to the id, else "edition-<heading slug>"
+ * @var string|null                      $group    Lightbox group key; defaults to the key
  * @var string                           $class    extra classes on the <section>
  */
 use Kirby\Content\Field;
@@ -34,9 +36,11 @@ if ($heading === '') return;
 
 /* A year is digits only (the anchor and the Statement's year link use it); anything else is treated as unset. */
 $year = trim((string)($year ?? ''));
-$id = preg_match('/^\d{4}$/', $year) ? 'edition-' . $year : null;
-$headingId = ($id ?? 'edition-' . Str::slug($heading)) . '-title';
-$group = $group ?? ($id ?? 'edition-' . Str::slug($heading));
+$hasYear = preg_match('/^\d{4}$/', $year) === 1;
+$key ??= $hasYear ? 'edition-' . $year : 'edition-' . Str::slug($heading);
+$id = $hasYear ? $key : null;
+$headingId = $key . '-title';
+$group ??= $key;
 
 $text = ($text ?? null) instanceof Field ? (string)$text->kt() : trim((string)($text ?? ''));
 $video = snippet('vimeo', ['url' => $video ?? null, 'title' => $heading], return: true);

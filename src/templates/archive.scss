@@ -11,7 +11,8 @@
 @layer custom {
 
   .parvus {
-    // Top bar height = the counter pill (Space XS × 2 + a Body line); a control pill is Space XS × 2 + a Large Icon.
+    // Top bar height = the counter pill (Space XS × 2 + a Body line).
+    // A control pill is Space XS × 2 + a Large Icon.
     --lightbox-bar: calc(2 * var(--space-xs) + var(--lh-body));
     --lightbox-pill: calc(2 * var(--space-xs) + 0.75 * var(--step-3));
 

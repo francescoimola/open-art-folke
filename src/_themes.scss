@@ -68,6 +68,9 @@ $theme-colours: ('primary', 'link', 'fg-muted', 'theme-button', 'theme-button-te
     @each $name in $theme-colours {
       --#{$name}: light-dark(#{map.get($flow, $name)}, #{map.get($ink, $name)});
     }
+
+    // Neutral/100 fill behind a missing photo or logo (Person card, Sponsor card); the same in every Theme.
+    --placeholder-bg: var(--light-Neutral-100);
   }
 
   // A Theme looks the same in light and dark OS modes: both endpoints are equal.
@@ -84,26 +87,6 @@ $theme-colours: ('primary', 'link', 'fg-muted', 'theme-button', 'theme-button-te
 
       color-scheme: map.get($t, 'scheme');
     }
-  }
-
-  // Retiring pre-redesign themes, still used by the current templates.
-  // Delete each one once no template or the home model emits it.
-  .theme-paper {
-    --bg-light: var(--light-Neutral-50);
-    --bg-dark: var(--light-Neutral-50);
-    --fg-light: var(--light-Neutral-950);
-    --fg-dark: var(--light-Neutral-950);
-    --primary: var(--light-Brand-600);
-    color-scheme: light;
-  }
-
-  .theme-crimson {
-    --bg-light: var(--dark-Brand-500);
-    --bg-dark: var(--dark-Brand-500);
-    --fg-light: var(--light-Neutral-50);
-    --fg-dark: var(--light-Neutral-50);
-    --primary: var(--dark-Brand-950);
-    color-scheme: dark;
   }
 
   // .accent colours text with --primary: red on light themes, soft pink on dark/deep-red.
