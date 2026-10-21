@@ -19,6 +19,7 @@ Built entirely from instances:
     - socials: a [Link list](link-list.md);
     - contact: [Copy email](copy-email.md).
   - **Legal rows**: Media credits, Privacy, Fundraising, Terms, Copyright, each heading + body text.
+- **Stacked** (`385:1069`) has no "All you need to know" heading. Its Section · Info is one column of rows, each a Split group with Divider on and an H2 heading: **Group · Visitor**, **Group · Artist**, **Group · Socials**, **Group · Contact**, then the five legal rows.
 
 ## Props & variants
 
@@ -31,7 +32,11 @@ Theme is **Ink**, pinned on the main. Stacked also has a 2px top rule in Button 
 
 ## Layout (Stacked ↔ Split)
 
+One HTML structure for both (ADR-0001); CSS switches at the tablet breakpoint (768px).
+
 - Info items and legal rows go from two columns to stacked.
+- **Below tablet**, the "All you need to know" heading is visually hidden (kept in the HTML for structure and screen readers) and its group loses its rule and padding. Each Info item becomes a row like the legal rows: 1px Divider, padding block Space 2XS, the label in the H2 style, the value below it (Space pair/S-M). Rows are Space 2XL apart.
+- **Tablet up**, the heading shows and the Info items sit in its right column (label | value, see [Info item](info-item.md)).
 - The **logo/nav order swaps**: see Open questions.
 
 ## Tokens
@@ -43,7 +48,9 @@ Theme is **Ink**, pinned on the main. Stacked also has a 2px top rule in Button 
 | Nav row padding block (Split) | Space pair/2XL-3XL | 56 → 108 |
 | Logo padding top / bottom | Space pair/S-XL / Space pair/2XL-3XL | 14 → 54 / 56 → 108 |
 | Between groups | Space 2XL | 56 → 72 |
-| Info items | Space pair/M-L | 21 → 36 |
+| Info items (Split) | Space pair/M-L | 21 → 36 |
+| Info item rows (Stacked) | Space 2XL | 56 → 72 |
+| Row heading → content (Stacked) | Space pair/S-M | 14 → 27 |
 | Row padding block | Space 2XS | 7 → 9 |
 
 ## States & interactions
@@ -64,7 +71,7 @@ Only the links' own states and Copy email. The footer stays in place between pag
 <footer class="footer theme-ink">
   <nav aria-label="Footer"> … </nav>
   <?php snippet('logo') ?>
-  <section class="split-group" aria-labelledby="info-title"> <h2 id="info-title">All you need to know</h2> <dl>…</dl> </section>
+  <section class="footer__group footer__group--info" aria-labelledby="footer-info"> <h2 id="footer-info">All you need to know</h2> <dl>…</dl> </section>
   …
 </footer>
 ```

@@ -21,6 +21,16 @@
   object-position: $position;
 }
 
+// Graffiti's .visually-hidden technique, for hiding an element only at some sizes (the utility class can't sit in a query).
+@mixin visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
 // Type roles — the Figma text styles, built from the Utopia tokens in _utopia.scss.
 // Weight goes through font-variation-settings too: the variable font ignores font-weight once it is set.
 @mixin type-role($size, $line-height, $letter-spacing, $weight) {

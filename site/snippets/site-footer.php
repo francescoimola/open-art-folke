@@ -2,6 +2,7 @@
 /**
  * Footer — the end of every page, always Ink (docs/components/footer.md). Closes the <main> opened in header.php.
  * Nav list first in the HTML (CSS puts the Logo first below tablet), then the Info items and the legal rows.
+ * Below tablet CSS hides the "All you need to know" heading (kept for screen readers) and makes each Info item a row.
  * Every string is a Site → Footer field, with the Figma copy as the fallback.
  *
  * @var \Kirby\Cms\Site $site
@@ -51,7 +52,7 @@ $socials = array_filter([
 
   <div class="footer__info">
 
-    <section class="footer__group" aria-labelledby="footer-info">
+    <section class="footer__group footer__group--info" aria-labelledby="footer-info">
       <h2 class="footer__title" id="footer-info"><?= $site->footer_info_title()->or('All you need to know')->html() ?></h2>
       <div class="footer__content">
         <dl class="footer__list">

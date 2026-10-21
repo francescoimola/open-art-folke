@@ -2,7 +2,24 @@
 // Below tablet (Stacked): Logo, then the Nav list column under a 1px rule, then the groups stacked; 2px top rule.
 // Tablet up (Split): centred Nav list row, centred Logo, then the groups as heading | content rows.
 // Each group is a Split-group row kept inside this block (the Split group component is built elsewhere).
+// Below tablet the Info items are rows too: the "All you need to know" heading is visually hidden, each label is an H2.
 @use './mixins' as *;
+
+// One row with its Divider (1px top rule): the legal rows, and each Info item below tablet.
+@mixin footer-row {
+  display: grid;
+  gap: var(--space-s-m);
+  padding-block: var(--space-2xs);
+  border-block-start: 1px solid var(--fg);
+}
+
+// A row's heading: H2, as in the legal rows.
+@mixin footer-heading {
+  @include type-h2;
+  margin: 0;
+  color: var(--fg);
+  text-wrap: balance;
+}
 
 @layer custom {
 
@@ -45,19 +62,12 @@
 
   // One Split-group row with its Divider: heading above content, then side by side from tablet.
   .footer__group {
-    display: grid;
-    gap: var(--space-s-m);
-    padding-block: var(--space-2xs);
-    border-block-start: 1px solid var(--fg);
+    @include footer-row;
   }
 
   // Two classes: the typography overlay's heading rule compiles to (0,1,1) and would set weight, line height and tracking.
   .footer__group > .footer__title {
-    @include type-h2;
-    word-spacing: normal;
-    margin: 0;
-    color: var(--fg);
-    text-wrap: balance;
+    @include footer-heading;
   }
 
   .footer__content {
@@ -102,6 +112,35 @@
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  // Stacked (Footer 385:1069): no "All you need to know" heading or rule; each Info item is its own row.
+  // The heading stays in the HTML for structure and screen readers.
+  @include below-tablet {
+    .footer__group--info {
+      gap: 0;
+      padding-block: 0;
+      border-block-start: 0;
+    }
+
+    .footer__group--info > .footer__title {
+      @include visually-hidden;
+    }
+
+    // Rows are Space 2XL apart, like the groups around them.
+    .footer__list {
+      gap: var(--space-2xl);
+    }
+
+    // Two classes: beat the Info item's own Split columns (container query) and gap.
+    .footer__list > .info-item {
+      @include footer-row;
+      grid-template-columns: none;
+    }
+
+    .footer__list .info-item__label {
+      @include footer-heading;
+    }
   }
 
   @include tablet {

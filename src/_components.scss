@@ -6,12 +6,7 @@
   // Skip link (a11y bypass-blocks) using Graffiti's .visually-hidden + --focus-ring tokens.
   // Named to match Graffiti's documented .skip-link — delete when it ships in the package.
   .skip-link {
-    position: absolute;
-    overflow: hidden;
-    clip-path: inset(50%);
-    width: 1px;
-    height: 1px;
-    margin: -1px;
+    @include visually-hidden;
   }
 
   .skip-link:focus {
