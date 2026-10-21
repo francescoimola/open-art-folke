@@ -42,7 +42,7 @@ The card is square and fills its grid cell. Only the logo slot changes, from 72Ã
 | Hover | The card switches to the **Red** theme (red fill; text, logo and square off-white; red arrow), and the arrow nudges 2px up and to the right | `:hover` | 200ms ease-out (Smart Animate) |
 | Focus | Same as Hover, plus a 2px outside ring in Neutral/900 | `:has(:focus-visible)` | instant |
 
-CSS: reuse the Red theme values (today `.theme-brand`) under `:hover` and `:has(:focus-visible)`. With reduced motion, there is no nudge and the colour change is instant.
+CSS: reuse the Red theme values (`.theme-red`) under `:hover` and `:has(:focus-visible)`. With reduced motion, there is no nudge and the colour change is instant.
 
 ## Panel fields / content rules
 

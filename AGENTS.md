@@ -65,9 +65,9 @@ Native PHP via Kirby's built-in engine. Every page type needs a matching `.php` 
 
 Uses [Graffiti UI](https://graffiti-ui.com/) (`@drop-in/graffiti`). Prefer Graffiti's foundations, tokens, utilities, elements, and blocks before custom CSS — keep custom CSS minimal, for edge cases only.
 
-> **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, the Utopia token rules, sanctioned custom classes (`.full-bleed`, the component blocks such as `.header`, `.drawer`, `.nav-list`, `.link`, `.button`, `.statement`, `.split-group`, `.photo-band`, `.photo-pair`, `.link-hint`, `.link-list`, `.hero`/`.stack-section`, `.page-section` (content-band shell), `.panel`, `.theme-flow`/`.theme-red`/`.theme-ink`, `.accent`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → code translation.
+> **Workflow:** Before writing/refactoring any HTML/PHP/CSS, follow the `oaf-graffiti` skill (`.claude/skills/oaf-graffiti/SKILL.md`) and run its compliance gate. It carries the version pin, the Utopia token rules, sanctioned custom classes (`.full-bleed`, the component blocks such as `.header`, `.drawer`, `.nav-list`, `.link`, `.button`, `.statement`, `.split-group`, `.photo-band`, `.photo-pair`, `.link-hint`, `.link-list`, `.stack-section`, `.page-section` (content-band shell; `--home` for the homepage sections band), `.panel`, `.theme-flow`/`.theme-red`/`.theme-ink`, `.accent`, `.center-both`, `.full-height`, `.show-mobile`/`.show-desktop`), and the Figma → code translation.
 
-`src/index.scss` imports `_mixins.scss` via `@use './mixins' as *;` and declares cascade layers in this precedence: `reset` (hand-rolled reset) → `fonts` (Inclusive Sans Variable) → `graffiti` (`@import "@drop-in/graffiti" layer(graffiti)`) → `colors` (Radix scales for `--red-*`/`--gray-*`) → `custom` (site rules: Utopia tokens, themes, typography, hero, layout) → `button-variants` (`.btt--secondary` + theme overrides).
+`src/index.scss` imports `_mixins.scss` via `@use './mixins' as *;` and declares cascade layers in this precedence: `reset` (hand-rolled reset) → `fonts` (Inclusive Sans Variable) → `graffiti` (`@import "@drop-in/graffiti" layer(graffiti)`) → `colors` (Radix scales for `--red-*`/`--gray-*`) → `custom` (site rules: Utopia tokens, themes, typography, layout) → `button-variants` (`.btt--secondary` + theme overrides).
 
 ### Tokens: Utopia drives Graffiti ([ADR-0006](docs/adr/0006-utopia-tokens-drive-graffiti.md))
 
@@ -85,7 +85,7 @@ The Oct 2026 redesign's components (Figma section "Components" on page "Design U
 
 ### Reusable sections
 
-Every section carries one Theme class ([ADR-0002](docs/adr/0002-theme-is-a-variable-mode.md)): `.theme-flow` (off-white, the default), `.theme-red` (Header, Drawer, Statement) or `.theme-ink` (Footer). The class sets background, text and the theme tokens; components never take a theme option. `.accent` colours text with the Theme's Accent (red on Flow, off-white on Red, pink on Ink). The pre-redesign `.theme-brand`, `.theme-paper`, `.theme-blush` and `.theme-crimson` remain only until the old templates are replaced; don't use them in new work.
+Every section carries one Theme class ([ADR-0002](docs/adr/0002-theme-is-a-variable-mode.md)): `.theme-flow` (off-white, the default), `.theme-red` (Header, Drawer, Statement) or `.theme-ink` (Footer). The class sets background, text and the theme tokens; components never take a theme option. `.accent` colours text with the Theme's Accent (red on Flow, off-white on Red, pink on Ink). The pre-redesign `.theme-paper` and `.theme-crimson` remain only until the old templates are replaced; don't use them in new work.
 
 ### Responsive images — the `image` snippet
 

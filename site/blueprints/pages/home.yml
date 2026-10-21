@@ -10,49 +10,68 @@ tabs:
     label: Content
     icon: text
     fields:
-      sections:
-        type: multiselect
-        label: Homepage sections
-        help: Drag to reorder. Remove a section to hide it. The hero stays first; the photo banner and footer stay last. Hiding Programme breaks the nav's “Programme” link.
-        default:
-          - programme
-          - countdown
-          - intro
-          - festival
-          - sponsors
-        options:
-          programme: Programme
-          countdown: Countdown
-          intro: Intro
-          festival: The Festival
-          sponsors: Sponsors
-      # One colour per middle section, so reordering never forces two same-coloured neighbours.
-      # Values are .theme-* suffixes; HomePage::sectionTheme() maps them to classes.
-      sectioncolours:
+      statementheadline:
         type: headline
-        label: Section colours
-        help: Avoid giving two neighbouring sections the same colour. The footer is Black.
-      programmetheme:
-        extends: fields/section-theme
-        label: Programme
-        default: crimson
-        help: Colours the left half when the programme is out; the buttons half stays Off-white.
-      countdowntheme:
-        extends: fields/section-theme
-        label: Countdown
-        default: blush
-      introtheme:
-        extends: fields/section-theme
-        label: Intro
-        default: brand
-      festivaltheme:
-        extends: fields/section-theme
-        label: The Festival
-        default: paper
-      sponsorstheme:
-        extends: fields/section-theme
-        label: Sponsors
-        default: blush
+        label: Statement
+        help: The red opening band. On phones each part starts on its own line; on desktop they run on as one paragraph.
+      statement_heading:
+        type: text
+        label: Opening sentence
+        placeholder: Open Art Folke is a community of 200+ Folkestone artists.
+      statement_body:
+        type: textarea
+        buttons: false
+        label: Follow-on sentence
+        placeholder: Every so often, we throw a mighty open-house style festival where we take you off the beaten track to see exactly where the art happens.
+      statement_kicker:
+        type: text
+        label: Closing line
+        placeholder: Come and have a nosey.
+        help: Leave any of these blank to use the placeholder text.
+      arrow_target:
+        type: select
+        label: Arrow goes to
+        help: Where the ↓ arrow under the Statement jumps to (phones only). If that section is hidden, it goes to the first section instead.
+        default: content
+        empty: false
+        options:
+          content: First section
+          programme: Programme
+          about: About
+          sponsors: Sponsors
+      heroimage:
+        type: files
+        label: Opening photo
+        help: Full-width photo under the Statement. It loads first, so keep it right-sized (about 2000px wide, JPEG).
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
+      # Homepage sections (ADR-0007): one block per section, rendered by site/snippets/blocks/<type>.php.
+      # HomePage::homeSections() caps each type (SECTION_LIMITS) and falls back to Programme → About → Sponsors when empty.
+      sectionblocks:
+        type: blocks
+        label: Homepage sections
+        help: >
+          The sections between the opening and closing photos, top to bottom. Drag to reorder; use a block's
+          menu to hide it (or delete it) to take that section off the homepage. Only one of each section shows,
+          even if you add it twice. While this list is empty, the homepage shows Programme, About and Sponsors.
+          Hiding Programme also hides the “Festival programme” links in the menu and footer.
+        empty: Showing Programme, About and Sponsors (the default). Add blocks to change the order.
+        fieldsets:
+          - programme
+          - about
+          - sponsors
+      bannerimage:
+        type: files
+        label: Closing photo
+        help: Full-width photo at the end of the page, just before the footer.
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
       thumbnail:
         type: files
         label: Panel thumbnail
@@ -62,80 +81,159 @@ tabs:
         uploads:
           parent: site.find('media')
           template: image
-      heroimage:
+
+  # The homepage #programme section (the nav's "Festival programme" link).
+  programme:
+    label: Programme
+    icon: book
+    fields:
+      programmeheading:
+        type: text
+        label: Heading
+        placeholder: The 2026 festival programme
+      programmetext:
+        type: textarea
+        label: Text
+        buttons: false
+        placeholder: Running 9-11 October, Open Art Folke 2026 brings together over 150 artists across 51 locations in and around Folkestone. Flick through the programme to see exactly what's going on, and where. Or download the PDF to keep on your device.
+        help: Leave either blank to use the placeholder text. After the festival, edit this copy or hide the Programme block.
+      programmepdf:
         type: files
-        label: Hero background
-        help: Background photo at the top of the page.
+        label: Programme PDF
+        help: >
+          The “See programme” and “Download PDF” links appear only once a PDF is here. Visitors' downloads keep
+          this file's name, so upload it as e.g. open-art-folke-2026-programme.pdf. Keep it under ~10 MB so it opens quickly on phones.
         max: 1
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        query: page.files.template('pdf')
         uploads:
-          parent: site.find('media')
-          template: image
-      festivalimage:
+          template: pdf
+      programme_see_label:
+        type: text
+        label: Read link
+        placeholder: See programme
+        width: 1/2
+      programme_see_hint:
+        type: text
+        label: Read link hint
+        placeholder: Opens in a new tab
+        width: 1/2
+      programme_download_label:
+        type: text
+        label: Download link
+        placeholder: Download PDF
+        width: 1/2
+      programme_download_hint:
+        type: text
+        label: Download link hint
+        placeholder: Save the programme on your device
+        width: 1/2
+        help: The file size is added automatically.
+      programmeimage:
         type: files
-        label: Festival section photo
-        help: Photo beside the “Open Art — The Festival” copy.
-        max: 1
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-        uploads:
-          parent: site.find('media')
-          template: image
-      festivalbuttons:
-        type: structure
-        label: Festival section buttons
-        help: Up to two. The first is solid red, the second is pale. Remove both to hide the buttons.
-        max: 2
-        default:
-          - label: Explore the 2026 programme
-            registration: false
-            link: "#programme"
-          - label: Register as an artist
-            registration: true
-        columns:
-          label: true
-          registration: true
-        fields:
-          label:
-            type: text
-            label: Button text
-            required: true
-          registration:
-            type: toggle
-            label: Registration button
-            text:
-              - Custom link
-              - Uses registration status
-            help: Links to the sign-up form while registration is open; otherwise it is hidden.
-          link:
-            type: link
-            label: Goes to
-            options:
-              - page
-              - url
-              - anchor
-            required: true
-            when:
-              registration: false
-      bannerimage:
-        type: files
-        label: Photo banner background
-        help: Background photo behind the closing banner (before footer)
+        label: Photo
+        help: Photo under the links, in the right-hand column on desktop.
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
           parent: site.find('media')
           template: image
 
-  # The homepage countdown section: counts down to the festival, then swaps to a "you've just missed it" message.
-  countdown:
-    label: Countdown
-    icon: clock
+  # The homepage #about section.
+  about:
+    label: About
+    icon: users
     fields:
+      aboutheading:
+        type: text
+        label: Heading
+        placeholder: About the festival
+      abouttext:
+        type: textarea
+        label: Text
+        buttons:
+          - bold
+          - italic
+          - link
+          - ul
+        placeholder: Each year since 2024 we've put together a festival… (leave blank to use the designed copy)
+        help: Leave blank to use the designed copy.
+      about_archive_label:
+        type: text
+        label: Link to the Archive
+        placeholder: Scroll through our archives
+        width: 1/2
+      about_people_label:
+        type: text
+        label: Link to the About page
+        placeholder: See who is behind Open Art Folke
+        width: 1/2
+      festivalimage:
+        type: files
+        label: Photo
+        help: Wide photo under the About section.
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
+
+  # Pre-redesign fields: kept readable (read-only) until the post-switch-over clean-up removes them. Nothing reads them.
+  retired:
+    label: Retired
+    icon: archive
+    fields:
+      retiredinfo:
+        type: info
+        theme: notice
+        text: These settings belonged to the old homepage design and no longer change the site. They are kept here for reference and will be removed.
+      sections:
+        type: multiselect
+        label: Homepage sections (old)
+        disabled: true
+        options:
+          programme: Programme
+          countdown: Countdown
+          intro: Intro
+          festival: The Festival
+          sponsors: Sponsors
+      programmetheme:
+        extends: fields/section-theme
+        label: Programme colour
+        disabled: true
+      countdowntheme:
+        extends: fields/section-theme
+        label: Countdown colour
+        disabled: true
+      introtheme:
+        extends: fields/section-theme
+        label: Intro colour
+        disabled: true
+      festivaltheme:
+        extends: fields/section-theme
+        label: The Festival colour
+        disabled: true
+      sponsorstheme:
+        extends: fields/section-theme
+        label: Sponsors colour
+        disabled: true
+      festivalbuttons:
+        type: structure
+        label: Festival section buttons
+        disabled: true
+        fields:
+          label:
+            type: text
+            label: Button text
+          registration:
+            type: toggle
+            label: Registration button
+          link:
+            type: link
+            label: Goes to
       countdownmode:
         type: toggles
         label: Countdown section shows
-        default: auto
-        grow: true
+        disabled: true
         options:
           - value: auto
             text: Automatic
@@ -143,160 +241,84 @@ tabs:
             text: Countdown
           - value: over
             text: Festival's over message
-        help: >
-          Automatic shows the countdown until the festival end date, then the message from the next day (UK time).
-          For the next edition, set the new dates below and pick Automatic or Countdown.
-
-      countdownheadline:
-        type: headline
-        label: Countdown
       countdownstart:
         type: date
         label: Countdown start
-        default: 2026-01-01
+        disabled: true
         width: 1/3
       countdownend:
         type: date
         label: Countdown end
-        help: Opening day — the count reaches 0 here.
-        default: 2026-10-09
+        disabled: true
         width: 1/3
       festivalend:
         type: date
         label: Festival end
-        help: Last day of the festival.
-        default: 2026-10-11
+        disabled: true
         width: 1/3
       countdownheading:
         type: text
-        label: Heading ending
-        placeholder: until Open Art Folke 2026
-        help: Follows “There are X days”. A 🥳 is added automatically on 0 days.
+        label: Countdown heading ending
+        disabled: true
       countdowntext:
         type: text
-        label: Text
-        placeholder: Almost there baby, almost there.
+        label: Countdown text
+        disabled: true
         width: 1/2
       countdownzerotext:
         type: text
-        label: Text on 0 days (festival days)
-        placeholder: Time to leave the house, dear
+        label: Countdown text on 0 days
+        disabled: true
         width: 1/2
-        help: Leave any of these blank to use the placeholder text.
       countdownimage:
         type: files
         label: Countdown image
-        help: Image revealed as vertical slices in the countdown section.
+        disabled: true
         max: 1
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-        uploads:
-          parent: site.find('media')
-          template: image
-
-      overheadline:
-        type: headline
-        label: Festival's over message
       overheading:
         type: text
-        label: Heading
-        placeholder: You've just missed this year's festival
+        label: Festival's over heading
+        disabled: true
       overtext:
         type: textarea
-        label: Text
-        buttons: false
-        placeholder: It was a blast and we're still recovering. Keep an eye here and on your socials to know what's coming next. In the meantime, godspeed my friend!
-        help: Leave either blank to use the placeholder text. The countdown graphic is hidden while this shows.
-
-  # The homepage #programme section (the nav's "Programme" link) has two versions; this tab picks one.
-  # Both groups stay editable so the next version's copy can be prepared before switching.
-  programme:
-    label: Programme
-    icon: book
-    fields:
+        label: Festival's over text
+        disabled: true
       programmemode:
         type: toggles
         label: Programme section shows
-        default: signup
-        grow: true
+        disabled: true
         options:
           - value: signup
             text: Sign-up (programme coming soon)
           - value: programme
             text: Read or download the programme
-        help: >
-          “Read or download” only appears once a PDF is uploaded below — until then the sign-up stays up.
-          Switch back to sign-up after the festival.
-
-      programmeheadline:
-        type: headline
-        label: Read or download the programme
-      programmeheading:
-        type: text
-        label: Heading
-        placeholder: See our 2026 programme
-        help: Leave blank to use the placeholder text.
-      programmetext:
-        type: textarea
-        label: Intro text
-        buttons: false
-        placeholder: It’s time to explore Open Art Folke. Flick through the programme, or download the PDF to keep on your device.
-        help: Explains the two buttons. Leave blank to use the placeholder text.
       programmeheroimage:
         type: files
-        label: Background illustration
-        help: Decorative artwork behind the heading and text. Leave empty to show flat colour instead.
+        label: Programme background illustration
+        disabled: true
         max: 1
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-        uploads:
-          parent: site.find('media')
-          template: image
-      programmepdf:
-        type: files
-        label: Programme PDF
-        help: >
-          Powers both buttons. Visitors' downloads keep this file's name, so upload it as
-          e.g. open-art-folke-2026-programme.pdf. Keep it under ~10 MB so it opens quickly on phones.
-        max: 1
-        query: page.files.template('pdf')
-        uploads:
-          template: pdf
-
-      signupheadline:
-        type: headline
-        label: Sign-up (programme coming soon)
       signupheading:
         type: text
-        label: Heading
-        placeholder: Looking for the Festival Programme?
+        label: Sign-up heading
+        disabled: true
         width: 1/2
       signupsubheading:
         type: text
-        label: Subheading (muted)
-        placeholder: You’re early
+        label: Sign-up subheading
+        disabled: true
         width: 1/2
       signuptext:
         type: textarea
-        label: Intro text
-        buttons: false
-        placeholder: "We're still setting the stage for the 3rd edition of Open Art Folke: <i>Art This Way</i>, and we'll release the programme in the weeks leading up to the opening. Leave us your email and we'll tell you all about it* as soon as we can."
-        help: Leave any of these blank to use the placeholder text.
+        label: Sign-up intro text
+        disabled: true
       signupsuccess:
         type: text
         label: Message after signing up
-        placeholder: Wooho! We'll send you an email as soon as the programme drops 😉
+        disabled: true
       signupfootnote:
         type: text
-        label: Footnote
-        placeholder: "*Spam? We want nothing to do with him either—and we'll never send you unsolicited communications."
-      programmeimage:
-        type: files
-        label: Photo
-        help: Photo beside the sign-up form.
-        max: 1
-        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
-        uploads:
-          parent: site.find('media')
-          template: image
+        label: Sign-up footnote
+        disabled: true
 
   seo:
     extends: tabs/seo
