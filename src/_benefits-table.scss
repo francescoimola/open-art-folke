@@ -42,8 +42,10 @@
       text-box: normal;
     }
 
+    // Balanced lines, so a two-line benefit never leaves one word alone.
     > .benefits-table__benefit {
       grid-column: 1 / -1;
+      text-wrap: balance;
     }
   }
 
