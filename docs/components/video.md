@@ -4,7 +4,7 @@
 
 ## Purpose
 
-A Vimeo embed at 16:9. Used in the [Edition](edition.md)'s right column.
+A Vimeo embed at 16:9. Used in the [Edition](edition.md), under the text at the text column's width.
 
 ## Anatomy
 

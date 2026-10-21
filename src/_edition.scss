@@ -1,5 +1,5 @@
 // Edition (docs/components/edition.md): one past year on the Archive, a Flow .page-section.
-// Row (text column + Video) Stacked below tablet, Split from tablet up; photos in justified rows below.
+// Row = text column, then the Video under it (half the width from tablet up); photos in justified rows below.
 @use './mixins' as *;
 
 @layer custom {
@@ -15,7 +15,7 @@
     text-box: normal;
   }
 
-  // Stacked: text column, then the Video, Space pair/XL-M apart.
+  // Text column, then the Video under it, Space pair/XL-M apart (user review, #31: not beside the text).
   .edition__row {
     display: flex;
     flex-direction: column;
@@ -46,12 +46,16 @@
   }
 
   @include tablet {
-    // Split: text left, Video right, gap Layout/Gutter. Without a Video the right column stays empty.
+    // Split grid, both parts in the left column: the Video keeps the text's width, the right half stays empty.
     .edition__row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: start;
-      column-gap: var(--gutter);
+      gap: var(--space-xl-m) var(--gutter);
+    }
+
+    .edition__row > * {
+      grid-column: 1;
     }
   }
 
