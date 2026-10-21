@@ -36,9 +36,20 @@ export function initDrawer({ onOpen, onClose } = {}) {
   const hooks = { false: onClose, true: onOpen }
   const isOpen = () => toggle.getAttribute('aria-expanded') === 'true'
 
+  const drawer = header.querySelector('.drawer')
+  let closingTimer
+
+  /* [data-closing] keeps the fade-out transition on until the Drawer is hidden (CSS animates only while open or closing). */
+  function markClosing(closing) {
+    clearTimeout(closingTimer)
+    header.toggleAttribute('data-closing', closing)
+    if (closing) closingTimer = setTimeout(() => header.removeAttribute('data-closing'), 400)
+  }
+
   function setOpen(open) {
     toggle.setAttribute('aria-expanded', String(open))
     toggle.textContent = labels[open]
+    markClosing(!open && header.hasAttribute('data-open'))
     header.toggleAttribute('data-open', open)
     lockPage(header, open)
     hooks[open]?.()
@@ -64,5 +75,10 @@ export function initDrawer({ onOpen, onClose } = {}) {
   /* Growing past the switch point shows the nav inline, so drop the open state silently. */
   TABLET.addEventListener('change', (event) => {
     if (event.matches && isOpen()) close(false)
+    markClosing(false)
+  })
+
+  drawer?.addEventListener('transitionend', (event) => {
+    if (event.target === drawer && event.propertyName === 'visibility' && !isOpen()) markClosing(false)
   })
 }

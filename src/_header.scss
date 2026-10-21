@@ -79,6 +79,10 @@
       opacity: 0;
       translate: 0 calc(-1 * var(--space-xs));
       visibility: hidden;
+    }
+
+    // Animate only while opening or closing, so crossing the breakpoint never fades a red panel in or out.
+    :is([data-open], [data-closing]) > .drawer {
       transition:
         opacity var(--d-base) ease-out,
         translate var(--d-base) ease-out,
