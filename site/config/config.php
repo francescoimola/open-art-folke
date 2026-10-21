@@ -84,12 +84,10 @@ return [
     ],
   ],
 
-  /* Pages cache is OFF in dev (edits show up on next reload) and ON in production. */
-  /* Home excluded: kirby-uniform needs a fresh CSRF token per request. */
+  /* Pages cache is OFF in dev (edits show up on next reload) and ON in production, for every page. */
   'cache' => [
     'pages' => $isDev ? false : [
       'active' => true,
-      'ignore' => ['home'],
     ],
   ],
 

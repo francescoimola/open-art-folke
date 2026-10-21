@@ -54,7 +54,8 @@
 @mixin type-h1         { @include type-role(var(--step-4-6), var(--lh-h1), var(--ls-h1), 500); }
 @mixin type-h2         { @include type-role(var(--step-4), var(--lh-h2), var(--ls-h2), 500); }
 // Figma's H3 style binds Letter spacing/H2, not /H3 (Link large uses /H3).
-@mixin type-h3         { @include type-role(var(--step-3), var(--lh-h3), var(--ls-h2), 500); }
+// Weight 450, a user decision (#33): lighter than Figma's Medium H3 style; Link large stays 500.
+@mixin type-h3         { @include type-role(var(--step-3), var(--lh-h3), var(--ls-h2), 450); }
 @mixin type-h4         { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 600); }
 @mixin type-body       { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 400); }
 @mixin type-caption    { @include type-role(var(--step--2), var(--lh-caption), var(--ls-caption), 400); }
