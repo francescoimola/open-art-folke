@@ -19,7 +19,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Image | [image.md](image.md) | figma |
 | Video | [video.md](video.md) | figma |
 | Logo | [logo.md](logo.md) | code |
-| Sponsor logo | [sponsor-logo.md](sponsor-logo.md) | figma |
+| Sponsor logo | [sponsor-logo.md](sponsor-logo.md) | code |
 
 ### Composites
 
@@ -28,12 +28,12 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Link + hint | [link-hint.md](link-hint.md) | code |
 | Link list | [link-list.md](link-list.md) | code |
 | Nav list | [nav-list.md](nav-list.md) | code |
-| Sponsor card | [sponsor-card.md](sponsor-card.md) | figma |
+| Sponsor card | [sponsor-card.md](sponsor-card.md) | code |
 | Info item | [info-item.md](info-item.md) | code |
 | Copy email | [copy-email.md](copy-email.md) | code |
 | Person card | [person-card.md](person-card.md) | figma |
 | Disclosure | [disclosure.md](disclosure.md) | figma |
-| Benefits table | [benefits-table.md](benefits-table.md) | figma |
+| Benefits table | [benefits-table.md](benefits-table.md) | code |
 
 ### Sections
 
@@ -45,7 +45,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Photo band | [photo-band.md](photo-band.md) | code |
 | Photo pair | [photo-pair.md](photo-pair.md) | code |
 | Split group | [split-group.md](split-group.md) | code |
-| Sponsor grid | [sponsor-grid.md](sponsor-grid.md) | figma |
+| Sponsor grid | [sponsor-grid.md](sponsor-grid.md) | code |
 | Edition | [edition.md](edition.md) | figma |
 | Lightbox | [lightbox.md](lightbox.md) | figma |
 | Footer | [footer.md](footer.md) | code |
@@ -111,7 +111,7 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 - ~~[Nav list](nav-list.md): a current-page link state~~: settled, `aria-current="page"` only, no visual style (spec #6).
 - [Logo](logo.md): should the footer logo link home?
 - ~~[Copy email](copy-email.md): should the visible address look like a link?~~: settled, no; it is a `mailto:` link styled as plain body text (spec #6).
-- [Sponsor logo](sponsor-logo.md) / [Sponsor card](sponsor-card.md): a fluid logo slot, which would remove the card's `Layout` axis.
+- ~~[Sponsor logo](sponsor-logo.md) / [Sponsor card](sponsor-card.md): a fluid logo slot~~: done in code (`--sponsor-logo-w` / `--sponsor-logo-h`, 72×40 → 108×60); the card's `Layout` axis is Figma-only.
 - [Link](link.md): is Link/Compact (sponsor names) a third Link size?
 - ~~[Icon](icon.md): vertical alignment against cap height~~: settled in code. The box sits on the baseline, so its top meets the cap height.
 
@@ -145,11 +145,11 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 - Become a sponsor: copy + [Copy email](copy-email.md); the bold "openartfolke at gmail dot com" in prose is gone.
 - `section#support` (Flow) holds two Split groups:
   - **Buy us a coffee** (`#donate`): the donating paragraph and a [Link + hint](link-hint.md), "Buy the OAF team a coffee ↗" (was a button).
-  - **Other ways to support us** (`#help`, non-monetary help): the intro, the Venues / Equipment loans / Volunteer list (bold lead-ins, plain `ul`), the closing line, then a Large [Link](link.md), "Why volunteer with us", to About (internal, no icon).
+  - **Other ways to support us** (`#help`, non-monetary help): the intro, the Venues / Equipment loans / Volunteer list (bold lead-ins, plain `ul`), the closing line, then a [Link list](link-list.md): "Message us about venues or equipment" (mailto, the site email) and "Why volunteer with us" (About). The frames now show these two Default links; an earlier version had one Large Link to About.
 - Photos: the Photo pair uses `featureimage` (family-drawing, 1:1) and `detailimage` (froude, 2:3), which fit the pair as they are. The closing Photo band uses a new optional `bandimage` field; Figma shows the homepage's closing photo as a stand-in.
 - Statement skip link: "Read on ↓" in the Links row. It jumps to the Why support us Split group (give it its own id, e.g. `#why-support`), not to `section#why`, which opens with the photos on desktop.
 - Library changes: Icon gained **Check**; new [Benefits table](benefits-table.md).
-- Retired: the old intro/photo 2×2 layout (`.sponsor-grid` in `src/_layout.scss`). Its class name clashes with the library's Sponsor grid, so rename or remove it at build time.
+- Retired: the old intro/photo 2×2 layout (`.sponsor-grid` in `src/_layout.scss`), removed in #15; `.sponsor-grid` is now the library's Sponsor grid.
 - Still open:
   - [Sponsor card](sponsor-card.md) on a dark Theme: its Neutral/100 fill is fixed while the logo and name follow Theme/Text, so on Ink they vanish unless the grid is pinned to Flow. It no longer arises here (Our sponsors went back to Flow), but it's still open for the library.
   - The mobile Sponsor grid leaves one card alone on the last row (9 cards in 2 columns).

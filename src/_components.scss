@@ -1,4 +1,4 @@
-// Site components: .skip-link, sponsors, archive carousel, form/dropdown, view transitions.
+// Site components: .skip-link, legacy homepage sponsor list, archive carousel, form/dropdown, view transitions.
 @use './mixins' as *;
 
 @layer custom {
@@ -34,17 +34,18 @@
     outline-offset: var(--focus-ring-offset);
   }
 
+  // Legacy homepage sponsor list (sponsor-list.php). Delete it all once the homepage uses the Sponsor grid.
   // Sponsors — two layouts swapped by breakpoint via .show-mobile / .show-desktop.
   // Both are plain Graffiti (.carousel / .box / .split / .stack); custom bits are below.
   // To restyle, change the knobs — leave the rest.
   .sponsors {
     --sponsor-card-width: min(80%, 24rem);
     --sponsor-card-logo-size: min(12rem, 40%);
-    --sponsor-logo-size: min(22rem, 45%);
-    --sponsor-logo-fade: 0.3s;
+    --sponsor-list-logo-size: min(22rem, 45%);
+    --sponsor-list-logo-fade: 0.3s;
   }
 
-  .sponsor-logo {
+  .sponsor-list__logo {
     inline-size: var(--sponsor-card-logo-size);
 
     svg {
@@ -86,7 +87,7 @@
     }
 
     // Inside deep-red card, SVG logo uses light fg.
-    >li.theme-crimson .sponsor-logo svg {
+    >li.theme-crimson .sponsor-list__logo svg {
       color: var(--fg);
     }
 
@@ -95,7 +96,7 @@
       justify-content: space-between;
     }
 
-    .sponsor-logo {
+    .sponsor-list__logo {
       display: contents;
 
       svg {
@@ -134,45 +135,21 @@
       }
     }
 
-    .sponsor-logo {
+    .sponsor-list__logo {
       position: absolute;
       inset-inline-end: 14%;
       inset-block-start: 50%;
       translate: 0 -50%;
-      inline-size: var(--sponsor-logo-size);
+      inline-size: var(--sponsor-list-logo-size);
       opacity: 0;
       pointer-events: none;
-      transition: opacity var(--sponsor-logo-fade) ease;
+      transition: opacity var(--sponsor-list-logo-fade) ease;
     }
 
-    >li:hover .sponsor-logo,
-    >li:focus-within .sponsor-logo {
+    >li:hover .sponsor-list__logo,
+    >li:focus-within .sponsor-list__logo {
       opacity: 1;
     }
-  }
-
-  // Past sponsors — plain list of name + ↗ links (no dropdown/logo). Links inherit .accent colour.
-  .sponsors-past {
-    list-style: none;
-    padding: 0;
-    gap: var(--vs-l);
-
-    a {
-      color: inherit;
-      text-decoration: none;
-
-      &:hover,
-      &:focus-visible {
-        text-decoration: underline;
-      }
-    }
-  }
-
-  .sponsors-roster hr:is(.show-desktop) {
-    inline-size: 100%;
-    border: 0;
-    border-block-start: 1px solid color-mix(in oklch, var(--fg) 60%, transparent);
-    opacity: 0.6;
   }
 
   // Archive photo grid — plain CSS Grid (composes .layout-split: 2 cols), no JS.

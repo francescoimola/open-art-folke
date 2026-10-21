@@ -1,0 +1,29 @@
+// Sponsor grid (docs/components/sponsor-grid.md): square Sponsor cards, gap Space S both ways, Panel order.
+// Stacked = 2 columns, Split = 3. The switch is a container query on the grid's own width (480px), not the viewport:
+// in a tablet's Split group column, 3 cards would be narrower than Figma's smallest (139px) card.
+@use './mixins' as *;
+
+@layer custom {
+
+  .sponsor-grid {
+    container-type: inline-size;
+    // Pinned to Flow for the cards' colours only: no Flow panel behind them inside an Ink or Red section.
+    background: none;
+  }
+
+  .sponsor-grid__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @include cq-medium {
+    .sponsor-grid__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+}

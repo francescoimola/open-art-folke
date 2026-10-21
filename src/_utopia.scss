@@ -123,6 +123,9 @@ $logo-w: (math.div(lo($lh-body) * 380412, 270000), math.div(hi($lh-body) * 38041
     --logo-w: #{fluid(lo($logo-w), hi($logo-w))};
     --footer-logo-w: #{fluid(108, 266.33)};
     --footer-logo-h: #{fluid(76.64, 189)};
+    // Sponsor logo slot: Figma's S (72×40, Min) and M (108×60, Max) slots as one fluid box.
+    --sponsor-logo-w: #{fluid(72, 108)};
+    --sponsor-logo-h: #{fluid(40, 60)};
 
     // Icons scale with the link's own font size (0.75em box, 0.1em stroke).
     --icon-size: 0.75em;

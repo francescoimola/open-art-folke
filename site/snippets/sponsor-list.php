@@ -19,7 +19,7 @@ $sponsorName = fn($s) => $s['url']->isNotEmpty()
   <?php foreach ($sponsors as $s): ?>
     <li class="theme-crimson box ghost split vertical center gap-xl">
       <?php if ($s['logo']): ?>
-        <figure class="sponsor-logo center-both"><?= $s['logo'] ?></figure>
+        <figure class="sponsor-list__logo center-both"><?= $s['logo'] ?></figure>
       <?php endif ?>
       <p class="h1"><?= $sponsorName($s) ?></p>
     </li>
@@ -47,7 +47,7 @@ $sponsorName = fn($s) => $s['url']->isNotEmpty()
       </div>
 
       <?php if ($s['logo']): ?>
-        <figure class="sponsor-logo center-both"><?= $s['logo'] ?></figure>
+        <figure class="sponsor-list__logo center-both"><?= $s['logo'] ?></figure>
       <?php endif ?>
     </li>
   <?php endforeach ?>
