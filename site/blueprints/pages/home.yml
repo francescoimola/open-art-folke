@@ -178,6 +178,26 @@ tabs:
           parent: site.find('media')
           template: image
 
+  # The homepage #sponsors section. The sponsors themselves come from the Sponsor page.
+  sponsors:
+    label: Sponsors
+    icon: heart
+    fields:
+      sponsorsinfo:
+        type: info
+        text: The sponsor cards are the current sponsors from the Sponsor page (those tagged with this year's festival). Edit them there.
+      sponsorsheading:
+        type: text
+        label: Heading
+        placeholder: Recent sponsors
+        width: 1/2
+      sponsors_all_label:
+        type: text
+        label: Link to the Sponsor page
+        placeholder: See all our sponsors
+        width: 1/2
+        help: Leave either blank to use the placeholder text.
+
   # Pre-redesign fields: kept readable (read-only) until the post-switch-over clean-up removes them. Nothing reads them.
   retired:
     label: Retired

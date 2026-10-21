@@ -1,6 +1,6 @@
 # Person card
 
-**Layer:** Composite · **Status:** figma · **Figma:** `392:1063` · **Code:** `site/snippets/person-card.php`, `.person-card` (planned)
+**Layer:** Composite · **Status:** code · **Figma:** `392:1063` · **Code:** `site/snippets/person-card.php`, `.person-card` and its grid `.people` (`src/_person-card.scss`)
 
 ## Purpose
 
@@ -29,7 +29,7 @@ None on the card itself; the grid around it changes its column count:
 - **Large desktop** (Utopia Max): **3 columns** in the right column, Space S apart, which makes 261px cards. That matches the Sponsor grid.
 - **Large tablet and below:** **2 columns**, down to 139px cards at 320.
 
-In code, use a container query on the Content column rather than a viewport breakpoint. Grids are 2 columns by default and 3 once the column fits three cards of about 240px or more. The exact switch width gets settled in the tablet pass, at the end.
+In code, `.people` is a container and `.people__list` the grid: 2 columns by default, 3 once the container is 640px or wider (mixin `cq-large`), so cards are at least about 200px. On the About page that switch happens at about 1340px viewports, so tablets and most laptops get 2 columns. A lone card on the last row stays left-aligned.
 
 ## Tokens
 
@@ -45,21 +45,31 @@ None. Photos lazy-load.
 
 ## Panel fields / content rules
 
-The About page's `people` structure: `name`, `area`, `role`, `photo`. With no photo, the card shows the Image placeholder (decide: hide the card, or show a neutral tile?).
+The About page's `people` structure: `name`, `area`, `role`, `photo`. With no photo, the card shows a solid Neutral/100 tile (spec #6). An empty Area or Role line is left out; a person without a name renders nothing.
 
 ## HTML & accessibility
 
-```html
-<ul class="people" role="list">
-  <li class="person-card">
-    <figure class="person-card__photo"><?php snippet('image', [...]) ?></figure>
-    <p class="person-card__details"><strong>Thurle Wright</strong> <span>Co-Chair</span> <span>Artist</span></p>
-  </li>
-</ul>
+```php
+<div class="people">
+  <ul class="people__list" role="list">
+    <?php snippet('person-card', ['name' => $person->name(), 'area' => $person->area(), 'role' => $person->role(), 'photo' => $person->photo()->toFile()]) ?>
+  </ul>
+</div>
 ```
+
+Each card renders:
+
+```html
+<li class="person-card">
+  <figure class="person-card__photo"><picture>…</picture></figure>
+  <p class="person-card__details"><strong>Thurle Wright</strong> <span>Co-Chair</span> <span>Artist</span></p>
+</li>
+```
+
+Without a photo, the figure becomes `<div class="person-card__photo person-card__photo--empty"></div>`.
 
 The photo's alt is empty (`alt=""`), because the name is right below it.
 
 ## Open questions
 
-- A person without a photo: hide the card, or show a neutral tile?
+- ~~A person without a photo: hide the card, or show a neutral tile?~~ Settled: a Neutral/100 tile (spec #6).

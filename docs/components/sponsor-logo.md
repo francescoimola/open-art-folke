@@ -1,6 +1,6 @@
 # Sponsor logo
 
-**Layer:** Primitive · **Status:** figma · **Figma:** source logos `325:378`, slots S `357:381` and M `359:509` · **Code:** sponsor SVGs in `content/sponsor/*.svg`, rendered inline
+**Layer:** Primitive · **Status:** code · **Figma:** source logos `325:378`, slots S `357:381` and M `359:509` · **Code:** `site/snippets/sponsor-logo.php`, `.sponsor-logo` (`src/_sponsor-logo.scss`); SVGs from `content/sponsor/*.svg`, sanitised by `SponsorPage::sponsorLogo()`
 
 ## Purpose
 
@@ -26,7 +26,7 @@ In CSS this is one fluid box (`max-width` / `max-height` on the `<svg>`), with n
 
 | Use | Token | Min (320) → Max (1500) |
 | --- | --- | --- |
-| Slot | none yet (fixed 72×40 / 108×60) | 72×40 → 108×60 |
+| Slot | `--sponsor-logo-w` × `--sponsor-logo-h` | 72×40 → 108×60 |
 | Colour | Theme/Text, Theme Background on card hover | |
 
 ## States & interactions
@@ -41,8 +41,10 @@ None of its own. It turns off-white when its Sponsor card is hovered or focused.
 
 ## HTML & accessibility
 
-- An inline `<svg aria-hidden="true" focusable="false">` inside the card's link. The link's text gives the sponsor name.
+- An inline `<svg aria-hidden="true" focusable="false" preserveAspectRatio="xMinYMin meet">` in `<span class="sponsor-logo">`, inside the card's link. The link's text gives the sponsor name.
+- The model turns every non-`none` fill into `currentColor`, and gives the root `fill="currentColor"` when it has none, so unfilled paths follow the Theme too.
+- The slot shrinks with a narrow card (`max-inline-size: 100%`).
 
 ## Open questions
 
-- Should the slot become a fluid token pair (e.g. width Space pair) so the S/M split can go? The Sponsor card's `Layout` axis would go with it.
+- ~~Should the slot become a fluid token?~~ Done: `--sponsor-logo-w` / `--sponsor-logo-h` in `src/_utopia.scss`. Figma keeps its S/M slots (nested instances can't be resized).

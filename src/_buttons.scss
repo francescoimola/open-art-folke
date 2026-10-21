@@ -83,7 +83,7 @@
 
   // On deep-red themes the dark-scheme default (salmon + black text) blends into the bg.
   // Reuse the secondary palette there: pink surface with deep-red text.
-  :is(.theme-brand, .theme-crimson) .button {
+  .theme-crimson .button {
     --button-color: var(--dark-Brand-950);
     color: var(--dark-Brand-400);
   }

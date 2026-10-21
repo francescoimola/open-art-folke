@@ -2,7 +2,7 @@
 /*
  * Homepage (Figma Desktop 332:124, Mobile 332:261): Statement (Red) → opening Photo band → Homepage sections → closing Photo band → Footer.
  * Homepage sections are the `sectionblocks` Blocks field (ADR-0007), one snippet per block type in site/snippets/blocks/.
- * Each block renders first, so an empty one (e.g. Sponsors before #18) leaves no gap and is never an arrow target.
+ * Each block renders first, so an empty one leaves no gap and is never an arrow target.
  */
 
 /* The Statement's ↓ arrow labels; Custom sections get "Skip to <heading>". */

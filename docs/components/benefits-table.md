@@ -1,6 +1,6 @@
 # Benefits table
 
-**Layer:** Composite · **Status:** figma · **Figma:** `450:3590` · **Code:** `site/snippets/benefits-table.php`, `.benefits-table` (planned; replaces the inline `<table>` in `sponsor.php`)
+**Layer:** Composite · **Status:** code · **Figma:** `450:3590` · **Code:** `site/snippets/benefits-table.php`, `.benefits-table` (`src/_benefits-table.scss`)
 
 ## Purpose
 
@@ -28,6 +28,8 @@ Rows are plain frames inside the component; edit their text on the instance. In 
 
 - **Split**: one line per benefit. The benefit column takes half the width and the three tiers share the other half (`grid-template-columns: 3fr repeat(3, 1fr)`), gap Layout/Gutter.
 - **Stacked**: each benefit takes its own full-width line, with its three tier cells on a line beneath it (Space 2XS apart). The header row shows only Gold · Silver · Bronze, aligned to the cells. This layout was chosen because four columns at 320 left about 40px per Tier ("Bronze" and "Full page" didn't fit).
+- In code the switch is a container query on the table's own width (`cq-medium`, 480px), so it stays Stacked in a tablet's narrow Split group column. Just above the switch, a two-word tier value ("Half page") can wrap to two lines.
+- Snippet: `snippet('benefits-table', ['rows' => $page->benefits()->toStructure()])`. The wrapper `div.benefits-table` is the query container; the `table` is `.benefits-table__table` and each `tr` is a grid (`.benefits-table__row`).
 
 ## Tokens
 
@@ -75,4 +77,4 @@ Sponsor page `benefits` structure (exists): `benefit`, `gold`, `silver`, `bronze
 
 ## Open questions
 
-- In Figma the tick sits at the top of its cell. Check its alignment against the first line of the benefit in code (see the [Icon](icon.md) alignment question).
+- ~~Tick alignment~~: settled in code. The tick (0.75 × Step 3) is centred on the cell's first Body line, so it lines up with the first line of its benefit.
