@@ -46,6 +46,11 @@
     scroll-margin-top: var(--nav-h);
   }
 
+  // Graffiti's html sets scroll-padding-block-start: 60px, which adds to the margin above (targets landed 60px low).
+  html {
+    scroll-padding-block-start: 0;
+  }
+
   :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, li, a, small, .ui-caption, body) {
     --ls: calc(var(--type-track-base) - var(--type-track-step) * var(--fl, 0));
     letter-spacing: var(--ls);

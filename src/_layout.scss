@@ -1,4 +1,4 @@
-// Layout primitives + structures: .full-bleed, .anchor-target, .center-both, .page-section, .stack-section, .hero, .panel, .photo-banner, .principles, .page-hero, .sponsor-grid, .dots, .split:where(.no-wrap).
+// Layout primitives + structures: .full-bleed, .anchor-target, .center-both, .page-section(--flush-start), .stack-section, .hero, .panel, .photo-banner, .sponsor-grid, .dots, .split:where(.no-wrap).
 @use './mixins' as *;
 
 @layer custom {
@@ -165,6 +165,11 @@
     padding: var(--space-l-xl) var(--margin);
   }
 
+  // Continues the band above in the same Theme: no top padding, so the two read as one (About #get-involved after the Photo pair).
+  .page-section--flush-start {
+    padding-block-start: 0;
+  }
+
   // Panel — spacing shell: padding + content rhythm only, no colour.
   .panel {
     padding-inline: clamp(var(--pad-l), 5vw, var(--pad-xxl));
@@ -252,70 +257,6 @@
     }
   }
 
-  /* Guiding principles — a bottom-anchored statement card over a backdrop photo. Mirrors the .hero__bg / .photo-banner__bg backdrop idiom: the photo fills the section edge-to-edge (no filter applied), the card is a width-constrained theme-brand panel pinned to the bottom of the stack-section. */
-  .principles {
-    overflow: clip;
-    display: grid;
-    place-items: end center;
-
-    &__bg {
-      @include cover-bg;
-
-      @include below-tablet {
-        position: relative;
-      }
-    }
-
-    &__card {
-      position: relative;
-      z-index: 1;
-      width: min(100%, calc(var(--vs-xxl) * 8));
-
-      h2 {
-        --fl: 5;
-        font-size: var(--fluid-type);
-      }
-    }
-  }
-
-  // Page hero — short section hero filling ~half the viewport, bottom-centres its heading. Pair with .panel and a .theme-* class.
-  .page-hero {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    text-align: center;
-
-    // Extend under the fixed nav (like the homepage hero) so the body's
-    // nav-h top padding doesn't show as a gap above the section. The
-    // inherited .stack-section sticky positioning also contains the absolute
-    // .page-hero__bg below.
-    top: 0;
-    margin-top: calc(-1 * var(--nav-h));
-    min-height: calc(50svh + var(--nav-h));
-    overflow: clip;
-
-    // <picture> is a layout-transparent wrapper: collapse it so the absolute
-    // .page-hero__bg <img> inside positions against the section itself.
-    >picture {
-      display: contents;
-    }
-
-    >h1 {
-      position: relative;
-      z-index: 1;
-    }
-
-    h1 {
-      --fl: 6;
-      font-size: var(--fluid-type);
-    }
-  }
-
-  .page-hero__bg {
-    @include cover-bg;
-  }
-
   .darken {
     &-50 {
       filter: brightness(90%);
@@ -347,74 +288,6 @@
 
     :is(th, td) {
       white-space: nowrap;
-    }
-  }
-
-  .people-list {
-    --gap: var(--vs-l);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--vs-l);
-    align-items: start;
-
-    @include below-tablet {
-      grid-template-columns: 1fr;
-      row-gap: var(--vs-xl);
-    }
-
-    li {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: var(--vs-m);
-      align-items: start;
-
-      article {
-        --gap: var(--vs-s);
-
-        >span {
-          text-box: trim-start text;
-        }
-
-        >span:first-of-type {
-          display: block;
-        }
-      }
-
-      @include mobile {
-        grid-template-columns: 1fr;
-      }
-
-      .people-row__photo {
-        flex-shrink: 0;
-        overflow: hidden;
-        border-radius: var(--br-xs);
-
-        >* {
-          inline-size: 100%;
-          block-size: 100%;
-          object-fit: cover;
-        }
-      }
-    }
-
-  }
-
-  .about-grid {
-    grid-template-columns: repeat(12, 1fr);
-
-    @include below-tablet {
-      grid-template-columns: 1fr;
-    }
-
-    @include tablet {
-      figure:first-child {
-        grid-column: 1 / span 6;
-      }
-
-      figure:last-child {
-        grid-column: 7 / span 4;
-        align-self: end;
-      }
     }
   }
 
@@ -503,31 +376,6 @@
         padding-inline-start: var(--pad-m);
 
       }
-    }
-  }
-
-  // Accordion divider: adjacent <details> get border-bottom instead of manual <hr>.
-  details {
-    > :not(summary) {
-      padding-inline: 0;
-      padding-block-start: var(--pad-xl);
-    }
-
-    &:has(+ details) {
-      padding-block-end: var(--vs-l);
-      border-block-end: var(--border-1);
-    }
-
-    summary {
-      list-style: none;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    &.minimal > summary::after {
-      font-weight: var(--fw-bold);
-      font-size: 200%;
     }
   }
 

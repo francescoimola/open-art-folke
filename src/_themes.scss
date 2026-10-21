@@ -1,6 +1,6 @@
 // Themes (ADR-0002): Flow, Red and Ink from the Figma "Theme" collection, as .theme-* classes on a section.
 // Each sets Graffiti's --bg/--fg/--primary endpoints; Graffiti's :where([class*="theme-"]) re-derives the scales.
-// Plus theme-aware text (.accent, .legacy-statement until the old templates go, .tagline) and ::selection.
+// Plus theme-aware text (.accent, .legacy-statement until the old templates go) and ::selection.
 @use 'sass:map';
 @use './mixins' as *;
 
@@ -147,17 +147,6 @@ $theme-colours: ('primary', 'link', 'fg-muted', 'theme-button', 'theme-button-te
 
   .legacy-statement a {
     color: inherit;
-  }
-
-  // Tagline lead: reuses .legacy-statement's type scale but recolours it.
-  .tagline>p:first-child {
-    --text-color: var(--fg);
-    color: var(--fg); // Lead at full fg strength (not the red accent).
-  }
-
-  .tagline>p:nth-child(2) { // Continuation drops to muted tone.
-    --text-color: var(--fg-5);
-    color: var(--fg-5);
   }
 
   // Theme-aware inverted highlight. Each section's --fg at ~85% with transparency; selected text flips to --bg.

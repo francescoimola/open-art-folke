@@ -13,6 +13,8 @@
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
 // Container at least 480px wide: room for two label | value columns (Info item Split).
 @mixin cq-medium     { @container (width >= 480px) { @content; } }
+// Container at least 640px wide: room for three cards of about 200px (Person card grid).
+@mixin cq-large      { @container (width >= 640px) { @content; } }
 
 // Absolute full-bleed background image — the shared `&__bg` cover idiom
 @mixin cover-bg($position: center) {

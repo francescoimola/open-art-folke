@@ -1,117 +1,114 @@
+<?php
+/**
+ * About page (docs/components/README.md "About redesign"; Figma Desktop v2 399:1839, Mobile v2 399:2255).
+ * Statement (Red) → Photo band → #how (Red) → Photo pair → #get-involved → #people → principles (Red) + Photo band → Footer.
+ * Every string is a Panel field with the Figma copy as the fallback, so empty fields render the design.
+ *
+ * @var \Kirby\Cms\Page $page
+ * @var \Kirby\Cms\Site $site
+ */
+$sponsorUrl = page('sponsor')?->url() ?? url('sponsor');
+$email = $site->contact_email()->or('openartfolke@gmail.com')->value();
+?>
 <?php snippet('header') ?>
 
-<section class="page-hero panel even theme-brand stack-section">
-  <?php snippet('image', [
-    'file' => $page->heroimage()->toFile(),
-    'class' => 'page-hero__bg darken-200',
-    'hidden' => true,
-    'loading' => 'eager',
-    'fetchpriority' => 'high',
-    'sizes' => '100vw',
-  ]) ?>
-  <h1>About Open Art</h1>
-</section>
-
-<section class="panel even theme-paper stack-section flowing stack gap-xxl">
-  <div class="tagline stack gap-l">
-    <p class="legacy-statement">Under the umbrella of Open Art Folke, creatives come together all year round for labs, events, and conversations.</p>
-    <p class="legacy-statement">Every so often, we invite the whole town to join us for a mighty festival, where you can meet the makers in their studios, their homes or perhaps in more unlikely corners of Folkestone.</p>
-  </div>
-
-  <div class="grid about-grid">
-    <figure class="">
-      <?php snippet('image', [
-        'file' => $page->image1()->toFile(),
-        'sizes' => '(min-width: 768px) 50vw, 100vw',
-      ]) ?>
-    </figure>
-    <figure>
-      <?php snippet('image', [
-        'file' => $page->image2()->toFile(),
-        'sizes' => '(min-width: 768px) 50vw, 100vw',
-      ]) ?>
-    </figure>
-  </div>
-</section>
-
-<section class="panel even theme-paper stack gap-xl stack-section flowing">
-  <div class="stack gap-xl">
-    <h2>The people behind Open Art Folke</h2>
-    <p class="readable">OAF is a nonprofit, volunteer-run collective led by artists for artists. We don't guarantee running a festival each year, but when we do run, our incredible team is what makes it possible.</p>
-  </div>
-
-  <ul class="stack people-list">
-    <?php foreach ($page->people()->toStructure() as $person): ?>
-      <li>
-        <?php if ($photo = $person->photo()->toFile()): ?>
-          <div class="people-row__photo aspect-square">
-            <?php snippet('image', [
-              'file' => $photo,
-              'sizes' => '20vw',
-              'alt' => $person->name()->value(),
-            ]) ?>
-          </div>
-        <?php endif ?>
-        <article class="stack">
-          <span><strong><?= $person->name()->html() ?></strong></span>
-          <span class="text-muted"><?= $person->area()->html() ?></span>
-          <span class="text-muted"><?= $person->role()->html() ?></span>
-        </article>
-      </li>
-    <?php endforeach ?>
-  </ul>
-</section>
-
-<section class="theme-paper panel even stack-section half flowing stack gap-xxl">
-  <h2>FAQs</h2>
-    <div class="stack gap-m">
-      <details class="minimal">
-      <summary><h4>Who are we here for?</h4></summary>
-      <p class="readable">
-        Art and culture have emerged from, and found their way to Folkestone in various forms over the years. Open Art Folke is here to celebrate both, by supporting the active creative community that makes this coastal town so <s>shit hot</s> special.
-      </p>
-    </details>
-    <details class="minimal">
-      <summary><h4>Why not just open studios?</h4></summary>
-      <p class="readable">
-        Since 2024, we've encouraged creatives to think of Open Art Folke's festival as an opportunity to welcome the public into their studios, of course, but equally have a go at exhibiting work or hosting events in unlikely spaces—for by doing so we bring art and creativity to the everyday lives of everyday people.
-      </p>
-    </details>
-    <details class="minimal">
-      <summary><h4>Are you a charity?</h4></summary>
-      <p class="readable">
-        Not at the moment. We qualify as a non-profit, unincorporated association. That is, we are a group of individuals who have voluntarily come together for a common purpose, and like many volunteer-led groups, we are reliant on <a href="/sponsor">the generous support of our sponsors and venues</a>.
-      </p>
-    </details>
-    </div>
-</section>
-
-<section class="principles stack-section flowing">
-  <?php snippet('image', [
-    'file' => $page->principlesimage()->toFile(),
-    'class' => 'principles__bg',
-    'hidden' => true,
-    'sizes' => '100vw',
-  ]) ?>
-  <div class="principles__card panel even theme-brand stack gap-xxl text-center">
-    <h2>Our (very solemn but very important) guiding principles</h2>
-    <ul class="stack gap-base fs-l">
-      <li>We are open to all</li>
-      <li>We are a community</li>
-      <li>We are collaborative</li>
-      <li>We are reliant on artist participation</li>
-      <li>We are honest and straightforward</li>
-      <li>We are not sales or professional agents</li>
-      <li>We are not curated or themed</li>
-      <li>We are not always a festival</li>
-    </ul>
-  </div>
-</section>
-
-<?php snippet('photo-banner', [
-  'hideText' => true,
-  'half' => true,
-  'logoBottom' => true,
+<?php snippet('statement', [
+  'heading' => $page->statement_heading()->or('How do we make Open Art Folke possible'),
+  'aside'   => $page->statement_aside()->or("We're a friendly bunch of creative types, from arts and non-arts backgrounds, who've joined forces to give our peers a reason to make and show their work—which they'd otherwise hide behind the couch indefinitely.\n\nOpen Art Folke is the perfect reason for folks to tidy their studios, open their doors, and collaborate. And for anyone visiting, it’s a reason to join in and experience some of the best ideas that Folkestone has to offer."),
+  'links'   => [[
+    'url'   => '#how',
+    'label' => $page->statement_link()->or("Here's how")->value(),
+    'icon'  => 'arrow-down',
+  ]],
 ]) ?>
+
+<?php snippet('photo-band', ['image' => $page->heroimage()->toFile(), 'first' => true]) ?>
+
+<div class="page-section theme-red" id="how">
+  <?php snippet('split-group', [
+    'heading' => $page->behind_title()->or('What goes on behind the scenes'),
+    'id'      => 'behind-the-scenes',
+    'content' => $page->behind_text()->or("As a community led by artists for artists, we make sure to check in with the community between festivals, ask questions and run labs on topics such as finding a venue, collaborating and marketing your work. Of course, there's also a lot that we do behind the scenes to prepare for the upcoming festival season, such as coming up with improbable marketing ideas, divvying up tasks, and fundraising, fundraising, fundraising.")->kt(),
+  ]) ?>
+
+  <?php snippet('split-group', [
+    'heading' => $page->invest_title()->or('Where we invest'),
+    'id'      => 'where-we-invest',
+  ], slots: true) ?>
+    <?= $page->invest_text()->or('Participating creatives pay a small fee to take part in the festival, the rest of our money comes from sponsors and local arts funding. We run a bit like a charity—even though we’re officially a “non-profit, unincorporated association”, bit of a mouthful—and everything we receive goes back into the festival, the marketing, and the community events we run in between.')->kt() ?>
+    <?php snippet('link', ['url' => $sponsorUrl, 'label' => $page->invest_link()->or('Who makes for a good sponsor')->value()]) ?>
+  <?php endsnippet() ?>
+</div>
+
+<div class="page-section theme-flow">
+  <?php snippet('photo-pair', ['first' => $page->image1()->toFile(), 'second' => $page->image2()->toFile()]) ?>
+</div>
+
+<div class="page-section page-section--flush-start theme-flow">
+  <?php snippet('split-group', [
+    'heading' => $page->involved_title()->or('Get involved'),
+    'id'      => 'get-involved',
+  ], slots: true) ?>
+    <?= $page->involved_text()->or('We don’t guarantee running a festival each year, but when we do run, our incredible team is what makes it possible. We’re a dozen volunteers at the moment, but there’s always room for more. Know your onions? Alright with spreadsheets, words, design software, ladders, herding cats, or talking to people? Send us a message and don’t make it wait.')->kt() ?>
+    <?php snippet('link', ['url' => 'mailto:' . $email, 'label' => $page->involved_link()->or('Message us about volunteering')->value()]) ?>
+  <?php endsnippet() ?>
+</div>
+
+<div class="page-section theme-flow">
+  <?php snippet('split-group', [
+    'heading' => $page->people_title()->or('The folks behind Open Art Folke'),
+    'id'      => 'people',
+  ], slots: true) ?>
+    <div class="people">
+      <ul class="people__list" role="list">
+        <?php foreach ($page->people()->toStructure() as $person): ?>
+          <?php snippet('person-card', [
+            'name'  => $person->name(),
+            'area'  => $person->area(),
+            'role'  => $person->role(),
+            'photo' => $person->photo()->toFile(),
+          ]) ?>
+        <?php endforeach ?>
+      </ul>
+    </div>
+  <?php endsnippet() ?>
+</div>
+
+<?php
+/* Principles: a Panel structure, else the eight designed lines. */
+$principles = [];
+foreach ($page->principles()->toStructure() as $item) {
+  $line = trim($item->principle()->value() ?? '');
+  if ($line !== '') $principles[] = $line;
+}
+if ($principles === []) {
+  $principles = [
+    'We are open to all',
+    'We are a community',
+    'We are collaborative',
+    'We are reliant on artist participation',
+    'We are honest and straightforward',
+    'We are not sales or professional agents',
+    'We are not curated or themed',
+    'We are not always a festival',
+  ];
+}
+?>
+<?php /* The Photo band comes first in the HTML (desktop order); below tablet, about.scss moves it after the principles. */ ?>
+<div class="about-principles">
+  <?php snippet('photo-band', ['image' => $page->principlesimage()->toFile()]) ?>
+  <div class="page-section theme-red">
+    <?php snippet('split-group', [
+      'heading' => $page->principles_title()->or('Our (very solemn but very important) guiding principles'),
+      'id'      => 'principles',
+    ], slots: true) ?>
+      <ul class="principles-list" role="list">
+        <?php foreach ($principles as $principle): ?>
+          <li class="principles-list__item"><?= esc($principle) ?></li>
+        <?php endforeach ?>
+      </ul>
+    <?php endsnippet() ?>
+  </div>
+</div>
 
 <?php snippet('site-footer') ?>
