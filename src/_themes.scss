@@ -46,6 +46,11 @@ $themes: (
   ),
 );
 
+// One Theme value, for a state that borrows another Theme's colours (e.g. a Sponsor card turning Red on hover).
+@function theme-value($theme, $name) {
+  @return map.get($themes, $theme, $name);
+}
+
 $theme-colours: ('primary', 'link', 'fg-muted', 'theme-button', 'theme-button-text', 'theme-button-secondary', 'theme-button-secondary-text');
 
 @layer custom {

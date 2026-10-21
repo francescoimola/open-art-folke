@@ -1,4 +1,4 @@
-// Layout primitives + structures: .full-bleed, .center-both, .page-section (--home, --flush-start), .stack-section, .panel, .photo-banner, .sponsor-grid, .dots, .split:where(.no-wrap).
+// Layout primitives + structures: .full-bleed, .center-both, .page-section (--home, --flush-start), .stack-section, .panel, .photo-banner, .dots, .split:where(.no-wrap).
 @use './mixins' as *;
 
 @layer custom {
@@ -207,78 +207,6 @@
 
     :is(th, td) {
       white-space: nowrap;
-    }
-  }
-
-  // Sponsor feature — 2×2 grid. Each cell is a direct child.
-  // Cell (2,1) is a subgrid constraining the detail image.
-  .sponsor-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, auto);
-    column-gap: var(--vs-xl);
-    row-gap: var(--vs-xxl);
-    align-items: start;
-
-    &__intro {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    &__detail-cell {
-      grid-column: 1;
-      grid-row: 2;
-      display: grid;
-    }
-
-    &__detail {
-      justify-self: start;
-      align-self: start;
-      inline-size: min(20rem, 100%);
-    }
-
-    &__feature {
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    &__help {
-      grid-column: 2;
-      grid-row: 2;
-    }
-
-    @include cq-wide {
-      grid-template-columns: 1fr;
-
-      .sponsor-grid__intro {
-        grid-column: auto;
-        grid-row: auto;
-        order: 1;
-      }
-
-      .sponsor-grid__feature {
-        grid-column: auto;
-        grid-row: auto;
-        order: 2;
-      }
-
-      .sponsor-grid__help {
-        grid-column: auto;
-        grid-row: auto;
-        order: 3;
-      }
-
-      .sponsor-grid__detail-cell {
-        grid-column: auto;
-        grid-row: auto;
-        display: contents;
-      }
-
-      .sponsor-grid__detail {
-        grid-column: auto;
-        grid-row: auto;
-        order: 4;
-      }
     }
   }
 
