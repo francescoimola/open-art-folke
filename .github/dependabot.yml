@@ -5,7 +5,10 @@
 
 version: 2
 updates:
-  - package-ecosystem: "" # See documentation for possible values
+  - package-ecosystem: "npm" # pnpm lockfile, read by the npm ecosystem
     directory: "/" # Location of package manifests
+    # Open PRs against development, the branch work integrates on.
+    # main is the deploy branch and lags behind.
+    target-branch: "development"
     schedule:
       interval: "weekly"
