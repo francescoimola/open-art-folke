@@ -1,26 +1,45 @@
+<?php
+/*
+ * Homepage (Figma Desktop 332:124, Mobile 332:261): Statement (Red) → opening Photo band → Homepage sections → closing Photo band → Footer.
+ * Homepage sections are the `sectionblocks` Blocks field (ADR-0007), one snippet per block type in site/snippets/blocks/.
+ * Each block renders first, so an empty one leaves no gap and is never an arrow target.
+ */
+
+/* Rendered sections keyed by block type; a type renders at most once, except Custom sections (max two, keyed by id). */
+$sections = [];
+foreach ($page->homeSections() as $block) {
+  $html = trim($block->toHtml());
+  if ($html !== '') $sections[$block->type() === 'custom' ? $block->id() : $block->type()] = $html;
+}
+
+/* The Statement's ↓ arrow: the chosen section, or the first one (#content) if it is hidden or empty. */
+$arrowLabels = [
+  'programme' => 'Skip to the festival programme',
+  'about'     => 'Skip to about the festival',
+  'sponsors'  => 'Skip to our sponsors',
+];
+$arrowTarget = $page->arrow_target()->value();
+$arrowHref = isset($sections[$arrowTarget]) ? '#' . $arrowTarget : '#content';
+if (!isset($sections[$arrowTarget])) $arrowTarget = array_key_first($sections);
+?>
 <?php snippet('header') ?>
 
-<section class="hero stack-section flex text-center stack-gap-none">
-  <?php snippet('image', [
-    'file' => $page->heroimage()->toFile(),
-    'class' => 'hero__bg darken-50',
-    'hidden' => true,
-    'loading' => 'eager',
-    'fetchpriority' => 'high',
-    'sizes' => '100vw',
-  ]) ?>
-  <div class="hero__title">
-    <h1>Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke<span aria-hidden="true"><span class="hero__typed"></span><span class="hero__cursor">|</span></span></h1>
-    <span class="hero__sizer h1" aria-hidden="true">Open&nbsp;&nbsp;Art&nbsp;&nbsp;Folke is cross-generational and cross-cultural</span>
+<?php snippet('statement', [
+  'heading'    => $page->statement_heading()->or('Open Art Folke is a community of 200+ Folkestone artists.'),
+  'body'       => $page->statement_body()->or('Every so often, we throw a mighty open-house style festival where we take you off the beaten track to see exactly where the art happens.'),
+  'kicker'     => $page->statement_kicker()->or('Come and have a nosey.'),
+  'arrow'      => $sections === [] ? null : $arrowHref,
+  'arrowLabel' => $arrowLabels[$arrowTarget] ?? 'Skip to the content',
+]) ?>
+
+<?php snippet('photo-band', ['image' => $page->heroimage()->toFile(), 'first' => true]) ?>
+
+<?php if ($sections !== []): ?>
+  <div class="page-section page-section--home theme-flow" id="content">
+    <?= implode("\n", $sections) ?>
   </div>
-  <span class="hero__arrow fs-xl" aria-hidden="true">↓</span>
-</section>
+<?php endif ?>
 
-<?php /* Middle sections: order, visibility and colour set in the Panel (Home → Content → Homepage sections). */ ?>
-<?php foreach ($page->homeSections() as $section): ?>
-  <?php snippet('home/' . $section, ['form' => $form, 'theme' => $page->sectionTheme($section)]) ?>
-<?php endforeach ?>
-
-<?php snippet('photo-banner', ['image' => $page->bannerimage()->toFile()]) ?>
+<?php snippet('photo-band', ['image' => $page->bannerimage()->toFile()]) ?>
 
 <?php snippet('site-footer') ?>

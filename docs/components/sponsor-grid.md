@@ -1,6 +1,6 @@
 # Sponsor grid
 
-**Layer:** Section · **Status:** figma · **Figma:** `382:1136` · **Code:** `site/snippets/sponsor-list.php` (exists; to be reworked), `ul.sponsors`
+**Layer:** Section · **Status:** code · **Figma:** `382:1136` · **Code:** `site/snippets/sponsor-grid.php`, `.sponsor-grid` (`src/_sponsor-grid.scss`). It replaces the old `sponsor-list.php` (mobile carousel + desktop hover list), removed in #15.
 
 ## Purpose
 
@@ -19,7 +19,7 @@ The square Sponsor cards for the Current sponsors: in the Sponsors Homepage sect
 
 ## Layout (Stacked ↔ Split)
 
-Columns change from 2 to 3. Cards stay square and fill their cells.
+Columns change from 2 to 3. Cards stay square and fill their cells. In code the switch is a container query on the grid's own width (`cq-medium`, 480px), so a tablet's narrow Split group column keeps 2 columns (3 would make cards smaller than Figma's 139px Min card).
 
 ## Tokens
 
@@ -40,12 +40,20 @@ Only the cards' own (Red on Hover and Focus). The cards follow source order, wit
 
 ## HTML & accessibility
 
-```html
-<ul class="sponsors" role="list"> <li class="sponsor-card">…</li> … </ul>
+```php
+<?php snippet('sponsor-grid') ?>   // Current sponsors from the Sponsor page
+<?php snippet('sponsor-grid', ['sponsors' => $page->currentSponsors()]) ?>
 ```
 
-CSS: `display: grid; grid-template-columns: repeat(2, 1fr)`, and `repeat(3, 1fr)` above the switch point, with `gap: var(--space-s)`.
+```html
+<div class="sponsor-grid theme-flow">   <!-- query container; pinned to Flow, no background -->
+  <ul class="sponsor-grid__list" role="list" aria-label="Current sponsors"> <li class="sponsor-card">…</li> … </ul>
+</div>
+```
+
+- Params: `sponsors` (rows of `name`, `url`, `logo`, as `SponsorPage::currentSponsors()` returns; default = the Sponsor page's), `label` (the list's accessible name, default "Current sponsors"), `class`. No sponsors: nothing renders.
+- The wrapper, not the `ul`, carries the block class, because it is the query container.
 
 ## Open questions
 
-- **Naming clash:** `.sponsor-grid` in `src/_layout.scss` is the old Sponsor page intro/photo layout. Remove it (retired by the redesign) before building this component.
+- ~~Naming clash with the old intro/photo layout~~: removed in #15.

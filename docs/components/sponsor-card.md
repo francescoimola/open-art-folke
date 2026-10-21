@@ -1,6 +1,6 @@
 # Sponsor card
 
-**Layer:** Composite · **Status:** figma · **Figma:** `357:498` · **Code:** `site/snippets/sponsor-card.php`, `.sponsor-card` (planned)
+**Layer:** Composite · **Status:** code · **Figma:** `357:498` · **Code:** `site/snippets/sponsor-card.php`, `.sponsor-card` (`src/_sponsor-card.scss`)
 
 ## Purpose
 
@@ -42,7 +42,7 @@ The card is square and fills its grid cell. Only the logo slot changes, from 72�
 | Hover | The card switches to the **Red** theme (red fill; text, logo and square off-white; red arrow), and the arrow nudges 2px up and to the right | `:hover` | 200ms ease-out (Smart Animate) |
 | Focus | Same as Hover, plus a 2px outside ring in Neutral/900 | `:has(:focus-visible)` | instant |
 
-CSS: reuse the Red theme values (today `.theme-brand`) under `:hover` and `:has(:focus-visible)`. With reduced motion, there is no nudge and the colour change is instant.
+CSS: the Red Theme's values (`theme-value('red', …)` from `src/_themes.scss`) under `:has(a:hover, a:focus-visible)`. The ring is `2px solid var(--fg)` (Flow's Text, since the grid is pinned to Flow) with no offset; not `--focus-ring`, which Graffiti resolves on `:root`. With reduced motion, there is no nudge and the colour change is instant.
 
 ## Panel fields / content rules
 
@@ -50,7 +50,9 @@ From each sponsor page: name, logo (SVG, coloured to Theme/Text via `currentColo
 
 ## HTML & accessibility
 
-- `<li>` inside `ul.sponsors`. The whole card is one `<a href target="_blank" rel="noopener">` whose accessible name is the sponsor's name, plus "(opens in a new tab)" as visually hidden text.
+- `<li class="sponsor-card">` inside the Sponsor grid's list. The whole card is one `<a class="sponsor-card__box" href target="_blank" rel="noopener">` whose accessible name is the sponsor's name, plus "(opens in a new tab)" as visually hidden text.
+- A sponsor without a website renders the same box as a `<div>`, with no corner.
+- Snippet: `snippet('sponsor-card', ['name' => …, 'url' => …, 'logo' => <svg string>])`. Normally rendered by the Sponsor grid.
 - The logo SVG and the ↗ arrow are `aria-hidden="true"`.
 
 ## Open questions

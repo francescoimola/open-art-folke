@@ -1,0 +1,7 @@
+# Homepage placeholder block (ADR-0007): position and visibility only. Rendered by site/snippets/blocks/programme.php.
+name: Programme
+icon: book
+fields:
+  note:
+    type: info
+    text: The Programme section's copy, photo and PDF live in the Home page's Programme tab. Drag this block to move the section; hide it to take the section off the homepage (the nav and footer programme links go with it).

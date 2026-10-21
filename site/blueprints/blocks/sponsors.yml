@@ -1,0 +1,7 @@
+# Homepage placeholder block (ADR-0007): position and visibility only. Rendered by site/snippets/blocks/sponsors.php.
+name: Sponsors
+icon: heart
+fields:
+  note:
+    type: info
+    text: The Sponsors section shows the current sponsors from the Sponsor page; its heading and link text live in the Home page's Sponsors tab. Drag this block to move the section; hide it to take the section off the homepage.
