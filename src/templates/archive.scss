@@ -1,0 +1,113 @@
+// Archive page: the Lightbox (docs/components/lightbox.md), Parvus on a native <dialog>, Theme Ink (set in archive.js).
+// Parvus's own styles sit in the graffiti layer, like Lenis's, so these overrides in custom win without !important.
+// The package exports only its SCSS source (no dist CSS), so it is loaded with meta.load-css.
+@use 'sass:meta';
+@use '../mixins' as *;
+
+@layer graffiti {
+  @include meta.load-css('parvus/src/scss/parvus');
+}
+
+@layer custom {
+
+  .parvus {
+    // Top bar height = the counter pill (Space XS × 2 + a Body line); a control pill is Space XS × 2 + a Large Icon.
+    --lightbox-bar: calc(2 * var(--space-xs) + var(--lh-body));
+    --lightbox-pill: calc(2 * var(--space-xs) + 0.75 * var(--step-3));
+
+    // Backdrop: Ink Background at 90%, so the page is only a faint hint. Controls sit on solid Ink pills.
+    --parvus-background-color: color-mix(in srgb, var(--bg) 90%, transparent);
+    --parvus-color: var(--fg);
+    --parvus-btn-background-color: var(--bg);
+    --parvus-btn-color: var(--fg);
+    --parvus-btn-hover-background-color: var(--bg);
+    --parvus-btn-hover-color: var(--fg);
+    --parvus-btn-disabled-background-color: var(--bg);
+    --parvus-btn-disabled-color: var(--fg-muted);
+    --parvus-caption-color: var(--fg);
+    --parvus-loader-background-color: var(--fg-muted);
+    --parvus-loader-color: var(--fg);
+    --parvus-loading-error-background-color: var(--bg);
+    --parvus-loading-error-color: var(--fg);
+
+    // Graffiti styles every <dialog> as a rounded, shadowed card that fades and scales in.
+    // The Lightbox is full-screen and square, and Parvus runs its own (motion-aware) transitions.
+    border-radius: 0;
+    box-shadow: none;
+    transition: none;
+  }
+
+  // Top bar: counter left, Close right, inside the outer margin.
+  .parvus__toolbar {
+    inset-block-start: var(--margin);
+    inset-inline: var(--margin);
+  }
+
+  .parvus__counter {
+    @include type-body;
+    padding: var(--space-xs) var(--space-s);
+    background-color: var(--bg);
+    color: var(--fg);
+    text-box: normal;
+  }
+
+  // Controls: the Icon at Large (0.75 × Step 3) in a Space XS pill.
+  .parvus__btn {
+    padding: var(--space-xs);
+    border: 0;
+    font-size: var(--step-3);
+    line-height: 1;
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+
+  // Stacked: no arrows (swipe, or the arrow keys).
+  .parvus__btn--previous,
+  .parvus__btn--next {
+    display: none;
+  }
+
+  // Photo area: below the top bar (+ Gutter), inside the margins. Parvus fits the photo to it, uncropped.
+  .parvus__slide {
+    padding-block: calc(var(--margin) + var(--lightbox-bar) + var(--gutter)) var(--margin);
+    padding-inline: var(--margin);
+  }
+
+  // Caption: Caption text on the backdrop in the Theme's text colour, at a readable measure, Space XS below the photo.
+  .parvus__caption {
+    @include type-caption;
+    max-inline-size: min(100%, 60ch);
+    margin-inline: auto;
+    padding-block-start: var(--space-xs);
+    color: var(--fg);
+    text-wrap: pretty;
+
+    p {
+      margin: 0;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+      text-wrap: inherit;
+    }
+  }
+
+  @include tablet {
+    // Split: arrows at the stage edges, vertically centred on the stage (top bar + Gutter down to the bottom margin).
+    // They are positioned in the toolbar, which starts at the top margin. A one-photo Edition keeps them hidden.
+    .parvus__btn--previous:not([aria-hidden="true"]),
+    .parvus__btn--next:not([aria-hidden="true"]) {
+      display: flex;
+      inset-block-start: calc((var(--lightbox-bar) + var(--gutter) + 100svh) / 2 - var(--margin));
+    }
+
+    // The photo keeps a Gutter clear of each arrow.
+    .parvus__slide {
+      padding-inline: calc(var(--margin) + var(--lightbox-pill) + var(--gutter));
+    }
+  }
+
+}

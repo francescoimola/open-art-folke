@@ -47,7 +47,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Split group | [split-group.md](split-group.md) | code |
 | Sponsor grid | [sponsor-grid.md](sponsor-grid.md) | figma |
 | Edition | [edition.md](edition.md) | code |
-| Lightbox | [lightbox.md](lightbox.md) | figma |
+| Lightbox | [lightbox.md](lightbox.md) | code |
 | Footer | [footer.md](footer.md) | code |
 
 Docs are written as each component is built, in this order: primitives, then composites, then sections. After that, the homepage frames are rebuilt from instances to check that everything fits together.

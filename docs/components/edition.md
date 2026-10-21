@@ -78,4 +78,4 @@ CSS for the rows: `display: flex; flex-wrap: wrap; gap: var(--gutter)`, each `li
 
 - `snippet('edition', ['heading', 'year', 'text', 'video', 'photos', 'group', 'class'])` renders the whole `<section class="edition page-section theme-flow">`. No valid 4-digit `year` → no `id` (and the Archive template gives it no year link).
 - Rows: `--row-h` is `30cqi` from a 480px list (about 2 per row) and `20cqi` from tablet (about 3); below 480px, one photo per row. Each `li` takes `aspect-ratio: var(--ratio)` and the image is `object-fit: contain`, so nothing is ever cropped.
-- Lightbox hook: each photo is `a.edition__link[href=<original file>][data-group=<edition id>]`.
+- Lightbox hook: each photo is `a.edition__link[href=<original file>][data-group=<edition id>]`, plus `data-srcset`/`data-sizes` (WebP), `data-alt` when the file has no alt, and `data-caption-id` pointing at a hidden, escaped copy of the file's caption.

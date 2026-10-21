@@ -29,4 +29,9 @@ foreach ($editions as $edition) {
   ]) ?>
 <?php endforeach ?>
 
+<?php /* Lightbox control glyphs (src/templates/archive.js reads them), so the dialog uses the library Icons. */ ?>
+<?php foreach (['close', 'arrow-left', 'arrow-right'] as $glyph): ?>
+  <template data-lightbox-icon="<?= $glyph ?>"><?php snippet('icon', ['glyph' => $glyph]) ?></template>
+<?php endforeach ?>
+
 <?php snippet('site-footer') ?>

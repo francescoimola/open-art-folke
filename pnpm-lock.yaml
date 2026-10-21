@@ -20,6 +20,9 @@ importers:
       lenis:
         specifier: ^1.3.26
         version: 1.3.26
+      parvus:
+        specifier: ^3.1.1
+        version: 3.1.1
     devDependencies:
       autoprefixer:
         specifier: ^10.6.1
@@ -1106,6 +1109,9 @@ packages:
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  parvus@3.1.1:
+    resolution: {integrity: sha512-jmku0kpu/M/AJQwKPKk+ZVVUbpGBUd1mRJ7dRPcvLv99bIokMRUVTgydawhEkgESX97LvCYbE/dCxN6nToQx5A==}
 
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
@@ -2275,6 +2281,8 @@ snapshots:
   node-releases@2.0.56: {}
 
   normalize-path@3.0.0: {}
+
+  parvus@3.1.1: {}
 
   picocolors@1.1.1: {}
 

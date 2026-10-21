@@ -5,6 +5,8 @@
  * Photos below in justified rows: every photo uncropped at its own ratio, the last row left-aligned and not stretched.
  *
  * Each photo is a plain link to its full-size file. Lightbox hook: `a.edition__link[data-group]`, one group per Edition.
+ * The link also carries the Lightbox's WebP srcset/sizes and, when the file has a caption, data-caption-id
+ * pointing at a hidden escaped copy of it (Parvus reads that element's HTML, so the text is never parsed as markup).
  *
  * Usage:
  *   snippet('edition', [
@@ -64,17 +66,34 @@ $attributes = [
           /* The photo's own ratio sizes its slot, so the cover-fit image is never cropped. */
           $ratio = $photo->height() > 0 ? round($photo->width() / $photo->height(), 4) : 1.5;
           $alt = $photo->alt()->or('')->value();
+          $number = $photos->indexOf($photo) + 1;
+          $label = $heading . ', photo ' . $number;
+          $caption = trim((string)$photo->caption()->value());
+          $captionId = $group . '-caption-' . $number;
+          /* Lightbox: the photo fits the viewport, so its slot is at most the full width or its ratio times the height. */
+          $link = [
+            'class'           => 'edition__link',
+            'href'            => $photo->url(),
+            'data-group'      => $group,
+            'data-srcset'     => $photo->srcset('webp'),
+            'data-sizes'      => 'min(100vw, ' . round($ratio * 100, 2) . 'vh)',
+            'data-alt'        => $alt === '' ? $label : null,
+            'data-caption-id' => $caption !== '' ? $captionId : null,
+          ];
         ?>
         <li class="edition__photo" style="--ratio: <?= $ratio ?>">
-          <a class="edition__link" href="<?= esc($photo->url(), 'attr') ?>" data-group="<?= esc($group, 'attr') ?>">
+          <a<?= attr($link, ' ') ?>>
             <?php snippet('image', [
               'file'  => $photo,
               'sizes' => '(width >= 768px) 40vw, (width >= 520px) 50vw, 100vw',
             ]) ?>
             <?php if ($alt === ''): ?>
-              <span class="visually-hidden"><?= esc($heading) ?>, photo <?= $photos->indexOf($photo) + 1 ?></span>
+              <span class="visually-hidden"><?= esc($label) ?></span>
             <?php endif ?>
           </a>
+          <?php if ($caption !== ''): ?>
+            <p id="<?= esc($captionId, 'attr') ?>" hidden><?= esc($caption) ?></p>
+          <?php endif ?>
         </li>
       <?php endforeach ?>
     </ul>
