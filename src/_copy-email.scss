@@ -1,0 +1,29 @@
+// Copy email (docs/components/copy-email.md): a Button, then the address as plain body text, gap Space 2XS.
+// The address is a mailto: link in code but not styled as one (Figma); it keeps the Link focus ring.
+@use './mixins' as *;
+
+@layer custom {
+
+  .copy-email {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2xs);
+  }
+
+  // Two classes: the typography overlay's `a` rule compiles to (0,1,1) and would take the tracking.
+  .copy-email .copy-email__address {
+    @include type-body;
+    word-spacing: normal;
+    color: var(--fg);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    text-box: normal;
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+
+}

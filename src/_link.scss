@@ -17,4 +17,15 @@
     @include type-link-large;
   }
 
+  // PostCSS rewrites the typography overlay's :is(… a …) to a:not(…) (0,1,1), which beat .link's tracking.
+  // Restate it at that weight; contexts like .nav-list .link (0,2,0) still win.
+  a.link {
+    letter-spacing: var(--ls-body);
+    word-spacing: normal;
+  }
+
+  a.link--large {
+    letter-spacing: var(--ls-h3);
+  }
+
 }

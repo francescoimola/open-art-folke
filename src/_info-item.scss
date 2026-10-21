@@ -1,0 +1,51 @@
+// Info item (docs/components/info-item.md): a <dt>/<dd> pair in a <dl>.
+// Stacked: label above value, gap Space 2XS. Split (wide container): two equal columns, gap Layout/Gutter.
+@use './mixins' as *;
+
+@layer custom {
+
+  .info-item {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .info-item__label {
+    @include type-h4;
+    margin: 0;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  .info-item__value {
+    @include type-body;
+    --text-color: var(--fg);
+    margin: 0;
+    color: var(--fg);
+    text-wrap: pretty;
+
+    // A value can hold several blocks (a message, a link, a footnote).
+    > * {
+      margin: 0;
+    }
+
+    // Body style on paragraphs too, over Graffiti's/the overlay's p defaults (balance, --lh, tracking).
+    p {
+      line-height: inherit;
+      letter-spacing: inherit;
+      word-spacing: normal;
+      text-wrap: pretty;
+    }
+
+    > * + * {
+      margin-block-start: var(--space-2xs);
+    }
+  }
+
+  @include cq-medium {
+    .info-item {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gutter);
+    }
+  }
+
+}

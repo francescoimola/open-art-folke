@@ -5,6 +5,8 @@
 
 // Container queries — match Graffiti UI 4.30.0
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
+// Container at least 480px wide: room for two label | value columns (Info item Split).
+@mixin cq-medium     { @container (width >= 480px) { @content; } }
 
 // Absolute full-bleed background image — the shared `&__bg` cover idiom
 @mixin cover-bg($position: center) {
