@@ -1,0 +1,89 @@
+// Split group (docs/components/split-group.md): h2 left, content right; stacks below tablet (ADR-0001).
+// Row → Column media → Media, Space pair/XL-M apart (shrinks from mobile to desktop). Colours from the parent section's Theme.
+@use './mixins' as *;
+
+@layer custom {
+
+  .split-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl-m);
+    color: var(--fg);
+  }
+
+  // Keep the Figma line boxes instead of the global cap-height trim.
+  :is(.split-group, .split-group *) {
+    text-box: normal;
+  }
+
+  // Stacked: heading above content, Space pair/S-M apart.
+  .split-group__row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s-m);
+  }
+
+  .split-group__heading {
+    @include type-h2;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  // Content slot: items Space M apart; plain KirbyText takes the Body style.
+  .split-group__content {
+    @include rich-text;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+
+    // A lone Link keeps its own width, so its focus ring hugs the label.
+    > a {
+      align-self: flex-start;
+    }
+  }
+
+  .split-group__media {
+    margin: 0;
+    overflow: clip;
+    aspect-ratio: 3 / 2;
+  }
+
+  // Footer rows: a 1px Theme/Text rule across the top, Space 2XS padding block.
+  .split-group--divider {
+    padding-block: var(--space-2xs);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline: 0;
+      block-size: 1px;
+      background: var(--fg);
+    }
+  }
+
+  @include tablet {
+    // Split: two equal columns, gap Layout/Gutter. Content keeps column 2 even without a heading.
+    .split-group__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      column-gap: var(--gutter);
+    }
+
+    .split-group__content {
+      grid-column: 2;
+    }
+
+    .split-group__media--column {
+      align-self: flex-end;
+      inline-size: calc((100% - var(--gutter)) / 2);
+    }
+
+    .split-group__media--wide {
+      aspect-ratio: 2 / 1;
+    }
+  }
+
+}

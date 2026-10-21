@@ -1,0 +1,42 @@
+// Photo pair (docs/components/photo-pair.md): a 1:1 and a 2:3 photo at the same height, gap Layout/Gutter.
+// Split from tablet up (widths 3 : 2, so the heights match); Stacked below, one photo per row.
+@use './mixins' as *;
+
+@layer custom {
+
+  .photo-pair {
+    display: grid;
+    gap: var(--gutter);
+  }
+
+  :is(.photo-pair__first, .photo-pair__second) {
+    margin: 0;
+    overflow: clip;
+  }
+
+  .photo-pair__first {
+    aspect-ratio: 1;
+  }
+
+  .photo-pair__second {
+    aspect-ratio: 2 / 3;
+  }
+
+  @include tablet {
+    .photo-pair {
+      grid-template-columns: 3fr 2fr;
+    }
+  }
+
+  // Sponsor wrap: below tablet the photos join the parent section's flow, Second after its other content.
+  @include below-tablet {
+    .photo-pair--wrap {
+      display: contents;
+
+      > .photo-pair__second {
+        order: 1;
+      }
+    }
+  }
+
+}

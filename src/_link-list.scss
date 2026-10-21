@@ -1,0 +1,27 @@
+// Link list (docs/components/link-list.md): Default Links stacked Space XS apart.
+@use './mixins' as *;
+
+@layer custom {
+
+  .link-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // One Body line box per item, as in Figma, instead of the global cap-height trim.
+  :is(.link-list, .link-list > li) {
+    text-box: normal;
+  }
+
+  .link-list > li {
+    @include type-body;
+    margin: 0;
+    padding: 0;
+  }
+
+}

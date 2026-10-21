@@ -1,0 +1,24 @@
+// Photo band (docs/components/photo-band.md): a full-bleed photo, height from its ratio. No padding, no Theme.
+// First band 1:1 and later bands 3:2 below tablet; every band 2:1 from tablet up. The image snippet crops to cover.
+@use './mixins' as *;
+
+@layer custom {
+
+  .photo-band {
+    inline-size: 100%;
+    margin: 0;
+    overflow: clip;
+    aspect-ratio: 3 / 2;
+  }
+
+  .photo-band--first {
+    aspect-ratio: 1;
+  }
+
+  @include tablet {
+    :is(.photo-band, .photo-band--first) {
+      aspect-ratio: 2 / 1;
+    }
+  }
+
+}

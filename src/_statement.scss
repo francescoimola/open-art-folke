@@ -1,0 +1,110 @@
+// Statement (docs/components/statement.md): the opening band, an h1 on the section's Theme (Red by default).
+// Stacked below tablet: Heading, Body and Kicker each start a line, one H1 line apart; Aside and ↓ Arrow Space XL below.
+// Split from tablet up: the h1 runs on as one paragraph; with an Aside, two equal columns (gap Layout/Gutter). No Arrow.
+@use './mixins' as *;
+
+@layer custom {
+
+  .statement {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xl);
+    padding: var(--space-s-m) var(--margin);
+    color: var(--fg);
+  }
+
+  // Keep the Figma line boxes instead of the global cap-height trim.
+  :is(.statement, .statement *) {
+    text-box: normal;
+  }
+
+  .statement__heading {
+    @include type-h1;
+    inline-size: 100%;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  // Block on mobile (one H1 line apart), inline from tablet: the h1 stays one heading for screen readers.
+  .statement__line {
+    display: block;
+    margin-block-start: var(--lh-h1);
+  }
+
+  .statement__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    inline-size: 100%;
+  }
+
+  // Aside paragraphs Space S apart, as Figma's paragraph spacing (the doc says M; Figma wins at the endpoints).
+  .statement__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+
+    p {
+      @include type-body;
+      color: var(--fg);
+      text-wrap: pretty;
+    }
+  }
+
+  // Links row: Links Space XS apart with a "·" between; CSS dots, so screen readers skip them.
+  .statement__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    > li {
+      @include type-body;
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-xs);
+      color: var(--fg);
+    }
+
+    > li + li::before {
+      content: "·";
+      content: "·" / "";
+    }
+  }
+
+  // ↓ Arrow: Icon Large (0.75em of Link/Large) in Theme/Link, with the Link focus ring.
+  .statement__arrow {
+    display: inline-flex;
+    font-size: var(--step-3);
+    line-height: 1;
+    color: var(--link);
+
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+
+  @include tablet {
+    .statement__line {
+      display: inline;
+      margin: 0;
+    }
+
+    .statement__arrow {
+      display: none;
+    }
+
+    .statement--aside {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      column-gap: var(--gutter);
+    }
+  }
+
+}

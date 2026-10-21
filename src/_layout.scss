@@ -1,4 +1,4 @@
-// Layout primitives + structures: .full-bleed, .anchor-target, .center-both, .stack-section, .hero, .panel, .photo-banner, .principles, .page-hero, .sponsor-grid, .dots, .split:where(.no-wrap).
+// Layout primitives + structures: .full-bleed, .anchor-target, .center-both, .page-section, .stack-section, .hero, .panel, .photo-banner, .principles, .page-hero, .sponsor-grid, .dots, .split:where(.no-wrap).
 @use './mixins' as *;
 
 @layer custom {
@@ -154,6 +154,15 @@
       position: relative;
       top: auto;
     }
+  }
+
+  // Page section — the redesign's content band: Space pair/L-XL block × Layout/Margin inline, children Space XL apart.
+  // Pair with one .theme-* class; holds Split groups, a Photo pair, etc. (the Photo pair wrap needs this flex flow).
+  .page-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding: var(--space-l-xl) var(--margin);
   }
 
   // Panel — spacing shell: padding + content rhythm only, no colour.

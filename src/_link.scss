@@ -5,25 +5,7 @@
 
   .link {
     @include type-link;
-    color: var(--link);
-    text-decoration-line: underline;
-    // Thickness from the font, as in Figma. The font's own underline position sits below the descenders
-    // in browsers; Figma draws it through them, about 0.12em under the baseline.
-    text-decoration-thickness: from-font;
-    text-underline-offset: 0.12em;
-    // The global cap-height trim pushes an inline link's underline below the descenders.
-    text-box: normal;
-
-    // Underline change is instant by design (no transition).
-    &:hover {
-      text-decoration-line: none;
-    }
-
-    // Focus ring: 2px Theme/Text with a 2px gap, keyboard only.
-    &:focus-visible {
-      outline: var(--focus-ring);
-      outline-offset: var(--focus-ring-offset);
-    }
+    @include link-look;
 
     // Space 3XS (Default) and 2XS (Large) both reduce to a quarter of the link's font size.
     > .icon {

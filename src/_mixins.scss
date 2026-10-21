@@ -39,6 +39,75 @@
 @mixin type-link-large { @include type-role(var(--step-3), var(--lh-h3), var(--ls-h3), 500); }
 @mixin type-link-compact { @include type-role(var(--step-0), var(--lh-body-tight), var(--ls-body), 500); }
 
+// Text link look (docs/components/link.md): Theme/Link, font underline, Hover drops it, keyboard Focus ring.
+// Shared by .link and the plain <a> inside rich text, which KirbyText writes without the Link snippet.
+@mixin link-look {
+  color: var(--link);
+  text-decoration-line: underline;
+  // Thickness from the font, as in Figma. The font's own underline position sits below the descenders
+  // in browsers; Figma draws it through them, about 0.12em under the baseline.
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.12em;
+  // The global cap-height trim pushes an inline link's underline below the descenders.
+  text-box: normal;
+
+  // Underline change is instant by design (no transition).
+  &:hover {
+    text-decoration-line: none;
+  }
+
+  // Focus ring: 2px Theme/Text with a 2px gap, keyboard only.
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+// Body copy from a writer/KirbyText field in the Figma text styles (Body/Default, Theme/Text).
+// Only unclassed elements (KirbyText output): components nested in the content (Link list, Sponsor grid…) keep their own styles.
+@mixin rich-text {
+  :is(p, li):not([class]) {
+    @include type-body;
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+
+  h2:not([class]) {
+    @include type-h3;
+    color: var(--fg);
+  }
+
+  :is(h3, h4):not([class]) {
+    @include type-h4;
+    color: var(--fg);
+  }
+
+  strong {
+    font-weight: 600;
+    font-variation-settings: "wght" 600;
+  }
+
+  :is(ul, ol):not([class]) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding-inline-start: 1.25em;
+  }
+
+  ul:not([class]) {
+    list-style: disc;
+  }
+
+  ol:not([class]) {
+    list-style: decimal;
+  }
+
+  a:not([class]) {
+    @include type-link;
+    @include link-look;
+  }
+}
+
 // Dev-only output. vite.config.js injects $vite-dev into entry files; src/index.scss forwards it here via `@use … with`.
 // Content compiles into `pnpm dev` CSS only; `pnpm build` never ships it.
 $is-dev: false !default;

@@ -1,0 +1,23 @@
+// Link + hint (docs/components/link-hint.md): a Large Link, then one Body line in Theme/Text secondary, no gap.
+@use './mixins' as *;
+
+@layer custom {
+
+  .link-hint {
+    @include type-body;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+  }
+
+  :is(.link-hint, .link-hint__hint) {
+    text-box: normal;
+  }
+
+  .link-hint__hint {
+    @include type-body;
+    color: var(--fg-muted);
+  }
+
+}

@@ -14,8 +14,8 @@
 
 <section class="panel even theme-paper stack-section flowing stack gap-xxl">
   <div class="tagline stack gap-l">
-    <p class="statement">Under the umbrella of Open Art Folke, creatives come together all year round for labs, events, and conversations.</p>
-    <p class="statement">Every so often, we invite the whole town to join us for a mighty festival, where you can meet the makers in their studios, their homes or perhaps in more unlikely corners of Folkestone.</p>
+    <p class="legacy-statement">Under the umbrella of Open Art Folke, creatives come together all year round for labs, events, and conversations.</p>
+    <p class="legacy-statement">Every so often, we invite the whole town to join us for a mighty festival, where you can meet the makers in their studios, their homes or perhaps in more unlikely corners of Folkestone.</p>
   </div>
 
   <div class="grid about-grid">
