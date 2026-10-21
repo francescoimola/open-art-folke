@@ -12,3 +12,12 @@ updates:
     target-branch: "development"
     schedule:
       interval: "weekly"
+    # One PR per run for all patch and minor bumps.
+    # Majors stay separate so they get reviewed on their own.
+    groups:
+      npm_and_yarn:
+        update-types:
+          - "version-update:semver-minor"
+          - "version-update:semver-patch"
+        patterns:
+          - "*"
