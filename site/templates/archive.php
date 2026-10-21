@@ -1,44 +1,32 @@
+<?php
+/* Archive (docs/components/README.md, "Archive redesign"): Statement (Red) with one year link per Edition, then one Edition per year (Flow). */
+$editions = $page->editions()->toStructure();
+
+/* Year links: only Editions with a year get one (an empty year renders the Edition without an anchor). */
+$yearLinks = [];
+foreach ($editions as $edition) {
+  $year = trim((string)$edition->year()->value());
+  if (preg_match('/^\d{4}$/', $year)) {
+    $yearLinks[] = ['url' => '#edition-' . $year, 'label' => $year];
+  }
+}
+?>
 <?php snippet('header') ?>
 
-<section class="panel even theme-brand stack-section half">
-  <div class="stack gap-xl readable mt-xl">
-    <h1><?= $page->headline()->esc() ?></h1>
-    <div class="stack gap-l text-muted"><?= $page->intro()->kt() ?></div>
-  </div>
-</section>
+<?php snippet('statement', [
+  'heading' => $page->headline()->or('Revisit past editions'),
+  'aside'   => $page->intro()->or('Nostalgic as it may seem, we enjoy documenting our successes, and we know that you love reminiscing about good times! In honour of the work done since Open Art Folke launched in 2024, here is an archive of what took place and the highlights of each edition.'),
+  'links'   => $yearLinks,
+]) ?>
 
-<?php foreach ($page->editions()->toStructure() as $i => $edition): ?>
-  <?php $photos = $edition->gallery()->toFiles() ?>
-  <section id="edition-<?= $i ?>" class="panel even stack-section flowing <?= $i % 2 ? 'theme-paper' : 'theme-blush' ?>">
-    <div class="stack gap-xl">
-      <h2><?= $edition->headline()->esc() ?></h2>
-
-      <?php if ($edition->video()->isNotEmpty()): ?>
-        <div class="layout-split">
-          <?php snippet('vimeo', [
-            'url'   => $edition->video(),
-            'title' => $edition->headline(),
-          ]) ?>
-        </div>
-      <?php endif ?>
-
-      <div class="stack gap-l readable"><?= $edition->text()->kt() ?></div>
-
-      <?php if ($photos->isNotEmpty()): ?>
-        <ul class="layout-split archive-gallery" aria-label="<?= $edition->headline()->esc('attr') ?> photos">
-          <?php foreach ($photos as $photo): ?>
-            <li>
-              <?php snippet('image', [
-                'file'  => $photo,
-                'sizes' => '(min-width: 768px) 50vw, 100vw',
-              ]) ?>
-            </li>
-          <?php endforeach ?>
-        </ul>
-      <?php endif ?>
-    </div>
-  </section>
+<?php foreach ($editions as $edition): ?>
+  <?php snippet('edition', [
+    'heading' => $edition->headline(),
+    'year'    => $edition->year(),
+    'text'    => $edition->text(),
+    'video'   => $edition->video(),
+    'photos'  => $edition->gallery()->toFiles(),
+  ]) ?>
 <?php endforeach ?>
-
 
 <?php snippet('site-footer') ?>

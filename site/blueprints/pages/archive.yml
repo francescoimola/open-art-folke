@@ -35,6 +35,14 @@ tabs:
         label: Past editions
         help: One row per festival edition (most recent first). 
         fields:
+          year:
+            type: number
+            label: Year
+            required: true
+            min: 2024
+            max: 2100
+            step: 1
+            help: The festival year, e.g. 2025. It makes the Year link at the top of the page and the edition's web address (#edition-2025).
           headline:
             type: text
             label: Headline

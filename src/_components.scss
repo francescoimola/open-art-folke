@@ -175,27 +175,6 @@
     opacity: 0.6;
   }
 
-  // Archive photo grid — plain CSS Grid (composes .layout-split: 2 cols), no JS.
-  // Each cell derives height from its own width via cqi, not vh or siblings — sidesteps Grid row auto-sizing.
-  .archive-gallery {
-    --gap: var(--vs-base);
-    list-style: none;
-    align-items: stretch; // align items to top; let them stretch horizontally
-
-    // Beat global picture/img cover rules (same layer, higher specificity).
-    picture,
-    picture img {
-      display: block;
-      max-block-size: calc(var(--vs-xxl) * 7);
-    }
-
-    picture img {
-      object-fit: contain;
-      // !important load-bearing: inline object-position from image.php outranks selectors — forces top-left pin regardless of stored focus point.
-      object-position: left top !important;
-    }
-  }
-
   // Dropdown.
 
   :where(.dropdown) {
