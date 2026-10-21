@@ -28,7 +28,7 @@
     "fallow": "^3.27.0",
     "postcss": "^8.5.28",
     "postcss-preset-env": "^11.5.3",
-    "sass": "^1.104.1",
+    "sass": "^1.105.2",
     "vite": "^8.3.0",
     "vite-plugin-kirby": "^5.7.1"
   },
