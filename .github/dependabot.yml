@@ -21,3 +21,26 @@ updates:
           - "version-update:semver-patch"
         patterns:
           - "*"
+
+  - package-ecosystem: "composer"
+    directory: "/"
+    # Kirby and the Kirby plugins ship in composer.lock.
+    target-branch: "development"
+    schedule:
+      interval: "weekly"
+    # One PR per run for all patch and minor bumps.
+    # Majors stay separate so they get reviewed on their own.
+    groups:
+      composer:
+        update-types:
+          - "version-update:semver-minor"
+          - "version-update:semver-patch"
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    # Keeps the workflow action versions off deprecated runtimes.
+    target-branch: "development"
+    schedule:
+      interval: "weekly"
