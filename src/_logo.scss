@@ -1,0 +1,20 @@
+// Logo (docs/components/logo.md): the OA mark, coloured by the Theme's text colour.
+@layer custom {
+
+  :is(.logo--header, .logo--footer) {
+    display: block;
+    color: var(--fg);
+  }
+
+  // Header: Layout/Logo width × one nav line (Line height/Body).
+  .logo--header {
+    inline-size: var(--logo-w);
+    block-size: var(--lh-body);
+  }
+
+  .logo--footer {
+    inline-size: var(--footer-logo-w);
+    block-size: auto;
+  }
+
+}

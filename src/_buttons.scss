@@ -1,5 +1,4 @@
-// Button base rule (brand red surface) lives in @layer custom; variants in @layer button-variants win via cascade priority.
-// Template-level unlayered CSS can override per page. prefers-contrast is the a11y override.
+// Button (docs/components/button.md): .button, filled with the section Theme's button colours.
 @use './mixins' as *;
 
 // Typed as a colour so the button's background can transition; unregistered custom properties swap instantly.
@@ -12,49 +11,52 @@
 
 @layer custom {
 
-  // Default button: brand red surface without needing an extra class.
-  :is(button, .button):not(.minimal) {
-    // Graffiti's reset only strips user-select on <button>; .button is also used on <a> CTAs,
-    // which stay text-selectable and can eat a click as a selection-drag instead of activating.
-    user-select: none;
-    --button-color: light-dark(var(--light-Brand-500), var(--dark-Brand-800));
-    color: light-dark(var(--light-Neutral-50), var(--dark-Neutral-50));
+  // Graffiti's own button tokens (--button-color/--button-text) are pointed at the Theme's button colours.
+  .button {
+    --button-color: var(--theme-button);
+    --button-text: var(--theme-button-text);
     --button-bg: var(--button-color);
-    // Graffiti's base rule paints a two-stop gradient; OAF only ever uses a flat colour, so
-    // override to background-color — cheaper to repaint on hover/active than a gradient.
-    background: var(--button-bg);
-    --button-border: color-mix(in oklab, var(--button-color) 95%, black);
-    --button-shadow: color-mix(in oklab, color-mix(in oklab, var(--button-color) 50%, black) 55%, transparent);
-    box-shadow: 0 1px 2px transparent;
-
+    @include type-body;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xs);
+    padding: var(--space-xs) var(--space-s);
+    border: 0;
     border-radius: var(--br-s);
-    padding-block: var(--vs-base);
-    padding-inline: var(--pad-l);
-    font-weight: 500;
-    // Trims font leading so label text sits optically centred instead of hugging the top of the padding box.
-    text-box-trim: trim-both;
-    text-box-edge: cap alphabetic;
-    // --button-bg is a @property colour (top of file) so it can interpolate. translate is Graffiti's 1px hover lift.
+    // Flat fill: Graffiti paints a gradient, which can't transition.
+    background: var(--button-bg);
+    color: var(--button-text);
+    box-shadow: none;
+    translate: none;
+    text-decoration: none;
+    // Keep the Figma line box (padding + one body line), not the global cap-height trim.
+    text-box: normal;
+    // .button on an <a> stays text-selectable otherwise, and a drag can eat the click.
+    user-select: none;
     transition:
-      --button-bg 0.25s ease,
-      box-shadow 0.3s ease,
-      translate 0.2s ease;
+      --button-bg var(--d-base) ease-out,
+      box-shadow var(--d-base) ease-out;
 
-    @supports (font-variation-settings: "wght" 400) {
-      font-variation-settings: "wght" 500;
-    }
-
+    // Hover: fill darkens 5% (mixed with the near-black Neutral primitive) and a shadow appears.
     &:hover {
-      box-shadow: 0 2px 4px var(--button-shadow);
-      --button-bg: light-dark(color-mix(in oklab, var(--button-color) 85%, white),
-          color-mix(in oklab, var(--button-color) 95%, black));
+      --button-bg: color-mix(in oklab, var(--button-color) 95%, var(--dark-Neutral-50));
+      box-shadow: var(--shadow-1);
     }
 
-    &:active {
-      box-shadow: 0 1px 2px var(--button-shadow);
-      --button-bg: light-dark(color-mix(in oklab, var(--button-color) 88%, black),
-          color-mix(in oklab, var(--button-color) 75%, black));
+    &:focus-visible {
+      outline: var(--focus-ring);
+      outline-offset: var(--focus-ring-offset);
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  .button--secondary {
+    --button-color: var(--theme-button-secondary);
+    --button-text: var(--theme-button-secondary-text);
   }
 
   @media (prefers-contrast: more) {
@@ -62,48 +64,10 @@
       text-decoration: underline;
     }
 
-    :is(button, .button):not(.minimal) {
-      --button-border: currentColor;
-      --button-shadow: none;
+    .button {
+      border: 1px solid currentColor;
+      box-shadow: none;
     }
   }
 
-}
-
-// Button variants in @layer button-variants win over base rule via cascade layer priority, not selector specificity.
-@layer button-variants {
-
-  .btt--secondary {
-    --button-color: light-dark(var(--light-Brand-50), var(--dark-Brand-950));
-    color: light-dark(var(--light-Brand-900), var(--dark-Brand-400));
-    --button-border: transparent;
-  }
-
-  // Contrast CTA: inverts fg/bg for footer buttons.
-  // Lives here (not Graffiti's .button.contrast) because @layer custom forces brand red;
-  // this layer's --button-color override is what base rule's --button-bg resolves from.
-  .btt--contrast {
-    --button-color: var(--fg);
-    color: var(--bg);
-    --button-border: transparent;
-  }
-
-  // On deep-red themes the dark-scheme default (salmon + black text) blends into the bg.
-  // Reuse the secondary palette there: pink surface with deep-red text.
-  :is(.theme-brand, .theme-crimson) :is(button, .button):not(.minimal, .btt--contrast) {
-    --button-color: var(--dark-Brand-950);
-    color: var(--dark-Brand-400);
-  }
-
-  // On blush, secondary bg (Brand-50) equals section bg — match Figma: bright-red text on Brand-50 (#FFE0DB) with faint border.
-  // Scoped to .theme-blush so it only applies inside blush sections.
-  .theme-blush {
-    .btt--secondary {
-      --button-color: var(--light-Neutral-50);
-    }
-
-    .accent .btt--secondary {
-      color: inherit;
-    }
-  }
 }

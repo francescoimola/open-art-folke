@@ -1,0 +1,31 @@
+// Sponsor grid (docs/components/sponsor-grid.md): square Sponsor cards, gap Space S both ways, Panel order.
+// 2 columns up to a 1210px viewport, 3 above (user decision, #28), on the Sponsor page and the homepage.
+// The 480px container check stays too, so the grid keeps 2 columns in any narrow placement.
+@use './mixins' as *;
+
+@layer custom {
+
+  .sponsor-grid {
+    container-type: inline-size;
+    // Pinned to Flow for the cards' colours only: no Flow panel behind them inside an Ink or Red section.
+    background: none;
+  }
+
+  .sponsor-grid__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @include sponsor-grid-wide {
+    @include cq-medium {
+      .sponsor-grid__list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  }
+
+}

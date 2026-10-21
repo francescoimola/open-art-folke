@@ -1,0 +1,95 @@
+// Benefits table (docs/components/benefits-table.md): Gold / Silver / Bronze per benefit, Body text, rows Space XS padded.
+// Stacked: the benefit on its own line, its three tiers beneath (Space 2XS). Split: the benefit takes half the width.
+// The switch is a container query on the table's own width (480px), so a tablet's narrow Split group column stays Stacked.
+// Rows are grids, so the markup keeps explicit ARIA table roles (see the snippet).
+@use './mixins' as *;
+
+@layer custom {
+
+  .benefits-table {
+    container-type: inline-size;
+  }
+
+  .benefits-table__table {
+    display: block;
+    inline-size: 100%;
+    border-collapse: collapse;
+
+    // Graffiti draws a rule under every thead; the header row draws its own (below), so only one line shows.
+    > :is(thead, tbody) {
+      display: block;
+      border: 0;
+    }
+  }
+
+  // Stacked: three equal tier columns, gap Layout/Gutter; the benefit spans them all.
+  .benefits-table__row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--gutter);
+    row-gap: var(--space-2xs);
+    align-items: start;
+    padding-block: var(--space-xs);
+    border-block-end: 1px solid color-mix(in oklab, var(--fg) 20%, transparent);
+
+    > :is(th, td) {
+      @include type-body;
+      padding: 0;
+      border: 0;
+      color: var(--fg);
+      text-align: start;
+      text-wrap: pretty;
+      text-box: normal;
+    }
+
+    // Balanced lines, so a two-line benefit never leaves one word alone.
+    > .benefits-table__benefit {
+      grid-column: 1 / -1;
+      text-wrap: balance;
+    }
+  }
+
+  // Header row: Text secondary, a 2px rule at the rows' 20% strength. "Benefit" is visually hidden while Stacked.
+  // User decision (#28): of the old double line (1px Text + Graffiti's 2px thead rule) only the thicker stays.
+  thead > .benefits-table__row {
+    border-block-end-width: 2px;
+
+    > th {
+      color: var(--fg-muted);
+    }
+
+    > .benefits-table__benefit {
+      @include visually-hidden;
+    }
+  }
+
+  // The tick is Icon/Large (0.75 × Step 3) in Theme/Accent, centred on the cell's first line so it
+  // lines up with the first line of its benefit.
+  .benefits-table__row > td > .benefits-table__tick {
+    display: block;
+    font-size: var(--step-3);
+    margin-block: calc((var(--lh-body) - var(--step-3) * 0.75) / 2);
+    color: var(--primary);
+  }
+
+  // Split: the benefit column is half the width; the three tiers share the other half, all Layout/Gutter apart.
+  @include cq-medium {
+    .benefits-table__row {
+      grid-template-columns: calc((100% - var(--gutter)) / 2) repeat(3, minmax(0, 1fr));
+
+      > .benefits-table__benefit {
+        grid-column: auto;
+      }
+    }
+
+    thead > .benefits-table__row > .benefits-table__benefit {
+      position: static;
+      overflow: visible;
+      clip-path: none;
+      width: auto;
+      height: auto;
+      margin: 0;
+    }
+  }
+
+}

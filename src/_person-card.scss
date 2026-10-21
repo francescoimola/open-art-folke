@@ -1,0 +1,69 @@
+// Person card (docs/components/person-card.md): a 1:1 photo, then name, area and role in Caption, Space XS apart.
+// Its grid, .people: 2 columns, 3 once the container fits three cards of about 200px.
+// Gap Space S; a lone last card stays left.
+@use './mixins' as *;
+
+@layer custom {
+
+  // The grid's column count follows its own width (a container), not the viewport.
+  .people {
+    container-type: inline-size;
+  }
+
+  .people__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-s);
+    align-items: start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // 3 columns from 640px: cards of about 200px (Figma: 261px at Max). Tablet adjustment, see ticket #12.
+  @include cq-large {
+    .people__list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .person-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+  }
+
+  .person-card__photo {
+    margin: 0;
+    overflow: clip;
+    // The ratio sets the height: without this the photo's own height (content-based minimum) wins.
+    min-block-size: 0;
+    aspect-ratio: 1;
+  }
+
+  // No photo: a solid tile in --placeholder-bg (Neutral/100 in Figma, not a Theme
+  // colour); the grid only sits on Flow.
+  .person-card__photo--empty {
+    background: var(--placeholder-bg);
+  }
+
+  // Two classes: the typography overlay's p rule compiles to (0,1,1) and would set its own tracking and colour.
+  .person-card > .person-card__details {
+    @include type-caption;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: var(--fg-muted);
+    text-box: normal;
+    text-wrap: pretty;
+
+    > strong {
+      color: var(--fg);
+      font-weight: 600;
+      font-variation-settings: "wght" 600;
+    }
+  }
+
+}

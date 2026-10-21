@@ -1,0 +1,104 @@
+// Nav list (docs/components/nav-list.md, ADR-0003): one <ul> of Links, arranged per context by a layout class.
+// --stacked (Stacked/Large), --row (Split/Large), --inline (Split/Default, comma-separated);
+// --tablet-<layout> switches layout from the tablet breakpoint up.
+@use './mixins' as *;
+
+// Every item but the last gets a comma, except before Register, which sits apart.
+$comma: '> .nav-list__item:not(:last-child, :has(+ .nav-list__item--register))::after';
+
+// Layout bodies, shared by the base and the --tablet-* modifiers.
+@mixin nav-list-stacked {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--space-xs);
+
+  .link {
+    @include type-link-large;
+  }
+
+  #{$comma} {
+    content: none;
+  }
+}
+
+@mixin nav-list-row {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-l);
+
+  .link {
+    @include type-link-large;
+  }
+
+  #{$comma} {
+    content: none;
+  }
+}
+
+@mixin nav-list-inline {
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: var(--space-2xs);
+
+  .link {
+    @include type-link;
+  }
+
+  // Commas are CSS so screen readers skip them.
+  #{$comma} {
+    content: ",";
+  }
+}
+
+@layer custom {
+
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // Keep the Figma line boxes (one Link line per item) instead of the global cap-height trim.
+  :is(.nav-list, .nav-list__item) {
+    text-box: normal;
+  }
+
+  .nav-list__item {
+    @include type-body;
+    margin: 0;
+    padding: 0;
+    color: var(--link);
+  }
+
+  .nav-list--stacked {
+    @include nav-list-stacked;
+  }
+
+  .nav-list--row {
+    @include nav-list-row;
+  }
+
+  .nav-list--inline {
+    @include nav-list-inline;
+  }
+
+  @include tablet {
+    .nav-list--tablet-stacked {
+      @include nav-list-stacked;
+    }
+
+    .nav-list--tablet-row {
+      @include nav-list-row;
+    }
+
+    .nav-list--tablet-inline {
+      @include nav-list-inline;
+    }
+  }
+
+}

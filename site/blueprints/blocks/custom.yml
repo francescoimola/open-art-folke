@@ -1,0 +1,81 @@
+# Custom section (ADR-0007, GLOSSARY.md): an editor-made Homepage section, rendered by site/snippets/blocks/custom.php.
+# A Split group in Flow: heading, text, up to two links, optional photo. At most two render (HomePage::CUSTOM_LIMIT).
+name: Custom section
+icon: layout
+label: "{{ heading }}"
+tabs:
+  content:
+    label: Content
+    fields:
+      heading:
+        type: text
+        label: Heading
+        required: true
+        help: Also names the section's web address (e.g. #open-studios), so the arrow under the Statement can jump here. Renaming it changes that address.
+      text:
+        type: textarea
+        label: Text
+        buttons:
+          - bold
+          - italic
+          - link
+          - ul
+      links:
+        type: structure
+        label: Links
+        help: Up to two, shown under the text. Add a hint to say what happens next (e.g. “Opens in a new tab”); it turns the link into a large one with that line underneath.
+        max: 2
+        fields:
+          label:
+            type: text
+            label: Label
+            required: true
+            help: What the link does, without arrows (e.g. “Book a studio visit”).
+            width: 1/2
+          link:
+            type: link
+            label: Goes to
+            required: true
+            options:
+              - page
+              - url
+              - file
+              - email
+            width: 1/2
+          hint:
+            type: text
+            label: Hint (optional)
+            help: One short line, about 40 characters.
+  photo:
+    label: Photo
+    fields:
+      photo:
+        type: files
+        label: Photo
+        help: Optional. Right-size it before uploading (about 2000px wide, JPEG).
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
+      photo_position:
+        type: toggles
+        label: Photo position
+        default: after
+        options:
+          - value: before
+            text: Before the text
+          - value: after
+            text: After the text
+        width: 1/2
+      photo_size:
+        type: toggles
+        label: Photo size
+        help: Column sits in the right-hand column on desktop; Wide spans the full width. Both are full width on phones.
+        default: column
+        options:
+          - value: column
+            text: Column
+          - value: wide
+            text: Wide
+        width: 1/2

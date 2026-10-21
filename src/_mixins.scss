@@ -1,20 +1,125 @@
-// Breakpoints — match Graffiti UI 4.29.0
+// Breakpoints — match Graffiti UI 4.30.0
 @mixin mobile        { @media (width < 640px)   { @content; } }
 @mixin below-tablet  { @media (width < 768px)   { @content; } }
 @mixin tablet        { @media (width >= 768px)  { @content; } }
+// Large phones and portrait tablets up (the complement of `mobile`): tablet adjustments between the Min and Max designs.
+@mixin above-mobile  { @media (width >= 640px)  { @content; } }
+// Footer only (user decision, #27): 820px viewports (iPad 10.9"/11th gen portrait) and below keep the Stacked footer.
+// The Header still switches at `tablet`.
+@mixin footer-stacked { @media (width <= 820px) { @content; } }
+@mixin footer-split   { @media (width > 820px)  { @content; } }
+// Sponsor grid only (user decision, #28): 2 columns up to a 1210px viewport, 3 above.
+@mixin sponsor-grid-wide { @media (width > 1210px) { @content; } }
 
-// Container queries — match Graffiti UI 4.29.0
+// Container queries — match Graffiti UI 4.30.0
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
+// Container at least 480px wide: room for two label | value columns (Info item Split).
+@mixin cq-medium     { @container (width >= 480px) { @content; } }
+// Container at least 640px wide: room for three cards of about 200px (Person card grid).
+@mixin cq-large      { @container (width >= 640px) { @content; } }
 
-// Absolute full-bleed background image — the shared `&__bg` cover idiom
-@mixin cover-bg($position: center) {
+// Graffiti's .visually-hidden technique, for hiding an element only at some sizes (the utility class can't sit in a query).
+@mixin visually-hidden {
   position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: $position;
+  overflow: hidden;
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+// Type roles — the Figma text styles, built from the Utopia tokens in _utopia.scss.
+// Weight goes through font-variation-settings too: the variable font ignores font-weight once it is set.
+@mixin type-role($size, $line-height, $letter-spacing, $weight) {
+  font-size: $size;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
+  // Figma has no word spacing; the typography overlay derives one from --ls.
+  word-spacing: normal;
+  font-weight: $weight;
+  font-variation-settings: "wght" $weight;
+}
+
+@mixin type-h1         { @include type-role(var(--step-4-6), var(--lh-h1), var(--ls-h1), 500); }
+@mixin type-h2         { @include type-role(var(--step-4), var(--lh-h2), var(--ls-h2), 500); }
+// Figma's H3 style binds Letter spacing/H2, not /H3 (Link large uses /H3).
+// Weight 450, a user decision (#33): lighter than Figma's Medium H3 style; Link large stays 500.
+@mixin type-h3         { @include type-role(var(--step-3), var(--lh-h3), var(--ls-h2), 450); }
+@mixin type-h4         { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 600); }
+@mixin type-body       { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 400); }
+@mixin type-caption    { @include type-role(var(--step--2), var(--lh-caption), var(--ls-caption), 400); }
+@mixin type-button     { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 500); }
+@mixin type-link       { @include type-role(var(--step-0), var(--lh-body), var(--ls-body), 500); }
+@mixin type-link-large { @include type-role(var(--step-3), var(--lh-h3), var(--ls-h3), 500); }
+@mixin type-link-compact { @include type-role(var(--step-0), var(--lh-body-tight), var(--ls-body), 500); }
+
+// Text link look (docs/components/link.md): Theme/Link, font underline, Hover drops it, keyboard Focus ring.
+// Shared by .link and the plain <a> inside rich text, which KirbyText writes without the Link snippet.
+@mixin link-look {
+  color: var(--link);
+  text-decoration-line: underline;
+  // Thickness from the font, as in Figma. The font's own underline position sits below the descenders
+  // in browsers; Figma draws it through them, about 0.12em under the baseline.
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.12em;
+  // The global cap-height trim pushes an inline link's underline below the descenders.
+  text-box: normal;
+
+  // Underline change is instant by design (no transition).
+  &:hover {
+    text-decoration-line: none;
+  }
+
+  // Focus ring: 2px Theme/Text with a 2px gap, keyboard only.
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+// Body copy from a writer/KirbyText field in the Figma text styles (Body/Default, Theme/Text).
+// Only unclassed elements (KirbyText output): components nested in the content (Link list, Sponsor grid…) keep their own styles.
+@mixin rich-text {
+  :is(p, li):not([class]) {
+    @include type-body;
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+
+  h2:not([class]) {
+    @include type-h3;
+    color: var(--fg);
+  }
+
+  :is(h3, h4):not([class]) {
+    @include type-h4;
+    color: var(--fg);
+  }
+
+  strong {
+    font-weight: 600;
+    font-variation-settings: "wght" 600;
+  }
+
+  :is(ul, ol):not([class]) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding-inline-start: 1.25em;
+  }
+
+  ul:not([class]) {
+    list-style: disc;
+  }
+
+  ol:not([class]) {
+    list-style: decimal;
+  }
+
+  a:not([class]) {
+    @include type-link;
+    @include link-look;
+  }
 }
 
 // Dev-only output. vite.config.js injects $vite-dev into entry files; src/index.scss forwards it here via `@use … with`.

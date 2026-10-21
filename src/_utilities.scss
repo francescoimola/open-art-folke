@@ -1,9 +1,9 @@
-// Utility classes: margin scale, gap scale, fit-width, underline, text-muted, split-gap, stack-gap-none.
+// Utility classes: margin scale, plus the Firefox fix for arrow spans inside links and buttons.
 
 @layer custom {
 
   // Margin utilities — Graffiti zeroes margins, these restore spacing.
-  // .mt-*/mb-*/my-*/mx-*; scale: s=0.5rem, m=1.5rem, l=2rem, xl=4rem, xxl=6rem.
+  // .mt-*/mb-*/my-*/mx-*; Graffiti --vs-* steps, now Utopia: s=Space 2XS, m=M, l=L, xl=2XL, xxl=3XL.
 
   $margin-scale: (
     's': var(--vs-s),
@@ -31,74 +31,12 @@
   }
 }
 
-.fit-width {
-  width: fit-content;
-  margin: 0;
-  padding: 0;
-}
-
-.underline {
-  text-decoration: underline;
-  text-underline-offset: var(--text-underline-offset);
-}
-
-.underline-on-hover {
-    @extend .underline;
-    text-decoration: none;
-
-    &:hover, &:focus-visible {
-      text-decoration: underline;
-    }
-}
-
 // Link arrows (↗) fall back to another font; Firefox then draws their underline lower than the text's.
 // inline-block stops decoration propagating, so only the label is underlined in every browser.
 // Markup has no space before the arrow; the margin makes the gap so it isn't underlined.
 :is(a, button) span[aria-hidden="true"] {
   display: inline-block;
   margin-inline-start: 0.3em;
-}
-
-// Gap utilities: set --gap on flex/grid/stack containers without inline styles.
-
-.gap-xs {
-  --gap: var(--vs-xs);
-}
-
-.gap-s {
-  --gap: var(--vs-s);
-}
-
-.gap-m {
-  --gap: var(--vs-m);
-}
-
-.gap-l {
-  --gap: var(--vs-l);
-}
-
-.gap-xl {
-  --gap: var(--vs-xl);
-}
-
-.gap-xxl {
-  --gap: var(--vs-xxl);
-}
-
-.stack-gap-none {
-  --gap: 0;
-}
-
-.split-gap-none {
-  --layout-gap: 0;
-}
-
-.split-gap-xxl {
-  --layout-gap: var(--vs-xxl);
-}
-
-.text-muted {
-  color: var(--fg-7);
 }
 
 }

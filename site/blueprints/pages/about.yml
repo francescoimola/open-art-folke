@@ -19,18 +19,67 @@ tabs:
         uploads:
           parent: site.find('media')
           template: image
+      # Every text field falls back to the designed copy when left empty (the placeholder shows it).
+      statementheadline:
+        type: headline
+        label: Statement
+        help: The red band at the top of the page.
+      statement_heading:
+        type: text
+        label: Heading
+        placeholder: How do we make Open Art Folke possible
+        help: Leave empty for the designed text.
+      statement_aside:
+        type: textarea
+        label: Text beside the heading
+        placeholder: "We're a friendly bunch of creative types, from arts and non-arts backgrounds, who've joined forces to give our peers a reason to make and show their work—which they'd otherwise hide behind the couch indefinitely. Open Art Folke is the perfect reason for folks to tidy their studios, open their doors, and collaborate. And for anyone visiting, it’s a reason to join in and experience some of the best ideas that Folkestone has to offer."
+        help: Leave empty for the designed text.
+      statement_link:
+        type: text
+        label: Skip link label
+        placeholder: Here's how
+        help: Jumps to “What goes on behind the scenes”. The ↓ arrow is added automatically.
       heroimage:
         type: files
-        label: Hero background
-        help: Full-width background photo behind the “About Open Art” title.
+        label: Photo under the Statement
+        help: Full-width photo between the Statement and “What goes on behind the scenes”.
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
           parent: site.find('media')
           template: image
+      howheadline:
+        type: headline
+        label: How it works
+        help: The red band after the first photo.
+      behind_title:
+        type: text
+        label: First heading
+        placeholder: What goes on behind the scenes
+      behind_text:
+        type: textarea
+        label: First text
+        placeholder: "As a community led by artists for artists, we make sure to check in with the community between festivals, ask questions and run labs on topics such as finding a venue, collaborating and marketing your work. Of course, there's also a lot that we do behind the scenes to prepare for the upcoming festival season, such as coming up with improbable marketing ideas, divvying up tasks, and fundraising, fundraising, fundraising."
+      invest_title:
+        type: text
+        label: Second heading
+        placeholder: Where we invest
+      invest_text:
+        type: textarea
+        label: Second text
+        placeholder: "Participating creatives pay a small fee to take part in the festival, the rest of our money comes from sponsors and local arts funding. We run a bit like a charity—even though we’re officially a “non-profit, unincorporated association”, bit of a mouthful—and everything we receive goes back into the festival, the marketing, and the community events we run in between."
+      invest_link:
+        type: text
+        label: Sponsor link label
+        placeholder: Who makes for a good sponsor
+        help: Links to the Sponsor page.
+      photosheadline:
+        type: headline
+        label: Photo pair and Get involved
       image1:
         type: files
         label: First photo
+        help: Square crop, beside the second photo (stacked on phones).
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
@@ -39,14 +88,36 @@ tabs:
       image2:
         type: files
         label: Second photo
+        help: Portrait crop (2:3).
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
           parent: site.find('media')
           template: image
+      involved_title:
+        type: text
+        label: Get involved heading
+        placeholder: Get involved
+      involved_text:
+        type: textarea
+        label: Get involved text
+        placeholder: "We don’t guarantee running a festival each year, but when we do run, our incredible team is what makes it possible. We’re a dozen volunteers at the moment, but there’s always room for more. Know your onions? Alright with spreadsheets, words, design software, ladders, herding cats, or talking to people? Send us a message and don’t make it wait."
+      involved_link:
+        type: text
+        label: Volunteering link label
+        placeholder: Message us about volunteering
+        help: Opens an email to the Contact email (Site → Contact).
+      peopleheadline:
+        type: headline
+        label: People
+      people_title:
+        type: text
+        label: People heading
+        placeholder: The folks behind Open Art Folke
       people:
         type: structure
         label: People
+        help: Shown as cards in this order. A person without a photo gets a plain tile.
         fields:
           name:
             type: text
@@ -67,10 +138,25 @@ tabs:
             uploads:
               parent: site.find('media')
               template: image
+      principlesheadline:
+        type: headline
+        label: Guiding principles
+      principles_title:
+        type: text
+        label: Principles heading
+        placeholder: Our (very solemn but very important) guiding principles
+      principles:
+        type: structure
+        label: Principles
+        help: One line each. Leave empty for the eight designed principles.
+        fields:
+          principle:
+            type: text
+            label: Principle
       principlesimage:
         type: files
-        label: Guiding principles background
-        help: Full-width background photo behind the “Our guiding principles” card.
+        label: Guiding principles photo
+        help: Full-width photo beside the principles (before them on desktop, after them on phones).
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:

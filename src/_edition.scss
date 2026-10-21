@@ -1,0 +1,112 @@
+// Edition (docs/components/edition.md): one past year on the Archive, a Flow .page-section.
+// Row = text column, then the Video under it (half the width from tablet up); photos in justified rows below.
+@use './mixins' as *;
+
+@layer custom {
+
+  // Row → photos Space pair/XL-M (shrinks from mobile to desktop), instead of the Page section's Space XL.
+  .edition {
+    gap: var(--space-xl-m);
+    color: var(--fg);
+  }
+
+  // Keep the Figma line boxes instead of the global cap-height trim.
+  :is(.edition__row, .edition__row *) {
+    text-box: normal;
+  }
+
+  // Text column, then the Video under it, Space pair/XL-M apart (user review, #31: not beside the text).
+  .edition__row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl-m);
+  }
+
+  // Heading → Text Space pair/S-M.
+  .edition__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s-m);
+  }
+
+  // Two classes: the typography overlay's h2 rule compiles to (0,1,1) and would take the H2 tracking and weight.
+  .edition__text > .edition__heading {
+    @include type-h2;
+    margin: 0;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  // Text slot: KirbyText paragraphs in Body, Space M apart.
+  .edition__body {
+    @include rich-text;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  @include tablet {
+    // Split grid, both parts in the left column: the Video keeps the text's width, the right half stays empty.
+    .edition__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      // Column gap Space L, the Split group gap (#32), so the text column matches the Statement's.
+      gap: var(--space-xl-m) var(--space-l);
+    }
+
+    .edition__row > * {
+      grid-column: 1;
+    }
+  }
+
+  // Justified rows: each photo grows in proportion to its ratio, so a row shares one height and nothing crops.
+  // --row-h is the target height; the ::after spacer soaks up the last row's slack so it stays left-aligned.
+  // The list is its own container: one photo per row below 480px, about 2 above, about 3 from tablet.
+  .edition__photos {
+    container-type: inline-size;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--gutter);
+  }
+
+  .edition__photo {
+    flex: 1 1 100%;
+    min-inline-size: 0;
+    min-block-size: 0;
+    // The slot takes the photo's own ratio, so the image snippet's cover fit never crops.
+    aspect-ratio: var(--ratio);
+  }
+
+  @include cq-medium {
+    .edition__photo {
+      --row-h: 30cqi;
+      flex: var(--ratio) 1 calc(var(--ratio) * var(--row-h));
+    }
+
+    // Only in rows: with one photo per row it would add an empty line.
+    .edition__photos::after {
+      content: "";
+      flex: 999 1 0;
+    }
+  }
+
+  @include tablet {
+    .edition__photo {
+      --row-h: 20cqi;
+    }
+  }
+
+  // The link fills the photo slot; its focus ring comes from the global link focus style.
+  .edition__link {
+    display: block;
+    block-size: 100%;
+  }
+
+  // Contain, not the global cover: sub-pixel rounding of the slot can never trim an edge.
+  .edition__link img {
+    object-fit: contain;
+  }
+
+}

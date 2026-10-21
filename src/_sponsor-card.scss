@@ -1,0 +1,100 @@
+// Sponsor card (docs/components/sponsor-card.md): a square Neutral/100 card, logo top-left, name bottom-left, ↗ corner top-right.
+// Hover and keyboard Focus borrow the Red Theme's colours; Focus adds a 2px ring. 200ms ease-out, instant with reduced motion.
+// The fill is fixed light, so the Sponsor grid pins the card to Flow; --fg here is Flow's Text.
+@use './mixins' as *;
+@use './themes' as themes;
+
+@layer custom {
+
+  .sponsor-card {
+    --card-bg: var(--placeholder-bg);
+    --card-fg: var(--fg);
+    // The corner's arrow is cut out in the Theme's background colour.
+    --card-arrow: var(--bg);
+    margin: 0;
+    padding: 0;
+  }
+
+  .sponsor-card:has(a:hover, a:focus-visible) {
+    --card-bg: #{themes.theme-value('red', 'bg')};
+    --card-fg: #{themes.theme-value('red', 'fg')};
+    --card-arrow: #{themes.theme-value('red', 'bg')};
+  }
+
+  // Two classes: the typography overlay's `a` rule compiles to (0,1,1) and would take colour and tracking.
+  .sponsor-card > .sponsor-card__box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-2xs);
+    aspect-ratio: 1;
+    padding: var(--space-s);
+    overflow: clip;
+    background: var(--card-bg);
+    color: var(--card-fg);
+    text-decoration: none;
+    word-spacing: normal;
+    text-box: normal;
+    transition:
+      background-color var(--d-base) ease-out,
+      color var(--d-base) ease-out;
+
+    // 2px ring outside the card in Flow's Text (Neutral/900). Not --focus-ring: Graffiti resolves its var(--fg) on :root.
+    &:focus-visible {
+      outline: 2px solid var(--fg);
+      outline-offset: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  // Link/Compact, trimmed to cap height and baseline as in Figma, so it sits flush with the padding.
+  .sponsor-card__box > .sponsor-card__name {
+    @include type-link-compact;
+    color: inherit;
+    text-wrap: balance;
+    text-box: trim-both cap alphabetic;
+  }
+
+  // Corner: a Space S square in the card's text colour, flush top-right; the ↗ is a Space 2XS glyph.
+  .sponsor-card__corner {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    display: grid;
+    place-items: center;
+    inline-size: var(--space-s);
+    block-size: var(--space-s);
+    background: var(--card-fg);
+    color: var(--card-arrow);
+    transition:
+      background-color var(--d-base) ease-out,
+      color var(--d-base) ease-out;
+
+    > .icon {
+      inline-size: var(--space-2xs);
+      block-size: var(--space-2xs);
+      transition: translate var(--d-base) ease-out;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+
+      > .icon {
+        transition: none;
+      }
+    }
+  }
+
+  // The arrow nudges 2px up and to the right on hover and focus (none with reduced motion).
+  @media (prefers-reduced-motion: no-preference) {
+    .sponsor-card__box:is(:hover, :focus-visible) .sponsor-card__corner > .icon {
+      translate: 2px -2px;
+    }
+  }
+
+}

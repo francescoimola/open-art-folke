@@ -12,3 +12,9 @@ fields:
     help: >
       Describe the image for screen readers and search engines. Leave empty for
       purely decorative images (those are hidden from assistive tech in the layout).
+  caption:
+    type: text
+    label: Caption
+    help: >
+      Optional. Shown under the photo when it opens large on the Archive page.
+      Everyone sees it; it does not replace the alt text above.

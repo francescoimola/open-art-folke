@@ -1,0 +1,49 @@
+@use '../mixins' as *;
+
+// About page (ticket #12): the guiding principles list, and where the principles Photo band sits.
+@layer custom {
+
+  // Guiding principles: one H3 line each, no bullets or gaps (Figma "ul · Principles").
+  .principles-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // Two classes: the typography overlay's li rule compiles to (0,1,1) and would set its own type.
+  .principles-list > .principles-list__item {
+    @include type-h3;
+    margin: 0;
+    // Tablet adjustment: a long line wraps in the narrow column (768–1100px); the hanging indent keeps each principle distinct.
+    padding-inline-start: 1em;
+    text-indent: -1em;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  // Below tablet, Figma sets the principles heading in H4 (Mobile v2), the lines Space 2XS lower.
+  // The lines stay H3 at every width (user decision). Three classes: beats the Split group's two-class heading rule.
+  @include below-tablet {
+    .about-principles .split-group__row > .split-group__heading {
+      @include type-h4;
+    }
+
+    .principles-list {
+      padding-block-start: var(--space-2xs);
+    }
+  }
+
+  // The principles Photo band sits before the principles from tablet up (HTML order);
+  // below tablet it moves after them, so it's the last thing before the Footer.
+  .about-principles {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @include below-tablet {
+    .about-principles > .photo-band {
+      order: 1;
+    }
+  }
+
+}

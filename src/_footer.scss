@@ -1,0 +1,195 @@
+// Footer (docs/components/footer.md): always Ink, via .theme-ink on the <footer>.
+// Up to 820px (Stacked): Logo, then the Nav list column under a 1px rule, then the groups stacked; 2px top rule.
+// Above 820px (Split): centred Nav list row, centred Logo, then the groups as heading | content rows.
+// The whole footer switches at once, later than the Header's tablet switch (#27): see footer-split in _mixins.scss.
+// Each group is a Split-group row kept inside this block (the Split group component is built elsewhere).
+// Stacked, the Info items are rows too: the "All you need to know" heading is visually hidden, each label is an H2.
+@use './mixins' as *;
+@use './nav-list' as nav;
+
+// One row with its Divider (1px top rule): the legal rows, and each Info item below tablet.
+@mixin footer-row {
+  display: grid;
+  gap: var(--space-s-m);
+  padding-block: var(--space-2xs);
+  border-block-start: 1px solid var(--fg);
+}
+
+// A row's heading: H2, as in the legal rows.
+@mixin footer-heading {
+  @include type-h2;
+  margin: 0;
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+@layer custom {
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+    padding: 0 var(--margin) var(--space-2xl-3xl);
+    border-block-start: 2px solid var(--theme-button-secondary);
+    background: var(--bg);
+    color: var(--fg);
+    // The overlay's word spacing on body would otherwise be inherited by the dt/dd text.
+    word-spacing: normal;
+    // Stays in place during cross-document view transitions (one per page).
+    view-transition-name: site-footer;
+
+    // Figma line boxes throughout: undo the global cap-height trim inside the footer.
+    :where(*) {
+      text-box: normal;
+    }
+  }
+
+  // HTML order is nav then logo; the logo comes first visually below tablet.
+  .footer__logo {
+    order: -1;
+    display: flex;
+    padding-block: var(--space-s-xl) var(--space-2xl-3xl);
+  }
+
+  .footer__nav {
+    padding-block-start: var(--space-2xs);
+    border-block-start: 1px solid var(--fg);
+  }
+
+  .footer__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  // One Split-group row with its Divider: heading above content, then side by side from tablet.
+  .footer__group {
+    @include footer-row;
+  }
+
+  // Two classes: the typography overlay's heading rule compiles to (0,1,1) and would set weight, line height and tracking.
+  .footer__group > .footer__title {
+    @include footer-heading;
+  }
+
+  .footer__content {
+    @include type-body;
+    --text-color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+
+  // Paragraphs take the Body style from the column, not Graffiti's/the overlay's p defaults (balance, --lh, tracking).
+  .footer__content p {
+    margin: 0;
+    line-height: inherit;
+    letter-spacing: inherit;
+    word-spacing: normal;
+    text-wrap: pretty;
+  }
+
+  // Legal text (KirbyText): paragraphs Space S apart, as in the mobile Copyright row.
+  .footer__text {
+    gap: var(--space-s);
+  }
+
+  // The "All you need to know" list; Info items switch to two columns by its width.
+  .footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m-l);
+    margin: 0;
+    container-type: inline-size;
+  }
+
+  // Socials: stacked Links, gap Space XS (Link list anatomy, kept inside the footer).
+  .footer__links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // Stacked (Footer 385:1069): no "All you need to know" heading or rule; each Info item is its own row.
+  // The heading stays in the HTML for structure and screen readers.
+  @include footer-stacked {
+    .footer__group--info {
+      gap: 0;
+      padding-block: 0;
+      border-block-start: 0;
+    }
+
+    .footer__group--info > .footer__title {
+      @include visually-hidden;
+    }
+
+    // Rows are Space 2XL apart, like the groups around them.
+    .footer__list {
+      gap: var(--space-2xl);
+    }
+
+    // Two classes: beat the Info item's own Split columns (container query) and gap.
+    .footer__list > .info-item {
+      @include footer-row;
+      grid-template-columns: none;
+    }
+
+    .footer__list .info-item__label {
+      @include footer-heading;
+    }
+  }
+
+  @include footer-split {
+    .footer {
+      gap: 0;
+      border-block-start: 0;
+    }
+
+    .footer__nav {
+      padding-block: var(--space-2xl-3xl);
+      border-block-start: 0;
+    }
+
+    // The Nav list's Split/Large row, at the footer's switch rather than its own tablet one.
+    // When the row wraps, no item may sit alone on a line (#29): flex wraps greedily (4 + 1),
+    // so the items become inline blocks in a centred, balanced text block (3 + 2, 3 + 3).
+    // DOM and tab order are unchanged; without text-wrap: balance it wraps like the flex row did.
+    .footer__nav > .nav-list {
+      @include nav.nav-list-row;
+      display: block;
+      // Half a gap round each item, cancelled at the edges: gap Space L both ways, as the flex gap was.
+      margin: calc(var(--space-l) / -2);
+      // Hide the whitespace between the <li>s (the margins are the gap); items set their own size.
+      font-size: 0;
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    .footer__nav > .nav-list > .nav-list__item {
+      display: inline-block;
+      margin: calc(var(--space-l) / 2);
+    }
+
+    .footer__logo {
+      order: 0;
+      justify-content: center;
+    }
+
+    .footer__info {
+      padding-block: var(--space-l-xl);
+    }
+
+    // Same column gap as the Split group, Space L, so the footer rows line up with the sections above.
+    .footer__group {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-l);
+    }
+  }
+
+}

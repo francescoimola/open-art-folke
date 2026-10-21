@@ -1,124 +1,107 @@
 <?php
-$status = $site->registration_status()->or('closed')->value();
-$registerUrl = $site->register_url()->isNotEmpty() ? $site->register_url()->value() : null;
-$contactEmail = 'openartfolke@gmail.com';
+/**
+ * Footer — the end of every page, always Ink (docs/components/footer.md). Closes the <main> opened in header.php.
+ * Nav list first in the HTML (CSS puts the Logo first while Stacked), then the Info items and the legal rows.
+ * Stacked (820px and below), CSS hides the "All you need to know" heading (kept for screen readers)
+ * and makes each Info item a row.
+ * The Nav list is Stacked here; _footer.scss makes it the Split row above 820px, with the rest of the footer.
+ * Every string is a Site → Footer field, with the Figma copy as the fallback.
+ *
+ * @var \Kirby\Cms\Site $site
+ */
+$home = $site->homePage();
+
+/* Legal rows: heading field, text field, Figma fallbacks. The text fields are KirbyText. */
+$legal = [
+  'media-credits' => [
+    $site->media_credits_title()->or('Media credits'),
+    $site->media_credits()->or('This site proudly features videos and photos by Niamh Pomace, Peter Blach, Dylan Komaromi, Katie Hutchings, Andrei Damian, and Sangmin Cha.'),
+  ],
+  'privacy' => [
+    $site->privacy_title()->or('Privacy'),
+    $site->privacy_text()->or('By signing up for festival updates, you agree to us collecting your email address and sending you news about the festival, artists and sponsors. We may share data with service providers and keep it only as long as necessary. Unsubscribe using the link in any email, or contact us to access, correct or delete your data.'),
+  ],
+  'fundraising' => [
+    $site->fundraising_title()->or('Fundraising'),
+    $site->fundraising_text()->or('This website may include information about fundraising and ways to support the festival. Donation pages, links or supporter/sponsorship arrangements may have their own terms.'),
+  ],
+  'terms' => [
+    $site->terms_title()->or('Terms'),
+    $site->terms_text()->or('Open Art Folke is a volunteer-run, unincorporated charitable association. This website shares info about our festival, artists and supporters. We aim to keep it accurate and up to date, but can’t guarantee it is always complete or current. Festival dates, volunteer team, fees and other arrangements may change.'),
+  ],
+  'copyright' => [
+    $site->copyright_title()->or('Copyright © Open Art Folke, ' . date('Y')),
+    $site->copyright_text()->or("Site design, copywriting, and heartfelt support by Francesco Imola.\n\nPowered by the wonderful CMS that is Kirby, and hosted by Fortrabbit in the EU."),
+  ],
+];
+
+$socials = array_filter([
+  'Instagram' => $site->instagram_url()->value(),
+  'Facebook'  => $site->facebook_url()->value(),
+]);
 ?>
 </main>
 
-<footer class="footer theme-ink panel stack gap-xl stack-section">
+<footer class="footer theme-ink">
 
-  <nav class="cluster center" aria-label="Footer">
-    <a class="underline" href="<?= $site->url() ?>" <?= $site->homePage()->isActive() ? ' aria-current="page"' : '' ?>>Home</a>
-    <a class="underline" href="<?= $site->homePage()->url() ?>#programme">Programme</a>
-    <?php foreach ($site->children()->not('home', 'media') as $child): ?>
-      <a class="underline" href="<?= $child->url() ?>" <?= $child->isActive() ? ' aria-current="page"' : '' ?>><?= $child->title() ?></a>
-    <?php endforeach ?>
-    <?php if ($status === 'open' && $registerUrl): ?>
-      <a class="underline" href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank">Register<span aria-hidden="true">↗</span></a>
-    <?php endif ?>
+  <nav class="footer__nav" aria-label="Footer">
+    <?php snippet('nav-list', ['layout' => 'stacked', 'startHere' => true, 'register' => true]) ?>
   </nav>
 
-  <hr>
-
-  <div class="layout-split split-gap-xxl">
-    <h2 class="fs-xxl">Key information</h2>
-    <div class="stack gap-xl">
-      <div class="stack gap-l">
-        <h3 class="fs-xxl">I’m a visitor</h3>
-        <a class="underline" href="<?= $site->homePage()->url() ?>#programme">See upcoming festival
-          programme</a>
-      </div>
-      <div class="stack gap-m">
-        <h3 class="fs-xxl text-muted">I’m a creative</h3>
-        <?php if ($status === 'open'): ?>
-          <?php if ($registerUrl): ?>
-            <a class="button btt--contrast fit-width" href="<?= esc($registerUrl, 'attr') ?>" rel="noopener noreferrer" target="_blank">Register as a creative</a>
-          <?php endif ?>
-        <?php else: ?>
-          <article class="mt-s stack gap-m">
-            <?php snippet('registration-notice', ['status' => $status]) ?>
-          </article>
-        <?php endif ?>
-      </div>
-    </div>
+  <div class="footer__logo">
+    <?php snippet('logo', ['size' => 'footer']) ?>
   </div>
 
-  <hr>
+  <div class="footer__info">
 
-  <div class="layout-split split-gap-xxl">
-    <h2 class="fs-xxl">Questions</h2>
-    <div class="stack gap-xl">
-      <div class="stack gap-m">
-        <h3 class="fs-xxl text-muted">Contact us</h3>
-        <p>Email us at <?= esc($contactEmail) ?></p>
-        <button class="btt--contrast fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email
-          address</button>
-      </div>
-      <div class="stack gap-l">
-        <h3 class="fs-xxl text-muted">Elsewhere</h3>
-        <div class="stack gap-m">
-          <?php if ($site->instagram_url()->isNotEmpty()): ?>
-            <a class="underline" href="<?= $site->instagram_url()->esc('attr') ?>"
-              rel="noopener noreferrer" target="_blank">Instagram<span aria-hidden="true">↗</span></a>
+    <section class="footer__group footer__group--info" aria-labelledby="footer-info">
+      <h2 class="footer__title" id="footer-info"><?= $site->footer_info_title()->or('All you need to know')->html() ?></h2>
+      <div class="footer__content">
+        <dl class="footer__list">
+
+          <?php /* The programme link follows the homepage: hidden with Programme, and the item with it. */ ?>
+          <?php if ($home->showsProgramme()): ?>
+          <?php snippet('info-item', ['label' => $site->footer_visitor_label()->or('I’m a visitor')->value()], slots: true) ?>
+            <?php snippet('link', [
+              'url'   => $home->url() . '#programme',
+              'label' => $site->footer_visitor_link()->or('See festival programme')->value(),
+            ]) ?>
+          <?php endsnippet() ?>
           <?php endif ?>
-          <?php if ($site->facebook_url()->isNotEmpty()): ?>
-            <a class="underline" href="<?= $site->facebook_url()->esc('attr') ?>"
-              rel="noopener noreferrer" target="_blank">Facebook<span aria-hidden="true">↗</span></a>
-          <?php endif ?>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <hr>
+          <?php snippet('info-item', ['label' => $site->footer_artist_label()->or('I’m an artist/creative')->value()], slots: true) ?>
+            <?php snippet('registration-notice') ?>
+          <?php endsnippet() ?>
 
-  <div id="credits-terms" class="layout-split split-gap-xxl">
-    <h2 class="fs-xxl">Provisions</h2>
-    <div class="stack gap-xl">
-      <?php if ($site->media_credits()->isNotEmpty()): ?>
-        <div class="stack gap-l">
-          <h3>Media credits</h3>
-          <div class="pretty"><?= $site->media_credits()->kt() ?></div>
-        </div>
-      <?php endif ?>
-      <div class="stack gap-l">
-        <h3>Privacy</h3>
-        <p class="pretty">When signing up for festival updates you agree for us to collect your email address and
-          receive emails about the festival, artists, sponsors and related news. We may share data with service
-          providers. We keep your data only as long as necessary. You can unsubscribe using the link in our emails, or
-          contact us for access, correction or deletion.</p>
-      </div>
-      <div class="stack gap-l">
-        <h3>Fundraising</h3>
-        <p class="pretty">This website may include information about fundraising activity and support opportunities for
-          the festival. Any fundraising pages, donation links, or supporter arrangements may be subject to separate
-          terms or processing information where relevant.</p>
-      </div>
-      <div class="stack gap-l">
-        <h3>Terms</h3>
-        <p class="pretty">This website provides general infor about Open Art Folke, and its festival, artists and
-          supporters. We aim for accuracy and update information regularly, but can't guarantee everything will always
-          be complete or current. Festival dates, participants, fees and other arrangements may change.</p>
-      </div>
-    </div>
-  </div>
+          <?php snippet('info-item', ['label' => $site->footer_socials_label()->or('Find us on socials')->value()], slots: true) ?>
+            <?php if ($socials): ?>
+            <ul class="footer__links" role="list">
+              <?php foreach ($socials as $label => $url): ?>
+              <li><?php snippet('link', ['url' => $url, 'label' => $label]) ?></li>
+              <?php endforeach ?>
+            </ul>
+            <?php endif ?>
+          <?php endsnippet() ?>
 
-  <hr>
+          <?php snippet('info-item', ['label' => $site->footer_contact_label()->or('Contact us')->value()], slots: true) ?>
+            <?php snippet('copy-email', ['variant' => 'secondary']) ?>
+          <?php endsnippet() ?>
 
-  <div class="layout-split footer__legal">
-    <small>Copyright ©️ Open Art Folke, 2026</small>
-    <div class="stack">
-      <small>Site design and heartfelt support by <a href="https://francescoimola.com/" rel="noopener noreferrer"
-          target="_blank">Francesco Imola</a></small>
-      <small>Powered by the wonderful CMS that is <a href="https://getkirby.com" rel="noopener noreferrer"
-          target="_blank">Kirby</a>, and hosted by <a href="https://www.fortrabbit.com" rel="noopener noreferrer"
-          target="_blank">Fortrabbit</a> in the EU.</small>
-    </div>
+        </dl>
+      </div>
+    </section>
+
+    <?php foreach ($legal as $id => [$title, $text]): ?>
+    <section class="footer__group" aria-labelledby="footer-<?= $id ?>">
+      <h2 class="footer__title" id="footer-<?= $id ?>"><?= $title->html() ?></h2>
+      <div class="footer__content footer__text"><?= $text->kt() ?></div>
+    </section>
+    <?php endforeach ?>
+
   </div>
 
 </footer>
 
-<?php snippet('registration-popover') ?>
 </body>
 
 </html>

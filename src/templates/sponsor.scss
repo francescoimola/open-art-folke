@@ -1,27 +1,29 @@
+// Sponsor page only: the "Current" / "Previous" groups under Our sponsors and the benefits small print.
 @use '../mixins' as *;
 
-// Sponsor page — benefits comparison table tweaks.
-// Graffiti's .table only borders <td>. Carry border onto <th scope="row"> row-header cells so divider spans full width.
 @layer custom {
 
-  .sponsor-support {
-
-    tbody th {
-      border-bottom: var(--border-1);
-    }
-
-    tbody tr:last-child th {
-      border: none;
-    }
-
-    // Rein in Benefit column so tier columns share remaining width evenly.
-    :is(th, td):first-child {
-      width: 45%;
-    }
-
-    // At narrow viewports, table must not squish below this width — Graffiti's .table overflow-x:auto scrolls it.
-    table {
-      min-width: 36rem;
-    }
+  // One sponsor group: its label, then the Sponsor grid or Link list, Space S apart.
+  .sponsor-roster {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
   }
+
+  // Two classes: the typography overlay's `p` rule compiles to (0,1,1) and would take the tracking and colour.
+  .sponsor-roster > .sponsor-roster__label {
+    @include type-body;
+    margin: 0;
+    color: var(--fg-muted);
+    text-wrap: pretty;
+  }
+
+  // Small print under the Benefits table: Caption in Text secondary.
+  .split-group__content > .sponsor-small-print {
+    @include type-caption;
+    margin: 0;
+    color: var(--fg-muted);
+    text-wrap: pretty;
+  }
+
 }

@@ -1,6 +1,11 @@
 import Lenis from 'lenis'
+import { initDrawer } from './drawer.js'
 
-const lenis = new Lenis({
+/* Smooth scroll, skipped with reduced motion so scrolling and anchor jumps stay native and instant.
+   Anchor targets land below the fixed Header via scroll-margin-top (Lenis reads it too). */
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const lenis = reduceMotion ? null : new Lenis({
   autoRaf: true,
   duration: 1.2,
   anchors: true,
@@ -9,23 +14,29 @@ const lenis = new Lenis({
   syncTouch: false,    // Lenis smooth-scroll on iOS<16 can jitter during inertial scroll, so we leave native touch alone.
 })
 
-/* Registration popover — swap its theme class to the popover's declared one for whichever trigger opened it (data-nav-theme / data-body-theme). */
-document.querySelectorAll('[popovertarget="registration-popover"]').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const popover = document.getElementById('registration-popover')
-    const theme = popover.dataset[`${btn.dataset.popoverOrigin}Theme`]
-    if (theme) popover.className = popover.className.replace(/\btheme-\S+\b/, theme)
-  })
+initDrawer({
+  onOpen: () => lenis?.stop(),
+  onClose: () => lenis?.start(),
 })
 
-/* Copy-to-clipboard buttons (progressive enhancement). Global — footer copy button and Sponsor page both rely on it. On failure, stay silent (address is shown as text nearby). */
+/* Copy-to-clipboard buttons (progressive enhancement; the Button snippet's `copy` option). On success the label
+   shows data-copied for 2s and the sibling live region announces data-announce. On failure, stay silent
+   (the value is shown as text nearby). */
 document.querySelectorAll('[data-copy]').forEach((btn) => {
+  const label = btn.querySelector('.button__label') ?? btn
+  const original = label.textContent
+  const status = btn.nextElementSibling?.matches('[data-copy-status]') ? btn.nextElementSibling : null
+  const say = (text) => { if (status) status.textContent = text }
+
   btn.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(btn.dataset.copy)
-      const original = btn.textContent
-      btn.textContent = 'Copied!'
-      setTimeout(() => { btn.textContent = original }, 2000)
+      label.textContent = btn.dataset.copied ?? 'Copied!'
+      say(btn.dataset.announce ?? 'Copied')
+      setTimeout(() => {
+        label.textContent = original
+        say('')
+      }, 2000)
     } catch {
       /* clipboard unavailable — no-op */
     }

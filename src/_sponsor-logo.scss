@@ -1,0 +1,20 @@
+// Sponsor logo (docs/components/sponsor-logo.md): one fluid slot (Figma S 72×40 → M 108×60), artwork top-left.
+// The SVG carries preserveAspectRatio="xMinYMin meet" (SponsorPage::sponsorLogo) and fills with currentColor.
+@layer custom {
+
+  .sponsor-logo {
+    display: block;
+    flex-shrink: 0;
+    inline-size: var(--sponsor-logo-w);
+    // A narrow card never overflows: the slot shrinks with it.
+    max-inline-size: 100%;
+    block-size: var(--sponsor-logo-h);
+
+    > svg {
+      display: block;
+      inline-size: 100%;
+      block-size: 100%;
+    }
+  }
+
+}

@@ -87,7 +87,8 @@ class SponsorPage extends Page
   }
 
   /**
-   * Sanitised, theme-aware inline SVG for one sponsor's logo. Second defensive pass after Kirby's Sane\Svg. Returns '' on failure.
+   * Sanitised, theme-aware inline SVG for one sponsor's logo (the Sponsor logo). Second defensive pass after Kirby's Sane\Svg.
+   * Fills become currentColor; the SVG is aria-hidden. Returns '' on failure.
    */
   public function sponsorLogo(Kirby\Cms\StructureObject $sponsor): string
   {
@@ -146,12 +147,19 @@ class SponsorPage extends Page
     };
     $walk($svg);
 
+    // Paths with no fill of their own default to black: let them inherit currentColor too.
+    if (!$svg->hasAttribute('fill')) {
+      $svg->setAttribute('fill', 'currentColor');
+    }
+
     // Scale by viewBox, not fixed pixels.
     $svg->removeAttribute('width');
     $svg->removeAttribute('height');
 
-    $svg->setAttribute('role', 'img');
-    $svg->setAttribute('aria-label', $sponsor->name()->value() . ' logo');
+    // Decorative: the Sponsor card's text names the sponsor. Artwork sits top-left in its slot.
+    $svg->setAttribute('aria-hidden', 'true');
+    $svg->setAttribute('focusable', 'false');
+    $svg->setAttribute('preserveAspectRatio', 'xMinYMin meet');
 
     return $dom->saveXML($svg);
   }

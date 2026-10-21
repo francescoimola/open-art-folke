@@ -1,0 +1,31 @@
+// Link (docs/components/link.md): Link/Default or Link/Large, Theme/Link colour, Hover drops the underline.
+@use './mixins' as *;
+
+@layer custom {
+
+  .link {
+    @include type-link;
+    @include link-look;
+
+    // Space 3XS (Default) and 2XS (Large) both reduce to a quarter of the link's font size.
+    > .icon {
+      margin-inline-start: 0.25em;
+    }
+  }
+
+  .link--large {
+    @include type-link-large;
+  }
+
+  // PostCSS rewrites the typography overlay's :is(… a …) to a:not(…) (0,1,1), which beat .link's tracking.
+  // Restate it at that weight; contexts like .nav-list .link (0,2,0) still win.
+  a.link {
+    letter-spacing: var(--ls-body);
+    word-spacing: normal;
+  }
+
+  a.link--large {
+    letter-spacing: var(--ls-h3);
+  }
+
+}

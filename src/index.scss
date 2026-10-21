@@ -1,12 +1,33 @@
-// Global entry point: composes partials in cascade order (reset → fonts → graffiti → colors → custom → button-variants).
+// Global entry point: composes partials in cascade order (reset → fonts → graffiti → colors → custom).
 // @use doesn't support layer(), so layer() calls inside imports declare the order. Remove when Sass adds @use … layer().
 @use './mixins' as * with ($is-dev: $vite-dev); // $vite-dev injected by vite.config.js
 @use './reset';
 @use './tokens';
+@use './utopia';
 @use './typography';
 @use './themes';
 @use './layout';
 @use './components';
+@use './icon';
+@use './link';
+@use './logo';
+@use './nav-list';
+@use './header';
+@use './link-hint';
+@use './link-list';
+@use './statement';
+@use './split-group';
+@use './edition';
+@use './photo-band';
+@use './photo-pair';
+@use './person-card';
+@use './info-item';
+@use './copy-email';
+@use './sponsor-logo';
+@use './sponsor-card';
+@use './sponsor-grid';
+@use './benefits-table';
+@use './footer';
 @use './utilities';
 @use './buttons';
 

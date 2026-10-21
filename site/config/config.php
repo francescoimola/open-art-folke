@@ -84,17 +84,11 @@ return [
     ],
   ],
 
-  /* Pages cache is OFF in dev (edits show up on next reload) and ON in production. */
-  /* Home excluded: kirby-uniform needs a fresh CSRF token per request. */
+  /* Pages cache is OFF in dev (edits show up on next reload) and ON in production, for every page. */
   'cache' => [
     'pages' => $isDev ? false : [
       'active' => true,
-      'ignore' => ['home'],
     ],
-  ],
-
-  'zapier' => [
-    'webhook' => env('PROGRAMME_SIGNUP_WEBHOOK', ''),
   ],
 
   /* SEO routes. sitemap.xml from bnomei/kirby3-feed using index() (all published pages, no sort-number prefixes). */

@@ -19,9 +19,13 @@ tabs:
         uploads:
           parent: site.find('media')
           template: image
+      statement_headline:
+        type: headline
+        label: Opening statement
       introtitle:
         type: text
         label: Intro heading
+        placeholder: Sponsor Folkestone's first artist-led festival
       text:
         type: textarea
         label: Intro text
@@ -30,10 +34,18 @@ tabs:
           - italic
           - link
           - ul
+      readon_label:
+        type: text
+        label: Skip link label
+        help: The link under the intro that jumps to “Why support us”. Leave empty for “Read on”.
+        placeholder: Read on
+      why_headline:
+        type: headline
+        label: Why support us
       featureimage:
         type: files
         label: Feature image
-        help: First image at the top of the page.
+        help: Square photo beside “Why support us” (1:1 crop).
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
@@ -42,7 +54,7 @@ tabs:
       detailimage:
         type: files
         label: Detail image
-        help: Smaller photo, second on the page.
+        help: Portrait photo beside “Why support us” (2:3 crop).
         max: 1
         query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
         uploads:
@@ -51,7 +63,8 @@ tabs:
       helptitle:
         type: text
         label: Help section title
-        help: Headline. Tells users what their support does for OAF.
+        help: Headline. Tells users what their support does for OAF. Leave empty for “Why support us”.
+        placeholder: Why support us
       helptext:
         type: textarea
         label: Help section text
@@ -60,6 +73,36 @@ tabs:
           - italic
           - link
           - ul
+      sponsors_headline:
+        type: headline
+        label: Our sponsors
+      sponsors_title:
+        type: text
+        label: Sponsors heading
+        placeholder: Our sponsors
+        width: 1/3
+      current_label:
+        type: text
+        label: Current sponsors label
+        placeholder: Current
+        width: 1/3
+      previous_label:
+        type: text
+        label: Previous sponsors label
+        placeholder: Previous
+        width: 1/3
+      sponsors_thanks:
+        type: text
+        label: Thank-you line
+        help: Shown under the sponsor lists.
+        placeholder: Are you one of the foundations or brands named here? Thank you. We couldn’t have done it without you.
+      benefits_headline:
+        type: headline
+        label: What sponsors get
+      benefits_title:
+        type: text
+        label: Benefits heading
+        placeholder: What sponsors get
       benefits:
         type: structure
         label: Sponsor benefits table
@@ -80,6 +123,90 @@ tabs:
             type: text
             label: Bronze
             width: 1/3
+      benefits_note:
+        type: textarea
+        label: Small print
+        help: Shown under the benefits table in small text.
+        buttons: false
+        placeholder: Prices and exact allocations will be confirmed to you by the fundraising team. The list above covers standard benefits available across tiers. Sponsorship packages are for a single festival year. Sponsors with first refusal are contacted ahead of each festival cycle.
+      become_headline:
+        type: headline
+        label: Become a sponsor
+      become_title:
+        type: text
+        label: Become a sponsor heading
+        placeholder: Become a sponsor
+      become_text:
+        type: textarea
+        label: Become a sponsor text
+        help: The “Copy email address” button underneath uses the Contact email in Site → Settings.
+        buttons:
+          - bold
+          - italic
+          - link
+      support_headline:
+        type: headline
+        label: Other ways to help
+      donate_title:
+        type: text
+        label: Donation heading
+        placeholder: Buy us a coffee
+        width: 1/2
+      donate_label:
+        type: text
+        label: Donation link label
+        help: Links to the donation URL in Site → Settings. No URL, no link.
+        placeholder: Buy the OAF team a coffee
+        width: 1/2
+      donate_hint:
+        type: text
+        label: Donation link hint
+        help: Short line under the donation link.
+        placeholder: Opens in a new tab
+      donate_text:
+        type: textarea
+        label: Donation text
+        buttons:
+          - bold
+          - italic
+          - link
+      help_title:
+        type: text
+        label: Other ways heading
+        placeholder: Other ways to support us
+      help_text:
+        type: textarea
+        label: Other ways text
+        help: Intro, the list of what you need (start each item with a **bold** lead-in), then the closing line.
+        buttons:
+          - bold
+          - italic
+          - link
+          - ul
+      help_contact_label:
+        type: text
+        label: Contact link label
+        help: Emails the Contact email in Site → Settings.
+        placeholder: Message us about venues or equipment
+        width: 1/2
+      help_volunteer_label:
+        type: text
+        label: Volunteering link label
+        help: Links to the About page.
+        placeholder: Why volunteer with us
+        width: 1/2
+      bandimage:
+        type: files
+        label: Closing photo
+        help: Optional full-width photo above the footer. Leave empty for none.
+        max: 1
+        query: site.find('media').images.filterBy("extension", "in", ["jpg", "jpeg", "png", "webp"])
+        uploads:
+          parent: site.find('media')
+          template: image
+      sponsors_list_headline:
+        type: headline
+        label: Sponsors
       sponsors:
         type: structure
         label: Sponsors
@@ -103,7 +230,7 @@ tabs:
           logo:
             type: files
             label: Logo
-            help: Current sponsors only — shown on hover. SVG.
+            help: Current sponsors only — shown on their card. Single-colour SVG with a tight viewBox.
             max: 1
             query: page.files.filterBy("extension", "svg")
             uploads:

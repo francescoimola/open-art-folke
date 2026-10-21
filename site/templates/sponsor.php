@@ -1,181 +1,93 @@
 <?php
-$contactEmail = 'openartfolke@gmail.com';
+/*
+ * Sponsor page (Figma "Sponsor · Redesign": Desktop 445:2919, Mobile 448:3031; docs/components/README.md).
+ * Statement (Ink) → section#why (Ink: Photo pair + Why support us) → Our sponsors → What sponsors get
+ * → Become a sponsor (Red) → section#support (#donate, #help) → closing Photo band → Footer. The rest is Flow.
+ * Every piece of copy is a Panel field; the Figma copy is the fallback.
+ */
+$contactEmail = $site->contact_email()->or('openartfolke@gmail.com')->value();
 
-// Check-badge tick (currentColor; coloured by the wrapping .accent span).
-$tick = '<svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z" clip-rule="evenodd"/></svg>';
-
-/* Render one tier cell: blank → nothing (sr-only "Not included"); affirmative value → a tick; anything else → literal text. */
-$cell = function ($field) use ($tick) {
-  $value = trim($field->value());
-
-  if ($value === '') {
-    return '<span class="visually-hidden">Not included</span>';
-  }
-
-  if (in_array(mb_strtolower($value), ['yes', 'y', '✓', '✔', 'true'], true)) {
-    return '<span class="accent">' . $tick . '<span class="visually-hidden">Included</span></span>';
-  }
-
-  return esc($value);
-};
+$previousLinks = array_map(fn ($sponsor) => [
+  'url'   => $sponsor['url']->value(),
+  'label' => trim($sponsor['name']->value()),
+], $page->pastSponsorsData());
 ?>
 <?php snippet('header') ?>
 
-<section class="panel even theme-ink stack-section flowing sponsor-feature">
-  <div
-    class="sponsor-grid">
-
-    <!-- Cell 1,1: intro -->
-    <div class="sponsor-grid__intro stack gap-xl">
-      <h1><?= $page->introtitle()->esc() ?></h1>
-      <?= $page->text()->kt() ?>
-    </div>
-
-    <!-- Cell 2,1: subgrid that constrains the detail image -->
-    <div
-      class="sponsor-grid__detail-cell">
-      <?php if ($detail = $page->detailimage()->toFile()): ?>
-        <figure
-          class="sponsor-grid__detail aspect-square"><?php snippet('image', [
-            'file' => $detail,
-            'sizes' => '(min-width: 768px) 25vw, 100vw',
-          ]) ?>
-        </figure>
-      <?php endif ?>
-    </div>
-
-    <!-- Cell 1,2: feature image -->
-    <?php if ($feature = $page->featureimage()->toFile()): ?>
-      <figure
-        class="sponsor-grid__feature aspect-square"><?php snippet('image', [
-          'file' => $feature,
-          'sizes' => '(min-width: 768px) 50vw, 100vw',
-        ]) ?>
-      </figure>
-    <?php endif ?>
-
-    <!-- Cell 2,2: help copy -->
-    <div class="sponsor-grid__help stack gap-xl">
-      <h2><?= $page->helptitle()->html() ?></h2>
-      <div class="stack gap-l"><?= $page->helptext()->kt() ?></div>
-    </div>
-
-  </div>
-</section>
-
-<section class="panel theme-crimson sponsors sponsors-roster stack gap-xxl">
-  <h2 class="h1">Our sponsors</h2>
-
-  <div class="stack gap-l">
-    <p>Current</p>
-    <?php snippet('sponsor-list', [
-      'sponsors' => $page->currentSponsors(),
-      'idPrefix' => 'current-sponsor',
-    ]) ?>
-  </div>
-
-  <hr class="show-desktop">
-
-  <div class="stack gap-xl">
-    <p>Previous</p>
-    <ul class="sponsors-past accent stack">
-      <?php foreach ($page->pastSponsorsData() as $p): ?>
-        <li>
-          <?php if ($p['url']->isNotEmpty()): ?>
-            <a class="h3" href="<?= $p['url']->esc('attr') ?>" target="_blank" rel="noopener noreferrer">
-              <?= esc($p['name']->value()) ?><span aria-hidden="true">↗</span>
-            </a>
-          <?php else: ?>
-            <p class="h3"><?= esc($p['name']->value()) ?></p>
-          <?php endif ?>
-        </li>
-      <?php endforeach ?>
-    </ul>
-  </div>
-
-  <p>If you're one of the people or brands named here, thank you for your support.</p>
-</section>
-
-<section class="panel theme-paper sponsor-support stack gap-xxl">
-
-  <div class="stack gap-xl">
-    <h2 class="h1">What sponsors get</h2>
-    <div class="table">
-      <table>
-        <thead>
-          <tr>
-            <th scope="col">Benefit</th>
-            <th scope="col">Gold</th>
-            <th scope="col">Silver</th>
-            <th scope="col">Bronze</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($page->benefits()->toStructure() as $row): ?>
-            <tr>
-              <th scope="row"><?= $row->benefit()->html() ?></th>
-              <td><?= $cell($row->gold()) ?></td>
-              <td><?= $cell($row->silver()) ?></td>
-              <td><?= $cell($row->bronze()) ?></td>
-            </tr>
-          <?php endforeach ?>
-        </tbody>
-      </table>
-    </div>
-    <small class="readable">Prices and exact allocations will be confirmed to you by the fundraising team. The list above covers standard benefits available across tiers. Sponsorship packages are for a single festival year. Sponsors with first refusal are contacted ahead of each festival cycle.</small>
-  </div>
-</section>
-
-<section class="panel theme-paper sponsor-support stack gap-xxl">
-  <div class="stack gap-l">
-    <h2 class="mb-m">Become a sponsor</h2>
-    <p class="readable">To discuss sponsoring OAF, please email Jackie at
-      <strong>openartfolke at gmail dot com</strong>. We’ll chat through what your support helps us achieve and how your brand will be highlighted, and we’ll answer any questions.</p>
-    <button class="btt--secondary fit-width" type="button" data-copy="<?= esc($contactEmail, 'attr') ?>">Copy email address</button>
-  </div>
-
-  <div class="stack gap-l">
-    <h2 class="mb-m">Buy us a coffee</h2>
-    <p class="readable">Donating, however you can, helps to keep the lights on, prepare for the upcoming festival cycle, and support local creatives in making and showcasing their work.</p>
-    <?php if ($site->donation_url()->isNotEmpty()): ?>
-      <a class="button btt--secondary fit-width" href="<?= $site->donation_url()->esc('attr') ?>" rel="noopener noreferrer" target="_blank">Buy the OAF team a coffee<span aria-hidden="true">↗</span>
-      </a>
-    <?php endif ?>
-  </div>
-
-  <div class="stack gap-m">
-    <h2 class="mb-m">Other ways to support us</h2>
-    <p class="readable">Sponsorship isn’t the only way to help Open Art Folke continue offering its services to the local creative community.</p>
-    <p class="readable">We’re always looking for:</p>
-    <ul class="stack dots gap-m readable">
-      <li>
-        <p>
-          <strong>Venues.</strong>
-          Cafés, shops, studios, community halls, restaurants, or unusual spaces willing to host art, events or performances during the festival.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>Equipment loans.</strong>
-          Always on the lookout for plinths, screens, lighting, and AV.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>Volunteer time and skills.</strong>
-          Our extended committee is responsible for most of the work, but we often need help with invigilation, installation, photography, videography and guiding visitors.
-        </p>
-      </li>
-    </ul>
-    <p class="readable">If you'd be up for offering any of that, it would make Becca and Thurle, and all of us at Open Art incredibly grateful. Please reach out to let us know.</p>
-  </div>
-
-</section>
-
-<?php snippet('photo-banner', [
-  'hideText' => true,
-  'half' => true,
-  'logoBottom' => true,
+<?php snippet('statement', [
+  'heading' => $page->introtitle()->or("Sponsor Folkestone's first artist-led festival"),
+  'aside'   => $page->text()->or('Open Art Folke is a community of artists, designers and makers who live or work in Folkestone. Every so often, we turn our studios, along with shops and other public spaces across town, into places that inspire, educate and connect people.'),
+  'links'   => [['url' => '#why-support', 'label' => $page->readon_label()->or('Read on')->value(), 'icon' => 'arrow-down']],
+  'class'   => 'theme-ink',
 ]) ?>
+
+<section class="page-section theme-ink" id="why">
+  <?php snippet('photo-pair', [
+    'first'  => $page->featureimage()->toFile(),
+    'second' => $page->detailimage()->toFile(),
+    'wrap'   => true,
+  ]) ?>
+  <?php snippet('split-group', [
+    'heading' => $page->helptitle()->or('Why support us'),
+    'id'      => 'why-support',
+    'content' => $page->helptext()->or("If it wasn't for sponsorship and donations, we would not be able to do what we do—simple as. Sponsoring Open Art Folke pays for printed programmes, our marketing costs, and low/subsidised entry fees for artists who couldn't otherwise take part. Your support also helps to keep OAF ticket-free and open to all.\n\nIn return, your business gets exposure across Folkestone during the festival, with your brand featured in programmes carried by thousands of visitors. It will also be visible online and advertised at our opening event. This is an opportunity to play a visible role in something that matters to this town, in front of an engaged, regional audience.")->kt(),
+  ]) ?>
+</section>
+
+<section class="page-section theme-flow" id="sponsors">
+  <?php snippet('split-group', ['heading' => $page->sponsors_title()->or('Our sponsors')], slots: true) ?>
+    <?php if ($current = $page->currentSponsors()): ?>
+      <div class="sponsor-roster">
+        <p class="sponsor-roster__label"><?= $page->current_label()->or('Current')->esc() ?></p>
+        <?php snippet('sponsor-grid', ['sponsors' => $current]) ?>
+      </div>
+    <?php endif ?>
+    <?php if ($previousLinks !== []): ?>
+      <div class="sponsor-roster">
+        <p class="sponsor-roster__label"><?= $page->previous_label()->or('Previous')->esc() ?></p>
+        <?php snippet('link-list', ['links' => $previousLinks]) ?>
+      </div>
+    <?php endif ?>
+    <p><?= $page->sponsors_thanks()->or('Are you one of the foundations or brands named here? Thank you. We couldn’t have done it without you.')->esc() ?></p>
+  <?php endsnippet() ?>
+</section>
+
+<section class="page-section theme-flow" id="benefits">
+  <?php snippet('split-group', ['heading' => $page->benefits_title()->or('What sponsors get')], slots: true) ?>
+    <?php snippet('benefits-table', ['rows' => $page->benefits()->toStructure()]) ?>
+    <p class="sponsor-small-print"><?= $page->benefits_note()->or('Prices and exact allocations will be confirmed to you by the fundraising team. The list above covers standard benefits available across tiers. Sponsorship packages are for a single festival year. Sponsors with first refusal are contacted ahead of each festival cycle.')->esc() ?></p>
+  <?php endsnippet() ?>
+</section>
+
+<section class="page-section theme-red" id="become">
+  <?php snippet('split-group', ['heading' => $page->become_title()->or('Become a sponsor')], slots: true) ?>
+    <?= $page->become_text()->or("To discuss sponsoring OAF, please email Jackie. We'll chat through what your support helps us achieve and how your brand will be highlighted, and we'll answer any questions.")->kt() ?>
+    <?php snippet('copy-email', ['variant' => 'secondary']) ?>
+  <?php endsnippet() ?>
+</section>
+
+<section class="page-section theme-flow" id="support">
+  <?php snippet('split-group', ['heading' => $page->donate_title()->or('Buy us a coffee'), 'id' => 'donate'], slots: true) ?>
+    <?= $page->donate_text()->or('Donating, however you can, helps to keep the lights on, prepare for the upcoming festival cycle, and support local creatives in making and showcasing their work.')->kt() ?>
+    <?php if ($site->donation_url()->isNotEmpty()): ?>
+      <?php snippet('link-hint', [
+        'url'   => $site->donation_url()->value(),
+        'label' => $page->donate_label()->or('Buy the OAF team a coffee')->value(),
+        'hint'  => $page->donate_hint()->or('Opens in a new tab')->value(),
+        'id'    => 'hint-donate',
+      ]) ?>
+    <?php endif ?>
+  <?php endsnippet() ?>
+
+  <?php snippet('split-group', ['heading' => $page->help_title()->or('Other ways to support us'), 'id' => 'help'], slots: true) ?>
+    <?= $page->help_text()->or("Sponsorship isn't the only way to help Open Art Folke continue offering its services to the local creative community. We're always looking for:\n\n- **Venues.** Cafés, shops, studios, community halls, restaurants, or unusual spaces willing to host art, events or performances during the festival.\n- **Equipment loans.** Always on the lookout for plinths, screens, lighting, projectors and AV.\n- **Volunteer time and skills.** Our extended committee is responsible for most of the work, but we often need help with invigilation, installation, photography, videography and guiding visitors.\n\nIf you'd be up for offering any of that, it would make Becca and Thurle, and all of us at Open Art incredibly grateful. Please reach out to let us know.")->kt() ?>
+    <?php snippet('link-list', ['links' => [
+      ['url' => 'mailto:' . $contactEmail, 'label' => $page->help_contact_label()->or('Message us about venues or equipment')->value()],
+      ['url' => page('about')?->url() ?? '', 'label' => $page->help_volunteer_label()->or('Why volunteer with us')->value()],
+    ]]) ?>
+  <?php endsnippet() ?>
+</section>
+
+<?php snippet('photo-band', ['image' => $page->bandimage()->toFile()]) ?>
 
 <?php snippet('site-footer') ?>

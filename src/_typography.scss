@@ -12,11 +12,7 @@
   :root {
     --font-sans: "Inclusive Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-    --primary: light-dark(var(--light-Brand-600), var(--dark-Brand-700));
-    --fg-light: var(--light-Neutral-900);
-    --fg-dark: var(--dark-Neutral-950);
-    --bg-light: var(--color-background);
-    --bg-dark: var(--dark-Neutral-100);
+    // Theme colours (--bg, --fg, --primary, --link, --fg-muted, --theme-button*) live in _themes.scss.
 
     --color-info: light-dark(var(--light-Info-500), var(--dark-Info-700));
 
@@ -27,7 +23,6 @@
       --color-error: light-dark(var(--light-Error-600), var(--dark-Error-700));
     }
 
-    --nav-height: calc(var(--vs-base) * 1.75 + var(--vs-l));
     --text-underline-offset: 0.22rem;
     --text-decoration-thickness: 7%;
 
@@ -40,10 +35,20 @@
     --type-lh-step: 0.1;
   }
 
+  // The fixed Header (--nav-h tall) sits over the top of the page.
   body {
     background: var(--bg);
-    padding-top: var(--nav-height, 6rem);
-    scroll-padding-top: var(--nav-height, 6rem);
+    padding-top: var(--nav-h);
+  }
+
+  // Anchor targets land below the Header, for native jumps and Lenis alike (Lenis reads scroll-margin-top).
+  :where([id]) {
+    scroll-margin-top: var(--nav-h);
+  }
+
+  // Graffiti's html sets a 60px scroll-padding, which adds to the margin above and lands anchors 60px too low.
+  html {
+    scroll-padding-block-start: 0;
   }
 
   :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, p, li, a, small, .ui-caption, body) {
@@ -130,13 +135,6 @@
   .pretty,
   .pretty p {
     text-wrap: pretty;
-  }
-
-  .image-cover {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
   }
 
   picture {

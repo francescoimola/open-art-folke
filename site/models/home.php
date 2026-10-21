@@ -1,179 +1,138 @@
 <?php
 
+use Kirby\Cms\Block;
+use Kirby\Cms\Blocks;
 use Kirby\Cms\Page;
-use Kirby\Cms\Structure;
+use Kirby\Toolkit\Str;
 
 /**
  * Home page model.
  *
- * Holds countdown maths so templates only call methods. Day-granularity comparisons (dates normalised to midnight) avoid hour/timezone off-by-one.
- * All dates use UK time (GMT/BST), so days roll over at Folkestone midnight whatever the server's timezone.
+ * Homepage sections are the "Homepage sections" Blocks field, `sectionblocks` (ADR-0007): one block per section,
+ * rendered by site/snippets/blocks/<type>.php. Placeholders (programme, about, sponsors) carry no content,
+ * only position and visibility; their copy lives in the page's own fields.
  */
 class HomePage extends Page
 {
-  private const DEFAULT_START = '2026-01-01';
-  private const DEFAULT_END = '2026-10-09';
-  private const DEFAULT_FESTIVAL_END = '2026-10-11';
-  private const TOTAL_BLOCKS = 16;
-  private const TIMEZONE = 'Europe/London';
-  /** Middle sections in default order, each with its default colour (a .theme-* suffix). */
-  private const SECTIONS = [
-    'programme' => 'crimson',
-    'countdown' => 'blush',
-    'intro' => 'brand',
-    'festival' => 'paper',
-    'sponsors' => 'blush',
+  /**
+   * The placeholder block types, in their default order: the one list the limits, fallback order,
+   * reserved ids and arrow options derive from. `label` names the arrow option; `skip` is the arrow's label.
+   */
+  public const PLACEHOLDERS = [
+    'programme' => ['label' => 'Programme', 'skip' => 'Skip to the festival programme'],
+    'about'     => ['label' => 'About', 'skip' => 'Skip to about the festival'],
+    'sponsors'  => ['label' => 'Sponsors', 'skip' => 'Skip to our sponsors'],
   ];
-  private const THEMES = ['brand', 'crimson', 'blush', 'paper', 'ink'];
 
-  public function countdownStartDate(): DateTimeImmutable
+  /** Custom sections that render; later extras are dropped. Each placeholder renders once. */
+  public const CUSTOM_LIMIT = 2;
+
+  /** Fixed ids on the homepage besides the placeholders' own (each type is its section's id). */
+  private const FIXED_IDS = ['main', 'drawer', 'content'];
+
+  private ?Blocks $sections = null;
+
+  /** @var array<string, string>|null Custom section anchor ids, keyed by block id */
+  private ?array $customIds = null;
+
+  /**
+   * Visible Homepage sections in Panel order, capped per type (sectionLimit()).
+   * An empty field (or one Kirby can't parse) falls back to Programme → About → Sponsors.
+   */
+  public function homeSections(): Blocks
   {
-    return $this->countdownDate('countdownstart', self::DEFAULT_START);
-  }
-
-  public function countdownEndDate(): DateTimeImmutable
-  {
-    return $this->countdownDate('countdownend', self::DEFAULT_END);
-  }
-
-  /** Last day of the festival; the countdown section switches to its "you missed it" copy the day after. */
-  public function festivalEndDate(): DateTimeImmutable
-  {
-    return $this->countdownDate('festivalend', self::DEFAULT_FESTIVAL_END);
-  }
-
-  /** Opening day — the same date the countdown runs down to. */
-  public function festivalStartDate(): DateTimeImmutable
-  {
-    return $this->countdownEndDate();
-  }
-
-  /** Festival year as shown in copy, e.g. "2026". */
-  public function festivalYear(): string
-  {
-    return $this->festivalEndDate()->format('Y');
-  }
-
-  /** Human date range, e.g. "9–11 October 2026" or "30 September – 2 October 2026". */
-  public function festivalDateRange(): string
-  {
-    $start = $this->festivalStartDate();
-    $end = $this->festivalEndDate();
-
-    if ($start->format('Y-m') === $end->format('Y-m')) {
-      return $start == $end
-        ? $end->format('j F Y')
-        : $start->format('j') . '–' . $end->format('j F Y');
+    if ($this->sections !== null) {
+      return $this->sections;
     }
 
-    $startFormat = $start->format('Y') === $end->format('Y') ? 'j F' : 'j F Y';
+    $field = $this->content()->get('sectionblocks');
+    $blocks = null;
 
-    return $start->format($startFormat) . ' – ' . $end->format('j F Y');
+    if (Blocks::parse($field->value()) !== []) {
+      try {
+        $blocks = $field->toBlocks();
+      } catch (Throwable) {
+        $blocks = null;
+      }
+    }
+
+    $blocks ??= Blocks::factory(
+      array_map(fn (string $type) => ['type' => $type, 'id' => 'default-' . $type, 'content' => []], array_keys(self::PLACEHOLDERS)),
+      ['parent' => $this]
+    );
+
+    $counts = [];
+    $this->sections = $blocks->filter(function (Block $block) use (&$counts): bool {
+      $type = $block->type();
+      $counts[$type] = ($counts[$type] ?? 0) + 1;
+      return $counts[$type] <= self::sectionLimit($type);
+    });
+
+    return $this->sections;
+  }
+
+  /** How many blocks of a type render: one per placeholder, CUSTOM_LIMIT Custom sections, none of an unknown type. */
+  public static function sectionLimit(string $type): int
+  {
+    if ($type === 'custom') return self::CUSTOM_LIMIT;
+    return isset(self::PLACEHOLDERS[$type]) ? 1 : 0;
   }
 
   /**
-   * Up to two "The Festival" CTAs. Until an editor first saves the field,
-   * falls back to the blueprint defaults so buttons don't vanish on deploy.
+   * A section's anchor id: the type for placeholders (#programme, #about, #sponsors). A Custom section takes
+   * its heading's slug, suffixed "-2", "-3"… if another id on the page has it, so it stays stable while the heading does.
    */
-  public function festivalButtons(): Structure
+  public function sectionId(Block $block): string
   {
-    // Read via content(): PHP method names are case-insensitive, so $this->festivalbuttons() would recurse into this method.
-    $buttons = $this->content()->has('festivalbuttons')
-      ? $this->content()->get('festivalbuttons')->toStructure()
-      : Structure::factory($this->blueprint()->field('festivalbuttons')['default'] ?? [], ['parent' => $this]);
+    if ($block->type() !== 'custom') {
+      return $block->type();
+    }
 
-    return $buttons->limit(2);
+    if ($this->customIds === null) {
+      $this->customIds = [];
+      $taken = [];
+      foreach ([...self::FIXED_IDS, ...array_keys(self::PLACEHOLDERS)] as $id) {
+        $taken[$id] = $taken[$id . '-title'] = true;
+      }
+
+      foreach ($this->homeSections()->filterBy('type', 'custom') as $custom) {
+        /* Footer group headings and Link + hint lines use these prefixes. */
+        $base = Str::slug($custom->heading()->value()) ?: 'section';
+        if (preg_match('/^(footer|hint)-/', $base)) $base = 'section-' . $base;
+
+        $id = $base;
+        for ($n = 2; isset($taken[$id]) || isset($taken[$id . '-title']); $n++) {
+          $id = $base . '-' . $n;
+        }
+        $taken[$id] = $taken[$id . '-title'] = true;
+        $this->customIds[$custom->id()] = $id;
+      }
+    }
+
+    return $this->customIds[$block->id()] ?? 'section-' . $block->id();
   }
 
   /**
-   * Middle homepage sections in Panel order; each key maps to site/snippets/home/<key>.php.
-   * Unsaved field falls back to the default order; unknown or duplicate keys are dropped.
+   * Options for the Statement arrow's target (the `arrow_target` select): the first section, the placeholders,
+   * then each Custom section that renders, by block id so renaming its heading keeps the choice.
+   *
+   * @return array<string, string>
    */
-  public function homeSections(): array
+  public function arrowTargets(): array
   {
-    $keys = array_keys(self::SECTIONS);
-
-    if (!$this->content()->has('sections')) {
-      return $keys;
+    $targets = ['content' => 'First section', ...array_map(fn (array $p) => $p['label'], self::PLACEHOLDERS)];
+    foreach ($this->homeSections()->filterBy('type', 'custom') as $block) {
+      if ($block->heading()->isNotEmpty()) $targets[$block->id()] = 'Custom section: ' . $block->heading()->value();
     }
-
-    return array_values(array_unique(array_intersect($this->content()->get('sections')->split(), $keys)));
+    return $targets;
   }
 
   /**
-   * Theme class for a middle section, from its "<key>theme" Panel field (e.g. "theme-crimson").
-   * Unsaved or unknown values fall back to the section's default colour.
+   * Whether the Programme section is on the homepage. The Nav list and the Footer's visitor item hide
+   * their programme links when it isn't, so no link points to a missing section.
    */
-  public function sectionTheme(string $section): string
+  public function showsProgramme(): bool
   {
-    $theme = $this->content()->get($section . 'theme')->value();
-
-    if (!in_array($theme, self::THEMES, true)) {
-      $theme = self::SECTIONS[$section] ?? 'paper';
-    }
-
-    return 'theme-' . $theme;
-  }
-
-  /** Panel toggle wins; "auto" shows the message from the day after the festival ends. */
-  public function festivalIsOver(): bool
-  {
-    return match ($this->countdownmode()->value()) {
-      'countdown' => false,
-      'over' => true,
-      default => $this->today() > $this->festivalEndDate(),
-    };
-  }
-
-  /** Whole days from today to the end date, never negative. */
-  public function daysRemaining(): int
-  {
-    return max(0, $this->daysBetween($this->today(), $this->countdownEndDate()));
-  }
-
-  /** Share of the window still remaining, clamped to 0–1. */
-  public function countdownFraction(): float
-  {
-    $total = $this->daysBetween($this->countdownStartDate(), $this->countdownEndDate());
-
-    if ($total <= 0) {
-      return 0.0;
-    }
-
-    $remaining = $this->daysBetween($this->today(), $this->countdownEndDate());
-
-    return max(0.0, min(1.0, $remaining / $total));
-  }
-
-  /** Total number of slices in the banner (illustrative, fixed). */
-  public function countdownTotalBlocks(): int
-  {
-    return self::TOTAL_BLOCKS;
-  }
-
-  /** Number of revealed (image) slices = elapsed fraction, nearest block. */
-  public function countdownFilled(): int
-  {
-    $filled = (int) round((1.0 - $this->countdownFraction()) * self::TOTAL_BLOCKS);
-
-    return max(0, min(self::TOTAL_BLOCKS, $filled));
-  }
-
-  private function countdownDate(string $field, string $fallback): DateTimeImmutable
-  {
-    $value = $this->content()->get($field);
-    $iso = $value->isNotEmpty() ? $value->toDate('Y-m-d') : $fallback;
-
-    return new DateTimeImmutable($iso . ' 00:00:00', new DateTimeZone(self::TIMEZONE));
-  }
-
-  private function today(): DateTimeImmutable
-  {
-    return new DateTimeImmutable('today', new DateTimeZone(self::TIMEZONE));
-  }
-
-  private function daysBetween(DateTimeImmutable $from, DateTimeImmutable $to): int
-  {
-    return (int) $from->diff($to)->format('%r%a');
+    return $this->homeSections()->filterBy('type', 'programme')->isNotEmpty();
   }
 }
