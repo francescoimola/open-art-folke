@@ -28,7 +28,7 @@ The workhorse content block: a heading in the left column and content in the rig
 
 ## Layout (Stacked ↔ Split)
 
-- **Split**: Row = two equal columns (`1fr 1fr`), gap Layout/Gutter.
+- **Split**: Row = two equal columns (`1fr 1fr`), gap Space L (2 × Layout/Gutter; doubled from the Figma gutter in the user's review, #30).
 - **Stacked**: heading above content, gap Space pair/S-M.
 
 Both stack Row → Column media → Media with gap Space pair/XL-M (a gap that *shrinks* from 42 on mobile to 27 on desktop).
@@ -37,7 +37,7 @@ Both stack Row → Column media → Media with gap Space pair/XL-M (a gap that *
 
 | Use | Token | Min (320) → Max (1500) |
 | --- | --- | --- |
-| Column gap (Split) | Layout/Gutter | 14 → 18 |
+| Column gap (Split) | Space L (2 × Layout/Gutter, #30) | 28 → 36 |
 | Heading → content (Stacked) | Space pair/S-M | 14 → 27 |
 | Inside Content | Space M | 21 → 27 |
 | Row → media | Space pair/XL-M | 42 → 27 |
@@ -66,7 +66,7 @@ None of its own. Photos lazy-load.
 </section>
 ```
 
-CSS: `display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gutter)`, with the heading in column 1, content in column 2, `--column` media in column 2 and wide media spanning `1 / -1`. One column below the switch point.
+CSS: `display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--space-l)`, with the heading in column 1, content in column 2, `--column` media in column 2 and wide media spanning `1 / -1`. One column below the switch point.
 
 ## Open questions
 
