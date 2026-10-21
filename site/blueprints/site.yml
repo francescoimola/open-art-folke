@@ -135,10 +135,17 @@ tabs:
                 width: 1/2
                 when:
                   registration_status: open
+              open_message:
+                type: textarea
+                label: Message (optional)
+                buttons: false
+                help: Shown in the footer’s “I’m an artist/creative” item, above the Register link.
+                when:
+                  registration_status: open
               soon_intro:
                 type: info
                 label: “Not open yet” text
-                text: Shown in the footer while registration hasn’t opened.
+                text: Shown in the footer’s “I’m an artist/creative” item while registration hasn’t opened.
                 when:
                   registration_status: soon
               soon_message:
@@ -168,7 +175,7 @@ tabs:
               closed_intro:
                 type: info
                 label: “Closed” text
-                text: Shown in the footer to explain why registration is closed and what to do next/instead.
+                text: Shown in the footer’s “I’m an artist/creative” item, to explain why registration is closed and what to do next/instead.
                 when:
                   registration_status: closed
               closed_message:
@@ -214,6 +221,22 @@ tabs:
                 type: url
                 label: Facebook URL
                 help: Link to Facebook page. Leave blank to hide it.
+          contact:
+            type: fields
+            label: Contact
+            fields:
+              contact_email:
+                type: email
+                label: Contact email
+                help: Copied by the “Copy email address” buttons and shown next to them. Leave empty for openartfolke@gmail.com.
+                placeholder: openartfolke@gmail.com
+                width: 1/2
+              copy_email_label:
+                type: text
+                label: “Copy email” button label
+                help: A verb plus an object, up to about 24 characters. Leave empty for “Copy email address”.
+                placeholder: Copy email address
+                width: 1/2
           credits:
             type: fields
             label: Credits
@@ -221,7 +244,84 @@ tabs:
               media_credits:
                 type: textarea
                 label: Media credits
-                help: Credits text for the footer (videographers, photographers). Links and formatting are supported.
+                help: Credits text for the footer (videographers, photographers). Links and formatting are supported. Leave empty for the designed text.
+          footer:
+            type: fields
+            label: Footer
+            fields:
+              footer_info_title:
+                type: text
+                label: Info heading
+                placeholder: All you need to know
+                help: Every footer field falls back to the designed text when left empty.
+              footer_visitor_label:
+                type: text
+                label: Visitor label
+                placeholder: I’m a visitor
+                width: 1/2
+              footer_visitor_link:
+                type: text
+                label: Visitor link label
+                placeholder: See festival programme
+                help: Links to the homepage programme; hidden while Programme is hidden on the homepage.
+                width: 1/2
+              footer_artist_label:
+                type: text
+                label: Artist label
+                placeholder: I’m an artist/creative
+                help: Its text follows the Registration status (see Registration above).
+                width: 1/2
+              footer_socials_label:
+                type: text
+                label: Socials label
+                placeholder: Find us on socials
+                help: Lists the Instagram and Facebook links above.
+                width: 1/2
+              footer_contact_label:
+                type: text
+                label: Contact label
+                placeholder: Contact us
+                help: Shows the Contact email with its copy button.
+                width: 1/2
+              media_credits_title:
+                type: text
+                label: Media credits heading
+                placeholder: Media credits
+                help: The text is in Credits above.
+                width: 1/2
+              privacy_title:
+                type: text
+                label: Privacy heading
+                placeholder: Privacy
+              privacy_text:
+                type: textarea
+                label: Privacy text
+                placeholder: "By signing up for festival updates, you agree to us collecting your email address and sending you news about the festival, artists and sponsors. We may share data with service providers and keep it only as long as necessary. Unsubscribe using the link in any email, or contact us to access, correct or delete your data."
+              fundraising_title:
+                type: text
+                label: Fundraising heading
+                placeholder: Fundraising
+              fundraising_text:
+                type: textarea
+                label: Fundraising text
+                placeholder: "This website may include information about fundraising and ways to support the festival. Donation pages, links or supporter/sponsorship arrangements may have their own terms."
+              terms_title:
+                type: text
+                label: Terms heading
+                placeholder: Terms
+              terms_text:
+                type: textarea
+                label: Terms text
+                placeholder: "Open Art Folke is a volunteer-run, unincorporated charitable association. This website shares info about our festival, artists and supporters. We aim to keep it accurate and up to date, but can’t guarantee it is always complete or current. Festival dates, volunteer team, fees and other arrangements may change."
+              copyright_title:
+                type: text
+                label: Copyright heading
+                placeholder: Copyright © Open Art Folke, 2026
+                help: Leave empty for “Copyright © Open Art Folke, ” and the current year.
+              copyright_text:
+                type: textarea
+                label: Copyright text
+                placeholder: "Site design, copywriting, and heartfelt support by Francesco Imola. Powered by the wonderful CMS that is Kirby, and hosted by Fortrabbit in the EU."
           seo:
             type: fields
             label: SEO / Social defaults

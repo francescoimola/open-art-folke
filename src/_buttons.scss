@@ -81,15 +81,9 @@
     color: light-dark(var(--light-Brand-900), var(--dark-Brand-400));
   }
 
-  // Contrast CTA: inverts fg/bg for footer buttons.
-  .btt--contrast {
-    --button-color: var(--fg);
-    color: var(--bg);
-  }
-
   // On deep-red themes the dark-scheme default (salmon + black text) blends into the bg.
   // Reuse the secondary palette there: pink surface with deep-red text.
-  :is(.theme-brand, .theme-crimson) .button:not(.btt--contrast) {
+  :is(.theme-brand, .theme-crimson) .button {
     --button-color: var(--dark-Brand-950);
     color: var(--dark-Brand-400);
   }

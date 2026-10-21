@@ -1,4 +1,4 @@
-// Site components: .skip-link, sponsors, archive carousel, form/dropdown, view transitions, footer tweaks.
+// Site components: .skip-link, sponsors, archive carousel, form/dropdown, view transitions.
 @use './mixins' as *;
 
 @layer custom {
@@ -288,10 +288,7 @@
   }
 
   // Lift persistent chrome out of the root snapshot. Named elements on both pages morph in place (identical = imperceptible).
-  // Each name must be unique per page; .header (site-header, in _header.scss) and .footer each appear once.
-  .footer {
-    view-transition-name: site-footer;
-  }
+  // Each name must be unique per page; .header (site-header, in _header.scss) and .footer (site-footer, in _footer.scss) each appear once.
 
   @media (prefers-reduced-motion: reduce) {
 
@@ -299,36 +296,6 @@
     ::view-transition-old(*),
     ::view-transition-new(*) {
       animation: none !important;
-    }
-  }
-
-  // Footer tweaks: nav rhythm, CTA hover, legal-copy links, muted headings.
-  .footer {
-    >nav {
-      padding-block: var(--vs-xl);
-      gap: clamp(var(--vs-base), 5vw, var(--vs-m));
-    }
-
-    :is(.button, button):hover {
-      text-decoration: none;
-    }
-
-    article a {
-      text-decoration: underline;
-    }
-
-    h3 {
-      color: var(--fg-8);
-    }
-
-    &__legal {
-      --layout-gap: var(--vs-xxl);
-    }
-
-    @include below-tablet {
-      &__legal {
-        --layout-gap: revert;
-      }
     }
   }
 

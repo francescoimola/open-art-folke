@@ -1,6 +1,6 @@
 # Copy email
 
-**Layer:** Composite · **Status:** figma · **Figma:** `377:540` · **Code:** footer markup in `site/snippets/site-footer.php`; behaviour on `[data-copy]` in `src/index.js` (both exist)
+**Layer:** Composite · **Status:** code · **Figma:** `377:540` · **Code:** `site/snippets/copy-email.php` + `src/_copy-email.scss`, `.copy-email`; behaviour on `[data-copy]` in `src/index.js`
 
 ## Purpose
 
@@ -34,15 +34,17 @@ Click → the Button shows Copied for 2s and a polite live region announces "Ema
 
 ## Panel fields / content rules
 
-Site → contact email, used both for `data-copy` and for the visible address.
+Site → Settings → Contact: **Contact email** (fallback `openartfolke@gmail.com`), used both for `data-copy` and for the visible address, and the **"Copy email" button label** (fallback "Copy email address").
+
+Usage: `snippet('copy-email', ['variant' => 'secondary'])`. Options: `email`, `label` (both default to the Site fields), `variant` (`primary` | `secondary`, the Button variant), `class`. The Footer (Ink) uses `secondary`, matching Figma's light button there.
 
 ## HTML & accessibility
 
 ```html
 <div class="copy-email">
-  <button type="button" class="btt" data-copy="openartfolke@gmail.com">Copy email address</button>
-  <span class="visually-hidden" aria-live="polite"></span>
-  <a href="mailto:openartfolke@gmail.com">openartfolke@gmail.com</a>
+  <button class="button button--secondary" type="button" data-copy="openartfolke@gmail.com" data-copied="Copied!" data-announce="Email address copied"><span class="button__label">Copy email address</span></button>
+  <span class="visually-hidden" aria-live="polite" data-copy-status></span>
+  <a class="copy-email__address" href="mailto:openartfolke@gmail.com">openartfolke@gmail.com</a>
 </div>
 ```
 
@@ -50,4 +52,4 @@ The address is a `mailto:` link in code, so people can tap it too. Visually it s
 
 ## Open questions
 
-- Should the visible address look like a link (underlined), since it is one in code?
+- ~~Should the visible address look like a link?~~ Settled: no, it stays plain Body text (spec #6). It keeps the Link focus ring.

@@ -29,8 +29,8 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Link list | [link-list.md](link-list.md) | figma |
 | Nav list | [nav-list.md](nav-list.md) | code |
 | Sponsor card | [sponsor-card.md](sponsor-card.md) | figma |
-| Info item | [info-item.md](info-item.md) | figma |
-| Copy email | [copy-email.md](copy-email.md) | figma |
+| Info item | [info-item.md](info-item.md) | code |
+| Copy email | [copy-email.md](copy-email.md) | code |
 | Person card | [person-card.md](person-card.md) | figma |
 | Disclosure | [disclosure.md](disclosure.md) | figma |
 | Benefits table | [benefits-table.md](benefits-table.md) | figma |
@@ -48,7 +48,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Sponsor grid | [sponsor-grid.md](sponsor-grid.md) | figma |
 | Edition | [edition.md](edition.md) | figma |
 | Lightbox | [lightbox.md](lightbox.md) | figma |
-| Footer | [footer.md](footer.md) | figma |
+| Footer | [footer.md](footer.md) | code |
 
 Docs are written as each component is built, in this order: primitives, then composites, then sections. After that, the homepage frames are rebuilt from instances to check that everything fits together.
 
@@ -107,10 +107,10 @@ The component library is complete in Figma (status `figma`). Code is **not** sta
 
 **Open design questions** (each one is detailed in its doc)
 
-- [Footer](footer.md): the HTML order of nav and logo, and whether to keep the mobile 2px top rule.
+- ~~[Footer](footer.md): the HTML order of nav and logo, and the mobile 2px top rule~~: settled, nav first in the HTML with CSS `order` putting the logo first on mobile; the rule is kept (spec #6).
 - ~~[Nav list](nav-list.md): a current-page link state~~: settled, `aria-current="page"` only, no visual style (spec #6).
 - [Logo](logo.md): should the footer logo link home?
-- [Copy email](copy-email.md): should the visible address look like a link?
+- ~~[Copy email](copy-email.md): should the visible address look like a link?~~: settled, no; it is a `mailto:` link styled as plain body text (spec #6).
 - [Sponsor logo](sponsor-logo.md) / [Sponsor card](sponsor-card.md): a fluid logo slot, which would remove the card's `Layout` axis.
 - [Link](link.md): is Link/Compact (sponsor names) a third Link size?
 - ~~[Icon](icon.md): vertical alignment against cap height~~: settled in code. The box sits on the baseline, so its top meets the cap height.

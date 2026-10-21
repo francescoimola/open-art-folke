@@ -1,6 +1,6 @@
 # Info item
 
-**Layer:** Composite · **Status:** figma · **Figma:** `377:882` · **Code:** `.info-item` inside `.footer__info` (planned)
+**Layer:** Composite · **Status:** code · **Figma:** `377:882` · **Code:** `site/snippets/info-item.php` + `src/_info-item.scss`, `.info-item`
 
 ## Purpose
 
@@ -23,6 +23,7 @@ One label → value pair in the footer's "All you need to know" list: I'm a visi
 
 - **Split** (desktop): label and value in two equal columns (`1fr 1fr`), gap Layout/Gutter.
 - **Stacked** (mobile): label above value, gap Space 2XS.
+- In code the switch is a container query on the `dl` (`cq-medium`, 480px wide), so the item stays stacked while the Footer's right column is narrow (tablet).
 
 The same markup is used at both sizes (Q17): the mobile frame's h2 groups become this `dt`/`dd` structure.
 
@@ -54,6 +55,14 @@ Site → Footer: each item is a label plus a value. The value is either text or 
 ```
 
 Wrapping each pair in a `<div>` is valid in a `dl` and gives the grid a row to lay out.
+
+In code the value is the snippet's slot; an item with an empty value renders nothing:
+
+```php
+<?php snippet('info-item', ['label' => 'Contact us'], slots: true) ?>
+  <?php snippet('copy-email', ['variant' => 'secondary']) ?>
+<?php endsnippet() ?>
+```
 
 ## Open questions
 

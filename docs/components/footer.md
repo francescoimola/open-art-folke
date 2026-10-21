@@ -1,6 +1,6 @@
 # Footer
 
-**Layer:** Section · **Status:** figma · **Figma:** `385:1262` · **Code:** `site/snippets/site-footer.php` (exists; to be reworked)
+**Layer:** Section · **Status:** code · **Figma:** `385:1262` · **Code:** `site/snippets/site-footer.php` + `src/_footer.scss`, `.footer`
 
 ## Purpose
 
@@ -52,8 +52,11 @@ Only the links' own states and Copy email. The footer stays in place between pag
 
 ## Panel fields / content rules
 
-- **Site → Footer**: the Info items (label + value) and the legal rows (heading + text).
-- The footer copy currently exists **in Figma only**. Copy it into the production Panel when the code ships.
+- **Site → Settings → Footer**: the Info heading, the four Info item labels, the visitor link label, and each legal row's heading and text (KirbyText). Media credits text stays in **Credits**; Instagram and Facebook in **Links**; the address and button label in **Contact**.
+- Every field falls back to the Figma copy in code (`->or()`), so nothing needs copying into the Panel at ship time. The Copyright heading falls back to "Copyright © Open Art Folke, " and the current year.
+- **Visitor item**: "See festival programme" links to the homepage's `#programme`. It is hidden, with its item, while `HomePage::showsProgramme()` is false (the same check as the Nav list).
+- **Artist item** follows **Registration status** (`site/snippets/registration-notice.php`): Open shows the optional open message and Register ↗; Not open yet and Closed show that state's message, link and footnote. Closed falls back to the Figma copy.
+- **Socials**: Instagram and Facebook, each shown only when its URL is set; the item hides when both are empty.
 
 ## HTML & accessibility
 
@@ -68,5 +71,7 @@ Only the links' own states and Copy email. The footer stays in place between pag
 
 ## Open questions
 
-- **Logo and nav are in a different order on mobile.** One HTML order is needed. I suggest **nav then logo** in the HTML (matching desktop and reading order), with CSS `order` putting the logo first on mobile. The order is purely visual and the logo is decorative, so this is safe.
-- Keep the mobile 2px top rule, or drop it to match desktop?
+- ~~Logo and nav order on mobile~~: settled. Nav then logo in the HTML; CSS `order` puts the logo first below tablet.
+- ~~The mobile 2px top rule~~: kept (Theme/Button secondary).
+- **Tablet (768–1100px):** the nav row wraps, centred; the Info items stay stacked in the right column until it is 480px wide (about 1000px viewport), then go Split.
+- The groups are Split-group rows built inside `.footer` (`.footer__group`), and Socials is a plain list of Links (`.footer__links`). Swap in the Split group and Link list snippets once they exist, if they fit.

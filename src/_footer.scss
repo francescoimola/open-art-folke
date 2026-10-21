@@ -1,0 +1,133 @@
+// Footer (docs/components/footer.md): always Ink, via .theme-ink on the <footer>.
+// Below tablet (Stacked): Logo, then the Nav list column under a 1px rule, then the groups stacked; 2px top rule.
+// Tablet up (Split): centred Nav list row, centred Logo, then the groups as heading | content rows.
+// Each group is a Split-group row kept inside this block (the Split group component is built elsewhere).
+@use './mixins' as *;
+
+@layer custom {
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+    padding: 0 var(--margin) var(--space-2xl-3xl);
+    border-block-start: 2px solid var(--theme-button-secondary);
+    background: var(--bg);
+    color: var(--fg);
+    // The overlay's word spacing on body would otherwise be inherited by the dt/dd text.
+    word-spacing: normal;
+    // Stays in place during cross-document view transitions (one per page).
+    view-transition-name: site-footer;
+
+    // Figma line boxes throughout: undo the global cap-height trim inside the footer.
+    :where(*) {
+      text-box: normal;
+    }
+  }
+
+  // HTML order is nav then logo; the logo comes first visually below tablet.
+  .footer__logo {
+    order: -1;
+    display: flex;
+    padding-block: var(--space-s-xl) var(--space-2xl-3xl);
+  }
+
+  .footer__nav {
+    padding-block-start: var(--space-2xs);
+    border-block-start: 1px solid var(--fg);
+  }
+
+  .footer__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  // One Split-group row with its Divider: heading above content, then side by side from tablet.
+  .footer__group {
+    display: grid;
+    gap: var(--space-s-m);
+    padding-block: var(--space-2xs);
+    border-block-start: 1px solid var(--fg);
+  }
+
+  // Two classes: the typography overlay's heading rule compiles to (0,1,1) and would set weight, line height and tracking.
+  .footer__group > .footer__title {
+    @include type-h2;
+    word-spacing: normal;
+    margin: 0;
+    color: var(--fg);
+    text-wrap: balance;
+  }
+
+  .footer__content {
+    @include type-body;
+    --text-color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+
+  // Paragraphs take the Body style from the column, not Graffiti's/the overlay's p defaults (balance, --lh, tracking).
+  .footer__content p {
+    margin: 0;
+    line-height: inherit;
+    letter-spacing: inherit;
+    word-spacing: normal;
+    text-wrap: pretty;
+  }
+
+  // Legal text (KirbyText): paragraphs Space S apart, as in the mobile Copyright row.
+  .footer__text {
+    gap: var(--space-s);
+  }
+
+  // The "All you need to know" list; Info items switch to two columns by its width.
+  .footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m-l);
+    margin: 0;
+    container-type: inline-size;
+  }
+
+  // Socials: stacked Links, gap Space XS (Link list anatomy, kept inside the footer).
+  .footer__links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @include tablet {
+    .footer {
+      gap: 0;
+      border-block-start: 0;
+    }
+
+    .footer__nav {
+      padding-block: var(--space-2xl-3xl);
+      border-block-start: 0;
+    }
+
+    .footer__logo {
+      order: 0;
+      justify-content: center;
+    }
+
+    .footer__info {
+      padding-block: var(--space-l-xl);
+    }
+
+    .footer__group {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gutter);
+    }
+  }
+
+}
