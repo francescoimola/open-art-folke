@@ -1,4 +1,4 @@
-// Layout primitives + structures: .full-bleed, .anchor-target, .center-both, .page-section, .stack-section, .hero, .panel, .photo-banner, .principles, .page-hero, .sponsor-grid, .dots, .split:where(.no-wrap).
+// Layout primitives + structures: .full-bleed, .center-both, .page-section, .stack-section, .panel, .photo-banner, .principles, .page-hero, .sponsor-grid, .dots, .split:where(.no-wrap).
 @use './mixins' as *;
 
 @layer custom {
@@ -20,13 +20,6 @@
     border: 0;
   }
 
-  // Anchor sentinel: sticky sections pin their rect, breaking anchor scrolling (native + Lenis).
-  .anchor-target {
-    display: block;
-    height: 0; // Zero-height marker before the section restores two-way scroll.
-    scroll-margin-top: var(--nav-h);
-  }
-
   .center-both {
     display: grid;
     place-items: center;
@@ -36,13 +29,6 @@
   .split:where(.no-wrap) {
     flex-direction: row;
     flex-wrap: nowrap;
-  }
-
-  @include tablet {
-    .right-aligned {
-      width: 100%;
-      text-align: right;
-    }
   }
 
   // Breakpoint visibility: .show-mobile below tablet, .show-desktop at/above it.
@@ -75,82 +61,9 @@
     min-height: calc(50dvh - var(--nav-h));
   }
 
-  section.hero {
-    &.stack-section {
-      top: 0;
-    }
-
-    height: 100svh;
-    margin-top: calc(-1 * var(--nav-h));
-    padding: var(--pad-l);
-    background: var(--dark-Brand-600);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-
-    /* Title + typewriter tagline. The h1 and a hidden "sizer" (a .h1-classed
-     span holding the longest phrase) share one grid cell, so the block
-     reserves the tallest layout at every viewport and never jumps
-     vertically while the typed text grows, wraps, and re-centres.
-     --fl must sit on the children (not the container): Graffiti sets
-    --fl: 5 directly on h1/.h1, which would override an inherited value. */
-    >.hero__title {
-      display: grid;
-
-      >h1,
-      >.hero__sizer {
-        --fl: 6;
-        --lh: 1.10;
-        grid-area: 1 / 1;
-        color: white;
-        max-inline-size: 18ch; // keeps typed phrases off the section edges; tune to taste
-      }
-    }
-
-    // The bg <img> is wrapped in a <picture>; exclude that wrapper (not the
-    // now-nested .hero__bg class) so it isn't lifted and doesn't become a
-    // zero-size containing block for the absolutely-positioned image.
-    >*:not(picture, .hero__arrow) {
-      position: relative;
-      z-index: 1;
-    }
-
-    // <picture> is a layout-transparent wrapper: let the .hero__bg <img>
-    // inside position against the .hero section itself.
-    >picture {
-      display: contents;
-    }
-
-    >.hero__arrow {
-      z-index: 1;
-    }
-  }
-
-  .hero__bg {
-    @include cover-bg;
-  }
-
-  .hero__arrow {
-    position: absolute;
-    bottom: calc(var(--pad-xl) + env(safe-area-inset-bottom, 0px));
-    color: var(--light-Neutral-100);
-  }
-
-  // Invisible but still occupies its grid cell — reserves the height of the
-  // longest typed phrase (see .hero__title above).
-  .hero__sizer {
-    visibility: hidden;
-  }
-
-  .intro__date {
-    letter-spacing: var(--type-track-ui);
-  }
-
-  // Below tablet: stop per-section card-stacking. Only hero stays pinned;
-  // other sections flow normally over it as one block. Heights untouched.
+  // Below tablet: stop per-section card-stacking; sections flow normally. Heights untouched.
   @include below-tablet {
-    .stack-section:not(.hero) {
+    .stack-section {
       position: relative;
       top: auto;
     }
@@ -163,6 +76,12 @@
     flex-direction: column;
     gap: var(--space-xl);
     padding: var(--space-l-xl) var(--margin);
+  }
+
+  // Homepage sections band (Figma "Section" 332:133): Layout/Margin all round, groups Space pair/XL-M apart (shrinks).
+  .page-section--home {
+    gap: var(--space-xl-m);
+    padding: var(--margin);
   }
 
   // Panel — spacing shell: padding + content rhythm only, no colour.

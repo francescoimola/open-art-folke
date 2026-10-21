@@ -1,4 +1,4 @@
-// Site components: .skip-link, sponsors, archive carousel, form/dropdown, view transitions.
+// Site components: .skip-link, sponsors, archive carousel, dropdown, view transitions.
 @use './mixins' as *;
 
 @layer custom {
@@ -196,24 +196,7 @@
     }
   }
 
-  // Form & dropdown.
-
-  // Let .input-group consume --gap so gap-* utilities work on it.
-  .input-group {
-    gap: var(--gap, 0);
-  }
-
-  // Square the email field to match the squared buttons (button
-  // border-radius is already 0 globally; inputs keep Graffiti's radius
-  // unless reset).
-  .input-group input {
-    border-radius: var(--br-s);
-  }
-
-  .uniform__potty {
-    position: absolute;
-    left: -9999px;
-  }
+  // Dropdown.
 
   :where(.dropdown) {
     cursor: context-menu;
@@ -240,21 +223,6 @@
 
   :is(.dropdown-header) {
     margin-top: var(--pad-xs);
-  }
-
-  .callout {
-    background: var(--gray-surface);
-    margin-top: var(--vs-base);
-
-    p {
-      color: var(--color-info);
-      text-wrap: balance;
-    }
-
-    &.hard {
-      border: var(--button-color) solid 2px;
-      border-radius: var(--br-s);
-    }
   }
 
   // View transitions — cross-document (opted in via @view-transition in index.scss). Page content cross-fades and lifts ~8px;

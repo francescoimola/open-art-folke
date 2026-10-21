@@ -93,10 +93,6 @@ return [
     ],
   ],
 
-  'zapier' => [
-    'webhook' => env('PROGRAMME_SIGNUP_WEBHOOK', ''),
-  ],
-
   /* SEO routes. sitemap.xml from bnomei/kirby3-feed using index() (all published pages, no sort-number prefixes). */
   /* media page excluded (asset container). robots.txt allows everything and points at sitemap. */
   'routes' => [

@@ -1,94 +1,13 @@
-@use '../mixins' as *;
-@use '../programme-choice'; // #programme section's "read or download" state
-
-// Countdown: image behind a row of cells. Empty cells are opaque (section --bg), filled cells are transparent windows.
-// Side-borders form pale gutters; swapping .theme-* recolours empties + gutters.
+// Homepage only. The page is built from library components; this holds the one Figma difference they don't cover.
 @layer custom {
 
-  // Panel wrapping the date range + band: fill its .layout-split cell.
-  .countdown-panel {
-    inline-size: 100%;
-  }
+  // About section (Figma "Group · About"): the copy is one dense text block, paragraphs and Links Space S apart
+  // (the Split group default is Space M), list items with no gap between them.
+  .home-about .split-group__content {
+    gap: var(--space-s);
 
-  // End-date label sits a touch in from the edge, over the band's last cell.
-  .countdown-range > :last-child {
-    margin-inline-end: var(--vs-s);
-  }
-
-  .countdown {
-    position: relative;
-    aspect-ratio: 1312 / 325; // matches the Figma band
-    overflow: hidden;
-    --countdown-empty: color-mix(in oklch, var(--bg), white 55%);
-
-    // Override these per-instance to retune reveal timing: --countdown-duration (slide time), --countdown-stagger (delay per --i), --countdown-easing.
-    --countdown-duration: 340ms;
-    --countdown-stagger:  60ms;
-    --countdown-easing:   cubic-bezier(0.16, 1, 0.3, 1); // expo-out feel
-  }
-
-  // Pre-edited artwork — no filter, no blend mode.
-  .countdown__img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .countdown__grid {
-    position: absolute;
-    inset: 0;
-    display: flex;
-  }
-
-  .countdown__cell {
-    position: relative;
-    flex: 1 1 0;
-    box-sizing: border-box;
-    overflow: hidden; // clips the sliding ::after curtain
-    background: var(--countdown-empty);
-    border-inline: calc(var(--vs-xs) / 2) solid var(--bg); // gutters = theme --bg
-
-    &.is-filled {
-      background: transparent;
-    }
-  }
-
-  // Curtain: covers filled cells until the observer fires. JS adds --primed to show it, then --revealed to animate it away.
-  .countdown--primed .countdown__cell.is-filled::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--countdown-empty);
-  }
-
-  .countdown--revealed .countdown__cell.is-filled::after {
-    animation:
-      countdown-cell-reveal
-      var(--countdown-duration, 340ms)
-      var(--countdown-easing, cubic-bezier(0.16, 1, 0.3, 1))
-      calc(var(--i, 0) * var(--countdown-stagger, 28ms))
-      both;
-  }
-
-  @keyframes countdown-cell-reveal {
-    from { transform: translateX(0); }
-    to   { transform: translateX(100%); }
-  }
-
-  // On narrow viewports: show 10 blocks instead of 20 — collapse every even cell. Visible cells keep odd --i;
-  // halve --countdown-stagger to preserve inter-cell pacing.
-  @include mobile {
-    .countdown__cell:nth-child(even) {
-      flex: 0 0 0;
-      min-width: 0;
-      overflow: hidden;
-      border-inline: none;
-    }
-
-    .countdown {
-      --countdown-stagger: 30ms;
+    > ul:not([class]) {
+      gap: 0;
     }
   }
 
