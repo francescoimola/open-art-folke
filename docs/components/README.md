@@ -16,8 +16,8 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Link | [link.md](link.md) | code |
 | Button | [button.md](button.md) | code |
 | Icon | [icon.md](icon.md) | code |
-| Image | [image.md](image.md) | figma |
-| Video | [video.md](video.md) | figma |
+| Image | [image.md](image.md) | code |
+| Video | [video.md](video.md) | code |
 | Logo | [logo.md](logo.md) | code |
 | Sponsor logo | [sponsor-logo.md](sponsor-logo.md) | code |
 
@@ -46,7 +46,7 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | Photo pair | [photo-pair.md](photo-pair.md) | code |
 | Split group | [split-group.md](split-group.md) | code |
 | Sponsor grid | [sponsor-grid.md](sponsor-grid.md) | code |
-| Edition | [edition.md](edition.md) | figma |
+| Edition | [edition.md](edition.md) | code |
 | Lightbox | [lightbox.md](lightbox.md) | figma |
 | Footer | [footer.md](footer.md) | code |
 

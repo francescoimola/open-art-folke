@@ -1,6 +1,6 @@
 # Sponsor grid
 
-**Layer:** Section · **Status:** code · **Figma:** `382:1136` · **Code:** `site/snippets/sponsor-grid.php`, `.sponsor-grid` (`src/_sponsor-grid.scss`). The legacy homepage list (`sponsor-list.php`) goes when the homepage switches to this.
+**Layer:** Section · **Status:** code · **Figma:** `382:1136` · **Code:** `site/snippets/sponsor-grid.php`, `.sponsor-grid` (`src/_sponsor-grid.scss`). It replaces the old `sponsor-list.php` (mobile carousel + desktop hover list), removed in #15.
 
 ## Purpose
 

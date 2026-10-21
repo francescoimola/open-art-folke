@@ -1,6 +1,6 @@
 # Edition
 
-**Layer:** Section · **Status:** figma · **Figma:** `421:51` · **Code:** `site/snippets/edition.php`, `.edition` (planned)
+**Layer:** Section · **Status:** code · **Figma:** `421:51` · **Code:** `site/snippets/edition.php`, `.edition` (`src/_edition.scss`)
 
 ## Purpose
 
@@ -71,5 +71,11 @@ CSS for the rows: `display: flex; flex-wrap: wrap; gap: var(--gutter)`, each `li
 
 ## Open questions
 
-- A greedy row-break can leave a single photo on the last row (2025: a lone portrait; 2024: a lone landscape). Accept it, or allow a smarter partition in code?
-- The video's poster in Figma is a grey placeholder.
+- Decided (spec #6): a lone photo on the last row stays left-aligned at the target height; no smarter partition.
+- Decided (spec #6): the video's poster is Vimeo's own thumbnail; no Kirby field.
+
+## In code
+
+- `snippet('edition', ['heading', 'year', 'text', 'video', 'photos', 'group', 'class'])` renders the whole `<section class="edition page-section theme-flow">`. No valid 4-digit `year` → no `id` (and the Archive template gives it no year link).
+- Rows: `--row-h` is `30cqi` from a 480px list (about 2 per row) and `20cqi` from tablet (about 3); below 480px, one photo per row. Each `li` takes `aspect-ratio: var(--ratio)` and the image is `object-fit: contain`, so nothing is ever cropped.
+- Lightbox hook: each photo is `a.edition__link[href=<original file>][data-group=<edition id>]`.

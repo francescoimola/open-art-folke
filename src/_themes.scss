@@ -106,15 +106,6 @@ $theme-colours: ('primary', 'link', 'fg-muted', 'theme-button', 'theme-button-te
     color-scheme: light;
   }
 
-  .theme-blush {
-    --bg-light: var(--light-Brand-50);
-    --bg-dark: var(--light-Brand-50);
-    --fg-light: var(--light-Neutral-950);
-    --fg-dark: var(--light-Neutral-950);
-    --primary: var(--light-Brand-600);
-    color-scheme: light;
-  }
-
   .theme-crimson {
     --bg-light: var(--dark-Brand-500);
     --bg-dark: var(--dark-Brand-500);
