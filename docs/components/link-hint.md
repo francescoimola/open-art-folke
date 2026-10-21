@@ -1,6 +1,6 @@
 # Link + hint
 
-**Layer:** Composite · **Status:** figma · **Figma:** `377:525` · **Code:** `site/snippets/link-hint.php`, `.link-hint` (planned)
+**Layer:** Composite · **Status:** code · **Figma:** `377:525` · **Code:** `site/snippets/link-hint.php`, `.link-hint` (`src/_link-hint.scss`)
 
 ## Purpose
 

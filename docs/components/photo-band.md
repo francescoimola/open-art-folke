@@ -1,6 +1,6 @@
 # Photo band
 
-**Layer:** Section · **Status:** figma · **Figma:** `382:1137` · **Code:** `site/snippets/photo-banner.php` (exists; rename to `photo-band.php`)
+**Layer:** Section · **Status:** code · **Figma:** `382:1137` · **Code:** `site/snippets/photo-band.php`, `.photo-band` (`src/_photo-band.scss`; the legacy `photo-banner.php` goes with the old templates)
 
 ## Purpose
 
@@ -20,6 +20,8 @@ None. Set **Ratio** on the exposed Image.
 | --- | --- | --- |
 | First (under the Statement) | 1:1 | 2:1 |
 | Later | 3:2 | 2:1 |
+
+Tablet (code): from 640px the first band is 3:2 too, so it doesn't fill a portrait tablet's screen; every band is 2:1 from 768px.
 
 ## Tokens
 

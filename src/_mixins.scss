@@ -2,6 +2,8 @@
 @mixin mobile        { @media (width < 640px)   { @content; } }
 @mixin below-tablet  { @media (width < 768px)   { @content; } }
 @mixin tablet        { @media (width >= 768px)  { @content; } }
+// Large phones and portrait tablets up (the complement of `mobile`): tablet adjustments between the Min and Max designs.
+@mixin above-mobile  { @media (width >= 640px)  { @content; } }
 
 // Container queries — match Graffiti UI 4.30.0
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }
@@ -25,6 +27,8 @@
   font-size: $size;
   line-height: $line-height;
   letter-spacing: $letter-spacing;
+  // Figma has no word spacing; the typography overlay derives one from --ls.
+  word-spacing: normal;
   font-weight: $weight;
   font-variation-settings: "wght" $weight;
 }

@@ -19,9 +19,11 @@
     text-box: normal;
   }
 
-  .statement__heading {
+  // Two classes: the typography overlay's h1 rule compiles to (0,1,1) and would take the H1 tracking and weight.
+  .statement > .statement__heading {
     @include type-h1;
     inline-size: 100%;
+    margin: 0;
     color: var(--fg);
     text-wrap: balance;
   }

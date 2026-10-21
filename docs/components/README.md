@@ -25,8 +25,8 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 
 | Component | Doc | Status |
 | --- | --- | --- |
-| Link + hint | [link-hint.md](link-hint.md) | figma |
-| Link list | [link-list.md](link-list.md) | figma |
+| Link + hint | [link-hint.md](link-hint.md) | code |
+| Link list | [link-list.md](link-list.md) | code |
 | Nav list | [nav-list.md](nav-list.md) | code |
 | Sponsor card | [sponsor-card.md](sponsor-card.md) | figma |
 | Info item | [info-item.md](info-item.md) | code |
@@ -41,10 +41,10 @@ Status: `planned` → `figma` (component built) → `code` (snippet + SCSS built
 | --- | --- | --- |
 | Header | [header.md](header.md) | code |
 | Drawer | [drawer.md](drawer.md) | code |
-| Statement | [statement.md](statement.md) | figma |
-| Photo band | [photo-band.md](photo-band.md) | figma |
-| Photo pair | [photo-pair.md](photo-pair.md) | figma |
-| Split group | [split-group.md](split-group.md) | figma |
+| Statement | [statement.md](statement.md) | code |
+| Photo band | [photo-band.md](photo-band.md) | code |
+| Photo pair | [photo-pair.md](photo-pair.md) | code |
+| Split group | [split-group.md](split-group.md) | code |
 | Sponsor grid | [sponsor-grid.md](sponsor-grid.md) | figma |
 | Edition | [edition.md](edition.md) | figma |
 | Lightbox | [lightbox.md](lightbox.md) | figma |

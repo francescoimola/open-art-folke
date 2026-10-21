@@ -1,6 +1,6 @@
 # Split group
 
-**Layer:** Section · **Status:** figma · **Figma:** `381:589` · **Code:** `site/snippets/split-group.php`, `.split-group` (planned)
+**Layer:** Section · **Status:** code · **Figma:** `381:589` · **Code:** `site/snippets/split-group.php`, `.split-group` (`src/_split-group.scss`)
 
 ## Purpose
 

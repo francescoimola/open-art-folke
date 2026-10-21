@@ -1,13 +1,13 @@
 <?php
 /**
  * Photo band — a full-bleed photo between sections (docs/components/photo-band.md). No padding, no caption, no Theme.
- * The first band (under the Statement) is 1:1 below tablet and loads eagerly at high priority; later bands are 3:2 and lazy.
+ * The first band (under the Statement) is 1:1 on phones (3:2 from 640px) and loads eagerly at high priority; later bands are 3:2 and lazy.
  * Both are 2:1 from tablet up. Crops follow the file's focus point.
  *
  * Usage: snippet('photo-band', ['image' => $page->heroimage()->toFile(), 'first' => true])
  *
  * @var \Kirby\Cms\File|null $image   the photo; nothing renders without one
- * @var bool                 $first   the band under the Statement: 1:1 on mobile, eager + fetchpriority high
+ * @var bool                 $first   the band under the Statement: 1:1 on phones, eager + fetchpriority high
  * @var bool                 $hidden  purely decorative: alt="" (otherwise alt comes from the file)
  * @var string               $class   extra classes
  */

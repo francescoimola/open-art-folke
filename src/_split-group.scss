@@ -24,8 +24,10 @@
     gap: var(--space-s-m);
   }
 
-  .split-group__heading {
+  // Two classes: the typography overlay's h2 rule compiles to (0,1,1) and would take the H2 tracking and weight.
+  .split-group__row > .split-group__heading {
     @include type-h2;
+    margin: 0;
     color: var(--fg);
     text-wrap: balance;
   }
@@ -46,6 +48,8 @@
   .split-group__media {
     margin: 0;
     overflow: clip;
+    // The ratio sets the height: without this the photo's own height (content-based minimum) wins.
+    min-block-size: 0;
     aspect-ratio: 3 / 2;
   }
 

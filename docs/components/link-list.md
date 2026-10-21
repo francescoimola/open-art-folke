@@ -1,6 +1,6 @@
 # Link list
 
-**Layer:** Composite · **Status:** figma · **Figma:** `377:532` · **Code:** `.link-list` (planned)
+**Layer:** Composite · **Status:** code · **Figma:** `377:532` · **Code:** `site/snippets/link-list.php`, `.link-list` (`src/_link-list.scss`)
 
 ## Purpose
 

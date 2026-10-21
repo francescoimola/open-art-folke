@@ -8,11 +8,20 @@
     inline-size: 100%;
     margin: 0;
     overflow: clip;
+    // The ratio sets the height: without this the photo's own height (content-based minimum) wins.
+    min-block-size: 0;
     aspect-ratio: 3 / 2;
   }
 
   .photo-band--first {
     aspect-ratio: 1;
+  }
+
+  // Tablet adjustment: a 1:1 first band fills a portrait tablet's screen, so it takes the later bands' 3:2 from 640px.
+  @include above-mobile {
+    .photo-band--first {
+      aspect-ratio: 3 / 2;
+    }
   }
 
   @include tablet {
