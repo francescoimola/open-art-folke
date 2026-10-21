@@ -6,7 +6,12 @@
  *
  * Usage:
  *   snippet('link-hint', ['url' => $programmeUrl, 'label' => 'See programme', 'hint' => 'Opens in a new tab'])
- *   snippet('link-hint', ['url' => $pdf->url(), 'label' => 'Download PDF', 'hint' => 'Save the programme on your device (' . $pdf->niceSize() . ')', 'download' => true])
+ *   snippet('link-hint', [
+ *     'url'      => $pdf->url(),
+ *     'label'    => 'Download PDF',
+ *     'hint'     => 'Save the programme on your device (' . $pdf->niceSize() . ')',
+ *     'download' => true,
+ *   ])
  *
  * @var string           $url       required (as Link)
  * @var string           $label     required (as Link)

@@ -18,17 +18,6 @@
 // Container at least 640px wide: room for three cards of about 200px (Person card grid).
 @mixin cq-large      { @container (width >= 640px) { @content; } }
 
-// Absolute full-bleed background image — the shared `&__bg` cover idiom
-@mixin cover-bg($position: center) {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: $position;
-}
-
 // Graffiti's .visually-hidden technique, for hiding an element only at some sizes (the utility class can't sit in a query).
 @mixin visually-hidden {
   position: absolute;

@@ -6,11 +6,7 @@
  */
 
 /* The Statement's ↓ arrow labels; Custom sections get "Skip to <heading>". */
-$arrowLabels = [
-  'programme' => 'Skip to the festival programme',
-  'about'     => 'Skip to about the festival',
-  'sponsors'  => 'Skip to our sponsors',
-];
+$arrowLabels = array_map(fn (array $p) => $p['skip'], HomePage::PLACEHOLDERS);
 
 /* Rendered sections keyed by block type; a type renders at most once, except Custom sections (max two, keyed by block id). */
 $sections = [];

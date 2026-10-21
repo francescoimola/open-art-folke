@@ -1,5 +1,4 @@
 // Button (docs/components/button.md): .button, filled with the section Theme's button colours.
-// Legacy .btt--* variants live in @layer button-variants and win via layer priority; delete them with their last template.
 @use './mixins' as *;
 
 // Typed as a colour so the button's background can transition; unregistered custom properties swap instantly.
@@ -39,9 +38,9 @@
       --button-bg var(--d-base) ease-out,
       box-shadow var(--d-base) ease-out;
 
-    // Hover: fill darkens 5% and a shadow appears.
+    // Hover: fill darkens 5% (mixed with the near-black Neutral primitive) and a shadow appears.
     &:hover {
-      --button-bg: color-mix(in oklab, var(--button-color) 95%, black);
+      --button-bg: color-mix(in oklab, var(--button-color) 95%, var(--dark-Neutral-50));
       box-shadow: var(--shadow-1);
     }
 
@@ -71,20 +70,4 @@
     }
   }
 
-}
-
-// Legacy variants for the pre-redesign templates, in a later layer so they win over .button.
-@layer button-variants {
-
-  .btt--secondary {
-    --button-color: light-dark(var(--light-Brand-50), var(--dark-Brand-950));
-    color: light-dark(var(--light-Brand-900), var(--dark-Brand-400));
-  }
-
-  // On deep-red themes the dark-scheme default (salmon + black text) blends into the bg.
-  // Reuse the secondary palette there: pink surface with deep-red text.
-  .theme-crimson .button {
-    --button-color: var(--dark-Brand-950);
-    color: var(--dark-Brand-400);
-  }
 }

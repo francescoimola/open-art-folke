@@ -1,7 +1,8 @@
 <?php
 /**
  * Person card — one member of the team (docs/components/person-card.md): a 1:1 photo, then name, area and role in Caption.
- * Without a photo it shows a Neutral/100 tile instead (spec #6). Put cards in a `ul.people` grid (2 columns, 3 in a wide container).
+ * Without a photo it shows a Neutral/100 tile instead (spec #6).
+ * Put cards in a `ul.people` grid (2 columns, 3 in a wide container).
  *
  * Usage:
  *   <ul class="people" role="list">

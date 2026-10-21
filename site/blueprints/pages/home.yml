@@ -48,7 +48,7 @@ tabs:
           parent: site.find('media')
           template: image
       # Homepage sections (ADR-0007): one block per section, rendered by site/snippets/blocks/<type>.php.
-      # HomePage::homeSections() caps each type (SECTION_LIMITS) and falls back to Programme → About → Sponsors when empty.
+      # HomePage::homeSections() caps each type (sectionLimit()) and falls back to Programme → About → Sponsors when empty.
       sectionblocks:
         type: blocks
         label: Homepage sections

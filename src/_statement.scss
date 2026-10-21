@@ -1,6 +1,7 @@
 // Statement (docs/components/statement.md): the opening band, an h1 on the section's Theme (Red by default).
 // Stacked below tablet: Heading, Body and Kicker each start a line, one H1 line apart; Aside and ↓ Arrow Space XL below.
-// Split from tablet up: the h1 runs on as one paragraph; with an Aside, two equal columns (gap Space L, as the Split group). No Arrow.
+// Split from tablet up: the h1 runs on as one paragraph, and there is no Arrow.
+// With an Aside, two equal columns (gap Space L, as the Split group).
 @use './mixins' as *;
 
 @layer custom {

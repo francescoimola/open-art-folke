@@ -1,5 +1,5 @@
 # Custom section (ADR-0007, GLOSSARY.md): an editor-made Homepage section, rendered by site/snippets/blocks/custom.php.
-# A Split group in Flow: heading, text, up to two links, optional photo. At most two render (HomePage::SECTION_LIMITS).
+# A Split group in Flow: heading, text, up to two links, optional photo. At most two render (HomePage::CUSTOM_LIMIT).
 name: Custom section
 icon: layout
 label: "{{ heading }}"
