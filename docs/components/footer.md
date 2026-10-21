@@ -36,7 +36,8 @@ One HTML structure for both (ADR-0001). The whole footer (nav, logo, Info, legal
 
 - **Why 820px** (user decision, #27): at iPad 10.9"/11th gen portrait (820 × 1180) the Split nav row wrapped onto a second line, so viewports of 820px and below get the Stacked footer. Split starts at 821px.
 - The Nav list is rendered `stacked`; `src/_footer.scss` applies its Split/Large row (`nav-list-row`, from `_nav-list.scss`) above 820px.
-- Above 820px the row can still wrap on narrower tablets and laptops, and with Register ↗ shown (registration open) even at 1500px; it fits on one line from about 1570px.
+- Above 820px the row can still wrap on narrower tablets and laptops, and with Register ↗ shown (registration open) even at 1500px. With the current labels it fits on one line from about 1270px (5 items) and 1555px (6 items).
+- **Balanced wrap** (user review, #29): a wrapped row never leaves one item alone on a line. Lines are balanced (3 + 2 with 5 items, 3 + 3 with 6, measured 821 → 1600px). The items are inline blocks in a centred `text-wrap: balance` block (`_footer.scss`), not a flex row, so the breaks follow the label widths, including Panel-edited labels. Gap Space L both ways, as before; DOM and tab order unchanged. Browsers without `text-wrap: balance` wrap greedily, like the old flex row.
 
 - Info items and legal rows go from two columns to stacked.
 - **Stacked (820px and below)**, the "All you need to know" heading is visually hidden (kept in the HTML for structure and screen readers) and its group loses its rule and padding. Each Info item becomes a row like the legal rows: 1px Divider, padding block Space 2XS, the label in the H2 style, the value below it (Space pair/S-M). Rows are Space 2XL apart.
@@ -84,5 +85,5 @@ Only the links' own states and Copy email. The footer stays in place between pag
 
 - ~~Logo and nav order on mobile~~: settled. Nav then logo in the HTML; CSS `order` puts the logo first while Stacked.
 - ~~The mobile 2px top rule~~: kept (Theme/Button secondary).
-- **Tablet:** up to 820px the footer is Stacked (#27). From 821px the nav row may wrap, centred (see Layout); the Info items stay stacked in the right column until it is 480px wide (about 1000px viewport), then go Split.
+- **Tablet:** up to 820px the footer is Stacked (#27). From 821px the nav row may wrap, centred and balanced (see Layout); the Info items stay stacked in the right column until it is 480px wide (about 1000px viewport), then go Split.
 - The groups are Split-group rows built inside `.footer` (`.footer__group`), and Socials is a plain list of Links (`.footer__links`). Swap in the Split group and Link list snippets once they exist, if they fit.

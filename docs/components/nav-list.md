@@ -70,7 +70,7 @@ In the Header, Split becomes the Drawer's Stacked below the switch point. In the
 </nav>
 ```
 
-`layout` is `stacked`, `row` or `inline`, or a pair `[below tablet, tablet and up]`. The Header uses `['stacked', 'inline']`. The Footer passes `stacked` and switches to the row itself above 820px (see [Footer](footer.md)).
+`layout` is `stacked`, `row` or `inline`, or a pair `[below tablet, tablet and up]`. The Header uses `['stacked', 'inline']`. The Footer passes `stacked` and switches to the row itself above 820px (see [Footer](footer.md)). There the row wraps into balanced lines, never one item alone (#29): the Footer sets the list to a centred `text-wrap: balance` block of inline-block items. That override lives in `_footer.scss`; the `row` layout itself (and the Header) still wraps as a flex row.
 
 ## Open questions
 
