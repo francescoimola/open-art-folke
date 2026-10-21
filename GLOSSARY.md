@@ -107,5 +107,5 @@ The comparison of what each Tier gets, on the Sponsor page: one row per benefit,
 _Avoid_: Tier table, pricing table
 
 **Site menu**:
-The one Panel-managed list of navigation links shown in the header, the Drawer and the Footer.
+The one fixed list of navigation links shown in the header, the Drawer and the Footer (not Panel-editable; only the "Start here" and Register labels are).
 _Avoid_: Primary nav, footer nav (as separate things)

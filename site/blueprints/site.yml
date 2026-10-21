@@ -76,34 +76,10 @@ tabs:
             type: fields
             label: Site menu
             fields:
-              menu:
-                type: structure
-                label: Site menu
-                help: The links in the header, the mobile menu and the footer, in this order. Leave empty to use the default menu (Festival programme, About OA, Explore past editions, How to help). A link to the homepage’s “programme” section hides itself while Programme is hidden on the homepage. Register is added automatically while registration is open.
-                fields:
-                  label:
-                    type: text
-                    label: Label
-                    required: true
-                    help: What the link does, without arrows (e.g. “About OA”).
-                    width: 1/2
-                  link:
-                    type: link
-                    label: Link
-                    required: true
-                    options:
-                      - page
-                      - url
-                    width: 1/2
-                  anchor:
-                    type: text
-                    label: Section on that page (optional)
-                    help: The id of a section to jump to, without the # (e.g. “programme”).
-                    width: 1/2
               menu_start_label:
                 type: text
                 label: “Start here” label
-                help: The extra home link at the front of the footer menu. Leave empty for “Start here”.
+                help: The extra home link at the front of the footer menu. Leave empty for “Start here”. The other menu links are fixed (Festival programme, About OA, Explore past editions, How to help); Festival programme hides itself while Programme is hidden on the homepage.
                 placeholder: Start here
           registration:
             type: fields

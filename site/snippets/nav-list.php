@@ -1,7 +1,7 @@
 <?php
 /**
- * Nav list — the Site menu (docs/components/nav-list.md, ADR-0003): one Panel list for the Header, Drawer and Footer.
- * Items come from Site → Settings → Site menu, or the designed defaults while that field is empty.
+ * Nav list — the Site menu (docs/components/nav-list.md, ADR-0003): one list for the Header, Drawer and Footer.
+ * Items are the designed ones, in order; only the "Start here" and Register labels are Panel fields.
  * Render it inside the caller's own <nav>; only the layout classes change per context.
  *
  * Usage: snippet('nav-list', ['layout' => ['stacked', 'inline'], 'register' => true])
@@ -28,40 +28,24 @@ if ($startHere ?? false) {
   $items[] = ['label' => $site->menu_start_label()->or('Start here')->value(), 'page' => $home];
 }
 
-/* Panel rows: label + link (page or URL) + optional anchor. Empty field → the designed defaults. */
-$rows = $site->menu()->toStructure();
-if ($rows->isNotEmpty()) {
-  foreach ($rows as $row) {
-    $target = $row->link()->toPage();
-    $items[] = [
-      'label'  => $row->label()->value(),
-      'page'   => $target,
-      'url'    => $target ? null : $row->link()->toUrl(),
-      'anchor' => $row->anchor()->value(),
-    ];
-  }
-} else {
-  $items[] = ['label' => 'Festival programme', 'page' => $home, 'anchor' => 'programme'];
-  $items[] = ['label' => 'About OA', 'page' => page('about')];
-  $items[] = ['label' => 'Explore past editions', 'page' => page('archive')];
-  $items[] = ['label' => 'How to help', 'page' => page('sponsor')];
-}
+$items[] = ['label' => 'Festival programme', 'page' => $home, 'anchor' => 'programme'];
+$items[] = ['label' => 'About OA', 'page' => page('about')];
+$items[] = ['label' => 'Explore past editions', 'page' => page('archive')];
+$items[] = ['label' => 'How to help', 'page' => page('sponsor')];
 
-/* Resolve URLs; drop broken rows and the homepage programme item while Programme is hidden. */
+/* Resolve URLs; drop missing pages and the programme item while Programme is hidden. */
 $links = [];
 foreach ($items as $item) {
-  $target = $item['page'] ?? null;
-  $anchor = ltrim($item['anchor'] ?? '', '#');
+  $target = $item['page'];
+  $anchor = $item['anchor'] ?? '';
 
-  if ($target && $target->isHomePage() && $anchor === 'programme' && !$home->showsProgramme()) continue;
-
-  $url = $target ? $target->url() . ($anchor !== '' ? '#' . $anchor : '') : ($item['url'] ?? null);
-  if (empty($url) || empty($item['label'])) continue;
+  if (!$target) continue;
+  if ($anchor === 'programme' && !$home->showsProgramme()) continue;
 
   $links[] = [
-    'url'     => $url,
+    'url'     => $target->url() . ($anchor !== '' ? '#' . $anchor : ''),
     'label'   => $item['label'],
-    'current' => $target && $anchor === '' && $target->isActive(),
+    'current' => $anchor === '' && $target->isActive(),
   ];
 }
 

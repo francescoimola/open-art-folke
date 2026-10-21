@@ -4,11 +4,11 @@
 
 ## Purpose
 
-The **Site menu**: one Panel-managed list of links, shown in the Header (desktop), the Drawer (mobile) and the Footer ([ADR-0003](../adr/0003-one-nav-list-for-header-and-drawer.md)).
+The **Site menu**: one fixed list of links, shown in the Header (desktop), the Drawer (mobile) and the Footer ([ADR-0003](../adr/0003-one-nav-list-for-header-and-drawer.md)).
 
 ## Anatomy
 
-- **Items**: [Link](link.md) instances, in this order: Start here (footer only) · Festival programme · About OA · Explore past editions · How to help · Register ↗ (Drawer only).
+- **Items**: [Link](link.md) instances, in this order: Start here (footer only) · Festival programme · About OA · Explore past editions · How to help · Register ↗ (Drawer and Footer, while registration is open).
 - **Separator** (Split/Default only): a "," after every item except the last.
 
 ## Props & variants
@@ -22,7 +22,7 @@ The **Site menu**: one Panel-managed list of links, shown in the Header (desktop
 | Property | Values | Notes |
 | --- | --- | --- |
 | Start here | on / off | On in the Footer only. |
-| Register | on / off | On in the Drawer only. The desktop Header shows Register separately, pushed to the right. |
+| Register | on / off | On in the Drawer and Footer. The desktop Header shows Register separately, pushed to the right. |
 
 ## Layout (Stacked ↔ Split)
 
@@ -41,12 +41,12 @@ In the Header, Split becomes the Drawer's Stacked below the switch point. In the
 
 - Each item has the Link states.
 - **The current page** gets `aria-current="page"`, with no visual style (spec #6).
-- **Hidden sections.** If Programme is hidden on the homepage, the "Festival programme" item (any item linking to the homepage's `programme` anchor) disappears too, via `HomePage::showsProgramme()`.
+- **Hidden sections.** If Programme is hidden on the homepage, the "Festival programme" item disappears too, via `HomePage::showsProgramme()`.
 
 ## Panel fields / content rules
 
-- Site → Settings → **Site menu**: a structure of label + link (page or URL) + optional section anchor, edited once and used everywhere. Labels are the same in every context. While it is empty, the designed items are used.
-- Footer adds "Start here" (home; its own label field) at the front. Register uses the registration URL and label, and shows only while registration is open.
+- The items and their labels are fixed in `nav-list.php`, the same in every context (user decision, #35: the Panel-editable menu field was removed). An item whose page doesn't exist is dropped.
+- Footer adds "Start here" (home; label field Site → Settings → Site menu → "Start here" label) at the front. Register uses the registration URL and label, and shows only while registration is open.
 
 ## HTML & accessibility
 
