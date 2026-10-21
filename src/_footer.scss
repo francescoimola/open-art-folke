@@ -1,9 +1,11 @@
 // Footer (docs/components/footer.md): always Ink, via .theme-ink on the <footer>.
-// Below tablet (Stacked): Logo, then the Nav list column under a 1px rule, then the groups stacked; 2px top rule.
-// Tablet up (Split): centred Nav list row, centred Logo, then the groups as heading | content rows.
+// Up to 820px (Stacked): Logo, then the Nav list column under a 1px rule, then the groups stacked; 2px top rule.
+// Above 820px (Split): centred Nav list row, centred Logo, then the groups as heading | content rows.
+// The whole footer switches at once, later than the Header's tablet switch (#27): see footer-split in _mixins.scss.
 // Each group is a Split-group row kept inside this block (the Split group component is built elsewhere).
-// Below tablet the Info items are rows too: the "All you need to know" heading is visually hidden, each label is an H2.
+// Stacked, the Info items are rows too: the "All you need to know" heading is visually hidden, each label is an H2.
 @use './mixins' as *;
+@use './nav-list' as nav;
 
 // One row with its Divider (1px top rule): the legal rows, and each Info item below tablet.
 @mixin footer-row {
@@ -116,7 +118,7 @@
 
   // Stacked (Footer 385:1069): no "All you need to know" heading or rule; each Info item is its own row.
   // The heading stays in the HTML for structure and screen readers.
-  @include below-tablet {
+  @include footer-stacked {
     .footer__group--info {
       gap: 0;
       padding-block: 0;
@@ -143,7 +145,7 @@
     }
   }
 
-  @include tablet {
+  @include footer-split {
     .footer {
       gap: 0;
       border-block-start: 0;
@@ -152,6 +154,11 @@
     .footer__nav {
       padding-block: var(--space-2xl-3xl);
       border-block-start: 0;
+    }
+
+    // The Nav list's Split/Large row, at the footer's switch rather than its own tablet one.
+    .footer__nav > .nav-list {
+      @include nav.nav-list-row;
     }
 
     .footer__logo {

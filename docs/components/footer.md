@@ -32,11 +32,15 @@ Theme is **Ink**, pinned on the main. Stacked also has a 2px top rule in Button 
 
 ## Layout (Stacked ↔ Split)
 
-One HTML structure for both (ADR-0001); CSS switches at the tablet breakpoint (768px).
+One HTML structure for both (ADR-0001). The whole footer (nav, logo, Info, legal rows) switches at once, **above 820px** (mixins `footer-stacked` / `footer-split` in `src/_mixins.scss`), not at the Header's tablet switch (768px).
+
+- **Why 820px** (user decision, #27): at iPad 10.9"/11th gen portrait (820 × 1180) the Split nav row wrapped onto a second line, so viewports of 820px and below get the Stacked footer. Split starts at 821px.
+- The Nav list is rendered `stacked`; `src/_footer.scss` applies its Split/Large row (`nav-list-row`, from `_nav-list.scss`) above 820px.
+- Above 820px the row can still wrap on narrower tablets and laptops, and with Register ↗ shown (registration open) even at 1500px; it fits on one line from about 1570px.
 
 - Info items and legal rows go from two columns to stacked.
-- **Below tablet**, the "All you need to know" heading is visually hidden (kept in the HTML for structure and screen readers) and its group loses its rule and padding. Each Info item becomes a row like the legal rows: 1px Divider, padding block Space 2XS, the label in the H2 style, the value below it (Space pair/S-M). Rows are Space 2XL apart.
-- **Tablet up**, the heading shows and the Info items sit in its right column (label | value, see [Info item](info-item.md)).
+- **Stacked (820px and below)**, the "All you need to know" heading is visually hidden (kept in the HTML for structure and screen readers) and its group loses its rule and padding. Each Info item becomes a row like the legal rows: 1px Divider, padding block Space 2XS, the label in the H2 style, the value below it (Space pair/S-M). Rows are Space 2XL apart.
+- **Split (above 820px)**, the heading shows and the Info items sit in its right column (label | value, see [Info item](info-item.md)).
 - The **logo/nav order swaps**: see Open questions.
 
 ## Tokens
@@ -78,7 +82,7 @@ Only the links' own states and Copy email. The footer stays in place between pag
 
 ## Open questions
 
-- ~~Logo and nav order on mobile~~: settled. Nav then logo in the HTML; CSS `order` puts the logo first below tablet.
+- ~~Logo and nav order on mobile~~: settled. Nav then logo in the HTML; CSS `order` puts the logo first while Stacked.
 - ~~The mobile 2px top rule~~: kept (Theme/Button secondary).
-- **Tablet (768–1100px):** the nav row wraps, centred; the Info items stay stacked in the right column until it is 480px wide (about 1000px viewport), then go Split.
+- **Tablet:** up to 820px the footer is Stacked (#27). From 821px the nav row may wrap, centred (see Layout); the Info items stay stacked in the right column until it is 480px wide (about 1000px viewport), then go Split.
 - The groups are Split-group rows built inside `.footer` (`.footer__group`), and Socials is a plain list of Links (`.footer__links`). Swap in the Split group and Link list snippets once they exist, if they fit.

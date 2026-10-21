@@ -4,6 +4,10 @@
 @mixin tablet        { @media (width >= 768px)  { @content; } }
 // Large phones and portrait tablets up (the complement of `mobile`): tablet adjustments between the Min and Max designs.
 @mixin above-mobile  { @media (width >= 640px)  { @content; } }
+// Footer only (user decision, #27): 820px viewports (iPad 10.9"/11th gen portrait) and below keep the Stacked footer.
+// The Header still switches at `tablet`.
+@mixin footer-stacked { @media (width <= 820px) { @content; } }
+@mixin footer-split   { @media (width > 820px)  { @content; } }
 
 // Container queries — match Graffiti UI 4.30.0
 @mixin cq-wide       { @container (max-width: 768px) { @content; } }

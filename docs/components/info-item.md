@@ -24,7 +24,7 @@ One label → value pair in the footer's "All you need to know" list: I'm a visi
 - **Split** (desktop): label and value in two equal columns (`1fr 1fr`), gap Layout/Gutter.
 - **Stacked** (mobile): label above value, gap Space 2XS.
 - In code the switch is a container query on the `dl` (`cq-medium`, 480px wide), so the item stays stacked while the Footer's right column is narrow (tablet).
-- **In the Footer below tablet** each item is a full row instead (Footer Stacked, `385:1069`): 1px Divider, padding block Space 2XS, label in the H2 style, value below at Space pair/S-M. The Footer sets this (`src/_footer.scss`), not the item.
+- **In the Footer at 820px and below** each item is a full row instead (Footer Stacked, `385:1069`): 1px Divider, padding block Space 2XS, label in the H2 style, value below at Space pair/S-M. The Footer sets this (`src/_footer.scss`), not the item.
 
 The same markup is used at both sizes (Q17): the mobile frame's h2 groups become this `dt`/`dd` structure.
 

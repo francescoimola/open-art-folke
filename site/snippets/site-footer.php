@@ -1,8 +1,9 @@
 <?php
 /**
  * Footer — the end of every page, always Ink (docs/components/footer.md). Closes the <main> opened in header.php.
- * Nav list first in the HTML (CSS puts the Logo first below tablet), then the Info items and the legal rows.
- * Below tablet CSS hides the "All you need to know" heading (kept for screen readers) and makes each Info item a row.
+ * Nav list first in the HTML (CSS puts the Logo first while Stacked), then the Info items and the legal rows.
+ * Stacked (820px and below), CSS hides the "All you need to know" heading (kept for screen readers) and makes each Info item a row.
+ * The Nav list is Stacked here; _footer.scss makes it the Split row above 820px, with the rest of the footer.
  * Every string is a Site → Footer field, with the Figma copy as the fallback.
  *
  * @var \Kirby\Cms\Site $site
@@ -43,7 +44,7 @@ $socials = array_filter([
 <footer class="footer theme-ink">
 
   <nav class="footer__nav" aria-label="Footer">
-    <?php snippet('nav-list', ['layout' => ['stacked', 'row'], 'startHere' => true, 'register' => true]) ?>
+    <?php snippet('nav-list', ['layout' => 'stacked', 'startHere' => true, 'register' => true]) ?>
   </nav>
 
   <div class="footer__logo">
