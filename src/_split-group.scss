@@ -68,12 +68,12 @@
   }
 
   @include tablet {
-    // Split: two equal columns, gap Layout/Gutter. Content keeps column 2 even without a heading.
+    // Split: two equal columns, gap Space L (2 × Layout/Gutter, #30). Content keeps column 2 even without a heading.
     .split-group__row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: start;
-      column-gap: var(--gutter);
+      column-gap: var(--space-l);
     }
 
     .split-group__content {
@@ -82,7 +82,7 @@
 
     .split-group__media--column {
       align-self: flex-end;
-      inline-size: calc((100% - var(--gutter)) / 2);
+      inline-size: calc((100% - var(--space-l)) / 2);
     }
 
     .split-group__media--wide {

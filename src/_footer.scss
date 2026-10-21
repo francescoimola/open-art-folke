@@ -185,9 +185,10 @@
       padding-block: var(--space-l-xl);
     }
 
+    // Same column gap as the Split group, Space L, so the footer rows line up with the sections above.
     .footer__group {
       grid-template-columns: 1fr 1fr;
-      gap: var(--gutter);
+      gap: var(--space-l);
     }
   }
 

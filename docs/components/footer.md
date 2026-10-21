@@ -54,6 +54,7 @@ One HTML structure for both (ADR-0001). The whole footer (nav, logo, Info, legal
 | Logo padding top / bottom | Space pair/S-XL / Space pair/2XL-3XL | 14 → 54 / 56 → 108 |
 | Between groups | Space 2XL | 56 → 72 |
 | Info items (Split) | Space pair/M-L | 21 → 36 |
+| Row heading \| content gap (Split) | Space L, as the [Split group](split-group.md) (#30) | 28 → 36 |
 | Info item rows (Stacked) | Space 2XL | 56 → 72 |
 | Row heading → content (Stacked) | Space pair/S-M | 14 → 27 |
 | Row padding block | Space 2XS | 7 → 9 |
@@ -85,5 +86,5 @@ Only the links' own states and Copy email. The footer stays in place between pag
 
 - ~~Logo and nav order on mobile~~: settled. Nav then logo in the HTML; CSS `order` puts the logo first while Stacked.
 - ~~The mobile 2px top rule~~: kept (Theme/Button secondary).
-- **Tablet:** up to 820px the footer is Stacked (#27). From 821px the nav row may wrap, centred and balanced (see Layout); the Info items stay stacked in the right column until it is 480px wide (about 1000px viewport), then go Split.
+- **Tablet:** up to 820px the footer is Stacked (#27). From 821px the nav row may wrap, centred and balanced (see Layout); the Info items stay stacked in the right column until it is 480px wide (about 1036px viewport since the Space L column gap, #30), then go Split.
 - The groups are Split-group rows built inside `.footer` (`.footer__group`), and Socials is a plain list of Links (`.footer__links`). Swap in the Split group and Link list snippets once they exist, if they fit.

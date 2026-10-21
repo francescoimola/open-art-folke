@@ -1,7 +1,8 @@
 <?php
 /**
  * Edition — one past festival year on the Archive (docs/components/edition.md). Renders its own Flow <section>.
- * Row: text column (h2 + Text) and an optional Video (16:9) on the right; Stacked below tablet, Split from tablet up.
+ * Row: text column (h2 + Text), then an optional Video (16:9) under it. From tablet up both take the left half
+ * (the Split text column); below tablet they are full width.
  * Photos below in justified rows: every photo uncropped at its own ratio, the last row left-aligned and not stretched.
  *
  * Each photo is a plain link to its full-size file. Lightbox hook: `a.edition__link[data-group]`, one group per Edition.
@@ -20,7 +21,7 @@
  * @var string|\Kirby\Content\Field      $heading  required; the h2 (plain text, escaped here)
  * @var string|int|\Kirby\Content\Field  $year     drives id="edition-<year>"; empty or not a year = no id (the page still renders)
  * @var string|\Kirby\Content\Field|null $text     KirbyText field (rendered with ->kt()) or HTML string
- * @var string|\Kirby\Content\Field|null $video    Vimeo URL; empty = no Video, the text keeps its half
+ * @var string|\Kirby\Content\Field|null $video    Vimeo URL; empty = no Video (the text column is unchanged)
  * @var \Kirby\Cms\Files|null            $photos   images in order; empty = no photo list
  * @var string|null                      $group    Lightbox group key; defaults to the id, else "edition-<heading slug>"
  * @var string                           $class    extra classes on the <section>
