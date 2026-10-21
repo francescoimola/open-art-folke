@@ -197,6 +197,46 @@ Before merging into `main` (or `development`), run `pnpm fallow:audit`. It check
 
 ---
 
+## Dependencies
+
+### Classifying packages
+
+Source-imported packages go in `dependencies`; build tooling goes in `devDependencies`.
+
+- `dependencies` — imported by source (`src/index.js`, `src/templates/*`) **or** by Sass via `@import`/`meta.load-css`
+- `devDependencies` — build tooling only (`sass`, `postcss`, `vite`, `vite-plugin-kirby`, `autoprefixer`)
+
+`@drop-in/graffiti` and `parvus` are CSS-only, but they are still source imports. Keep them in `dependencies`.
+
+Fallow's "dev dependency used in production" warning means the classification contradicts an import. Fix the classification, don't silence the warning.
+
+### Security posture
+
+Dependabot covers three ecosystems (`.github/dependabot.yml`): `npm` (pnpm lockfile), `composer`, and `github-actions`. All three target `development`; `main` is the deploy branch.
+
+`composer audit` and `pnpm audit` should both be clean before merging.
+
+### Accepted risk — `braces` (GHSA-vfj7-8cjw-p6xm)
+
+The one advisory with no upstream fix. `braces@3.0.3` is the latest release; Dependabot auto-dismissed it.
+
+- Path: `vite-plugin-kirby` → `vite-plugin-live-reload@3.1.0` → `chokidar@3.6.0` → `braces@3.0.3`
+- Impact: stack exhaustion on deeply nested brace patterns. `chokidar@3` parses glob patterns, which come from developer-controlled config here.
+- Not fixable upstream: `chokidar@4+` drops `braces`, but `vite-plugin-live-reload@3` pins `chokidar: ^3.6.0` and `vite-plugin-kirby` won't accept `live-reload@4`.
+- Removing it needs an override of `vite-plugin-live-reload` to `4.0.0` — a major bump needing live-reload QA.
+
+### `devalue` alerts look like runtime risk, but never ship
+
+Dependabot reports `devalue` as `runtime` scope. It is not bundled.
+
+- Path: `@drop-in/graffiti` → `@humanspeak/svelte-markdown` → `svelte` → `devalue`
+- Graffiti's `main` is `index.css`; every export is CSS. The site imports no Graffiti JS entry.
+- `public/dist/assets/*.js` contains no svelte or devalue code. Verified after each build.
+
+Only a future Graffiti JS import would put `devalue` in the bundle. Re-check if that changes.
+
+---
+
 ## Comment style
 
 - **SCSS**: single-line `//` only (stripped at compile time — never appears in production CSS)
