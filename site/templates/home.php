@@ -30,7 +30,7 @@ if (!isset($sections[$arrowTarget])) $arrowTarget = array_key_first($sections);
 <?php snippet('statement', [
   'heading'    => $page->statement_heading()->or('Open Art Folke is a community of 200+ Folkestone artists.'),
   'body'       => $page->statement_body()->or('Every so often, we throw a mighty open-house style festival where we take you off the beaten track to see exactly where the art happens.'),
-  'kicker'     => $page->statement_kicker()->or('Come and have a nosey.'),
+  'kicker'     => $page->statement_kicker(),
   'arrow'      => $sections === [] ? null : $arrowHref,
   'arrowLabel' => $arrowLabels[$arrowTarget] ?? 'Skip to the content',
 ]) ?>

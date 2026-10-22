@@ -56,6 +56,7 @@ Figma can't flow three text layers as one paragraph, so Split carries the joined
 ## Panel fields / content rules
 
 - `statement_heading` (required), `statement_body`, `statement_kicker`, `statement_aside` (optional; a writer field, so it can hold paragraphs). Paragraphs in the Aside are Space S apart (Figma's paragraph spacing); the Aside's text and Links row are Space M apart.
+- On the homepage, a blank `statement_heading` or `statement_body` falls back to the default copy; a blank `statement_kicker` hides the closing line.
 - `arrow_target` (homepage only): a select with "First section" plus the visible Homepage sections.
 - Keep it to about 3 sentences: on mobile at 29px, more than about 15 lines pushes the photo out of the first screen.
 
