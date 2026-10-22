@@ -95,6 +95,10 @@ All images render through `snippet('image', [...])` (`site/snippets/image.php`):
 
 **Right-size source images before uploading.** Multi-MB 2560px+ PNG photos are the main cause of slow thumbnail generation — export photos as JPEG near display size (heroes ~2000px), not oversized PNGs.
 
+**Thumbnails are lazy: the first view of each width is slow.** Kirby generates a srcset width on its first request and saves it to `/media`. Later views are static files, even after a hard reload. This is expected and predates the redesign.
+
+The wait returns only after new or replaced uploads, changed `sizes` or `thumbs.srcsets` widths, or a cleared `/media`. If it becomes a problem, right-size the sources (above) or warm the thumbnails by fetching every srcset URL after uploads.
+
 ---
 
 ## Adding a new page
