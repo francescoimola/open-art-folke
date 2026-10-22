@@ -18,16 +18,17 @@ tabs:
         type: text
         label: Opening sentence
         placeholder: Open Art Folke is a community of 200+ Folkestone artists.
+        help: Leave blank to use the placeholder text.
       statement_body:
         type: textarea
         buttons: false
         label: Follow-on sentence
         placeholder: Every so often, we throw a mighty open-house style festival where we take you off the beaten track to see exactly where the art happens.
+        help: Leave blank to use the placeholder text.
       statement_kicker:
         type: text
         label: Closing line
-        placeholder: Come and have a nosey.
-        help: Leave any of these blank to use the placeholder text.
+        help: Optional. Leave blank to hide it.
       arrow_target:
         type: select
         label: Arrow goes to
