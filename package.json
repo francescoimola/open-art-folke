@@ -23,7 +23,7 @@
     "parvus": "^3.1.1"
   },
   "devDependencies": {
-    "autoprefixer": "^10.6.1",
+    "autoprefixer": "^10.6.2",
     "concurrently": "^10.0.6",
     "fallow": "^3.34.1",
     "postcss": "^8.5.31",
